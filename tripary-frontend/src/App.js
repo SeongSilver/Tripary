@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router";
+import MainPage from "./pages/MainPage";
+import MyPagePage from "./pages/MyPagePage";
+import PostPage from "./pages/PostPage";
+import ShareBoardPage from "./pages/ShareBoardPage";
+import None from "./pages/None";
+import NotFound from "./NotFound";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/none" element={<None />} />
+      <Route path="/*" element={<NotFound />} />
+      <Route path="/mypage" element={<MyPagePage />} />
+      <Route path="/post" element={<PostPage />} />
+      <Route path="/shareboard" element={<ShareBoardPage />} />
+    </Routes>
   );
 }
 

@@ -1,0 +1,22 @@
+.header {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.headerWrapper {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-left: 1%;
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.right {
+  margin-right: 1%;
+  display: flex;
+  align-items: center;
+}
