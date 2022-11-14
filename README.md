@@ -1,1 +1,1 @@
-# WorldTravel-Log
+# World-Travel-Map
