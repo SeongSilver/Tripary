@@ -6,10 +6,10 @@ function Login() {
       <div className="login">
         <form>
           <div>
-            <input />
+            <input type="text" />
           </div>
           <div>
-            <input />
+            <input type="password" />
           </div>
           <button>로그인</button>
           <button>회원가입</button>

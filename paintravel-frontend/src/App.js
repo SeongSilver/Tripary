@@ -6,12 +6,13 @@ import ShareBoardPage from "./pages/ShareBoardPage";
 import Login from "./components/Login/Login";
 import None from "./pages/None";
 import NotFound from "./NotFound";
+import MapChart from "./components/map/MapChart";
 import "./App.css";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
+      <Route path="/" element={<MapChart />} />
       <Route path="/none" element={<None />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/login" element={<Login />} />
