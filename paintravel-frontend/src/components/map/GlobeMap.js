@@ -3,6 +3,7 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import "../../styles/map/globeMap.scss";
 
 const GlobeMap = () => {
   /* Chart code */
@@ -49,11 +50,11 @@ const GlobeMap = () => {
     });
 
     polygonSeries.mapPolygons.template.states.create("hover", {
-      fill: root.interfaceColors.get("primaryButtonHover"),
+      fill: "#284ef9d6",
     });
 
     polygonSeries.mapPolygons.template.states.create("active", {
-      fill: root.interfaceColors.get("primaryButtonHover"),
+      fill: "rgba(255,0,0,0.5)",
     });
 
     // Create series for background fill
@@ -62,9 +63,7 @@ const GlobeMap = () => {
       am5map.MapPolygonSeries.new(root, {})
     );
     backgroundSeries.mapPolygons.template.setAll({
-      fill: root.interfaceColors.get("alternativeBackground"),
-      fillOpacity: 0.1,
-      strokeOpacity: 0,
+      fill: "rgba(255,255,255,0.2)",
     });
     backgroundSeries.data.push({
       geometry: am5map.getGeoRectangle(90, 180, -90, -180),
@@ -88,7 +87,7 @@ const GlobeMap = () => {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
       console.log(dataItem);
-      console.log(target);
+      console.log(dataItem);
       setTimeout(() => {
         if (id === "RU" || id === "CA") {
           chart.zoomToGeoPoint(target.geoCentroid(), 3, target.geoCentroid());
@@ -156,7 +155,17 @@ const GlobeMap = () => {
     };
   }, []);
 
-  return <div id="chartdiv" style={{ width: "100%", height: "900px" }}></div>;
+  return (
+    <div
+      id="chartdiv"
+      className="chartdiv"
+      style={{
+        display: "block",
+        width: "100%",
+        height: "900px",
+        backgroundColor: "rgba(0,0,0,0.95)",
+      }}></div>
+  );
 };
 
 export default GlobeMap;

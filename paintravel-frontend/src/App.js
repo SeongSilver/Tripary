@@ -12,7 +12,7 @@ import "./App.css";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<GlobeMap />} />
+      <Route path="/" element={<MapPage />} />
       <Route path="/none" element={<None />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/login" element={<Login />} />
