@@ -12,11 +12,12 @@ svg {
   vertical-align: middle;
 }
 
-path {
-  fill: rgba(0, 0, 0, 0.4);
-}
-
 .App {
   font-family: sans-serif;
   text-align: center;
+}
+.mapContainer {
+  display: block;
+  position: relative;
+  height: calc(100% - 170px);
 }

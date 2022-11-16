@@ -1,18 +1,18 @@
 import { Routes, Route } from "react-router";
-import MainPage from "./pages/MainPage";
+import GlobeMap from "./components/map/GlobeMap";
 import MyPagePage from "./pages/MyPagePage";
 import PostPage from "./pages/PostPage";
 import ShareBoardPage from "./pages/ShareBoardPage";
 import Login from "./components/Login/Login";
 import None from "./pages/None";
 import NotFound from "./NotFound";
-import MapChart from "./components/map/MapChart";
+import MapPage from "./pages/MapPage";
 import "./App.css";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MapChart />} />
+      <Route path="/" element={<GlobeMap />} />
       <Route path="/none" element={<None />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/login" element={<Login />} />

@@ -4,8 +4,9 @@ import {
   Geographies,
   Geography,
   ZoomableGroup,
+  Sphere,
+  Graticule,
 } from "react-simple-maps";
-import { geoWinkel3 } from "d3-geo-projection";
 import "../../styles/map/mapchart.scss";
 
 const geoUrl =
@@ -23,18 +24,29 @@ export default function MapChart() {
   function handleMoveEnd(position) {
     setPosition(position);
   }
-  const handleClick = (geo) => () => {
-    console.log(geo);
+  const onCLick = (e) => {
+    console.dir(e.target);
   };
-
+  const dbClickHandler = (e) => {
+    console.log(position.coordinates);
+    console.dir();
+  };
   return (
-    <div>
-      <ComposableMap width={width} height={height}>
+    <div
+      className="mapContainer"
+      style={{ backgroundColor: "rgba(0,0,0,0.9)" }}>
+      <ComposableMap
+        width={width}
+        height={height}
+        projectionConfig={{
+          rotate: [-10, 0, 0],
+          scale: 147,
+        }}>
         <ZoomableGroup
           zoom={position.zoom}
           center={position.coordinates}
           onMoveEnd={handleMoveEnd}>
-          <Geographies geography={geoUrl}>
+          <Geographies geography="/features.json">
             {({ geographies }) =>
               geographies.map((geo) => (
                 <Geography
@@ -42,19 +54,16 @@ export default function MapChart() {
                   geography={geo}
                   style={{
                     default: {
-                      fill: "rgba(0,0,0,0.15)",
-                      stroke: "rgb(255,255,255)",
-                      strokeWidth: "0.5px",
+                      fill: "#EEE",
                     },
                     hover: {
-                      fill: "rgba(0,255,30,0.5)",
+                      fill: "#F53",
                     },
                     pressed: {
-                      fill: "black",
-                      outline: "none",
+                      fill: "#E42",
                     },
                   }}
-                  onClick={handleClick}
+                  onClick={dbClickHandler}
                 />
               ))
             }
