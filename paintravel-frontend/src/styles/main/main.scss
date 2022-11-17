@@ -1,5 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital@0;1&family=Noto+Sans+KR:wght@100;300;400&display=swap');
+@mixin font() {
+  font-family: 'Courier Prime', monospace, 'Noto Sans KR', sans-serif;
+  color:#fff;
+  letter-spacing: 0.3rem;
+  text-align: center;
+}
+@mixin noDrag() {
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
 .main {
-  width: 100%;
-  height: calc(100vh - 170px);
-  background-color: rgba(0, 0, 255, 0.2);
+  width: 100%; height: 100vh;
+  background: radial-gradient(transparent, #000);
+  position:relative;
+  z-index: 100 ;
+  @include noDrag;
+  .main::before {
+    content:"";
+    display:block;
+    position:absolute; left: 0; top: 0;
+    width: 100vw; height: 100vh;
+    background: #000;
+  }
+  h1 {
+    text-indent: -9999px;
+    height:0;
+  }
+  h2 {
+    font-size:10rem;
+    @include font;
+    line-height: 100vh;
+  }
 }

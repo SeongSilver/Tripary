@@ -50,11 +50,11 @@ const GlobeMap = () => {
     });
 
     polygonSeries.mapPolygons.template.states.create("hover", {
-      fill: "#284ef9d6",
+      fill: "#fff",
     });
 
     polygonSeries.mapPolygons.template.states.create("active", {
-      fill: "rgba(255,0,0,0.5)",
+      fill: "rgba(255,255,255,1)",
     });
 
     // Create series for background fill
@@ -63,7 +63,7 @@ const GlobeMap = () => {
       am5map.MapPolygonSeries.new(root, {})
     );
     backgroundSeries.mapPolygons.template.setAll({
-      fill: "rgba(255,255,255,0.2)",
+      fill: "rgba(255,255,255,0.1 )",
     });
     backgroundSeries.data.push({
       geometry: am5map.getGeoRectangle(90, 180, -90, -180),
@@ -162,8 +162,8 @@ const GlobeMap = () => {
       style={{
         display: "block",
         width: "100%",
-        height: "900px",
-        backgroundColor: "rgba(0,0,0,0.95)",
+        height: "100vh",
+        backgroundColor: "rgba(0,0,0,1)",
       }}></div>
   );
 };

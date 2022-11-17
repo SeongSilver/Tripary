@@ -7,21 +7,11 @@ function Header() {
     <div className="header">
       <div className="headerWrapper">
         <div className="logo">
-          <Link to="/">페인트레블</Link>
+          <Link to="/">페인트레블<img src="../../img/logo.png"></img></Link>
         </div>
         <div className="headerRight">
-          <Link to="/post" className="headLink">
-            포스트
-          </Link>
-          <Link to="/shareboard" className="headLink">
-            공유게시판
-          </Link>
-          <Link to="/mypage" className="headLink">
-            마이페이지
-          </Link>
-          <Link to="/none" className="headLink">
-            헤더푸터없는페이지
-          </Link>
+          <Link to="/shareboard" className="headLink">community</Link>
+          <Link to="/Login" className="headLink">sign in</Link>
         </div>
       </div>
     </div>

@@ -2,12 +2,15 @@ import React from "react";
 import GlobeMap from "../components/map/GlobeMap";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
+import Main from "../components/main/Main";
 
 function MapPage() {
   return (
     <div>
-      <Header style={{ opacity: 1 }} />
+      <Header />
+      <Main />
       <GlobeMap />
+      <Footer />
     </div>
   );
 }

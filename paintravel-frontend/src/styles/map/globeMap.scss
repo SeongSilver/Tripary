@@ -17,5 +17,6 @@ svg {
   text-align: center;
 }
 .chartdiv {
-  height: 95vh;
+  background: url(../../img/mainBg.png);
+  position:absolute; left: 0; top: 0;
 }
