@@ -1,11 +1,21 @@
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 
+import Modal from "../common/Modal";
+
 const GlobeMap = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [test, setTest] = useState(false);
+
+  const openModal = () => {
+    console.log("오픈모달 함수 혹시실행되는거니?");
+    setModalOpen(true);
+    console.log(modalOpen);
+  };
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
@@ -25,7 +35,7 @@ const GlobeMap = () => {
         panX: "rotateX",
         panY: "rotateY",
         wheelY: "zoom",
-        zoomStep: 0.5,
+        zoomStep: 2,
         projection: am5map.geoOrthographic(),
       })
     );
@@ -97,6 +107,10 @@ const GlobeMap = () => {
           polygonSeries.zoomToDataItem(dataItem);
         }
       }, 1500);
+      setTimeout(() => {
+        openModal();
+        console.log(test);
+      }, 2200);
       if (target) {
         let centroid = target.geoCentroid();
         if (centroid) {
@@ -154,9 +168,16 @@ const GlobeMap = () => {
     return () => {
       root.dispose();
     };
-  }, []);
+  }, [test]);
 
-  return <div id="chartdiv" className="chartdiv"></div>;
+  return (
+    <>
+      <div id="chartdiv" className="chartdiv"></div>
+      {modalOpen && (
+        <Modal setModalOpen={setModalOpen} test={test} setTest={setTest} />
+      )}
+    </>
+  );
 };
 
 export default GlobeMap;

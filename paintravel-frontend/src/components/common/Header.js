@@ -9,7 +9,6 @@ function Header() {
       <div className="headerWrapper">
         <div className="logo">
           <Link to="/">
-            페인트레블
             <img src={logo} alt="logo" />
           </Link>
         </div>
