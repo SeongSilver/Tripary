@@ -25,7 +25,7 @@ const GlobeMap = () => {
         panX: "rotateX",
         panY: "rotateY",
         wheelY: "zoom",
-        zoomStep: 10,
+        zoomStep: 0.5,
         projection: am5map.geoOrthographic(),
       })
     );
@@ -35,6 +35,7 @@ const GlobeMap = () => {
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
+        fill: "#289145",
       })
     );
 
@@ -49,21 +50,23 @@ const GlobeMap = () => {
       interactive: true,
     });
 
-    polygonSeries.mapPolygons.template.states.create("hover", {
-      fill: "#fff",
-    });
+    // polygonSeries.mapPolygons.template.states.create("hover", {
+    //   fill: "skyblue",
+    // });
 
     polygonSeries.mapPolygons.template.states.create("active", {
-      fill: "rgba(255,255,255,1)",
+      fill: "blue",
     });
 
     // Create series for background fill
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
-    let backgroundSeries = chart.series.push(
+    let backgroundSeries = chart.series.unshift(
       am5map.MapPolygonSeries.new(root, {})
     );
+    //지도에서 바다색칠하는 부분
     backgroundSeries.mapPolygons.template.setAll({
-      fill: "rgba(255,255,255,0.1 )",
+      fill: "#3b75af",
+      stroke: am5.color(0xd4f1f9),
     });
     backgroundSeries.data.push({
       geometry: am5map.getGeoRectangle(90, 180, -90, -180),
@@ -87,9 +90,8 @@ const GlobeMap = () => {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
       console.log(dataItem);
-      console.log(dataItem);
       setTimeout(() => {
-        if (id === "RU" || id === "CA") {
+        if (id === "RU" || id === "CA" || id === "CN" || id === "AQ") {
           chart.zoomToGeoPoint(target.geoCentroid(), 3, target.geoCentroid());
         } else {
           polygonSeries.zoomToDataItem(dataItem);
@@ -141,7 +143,6 @@ const GlobeMap = () => {
         }
       }
     }
-
     // Uncomment this to pre-center the globe on a country when it loads
     polygonSeries.events.on("datavalidated", function () {
       homeCountry("KR");
@@ -155,17 +156,7 @@ const GlobeMap = () => {
     };
   }, []);
 
-  return (
-    <div
-      id="chartdiv"
-      className="chartdiv"
-      style={{
-        display: "block",
-        width: "100%",
-        height: "100vh",
-        backgroundColor: "rgba(0,0,0,1)",
-      }}></div>
-  );
+  return <div id="chartdiv" className="chartdiv"></div>;
 };
 
 export default GlobeMap;
