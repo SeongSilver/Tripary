@@ -168,6 +168,7 @@ const GlobeMap = () => {
     return () => {
       root.dispose();
     };
+<<<<<<< HEAD
   }, [test]);
 
   return (
@@ -178,6 +179,76 @@ const GlobeMap = () => {
       )}
     </>
   );
+=======
+  }, []);
+  // 별 내리는 함수
+  function canvasStar() {
+    var canvas = document.getElementById('stars');
+    var ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    var starsLength = getRandomArbitrary(canvas.width / 10, canvas.width / 10);
+    
+    var starsA = stars('#fff', 0.5);
+    var starsB = stars('#fff', 0.7);
+
+    // 별 생성
+    function stars(color, radius) {
+        var starsArr = [];
+        
+        for (var i = 0; i < starsLength; i++) {
+            ctx.beginPath();
+            var x = getRandomArbitrary(0, canvas.width);
+            var y = getRandomArbitrary(0, canvas.height);
+            ctx.arc(x, y, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = color;
+            ctx.fill();
+            starsArr.push({ x, y, radius, color});
+        }
+        return starsArr;
+    }
+    // 별 떨어지는 동작
+    function update(starsArr) {
+        for (var i = 0; i < starsArr.length; i++) {
+            
+            ctx.beginPath();
+            starsArr[i].x += (starsArr[i].radius * 0.1);
+            starsArr[i].y += (starsArr[i].radius * 0.1);
+            ctx.arc(starsArr[i].x, starsArr[i].y, starsArr[i].radius, 0.3, 2 * Math.PI);
+            ctx.fillStyle = starsArr[i].color;
+            ctx.fill();
+            
+            if (starsArr[i].x > canvas.width) {
+                starsArr[i].x = 0;
+            }
+            if (starsArr[i].y > canvas.height) {
+                starsArr[i].y = 0;
+            }
+        }
+    }
+    
+    // 별 떨어지는 동작 실행
+    function render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        update(starsA);
+        update(starsB);
+        requestAnimationFrame(render)
+    }
+    requestAnimationFrame(render)
+
+    // 난수
+    function getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+  }
+  return (
+    <div id="chartdiv" className="chartdiv" onLoad={canvasStar}>
+      <canvas id="stars"></canvas>
+    </div>
+  )
+>>>>>>> a17175df3bf2c02b6db2264ba7c35f75763783d0
 };
 
 export default GlobeMap;
