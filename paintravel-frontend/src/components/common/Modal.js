@@ -13,7 +13,7 @@ const Modal = ({ test, setModalOpen, setTest }) => {
     // 모달이 열릴때 openModal 클래스가 생성된다.
     <div className="modalContainer">
       <div className="modalDiv">
-        <button onClick={closeModal}>닫기</button>모달 내용
+        <button onClick={closeModal}>x</button>모달 내용
       </div>
     </div>
   );
