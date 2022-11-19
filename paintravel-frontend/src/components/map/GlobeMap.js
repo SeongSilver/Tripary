@@ -1,18 +1,18 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
-import * as am5 from "@amcharts/amcharts5";
-import * as am5map from "@amcharts/amcharts5/map";
-import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
-import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import "../../styles/map/globeMap.scss";
+import React, { useState, useRef, useLayoutEffect } from 'react';
+import * as am5 from '@amcharts/amcharts5';
+import * as am5map from '@amcharts/amcharts5/map';
+import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow';
+import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
+import '../../styles/map/globeMap.scss';
 
-import Modal from "../common/Modal";
+import Modal from '../post/ContentList';
 
 const GlobeMap = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [test, setTest] = useState({});
 
   const openModal = () => {
-    console.log("오픈모달 함수 혹시실행되는거니?");
+    console.log('오픈모달 함수 혹시실행되는거니?');
     setModalOpen(true);
     console.log(modalOpen);
   };
@@ -20,7 +20,7 @@ const GlobeMap = () => {
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
   useLayoutEffect(() => {
-    let root = am5.Root.new("chartdiv");
+    let root = am5.Root.new('chartdiv');
 
     // Set themes
     // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -32,12 +32,12 @@ const GlobeMap = () => {
       am5map.MapChart.new(root, {
         homeGeoPoint: { longitude: 127, latitude: 36 },
         homeZoomLevel: 0,
-        panX: "rotateX",
-        panY: "rotateY",
-        wheelY: "zoom",
+        panX: 'rotateX',
+        panY: 'rotateY',
+        wheelY: 'zoom',
         zoomStep: 2,
         projection: am5map.geoOrthographic(),
-      })
+      }),
     );
 
     // Create main polygon series for countries
@@ -45,8 +45,8 @@ const GlobeMap = () => {
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
-        fill: "#289145",
-      })
+        fill: '#289145',
+      }),
     );
 
     // polygonSeries.mapPolygons.template.events.on("click", function (ev) {
@@ -55,8 +55,8 @@ const GlobeMap = () => {
     // });
 
     polygonSeries.mapPolygons.template.setAll({
-      tooltipText: "{name}",
-      toggleKey: "active",
+      tooltipText: '{name}',
+      toggleKey: 'active',
       interactive: true,
     });
 
@@ -64,18 +64,18 @@ const GlobeMap = () => {
     //   fill: "skyblue",
     // });
 
-    polygonSeries.mapPolygons.template.states.create("active", {
-      fill: "blue",
+    polygonSeries.mapPolygons.template.states.create('active', {
+      fill: 'blue',
     });
 
     // Create series for background fill
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
     let backgroundSeries = chart.series.unshift(
-      am5map.MapPolygonSeries.new(root, {})
+      am5map.MapPolygonSeries.new(root, {}),
     );
     //지도에서 바다색칠하는 부분
     backgroundSeries.mapPolygons.template.setAll({
-      fill: "#3b75af",
+      fill: '#3b75af',
       stroke: am5.color(0xd4f1f9),
     });
     backgroundSeries.data.push({
@@ -85,23 +85,23 @@ const GlobeMap = () => {
     // Set up events
     let previousPolygon;
 
-    polygonSeries.mapPolygons.template.on("active", function (active, target) {
+    polygonSeries.mapPolygons.template.on('active', function (active, target) {
       if (previousPolygon && previousPolygon != target.dataItem) {
-        previousPolygon.set("active", false);
-        unSelectCountry(target.dataItem.get("id"));
+        previousPolygon.set('active', false);
+        unSelectCountry(target.dataItem.get('id'));
       }
-      if (target.get("active")) {
-        selectCountry(target.dataItem.get("id"));
+      if (target.get('active')) {
+        selectCountry(target.dataItem.get('id'));
       }
       previousPolygon = target;
     });
 
     function selectCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
-      let target = dataItem.get("mapPolygon");
+      let target = dataItem.get('mapPolygon');
       console.log(dataItem);
       setTimeout(() => {
-        if (id === "RU" || id === "CA" || id === "CN" || id === "AQ") {
+        if (id === 'RU' || id === 'CA' || id === 'CN' || id === 'AQ') {
           chart.zoomToGeoPoint(target.geoCentroid(), 3, target.geoCentroid());
         } else {
           polygonSeries.zoomToDataItem(dataItem);
@@ -115,13 +115,13 @@ const GlobeMap = () => {
         let centroid = target.geoCentroid();
         if (centroid) {
           chart.animate({
-            key: "rotationX",
+            key: 'rotationX',
             to: -centroid.longitude,
             duration: 1500,
             easing: am5.ease.inOut(am5.ease.cubic),
           });
           chart.animate({
-            key: "rotationY",
+            key: 'rotationY',
             to: -centroid.latitude,
             duration: 1500,
             easing: am5.ease.inOut(am5.ease.cubic),
@@ -132,24 +132,24 @@ const GlobeMap = () => {
 
     function unSelectCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
-      let target = dataItem.get("mapPolygon");
+      let target = dataItem.get('mapPolygon');
       chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
     }
 
     function homeCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
-      let target = dataItem.get("mapPolygon");
+      let target = dataItem.get('mapPolygon');
       if (target) {
         let centroid = target.geoCentroid();
         if (centroid) {
           chart.animate({
-            key: "rotationX",
+            key: 'rotationX',
             to: -centroid.longitude,
             duration: 1500,
             easing: am5.ease.inOut(am5.ease.cubic),
           });
           chart.animate({
-            key: "rotationY",
+            key: 'rotationY',
             to: -centroid.latitude,
             duration: 1500,
             easing: am5.ease.inOut(am5.ease.cubic),
@@ -158,8 +158,8 @@ const GlobeMap = () => {
       }
     }
     // Uncomment this to pre-center the globe on a country when it loads
-    polygonSeries.events.on("datavalidated", function () {
-      homeCountry("KR");
+    polygonSeries.events.on('datavalidated', function () {
+      homeCountry('KR');
     });
 
     // Make stuff animate on load
@@ -171,16 +171,16 @@ const GlobeMap = () => {
   }, [test]);
   // 별 내리는 함수
   function canvasStar() {
-    var canvas = document.getElementById("stars");
-    var ctx = canvas.getContext("2d");
+    var canvas = document.getElementById('stars');
+    var ctx = canvas.getContext('2d');
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     var starsLength = getRandomArbitrary(canvas.width / 10, canvas.width / 10);
 
-    var starsA = stars("#fff", 0.5);
-    var starsB = stars("#fff", 0.7);
+    var starsA = stars('#fff', 0.5);
+    var starsB = stars('#fff', 0.7);
 
     // 별 생성
     function stars(color, radius) {
@@ -208,7 +208,7 @@ const GlobeMap = () => {
           starsArr[i].y,
           starsArr[i].radius,
           0.3,
-          2 * Math.PI
+          2 * Math.PI,
         );
         ctx.fillStyle = starsArr[i].color;
         ctx.fill();
