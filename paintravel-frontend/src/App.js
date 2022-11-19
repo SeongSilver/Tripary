@@ -1,3 +1,12 @@
+import { Routes, Route } from "react-router";
+import MyPagePage from "./pages/MyPagePage";
+import PostPage from "./pages/PostPage";
+import ShareBoardPage from "./pages/ShareBoardPage";
+import Login from "./components/Login/Login";
+import None from "./pages/None";
+import NotFound from "./NotFound";
+import MapPage from "./pages/MapPage";
+import "./App.css";
 import { Routes, Route } from 'react-router';
 import MyPagePage from './pages/MyPagePage';
 import PostPage from './pages/PostPage';
@@ -19,7 +28,6 @@ function App() {
       <Route path="/shareboard" element={<ShareBoardPage />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/none" element={<None />} />
-      {/* <Route path="/img" element={<Img />} /> */}
     </Routes>
   );
 }

@@ -1,15 +1,17 @@
 import React from "react";
 import "../../styles/common/header.scss";
 import { Link } from "react-router-dom";
-import logo from "../../img/logo.png";
 
 function Header() {
   return (
     <div className="header">
       <div className="headerWrapper">
+        <div className="skipNav">
+          <Link to="/">본문바로가기</Link>
+        </div>
         <div className="logo">
           <Link to="/">
-            <img src={logo} alt="logo" />
+            <img src={require("../../img/logo.png")} alt="logo" />
           </Link>
         </div>
         <div className="headerRight">
