@@ -1,6 +1,6 @@
-import '../../styles/common/modal.scss';
+import '../../styles/post/contentList.scss';
 
-function Modal({ test, setModalOpen, setTest }) {
+function ContentList({ test, setModalOpen, setTest }) {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
   const closeModal = () => {
     setModalOpen(false);
@@ -61,4 +61,4 @@ function Modal({ test, setModalOpen, setTest }) {
   );
 }
 
-export default Modal;
+export default ContentList;
