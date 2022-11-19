@@ -1,15 +1,137 @@
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src: url('../../fonts/NanumMyeongjo-Regular.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-Bold.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-ExtraBold.ttf') format("truetype");
+  // 영문(대소문자)
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('../../fonts/NotoSansKR-Thin.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Light.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Medium.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Regular.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Bold.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Black.otf') format("opentype");
+  // 국문, 숫자
+  unicode-range: U+AC00-D7A3, U+0030-0039;
+}
+@mixin font {
+  font-family: 'Nanum Myeongjo', 'Noto Sans KR';
+  color: #fff;
+  letter-spacing: 0.2rem;
+  font-weight:100;
+}
+@mixin hidden {
+  display: block;
+  width: 0; height: 0;
+  text-indent: -9999px;
+}
 .footer {
-  width: 100%;
-  height: 100px;
-  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%; height: 28%;
+  background-color: #000;
   display: flex;
   align-items: center;
-  position:absolute; left: 0; bottom: 0;
-  display:none;
-}
-.footerLogo {
-  margin-left: 2%;
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: white;
+  position:absolute; left: 0; bottom: -28%;
+  z-index: 1000;
+  color:#fff;
+  transition: all 0.5s;
+  @include font;
+  
+  h1 {@include hidden;}
+  .footerButton{
+    span {
+      background-color: #000;
+      width: 4.8vw; height: 4vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left: calc(2% + (5% - 1.2vw)/2); top: -2vw;
+      border-top-left-radius: 20%;
+      border-top-right-radius: 20%;
+      clip-path:polygon(0 0, 100% 0, 100% 50%, 0 50%);
+      cursor:pointer;
+      img {
+        display:block;
+        width: 1.2vw; height: 1vw;
+        margin-bottom:2vw;
+      }
+    }
+  }
+  .footerLogo {
+    display:block;
+    width: auto; height: 25%;
+    margin-left:15%;
+  }
+  .footerMenu {
+    width: 50%; height: auto;
+    margin: 0 auto;
+    .sns {
+      display: flex;
+      align-items: center;
+      li {
+        float:left;
+        cursor:pointer;
+        margin-right:15%;
+        position: relative;
+        img {
+          opacity: 0;
+          transition:all 0.3s;
+        }
+      }
+      li:nth-child(1) {
+        content:"";
+        background:url("../../img/footer_facebook.png") no-repeat 0 0;
+      }
+      li:nth-child(2) {
+        content:"";
+        background:url("../../img/footer_youtube.png") no-repeat 0 0;
+      }
+      li:nth-child(3) {
+        content:"";
+        background:url("../../img/footer_instagram.png") no-repeat 0 0;
+      }
+      li:nth-child(4) {
+        content:"";
+        background:url("../../img/footer_twitter.png") no-repeat 0 0;
+      }
+      li:nth-child(1):hover img {opacity: 1;}
+      li:nth-child(2):hover img {opacity: 1;}
+      li:nth-child(3):hover img {opacity: 1;}
+      li:nth-child(4):hover img {opacity: 1;}
+    }
+    ul:not(.sns) {
+      display: flex;
+      width: 100%; height: 100%;
+      margin-top:5%;
+      li {
+        float:left;
+        font-size: 1.2rem;
+        line-height: 3rem;
+        margin-right:10vw;
+        a {
+          float:left;
+          color:#fff;
+        }
+      }
+      li:not(li:nth-child(1))::after {
+        content:"";
+        display: block;
+        width: 1px; height: 50%;
+        margin: 0.75rem 0 0 -5vw;
+        background-color: #fff;
+      }
+    }
+    address {
+      font-size: 1.2rem;
+      line-height: 3rem;
+    }
+    p {
+      display:block;
+      font-size: 1.2rem;
+      line-height: 3rem;
+    }
+  }
 }

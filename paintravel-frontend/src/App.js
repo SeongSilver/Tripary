@@ -6,7 +6,6 @@ import Login from "./components/Login/Login";
 import None from "./pages/None";
 import NotFound from "./NotFound";
 import MapPage from "./pages/MapPage";
-//import Img from "./img";
 import "./App.css";
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
       <Route path="/shareboard" element={<ShareBoardPage />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/none" element={<None />} />
-      {/* <Route path="/img" element={<Img />} /> */}
     </Routes>
   );
 }
