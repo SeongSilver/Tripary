@@ -11,7 +11,7 @@ function Header() {
         </div>
         <div className="logo">
           <Link to="/">
-            <img src={require("../../img/logo.png")} alt="logo" />
+            <img src={require("../../img/common/logo.png")} alt="logo" />
           </Link>
         </div>
         <div className="headerRight">
