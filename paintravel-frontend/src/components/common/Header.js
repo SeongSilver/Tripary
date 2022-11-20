@@ -1,6 +1,7 @@
-import React from 'react';
-import '../../styles/common/header.scss';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "../../styles/common/header.scss";
+import { Link } from "react-router-dom";
+import logo from "../../img/logo.png";
 
 function Header() {
   return (
@@ -11,7 +12,7 @@ function Header() {
         </div>
         <div className="logo">
           <Link to="/">
-            <img src={require('../../img/logo.png')} alt="logo" />
+            <img src={logo} alt="logo" />
           </Link>
         </div>
         <div className="headerRight">
