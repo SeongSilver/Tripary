@@ -21,9 +21,7 @@
         @include font;
         .loginWrap {
             width: 30%; height: 60%;
-            // border:2px solid #fff;
             margin: 20vh auto 0 auto;
-            // padding: 5vh 5vw 10vh 5vw;
         }
         h1 {
             font-size: 2.4rem;
@@ -46,7 +44,7 @@
                 background: transparent;
                 border:1px solid #fff;
                 padding : 0 5%;
-                font-size: 1.8rem;
+                font-size: 1.6rem;
                 border-radius: 10px;
                 margin-bottom:3vh;
             }
@@ -78,7 +76,7 @@
                 font-size: 1.4rem;
                 line-height: 3vh;
             }
-            #signUpButton {
+            #moveToSignUp {
                 border:none;
                 background-color: transparent;
                 @include font;

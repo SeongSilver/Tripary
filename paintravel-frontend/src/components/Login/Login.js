@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
+import SignUp from "../Login/SignUp";
 import "../../styles/scss/login.scss";
+import { Link } from "react-router-dom";
 
 function Login() {
+  const [openSignUpModal, setOpenSignUpModal] = useState(false);
+  const openSignUp = () => { setOpenSignUpModal(true); } 
   return (
     <div className="loginContainer">
       <Header />
@@ -19,12 +23,15 @@ function Login() {
             <button type="submit" id="loginButton">로그인</button>
             <div>
               <span>아직 회원이 아니시라면?</span>
-              <button id="signUpButton">회원가입</button>
+              <Link id="moveToSignUp" onClick={openSignUp}>회원가입</Link>
             </div>
           </form>
         </div>
       </div>
       <Footer />
+      {openSignUpModal && (
+        <SignUp setOpenSignUpModal={setOpenSignUpModal} />
+      )}
     </div>
   );
 }
