@@ -1,12 +1,21 @@
-.contentContainer {
-  margin-top: 10vh;
-  padding: 2vw;
-  background-color: rgba(255, 255, 255, 0.5);
+.modalContainer {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .modalDiv {
     width: 1000px;
     height: 800px;
     border-radius: 20px;
-    .contentHeader {
+    .modalHeader {
       height: 80px;
       background-color: rgba(0, 0, 0, 0.5);
       display: flex;
@@ -16,14 +25,14 @@
       font-weight: 900;
     }
     background-color: white;
-    .contentBody {
+    .modalContent {
       height: 670px;
       background-color: rgba(0, 0, 0, 0.4);
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       overflow: auto;
-      .contentCard {
+      .modalCard {
         width: 400px;
         height: 400px;
         margin: 30px;
@@ -34,7 +43,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        .contentImage {
+        .modalImage {
           width: 320px;
           height: 240px;
           padding: 15px;
