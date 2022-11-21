@@ -28,6 +28,12 @@
   width: 0; height: 0;
   text-indent: -9999px;
 }
+@mixin noDrag {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .footer {
   width: 100%; height: 28%;
   background-color: #000;
@@ -38,7 +44,8 @@
   color:#fff;
   transition: all 0.5s;
   @include font;
-  
+  @include noDrag;
+
   h1 {@include hidden;}
   .footerButton{
     span {
@@ -59,6 +66,7 @@
         margin-bottom:2vw;
       }
     }
+    .footerClose {display:none;}
   }
   .footerLogo {
     display:block;
@@ -83,19 +91,23 @@
       }
       li:nth-child(1) {
         content:"";
-        background:url("../../img/footer_facebook.png") no-repeat 0 0;
+        background:url("../../img/common/footer_facebook.png") no-repeat 0 0;
+        background:url("../../img/common/footer_facebook.png") no-repeat 0 0;
       }
       li:nth-child(2) {
         content:"";
-        background:url("../../img/footer_youtube.png") no-repeat 0 0;
+        background:url("../../img/common/footer_youtube.png") no-repeat 0 0;
+        background:url("../../img/common/footer_youtube.png") no-repeat 0 0;
       }
       li:nth-child(3) {
         content:"";
-        background:url("../../img/footer_instagram.png") no-repeat 0 0;
+        background:url("../../img/common/footer_instagram.png") no-repeat 0 0;
+        background:url("../../img/common/footer_instagram.png") no-repeat 0 0;
       }
       li:nth-child(4) {
         content:"";
-        background:url("../../img/footer_twitter.png") no-repeat 0 0;
+        background:url("../../img/common/footer_twitter.png") no-repeat 0 0;
+        background:url("../../img/common/footer_twitter.png") no-repeat 0 0;
       }
       li:nth-child(1):hover img {opacity: 1;}
       li:nth-child(2):hover img {opacity: 1;}
