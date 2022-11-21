@@ -11,6 +11,7 @@ const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentWidth, setContentWidth] = useState("0%");
   const [divDisplay, setDivDisplay] = useState("hidden");
+  const [selectedCountry, setSelectedCountry] = useState("")
   const [starBg, setStarBg] = useState("true");
 
   /* Chart code */
@@ -60,7 +61,7 @@ const GlobeMap = () => {
     // polygonSeries.mapPolygons.template.states.create("hover", {
     //   fill: "skyblue",
     // });
-
+    
     polygonSeries.mapPolygons.template.states.create("active", {
       fill: "blue",
     });
@@ -83,7 +84,7 @@ const GlobeMap = () => {
     let previousPolygon;
 
     polygonSeries.mapPolygons.template.on("active", function (active, target) {
-      if (previousPolygon && previousPolygon != target.dataItem) {
+      if (previousPolygon && previousPolygon !== target.dataItem) {
         previousPolygon.set("active", false);
         unSelectCountry(target.dataItem.get("id"));
       }
@@ -96,17 +97,13 @@ const GlobeMap = () => {
     function selectCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
-      console.log(dataItem);
+      console.log(dataItem)
+      setSelectedCountry(dataItem.dataContext.name);
+      // setSelectedCountry(target);
       setTimeout(() => {
-        if (id === "RU" || id === "CA" || id === "CN" || id === "AQ") {
-          chart.zoomToGeoPoint(target.geoCentroid(), 3, target.geoCentroid());
-        } else {
-          polygonSeries.zoomToDataItem(dataItem);
-        }
+          //타겟의 중심 포인트에 
+          chart.zoomToGeoPoint(target.geoCentroid(), 1.3, target.geoCentroid());
       }, 1500);
-      setTimeout(() => {
-        console.log(test);
-      }, 2200);
       setGlobeWidth("40%");
       setContentWidth("60%");
       setDivDisplay("block");
@@ -133,7 +130,7 @@ const GlobeMap = () => {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
       chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
-      setGlobeWidth("100%");
+      nationDivStyleHandler();
     }
 
     function homeCountry(id) {
@@ -156,6 +153,12 @@ const GlobeMap = () => {
           });
         }
       }
+    }
+  
+    function nationDivStyleHandler(){
+      setGlobeWidth("100%");
+      setContentWidth("0%");
+      setDivDisplay("hidden")
     }
     // Uncomment this to pre-center the globe on a country when it loads
     polygonSeries.events.on("datavalidated", function () {
@@ -240,15 +243,14 @@ const GlobeMap = () => {
   return (
     <div className="globeMap">
       <div
-        style={{ width: `${globeWidth}` }}
+        style={{ width: `${globeWidth}`}}
         id="chartdiv"
         className="chartdiv">
-        <canvas id="stars" onLoad={canvasStar}></canvas>
+        {/* <canvas id="stars" onLoad={canvasStar}></canvas> */}
       </div>
-      <ContentList
-        style={{ width: `${contentWidth}`, display: `${divDisplay}` }}
-        className="nation"
-      />
+      <div className="nationdiv" style={{ width: `${contentWidth}`, display: `${divDisplay}` }}>
+        <ContentList selectedCountry={selectedCountry}/>
+        </div>
     </div>
   );
 };
