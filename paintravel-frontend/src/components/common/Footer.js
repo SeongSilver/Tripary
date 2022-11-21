@@ -1,39 +1,18 @@
 // eslint-disable-next-line
 import React,{useState} from "react";
-import styled from "styled-components";
 import "../../styles/common/footer.scss";
 import { Link } from "react-router-dom";
 
-function Footer(props) {
-  // const [footerBottom, setFooterBottom] = useState("-28%");
-  // const [openDisplay, setOpenDisplay] = useState("flex");
-  // const [closeDisplay, setCloseDisplay] = useState("none");
-  // let footerStyle = {
-  //   bottom : "0"
-  // }
-  // const footerOpenStyle = () => {
+function Footer() {
+  const [footerToggle, setFooterToggle] = useState(false);
+  const footerMenuToggle = () => {
+    setFooterToggle(footerToggle => !footerToggle);
+  }
 
-  //   styled.footer`bottom : -28%;`
-  //   styled.img`display : flex;`
-  //   styled.img`display : none;`
-  // }
-  // const footerCloseStyle = () => {
-  //   styled.footer`bottom : 0;`
-  //   styled.img`display : none;`
-  //   styled.img`display : flex;`
-  // }
-  const Header = () => {
-  
-    const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
-    
-    const toggleMenu = () => {
-      setMenu(isOpen => !isOpen); // on,off 개념 boolean
-    }
-  
   return (
-    <footer className={isOpen ? "show-menu" : "hide-menu"}>
+    <footer className={footerToggle ? "footerOpen" : "footerClose"}>
       <h1>하단메뉴</h1>
-      <div className="footerButton">
+      <div className="footerButton" onClick={()=>footerMenuToggle()}>
         <span className="footerOpenBtn">
           <img
             src={require("../../img/common/arrow_up.png")}
