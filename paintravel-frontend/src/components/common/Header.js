@@ -16,8 +16,8 @@ function Header() {
           </Link>
         </div>
         <div className="headerRight">
-          <Link to="/postWrite" className="headLink">
-            글쓰기
+          <Link to="/mypage" className="headLink">
+            my page
           </Link>
           <Link to="/Login" className="headLink">
             sign in

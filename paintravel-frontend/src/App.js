@@ -17,10 +17,10 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/mypage" element={<MyPagePage />} />
       <Route path="/post" element={<PostPage />} />
+      <Route path="/postwrite" element={<PostWritePage />} />
       <Route path="/shareboard" element={<ShareBoardPage />} />
       <Route path="/*" element={<NotFound />} />
       <Route path="/none" element={<None />} />
-      <Route path="/postwrite" element={<PostWritePage />} />
     </Routes>
   );
 }
