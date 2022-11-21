@@ -10,7 +10,7 @@ function ContentList() {
     <div className="contentContainer">
       <div className="contentHeader">
         <div>한국</div>
-        <div><Link to="/postwrite" style={{color:'white'}}>Post</Link></div>
+        <div><Link to="/postwrite">Post</Link></div>
       </div>
       <div className="contentBody">
         <div className="contentCard">
