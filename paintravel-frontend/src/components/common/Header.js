@@ -16,8 +16,8 @@ function Header() {
           </Link>
         </div>
         <div className="headerRight">
-          <Link to="/mypage" className="headLink">
-            my page
+          <Link to="/shareboard" className="headLink">
+            community
           </Link>
           <Link to="/Login" className="headLink">
             sign in
