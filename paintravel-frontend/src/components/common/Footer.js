@@ -25,45 +25,45 @@ function Footer() {
       <div className="footerButton">
         <span>
           <img
-            src={require("../../img/arrow_up.png")}
+            src={require("../../img/common/arrow_up.png")}
             alt="하단메뉴 열기 버튼"
           />
         </span>
         <span>
           <img
-            src={require("../../img/arrow_down.png")}
+            src={require("../../img/common/arrow_down.png")}
             alt="하단메뉴 닫기 버튼"
           />
         </span>
       </div>
       <img
         className="footerLogo"
-        src={require("../../img/footer_logo.png")}
+        src={require("../../img/common/footer_logo.png")}
         alt="logo"
       />
       <div className="footerMenu">
         <ul className="sns">
           <li>
             <img
-              src={require("../../img/footer_facebook_hover.png")}
+              src={require("../../img/common/footer_facebook_hover.png")}
               alt="facebook icon"
             />
           </li>
           <li>
             <img
-              src={require("../../img/footer_youtube_hover.png")}
+              src={require("../../img/common/footer_youtube_hover.png")}
               alt="youtube icon"
             />
           </li>
           <li>
             <img
-              src={require("../../img/footer_instagram_hover.png")}
+              src={require("../../img/common/footer_instagram_hover.png")}
               alt="instagram icon"
             />
           </li>
           <li>
             <img
-              src={require("../../img/footer_twitter_hover.png")}
+              src={require("../../img/common/footer_twitter_hover.png")}
               alt="twitter icon"
             />
           </li>
