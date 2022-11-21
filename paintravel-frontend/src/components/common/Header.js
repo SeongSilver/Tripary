@@ -16,8 +16,8 @@ function Header() {
           </Link>
         </div>
         <div className="headerRight">
-          <Link to="/shareboard" className="headLink">
-            community
+          <Link to="/postWrite" className="headLink">
+            글쓰기
           </Link>
           <Link to="/Login" className="headLink">
             sign in
