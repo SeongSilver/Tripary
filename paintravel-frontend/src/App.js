@@ -1,12 +1,13 @@
-import { Routes, Route } from "react-router";
-import MyPagePage from "./pages/MyPagePage";
-import PostPage from "./pages/PostPage";
-import ShareBoardPage from "./pages/ShareBoardPage";
-import Login from "./components/Login/Login";
-import None from "./pages/None";
-import NotFound from "./NotFound";
-import MapPage from "./pages/MapPage";
-import "./App.css";
+/* eslint-disable */
+import { Routes, Route } from 'react-router';
+import MyPagePage from './pages/MyPagePage';
+import PostPage from './pages/PostPage';
+import ShareBoardPage from './pages/ShareBoardPage';
+import Login from './components/Login/Login';
+import None from './pages/None';
+import NotFound from './NotFound';
+import MapPage from './pages/MapPage';
+import './App.css';
 
 function App() {
   return (

@@ -1,0 +1,76 @@
+.modalContainer {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .modalDiv {
+    width: 1000px;
+    height: 800px;
+    border-radius: 20px;
+    .modalHeader {
+      height: 80px;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+    background-color: white;
+    .modalContent {
+      height: 670px;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      overflow: auto;
+      .modalCard {
+        width: 400px;
+        height: 400px;
+        margin: 30px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .modalImage {
+          width: 320px;
+          height: 240px;
+          padding: 15px;
+          background-color: rgba(0, 0, 255, 0.5);
+        }
+        .cardcontent1 {
+          font-size: 1.6rem;
+          font-weight: 800;
+        }
+        hr {
+          margin: 15px 0px;
+        }
+      }
+    }
+    .modalFooter {
+      height: 50px;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: right;
+      align-items: center;
+      button {
+        width: 80px;
+        height: 40px;
+        border-radius: 10px;
+        border: none;
+        margin-right: 50px;
+      }
+    }
+  }
+}

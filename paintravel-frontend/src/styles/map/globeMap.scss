@@ -16,17 +16,23 @@ svg {
   font-family: sans-serif;
   text-align: center;
 }
-
-.chartdiv {
-  display: block;
-  width: 100%;
-  height: 80vh;
-  background:transparent;
-  opacity: 0.9;
-  padding-top:10vh;
+.globeMap {
+  display: flex;
+  flex-direction: row;
+  .chartdiv {
+    display: block;
+    height: 80vh;
+    background: transparent;
+    opacity: 0.9;
+    padding-top: 10vh;
+  }
 }
+
 #stars {
-  width: 100%; height: 100vh;
-  position:absolute; left: 0; top: 0;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
   background: #000;
 }
