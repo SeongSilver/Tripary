@@ -1,35 +1,46 @@
 // eslint-disable-next-line
-import React from "react";
+import React,{useState} from "react";
+import styled from "styled-components";
 import "../../styles/common/footer.scss";
 import { Link } from "react-router-dom";
 
-function Footer() {
-  // let footer = document.querySelector('.footer');
-  // let footerButton = document.querySelector('.footerButton');
-  // footerButton.lastChild.style.display = 'none';
-  // // footer 열기
-  // footerButton.firstChild.addEventListener('click', function (event) {
-  //   footer.style.bottom = '0';
-  //   event.target.style.display = 'none';
-  //   footerButton.lastChild.style.display = 'flex';
-  // });
-  // // footer 닫기
-  // footerButton.lastChild.addEventListener('click', function (event) {
-  //   footer.style.bottom = '-28%';
-  //   event.target.style.display = 'none';
-  //   footerButton.firstChild.style.display = 'flex';
-  // });
+function Footer(props) {
+  // const [footerBottom, setFooterBottom] = useState("-28%");
+  // const [openDisplay, setOpenDisplay] = useState("flex");
+  // const [closeDisplay, setCloseDisplay] = useState("none");
+  // let footerStyle = {
+  //   bottom : "0"
+  // }
+  // const footerOpenStyle = () => {
+
+  //   styled.footer`bottom : -28%;`
+  //   styled.img`display : flex;`
+  //   styled.img`display : none;`
+  // }
+  // const footerCloseStyle = () => {
+  //   styled.footer`bottom : 0;`
+  //   styled.img`display : none;`
+  //   styled.img`display : flex;`
+  // }
+  const Header = () => {
+  
+    const [isOpen, setMenu] = useState(false);  // 메뉴의 초기값을 false로 설정
+    
+    const toggleMenu = () => {
+      setMenu(isOpen => !isOpen); // on,off 개념 boolean
+    }
+  
   return (
-    <div className="footer">
+    <footer className={isOpen ? "show-menu" : "hide-menu"}>
       <h1>하단메뉴</h1>
       <div className="footerButton">
-        <span>
+        <span className="footerOpenBtn">
           <img
             src={require("../../img/common/arrow_up.png")}
             alt="하단메뉴 열기 버튼"
           />
         </span>
-        <span>
+        <span className="footerCloseBtn">
           <img
             src={require("../../img/common/arrow_down.png")}
             alt="하단메뉴 닫기 버튼"
@@ -82,7 +93,7 @@ function Footer() {
         <address>얼굴도 귀엽군 만지면 더귀여우리 (03048)</address>
         <p>Copyright ⓒ PAINTRAVEL. All rights reserved</p>
       </div>
-    </div>
+    </footer>
   );
 }
 

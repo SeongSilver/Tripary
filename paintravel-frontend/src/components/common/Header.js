@@ -5,7 +5,7 @@ import logo from "../../img/common/logo.png";
 
 function Header() {
   return (
-    <div className="header">
+    <header className="header">
       <div className="headerWrapper">
         <div className="skipNav">
           <Link to="/">본문바로가기</Link>
@@ -24,7 +24,7 @@ function Header() {
           </Link>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
 

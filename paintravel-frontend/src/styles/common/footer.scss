@@ -147,3 +147,13 @@
     }
   }
 }
+.footerOpen {
+  bottom : 0 !important;
+  .footerOpenBtn {display:none !important;}
+  .footerCloseBtn {display:flex !important;}
+}
+.footerClose {
+  bottom : -28%;
+  .footerOpenBtn {display:flex !important;}
+  .footerCloseBtn {display:none !important;}
+}
