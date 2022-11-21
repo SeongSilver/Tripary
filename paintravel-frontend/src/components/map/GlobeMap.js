@@ -11,6 +11,7 @@ const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentWidth, setContentWidth] = useState("0%");
   const [divDisplay, setDivDisplay] = useState("hidden");
+  const [starBg, setStarBg] = useState("true");
 
   /* Chart code */
   // Create root element
@@ -168,8 +169,9 @@ const GlobeMap = () => {
       root.dispose();
     };
   }, []);
+
   // 별 내리는 함수
-  function canvasStar() {
+  const canvasStar = () =>  {
     var canvas = document.getElementById("stars");
     var ctx = canvas.getContext("2d");
 
@@ -180,9 +182,9 @@ const GlobeMap = () => {
 
     var starsA = stars("#fff", 0.5);
     var starsB = stars("#fff", 0.7);
-
+    setStarBg = 0;
     // 별 생성
-    function stars(color, radius) {
+    const stars = (color, radius) =>  {
       var starsArr = [];
 
       for (var i = 0; i < starsLength; i++) {
@@ -197,7 +199,7 @@ const GlobeMap = () => {
       return starsArr;
     }
     // 별 떨어지는 동작
-    function update(starsArr) {
+    const update = (starsArr) => {
       for (var i = 0; i < starsArr.length; i++) {
         ctx.beginPath();
         starsArr[i].x += starsArr[i].radius * 0.1;
@@ -222,7 +224,7 @@ const GlobeMap = () => {
     }
 
     // 별 떨어지는 동작 실행
-    function render() {
+    const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       update(starsA);
       update(starsB);
@@ -231,7 +233,7 @@ const GlobeMap = () => {
     requestAnimationFrame(render);
 
     // 난수
-    function getRandomArbitrary(min, max) {
+    const getRandomArbitrary = (min, max) => {
       return Math.random() * (max - min) + min;
     }
   }
@@ -240,9 +242,8 @@ const GlobeMap = () => {
       <div
         style={{ width: `${globeWidth}` }}
         id="chartdiv"
-        className="chartdiv"
-        onLoad={canvasStar}>
-        <canvas id="stars"></canvas>
+        className="chartdiv">
+        <canvas id="stars" onLoad={canvasStar}></canvas>
       </div>
       <ContentList
         style={{ width: `${contentWidth}`, display: `${divDisplay}` }}

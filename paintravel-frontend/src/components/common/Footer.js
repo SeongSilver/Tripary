@@ -4,15 +4,15 @@ import "../../styles/common/footer.scss";
 import { Link } from "react-router-dom";
 
 function Footer() {
-  const [isOpen, setFooterToggle] = useState(false);
-  const footerToggle = () => {
-    setFooterToggle(isOpen => !isOpen);
+  const [footerToggle, setFooterToggle] = useState(false);
+  const footerMenuToggle = () => {
+    setFooterToggle(footerToggle => !footerToggle);
   }
 
   return (
-    <footer className={isOpen ? "footerOpen" : "footerClose"}>
+    <footer className={footerToggle ? "footerOpen" : "footerClose"}>
       <h1>하단메뉴</h1>
-      <div className="footerButton" onClick={()=>footerToggle()}>
+      <div className="footerButton" onClick={()=>footerMenuToggle()}>
         <span className="footerOpenBtn">
           <img
             src={require("../../img/common/arrow_up.png")}
