@@ -15,10 +15,8 @@ function App() {
       <Route path="/" element={<MapPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/mypage" element={<MyPagePage />} />
-      <Route path="/post" element={<PostPage />} />
       <Route path="/postwrite" element={<PostWritePage />} />
       <Route path="/*" element={<NotFound />} />
-      <Route path="/none" element={<None />} />
     </Routes>
   );
 }
