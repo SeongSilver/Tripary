@@ -5,7 +5,7 @@ import "../../styles/login/signUp.scss";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
-function SignUp(setOpenSignUpModal) {
+function SignUp({setOpenSignUpModal}) {
   //아이디, 비밀번호, 이메일, 닉네임
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
@@ -13,33 +13,19 @@ function SignUp(setOpenSignUpModal) {
   const [email, setEmail] = useState('');
   const [nickName, setNickName] = useState('');
 
-  //오류메세지 
-  const [userIdMessage, setUserIdMessage] = useState('');
-  const [passwordMessage, setPasswordMessage] = useState('');
-  const [ConfirmPasswordMessage, setConfirmPasswordMessage] = useState('');
-  const [emailMessage, setEmailMessage] = useState('');
-  const [nickNameMessage, setNickNameMessage] = useState('');
+  // //오류메세지 
+  // const [userIdMessage, setUserIdMessage] = useState('');
+  // const [passwordMessage, setPasswordMessage] = useState('');
+  // const [ConfirmPasswordMessage, setConfirmPasswordMessage] = useState('');
+  // const [emailMessage, setEmailMessage] = useState('');
+  // const [nickNameMessage, setNickNameMessage] = useState('');
 
-  //유효성 검사
-  const [isUserId, setIsUserId] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
-  const [isConfirmPassword, setIsConfirmPassword] = useState(false);
-  const [isEmail, setIsEmail] = useState(false);
-  const [isNickName, setIsNickName] = useState(false);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    try{
-      axios.post('액션이름', {
-        userid : userId,
-        password: password,
-        email: email,
-        nickName: nickName,
-      })
-    }catch(e){
-      console.log(e)
-    }
-  } 
+  // //유효성 검사
+  // const [isUserId, setIsUserId] = useState(false);
+  // const [isPassword, setIsPassword] = useState(false);
+  // const [isConfirmPassword, setIsConfirmPassword] = useState(false);
+  // const [isEmail, setIsEmail] = useState(false);
+  // const [isNickName, setIsNickName] = useState(false);
 
   const closeSignUp = () => {
     setOpenSignUpModal(false);
@@ -57,19 +43,19 @@ function SignUp(setOpenSignUpModal) {
             <div>
               <p>아이디/비밀번호</p>
               <input type="text" placeholder="아이디" value={userId}/>
-              <button class="doubleCheckBtn">중복 확인</button>
+              <button className="doubleCheckBtn">중복 확인</button>
               <input type="password" placeholder="비밀번호" value={password}/>
               <input type="password" placeholder="비밀번호 확인" value={ConfirmPassword}/>
             </div>
             <div>
               <p>이메일</p>
               <input type="text" placeholder="이메일을 입력하세요" value={email}/>
-              <button class="doubleCheckBtn">중복 확인</button>
+              <button className="doubleCheckBtn">중복 확인</button>
             </div>
             <div>
               <p>닉네임</p>
               <input type="text" placeholder="닉네임을 입력하세요" value={nickName}/>
-              <button class="doubleCheckBtn">중복 확인</button>
+              <button className="doubleCheckBtn">중복 확인</button>
             </div>
             <button type="submit" id="signUpButton">
               가입하기
