@@ -48,7 +48,7 @@ function Login() {
             </button>
             <div>
               <span>아직 회원이 아니시라면?</span>
-              <Link id="moveToSignUp" onClick={openSignUp}>
+              <Link to="#" id="moveToSignUp" onClick={openSignUp}>
                 회원가입
               </Link>
             </div>

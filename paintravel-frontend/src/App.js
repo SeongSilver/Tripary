@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router';
 import MyPagePage from './pages/MyPagePage';
 import PostPage from './pages/PostPage';
 import Login from './components/Login/Login';
-import None from './pages/None';
 import NotFound from './NotFound';
 import MapPage from './pages/MapPage';
 import PostWritePage from './pages/PostWritePage';
@@ -18,7 +17,6 @@ function App() {
       <Route path="/post" element={<PostPage />} />
       <Route path="/postwrite" element={<PostWritePage />} />
       <Route path="/*" element={<NotFound />} />
-      <Route path="/none" element={<None />} />
     </Routes>
   );
 }
