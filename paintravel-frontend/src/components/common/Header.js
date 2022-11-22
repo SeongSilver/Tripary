@@ -51,7 +51,7 @@ function Header() {
           <Link to="/mypage" className="headLink">
             my page
           </Link>
-          {isLogined ? (<span className="headLink" onClick={onClickHandler}>Log out</span>) : (<Link to="/Login" className="headLink">
+          {isLogined ? (<span className="headLink" onClick={onClickHandler}>Logout</span>) : (<Link to="/Login" className="headLink">
             sign in
           </Link>)}
         </div>
