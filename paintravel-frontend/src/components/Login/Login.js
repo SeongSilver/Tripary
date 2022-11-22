@@ -4,10 +4,14 @@ import Footer from "../common/Footer";
 import SignUp from "../Login/SignUp";
 import "../../styles/login/login.scss";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../_actions/user_actions'
 
 function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState({userId:'', password:'',});
-  const {userId, password} = inputValue;
   const [openSignUpModal, setOpenSignUpModal] = useState(false);
 
   const handleInput = event => {
@@ -16,6 +20,21 @@ function Login() {
       ...inputValue,
       [name]:value,
     })
+  }
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+
+    let body = inputValue;
+
+    dispatch(loginUser(body))
+      .then(response => {
+        if(response.payload.loginSuccess) {
+          navigate('/')
+        }else {
+          alert('로그인 실패! 다시 시도하세요')
+        }
+      })
+    
   }
   // if(userId === null || userId ===""){
   //   alert('아이디를 잘못 입력하였습니다.');
@@ -38,7 +57,7 @@ function Login() {
             Welcome to <br />
             <span>PAINTRAVEL.</span>
           </h1>
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <div>
               <input type="text" placeholder="아이디" name="userId" onChange={handleInput} required/>
               <input type="password" placeholder="비밀번호" name="password" onChange={handleInput} required/>
