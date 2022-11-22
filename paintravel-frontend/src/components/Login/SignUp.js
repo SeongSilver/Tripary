@@ -64,6 +64,7 @@ function SignUp({setOpenSignUpModal}){
           <form onSubmit={onSubmitHandler}>
             <div>
               <p>아이디/비밀번호</p>
+
               <input type="text" placeholder="아이디" name = 'userId' onChange={onChange}/>
               <button type="button" className="doubleCheckBtn">중복 확인</button>
               <input type="password" placeholder="비밀번호" name = 'password' onChange={onChange}/>
