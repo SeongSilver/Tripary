@@ -1,5 +1,6 @@
 import '../../styles/post/contentList.scss';
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
+
 
 function ContentList({selectedCountry}) {
   return (
