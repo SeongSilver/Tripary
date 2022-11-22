@@ -1,13 +1,13 @@
 import React from "react";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
-import Post from "../components/post/Post";
+import PostWrite from "../components/post/PostWrite";
 
 function PostWritePage() {
     return (
       <>
         <Header />
-        <Post />
+        <PostWrite />
         <Footer />
       </>
     );
