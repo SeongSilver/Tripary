@@ -11,7 +11,8 @@ const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentWidth, setContentWidth] = useState("0%");
   const [divDisplay, setDivDisplay] = useState("hidden");
-  const [selectedCountry, setSelectedCountry] = useState("")
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [nationCode, setNationCode] = useState('');
   const [starBg, setStarBg] = useState("true");
 
   /* Chart code */
@@ -98,7 +99,9 @@ const GlobeMap = () => {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
       console.log(dataItem)
+      setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
+      console.log(nationCode);
       // setSelectedCountry(target);
       setTimeout(() => {
           //타겟의 중심 포인트에 
@@ -249,7 +252,7 @@ const GlobeMap = () => {
         {/* <canvas id="stars" onLoad={canvasStar}></canvas> */}
       </div>
       <div className="nationdiv" style={{ width: `${contentWidth}`, display: `${divDisplay}` }}>
-        <ContentList selectedCountry={selectedCountry}/>
+        <ContentList selectedCountry={selectedCountry} nationCode={nationCode}/>
         </div>
     </div>
   );
