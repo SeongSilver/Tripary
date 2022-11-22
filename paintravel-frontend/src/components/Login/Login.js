@@ -6,10 +6,29 @@ import "../../styles/login/login.scss";
 import { Link } from "react-router-dom";
 
 function Login() {
+  const [inputValue, setInputValue] = useState({userId:'', password:'',});
+  const {userId, password} = inputValue;
   const [openSignUpModal, setOpenSignUpModal] = useState(false);
+
+  const handleInput = event => {
+    const {name, value} = event.target;
+    setInputValue({
+      ...inputValue,
+      [name]:value,
+    })
+  }
+  // if(userId === null || userId ===""){
+  //   alert('아이디를 잘못 입력하였습니다.');
+  //   return;
+  // }
+  // if(password === null || password ===""){
+  //   alert('비밀번호를 잘못 입력하였습니다.');
+  //   return;
+  // }
   const openSignUp = () => {
     setOpenSignUpModal(true);
   };
+  
   return (
     <div className="loginContainer">
       <Header />
@@ -21,10 +40,9 @@ function Login() {
           </h1>
           <form>
             <div>
-              <input type="text" placeholder="아이디" />
-              <input type="password" placeholder="비밀번호" />
+              <input type="text" placeholder="아이디" name="userId" onChange={handleInput} required/>
+              <input type="password" placeholder="비밀번호" name="password" onChange={handleInput} required/>
             </div>
-            <p>아이디 또는 비밀번호를 다시 확인하세요.</p>
             <button type="submit" id="loginButton">
               로그인
             </button>

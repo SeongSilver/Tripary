@@ -19,12 +19,18 @@ svg {
 .globeMap {
   display: flex;
   flex-direction: row;
+  transition:0.5s;
   .chartdiv {
     display: block;
     height: 80vh;
     background: transparent;
     opacity: 0.9;
     padding-top: 10vh;
+    transition:1s ease-in-out;
+  }
+  .nationdiv{
+    width:100%;
+    transition:1s ease-in-out;
   }
 }
 
