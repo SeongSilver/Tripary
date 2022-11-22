@@ -52,6 +52,7 @@ function SignUp({setOpenSignUpModal}){
   }
 
 
+  
   return (
     <div className="signUpContainer">
       <Header />
@@ -64,20 +65,20 @@ function SignUp({setOpenSignUpModal}){
           <form onSubmit={onSubmitHandler}>
             <div>
               <p>아이디/비밀번호</p>
-              <input type="text" placeholder="아이디" value={userId}/>
-              <button class="doubleCheckBtn">중복 확인</button>
-              <input type="password" placeholder="비밀번호" value={password}/>
-              <input type="password" placeholder="비밀번호 확인" value={ConfirmPassword}/>
+              <input type="text" placeholder="아이디" name = 'userId' onChange={onChange} required/>
+              <button type="button" className="doubleCheckBtn">중복 확인</button>
+              <input type="password" placeholder="비밀번호" name = 'password' onChange={onChange}/>
+              <input type="password" placeholder="비밀번호 확인" name = 'passwordConfrim' onChange={onChange}/>
             </div>
             <div>
               <p>이메일</p>
-              <input type="text" placeholder="이메일을 입력하세요" value={email}/>
-              <button class="doubleCheckBtn">중복 확인</button>
+              <input type="email" placeholder="이메일을 입력하세요" name = 'email' onChange={onChange}/>
+              <button type="button" className="doubleCheckBtn">중복 확인</button>
             </div>
             <div>
               <p>닉네임</p>
-              <input type="text" placeholder="닉네임을 입력하세요" value={nickName}/>
-              <button class="doubleCheckBtn">중복 확인</button>
+              <input type="text" placeholder="닉네임을 입력하세요" name = 'nickName' onChange={onChange}/>
+              <button type="button" className="doubleCheckBtn">중복 확인</button>
             </div>
             <button type="submit" id="signUpButton">
               가입하기

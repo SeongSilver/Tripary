@@ -38,6 +38,7 @@ function Post() {
       [post.files]:imageUrlLists
     })
     setUploadImages(imageUrlLists);
+    console.log(imageUrlLists);
   }
 
   const deleteImage = (id) => {
