@@ -1,6 +1,6 @@
 import React , {useState, } from "react";
-import "../../styles/post/postWrite.scss";
 import {useNavigate} from 'react-router-dom';
+import "../../styles/post/postWrite.scss";
 
 function Post() {
   const [post, setPost] = useState({
@@ -66,7 +66,7 @@ function Post() {
           <input type="file" multiple={true} id="galleryUpload" onChange={onLoadFile} accept="image/jpg,image/png,image/jpeg,image/gif"/>
           <div className="galleryContainer">
             {uploadImages.map((image, id) => (
-              <div key={id} style={{width:'100px', height:'75px', display:'block'}}>
+              <div className="" key={id} style={{width:'100px', height:'75px', display:'block'}}>
                 <img src={image} alt={`${image} - ${id}`}/>
                 <span onClick={deleteImage} >X</span>
               </div>
