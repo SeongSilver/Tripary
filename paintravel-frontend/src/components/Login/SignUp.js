@@ -34,7 +34,7 @@ function SignUp(setOpenSignUpModal) {
         userid : userId,
         password: password,
         email: email,
-        nickname: nickname,
+        nickName: nickName,
       })
     }catch(e){
       console.log(e)
