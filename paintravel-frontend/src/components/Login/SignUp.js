@@ -52,6 +52,7 @@ function SignUp({setOpenSignUpModal}){
   }
 
 
+  
   return (
     <div className="signUpContainer">
       <Header />
@@ -64,15 +65,19 @@ function SignUp({setOpenSignUpModal}){
           <form onSubmit={onSubmitHandler}>
             <div>
               <p>아이디/비밀번호</p>
+<<<<<<< HEAD
+              <input type="text" placeholder="아이디" name = 'userId' onChange={onChange} required/>
+=======
 
               <input type="text" placeholder="아이디" name = 'userId' onChange={onChange}/>
+>>>>>>> 6a66907108cc7b7ca0adf9fabb448b27514159d3
               <button type="button" className="doubleCheckBtn">중복 확인</button>
               <input type="password" placeholder="비밀번호" name = 'password' onChange={onChange}/>
               <input type="password" placeholder="비밀번호 확인" name = 'passwordConfrim' onChange={onChange}/>
             </div>
             <div>
               <p>이메일</p>
-              <input type="text" placeholder="이메일을 입력하세요" name = 'email' onChange={onChange}/>
+              <input type="email" placeholder="이메일을 입력하세요" name = 'email' onChange={onChange}/>
               <button type="button" className="doubleCheckBtn">중복 확인</button>
             </div>
             <div>

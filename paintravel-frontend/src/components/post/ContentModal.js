@@ -1,12 +1,9 @@
 import '../../styles/post/contentModal.scss';
 
-function ContentModal({ test, setModalOpen, setTest }) {
+function ContentModal({ setContentModal, cityName }) {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
   const closeModal = () => {
-    setModalOpen(false);
-    console.log('여기는되는거니?');
-    setTest(!test);
-    console.log(test);
+    setContentModal(false);
   };
 
   return (
@@ -14,47 +11,10 @@ function ContentModal({ test, setModalOpen, setTest }) {
     // eslint-disable-next-line react/jsx-filename-extension
     <div className="modalContainer">
       <div className="modalDiv">
-        <div className="modalHeader">한국</div>
-        <div className="modalContent">
-          <div className="modalCard">
-            <div className="modalImage">이미지</div>
-            <div className="cardcontent1">서울</div>
-            <hr />
-            <div className="cardcontent2">글 1</div>
-          </div>
-          <div className="modalCard">
-            <div className="modalImage">이미지</div>
-            <hr />
-            <div className="cardcontent1">강화</div>
-            <div className="cardcontent2">글 1</div>
-          </div>
-          <div className="modalCard">
-            <div className="modalImage">이미지</div>
-            <hr />
-            <div className="cardcontent1">속초</div>
-            <div className="cardcontent2">글 1</div>
-          </div>
-          <div className="modalCard">
-            <div className="modalImage">이미지</div>
-            <hr />
-            <div className="cardcontent1">글 1</div>
-            <div className="cardcontent2">글 1</div>
-          </div>
-          <div className="modalCard">
-            <div className="modalImage">이미지</div>
-            <hr />
-            <div className="cardcontent1">글 1</div>
-            <div className="cardcontent2">글 1</div>
-          </div>
-          <div className="modalCard">
-            <div className="modalImage">이미지</div>
-            <hr />
-            <div className="cardcontent1">글 1</div>
-            <div className="cardcontent2">글 1</div>
-          </div>
-        </div>
+        <div className="modalHeader">{cityName}<span onClick={closeModal}>x</span></div>
+        <div className="modalBody"></div>
         <div className="modalFooter">
-          <button onClick={closeModal}>x</button>
+          
         </div>
       </div>
     </div>
