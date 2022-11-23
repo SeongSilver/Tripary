@@ -160,7 +160,7 @@ function SignUp({setOpenSignUpModal}){
               </div>
               <div className="formBox">
               <input type="password" placeholder="비밀번호 확인" name = 'passwordConfrim' onChange={onChangePasswordConfirm}/>
-              </div> 
+              </div>
             </div>
             <div>
               <p>이메일</p>
