@@ -20,7 +20,7 @@ function ContentList({selectedCountry}) {
     <div className="contentContainer">
       <div className="contentHeader">
         <div className="selectedCountry">{selectedCountry}</div>
-        <div className="postButton"><Link to="/postwrite"><span>+</span></Link></div>
+        <div className="postButton"><Link to="/postwrite" state={{ selectedCountry: selectedCountry }}><span>+</span></Link></div>
       </div>
       <div className="contentBody">
         <div className="contentCard">

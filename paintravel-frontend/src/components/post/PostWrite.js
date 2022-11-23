@@ -1,14 +1,21 @@
 import React , {useState, } from "react";
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
+import { useSelector } from "react-redux";
 import "../../styles/post/postWrite.scss";
 
-function Post() {
+function Postwrite() {
+  const location = useLocation();
+  //[성은] 지구본에서 선택된 나라 이름 (22.11.23  20:32)
+  const selectedCountry = location.state.selectedCountry;
   const [post, setPost] = useState({
+    title:'',
+    country:'',
     location:'',
     fromDate:'',
     toDate:'',
     content:'',
     files:'',
+    writer:'',
   });
   const [uploadImages, setUploadImages] = useState([]);
   const navigate = useNavigate();
@@ -21,36 +28,36 @@ function Post() {
   }
   const onLoadFile = (e) => {
     const files = e.target.files;
+    //업로드한 파일을 미리보기로 보여주기 위한 과정
     if(files.length>4){
       e.preventDefault();
       alert("이미지 개수는 4개를 넘을 수 없습니다!");
       return;
     }
-    let imageUrlLists = [...post.files];
-
+    //1. post 객체에 files 정보 담아주기
+    setPost({
+      ...post,
+      [e.target.name]:files
+    })
+    //2. 썸네일 생성을 위한 과정
+    let imageUrlLists = [];
     for (let i = 0; i < files.length; i++) {
       const currentImageUrl = URL.createObjectURL(files[i]);
       imageUrlLists.push(currentImageUrl);
     }
-
-    setPost({
-      ...post,
-      [post.files]:imageUrlLists
-    })
     setUploadImages(imageUrlLists);
-    console.log(imageUrlLists);
   }
 
   const deleteImage = (id) => {
     setPost({
       ...post,
-      [post.files]:post.files.filter((index) => index !== id)
+      [post.filesthumnails]:post.thumnails.filter((index) => index !== id)
     })
   }
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(post);
+    console.log("서브밋이여")
   }
 
   const goMain = () => {
@@ -59,12 +66,12 @@ function Post() {
   return (
   <div className="postWriteContainer">
     <div className="postWrite">
-      <h1>Diary</h1>
+      <h1>Diary [{selectedCountry}]</h1>
       <form className="postWriteWrap">
         <div className="gallery">
           <h2>Gallery</h2>
           <label htmlFor="galleryUpload">+</label>
-          <input type="file" multiple={true} id="galleryUpload" onChange={onLoadFile} accept="image/jpg,image/png,image/jpeg,image/gif"/>
+          <input type="file" name="file" multiple={true} id="galleryUpload" onChange={onLoadFile} accept="image/jpg,image/png,image/jpeg,image/gif"/>
           <div className="galleryContainer">
             {uploadImages.map((image, id) => (
               <div className="" key={id} style={{width:'100px', height:'75px', display:'block'}}>
@@ -75,6 +82,10 @@ function Post() {
           </div>
         </div>
         <ul>
+          <li>
+            <p>제목</p>
+            <input type="text" name='title' onChange={onChangePost}></input>
+          </li>
           <li>
             <p>위치</p>
             <input type="text" name='location' onChange={onChangePost}></input>
@@ -100,4 +111,4 @@ function Post() {
   )
 }
 
-export default Post;
+export default Postwrite;
