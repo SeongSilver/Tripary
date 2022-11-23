@@ -9,8 +9,8 @@ import ContentList from "../post/ContentList";
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
-  const [contentWidth, setContentWidth] = useState("0%");
-  const [divDisplay, setDivDisplay] = useState("hidden");
+  const [contentPositionRight, setContentPositionRight] = useState("-60vw");
+  const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState('');
   const [starBg, setStarBg] = useState("true");
@@ -108,8 +108,8 @@ const GlobeMap = () => {
           chart.zoomToGeoPoint(target.geoCentroid(), 1.3, target.geoCentroid());
       }, 1500);
       setGlobeWidth("40%");
-      setContentWidth("60%");
-      setDivDisplay("block");
+      setContentPositionRight("0");
+      setContentDisplay("block");
       if (target) {
         let centroid = target.geoCentroid();
         if (centroid) {
@@ -157,11 +157,11 @@ const GlobeMap = () => {
         }
       }
     }
-  
+    //국가 선택 취소 때 css
     function nationDivStyleHandler(){
       setGlobeWidth("100%");
-      setContentWidth("0%");
-      setDivDisplay("hidden")
+      setContentPositionRight("-60vw");
+      setContentDisplay("hidden");
     }
     // Uncomment this to pre-center the globe on a country when it loads
     polygonSeries.events.on("datavalidated", function () {
@@ -176,73 +176,73 @@ const GlobeMap = () => {
     };
   }, []);
 
-  // 별 내리는 함수
-  const canvasStar = () =>  {
-    var canvas = document.getElementById("stars");
-    var ctx = canvas.getContext("2d");
+  // // 별 내리는 함수
+  // const canvasStar = () =>  {
+  //   var canvas = document.getElementById("stars");
+  //   var ctx = canvas.getContext("2d");
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  //   canvas.width = window.innerWidth;
+  //   canvas.height = window.innerHeight;
 
-    var starsLength = getRandomArbitrary(canvas.width / 10, canvas.width / 10);
+  //   var starsLength = getRandomArbitrary(canvas.width / 10, canvas.width / 10);
 
-    var starsA = stars("#fff", 0.5);
-    var starsB = stars("#fff", 0.7);
-    setStarBg = 0;
-    // 별 생성
-    const stars = (color, radius) =>  {
-      var starsArr = [];
+  //   var starsA = stars("#fff", 0.5);
+  //   var starsB = stars("#fff", 0.7);
+  //   setStarBg = 0;
+  //   // 별 생성
+  //   const stars = (color, radius) =>  {
+  //     var starsArr = [];
 
-      for (var i = 0; i < starsLength; i++) {
-        ctx.beginPath();
-        var x = getRandomArbitrary(0, canvas.width);
-        var y = getRandomArbitrary(0, canvas.height);
-        ctx.arc(x, y, radius, 0, 2 * Math.PI);
-        ctx.fillStyle = color;
-        ctx.fill();
-        starsArr.push({ x, y, radius, color });
-      }
-      return starsArr;
-    }
-    // 별 떨어지는 동작
-    const update = (starsArr) => {
-      for (var i = 0; i < starsArr.length; i++) {
-        ctx.beginPath();
-        starsArr[i].x += starsArr[i].radius * 0.1;
-        starsArr[i].y += starsArr[i].radius * 0.1;
-        ctx.arc(
-          starsArr[i].x,
-          starsArr[i].y,
-          starsArr[i].radius,
-          0.3,
-          2 * Math.PI
-        );
-        ctx.fillStyle = starsArr[i].color;
-        ctx.fill();
+  //     for (var i = 0; i < starsLength; i++) {
+  //       ctx.beginPath();
+  //       var x = getRandomArbitrary(0, canvas.width);
+  //       var y = getRandomArbitrary(0, canvas.height);
+  //       ctx.arc(x, y, radius, 0, 2 * Math.PI);
+  //       ctx.fillStyle = color;
+  //       ctx.fill();
+  //       starsArr.push({ x, y, radius, color });
+  //     }
+  //     return starsArr;
+  //   }
+  //   // 별 떨어지는 동작
+  //   const update = (starsArr) => {
+  //     for (var i = 0; i < starsArr.length; i++) {
+  //       ctx.beginPath();
+  //       starsArr[i].x += starsArr[i].radius * 0.1;
+  //       starsArr[i].y += starsArr[i].radius * 0.1;
+  //       ctx.arc(
+  //         starsArr[i].x,
+  //         starsArr[i].y,
+  //         starsArr[i].radius,
+  //         0.3,
+  //         2 * Math.PI
+  //       );
+  //       ctx.fillStyle = starsArr[i].color;
+  //       ctx.fill();
 
-        if (starsArr[i].x > canvas.width) {
-          starsArr[i].x = 0;
-        }
-        if (starsArr[i].y > canvas.height) {
-          starsArr[i].y = 0;
-        }
-      }
-    }
+  //       if (starsArr[i].x > canvas.width) {
+  //         starsArr[i].x = 0;
+  //       }
+  //       if (starsArr[i].y > canvas.height) {
+  //         starsArr[i].y = 0;
+  //       }
+  //     }
+  //   }
 
-    // 별 떨어지는 동작 실행
-    const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      update(starsA);
-      update(starsB);
-      requestAnimationFrame(render);
-    }
-    requestAnimationFrame(render);
+  //   // 별 떨어지는 동작 실행
+  //   const render = () => {
+  //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //     update(starsA);
+  //     update(starsB);
+  //     requestAnimationFrame(render);
+  //   }
+  //   requestAnimationFrame(render);
 
-    // 난수
-    const getRandomArbitrary = (min, max) => {
-      return Math.random() * (max - min) + min;
-    }
-  }
+  //   // 난수
+  //   const getRandomArbitrary = (min, max) => {
+  //     return Math.random() * (max - min) + min;
+  //   }
+  // }
   return (
     <div className="globeMap">
       <div
@@ -251,9 +251,9 @@ const GlobeMap = () => {
         className="chartdiv">
         {/* <canvas id="stars" onLoad={canvasStar}></canvas> */}
       </div>
-      <div className="nationdiv" style={{ width: `${contentWidth}`, display: `${divDisplay}` }}>
+      <div className="nationdiv" style={{right: `${contentPositionRight}`, display: `${ContentDisplay}`, position:'absolute', width:'60vw'}}>
         <ContentList selectedCountry={selectedCountry} nationCode={nationCode}/>
-        </div>
+      </div>
     </div>
   );
 };
