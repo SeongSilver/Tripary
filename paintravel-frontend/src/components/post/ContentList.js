@@ -23,9 +23,11 @@ function ContentList({selectedCountry}) {
       <h1>다이어리 리스트</h1>
       <div className="contentHeader">
         <h2 className="selectedCountry">{selectedCountry}</h2>
-        <Link to="/postwrite" className="postButton">
-          <span>다이어리 추가</span>+
-        </Link>
+        <div className="postButton">
+          <Link to="/postwrite" state={{ selectedCountry: selectedCountry }} className="postButton">
+            <span>다이어리 추가</span>+
+          </Link>
+        </div>
       </div>
       <ul className="contentBody">
         <li className="contentCard">
