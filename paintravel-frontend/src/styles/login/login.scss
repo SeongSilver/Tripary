@@ -43,24 +43,26 @@
     }
     form {
       @include noDrag;
-      input {
-        @include font;
-        width: 100%;
-        height: 6vh;
-        background: transparent;
-        border: 1px solid #fff;
-        padding: 0 5%;
-        font-size: 1.6rem;
-        border-radius: 10px;
-        margin-bottom: 3vh;
-      }
-      input::placeholder {
-        color: #fff;
-        opacity: 0.5;
-      }
-      input:focus {
-        outline: none;
-      }
+      
+          input {
+            @include font;
+          width: 100%;
+          height: 6vh;
+          background: transparent;
+          border: 1px solid #fff;
+          padding: 0 5%;
+          font-size: 1.6rem;
+          border-radius: 10px;
+          margin-bottom: 3vh;
+        }
+        input::placeholder {
+          color: #fff;
+          opacity: 0.5;
+        }
+        input:focus {
+          outline: none;
+        }
+      
       p {
         color: yellow;
         font-size: 1.6rem;
