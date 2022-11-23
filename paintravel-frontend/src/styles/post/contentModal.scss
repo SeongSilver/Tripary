@@ -8,50 +8,42 @@
   left: 0;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.7);
-  border-radius:20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease-out;
   .modalDiv {
+    position: absolute;
     width: 70vw;
-    height: 800px;
+    height: 85vh;
     border-radius: 20px;
+    background-color: white;
+    transition: all 0.2s ease-out;
     .modalHeader {
-      height: 60px;
+      height: 10vh;
       background-color: rgba(0, 0, 0, 0.9);
       color:white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-left:30px;
+      padding-left:2vw;
       font-size: 2rem;
-      font-weight: 700;
       span {
-        width: 40px;
-        height: 40px;
         border-radius: 10px;
-        margin-right: 50px;
+        margin-right: 2vw;
         cursor:pointer;
-        display:flex;
-        justify-content: center;
-        align-items: center;
         font-size:3rem;
-        padding-bottom:10px;
       }
     }
-    background-color: white;
     .modalBody {
-      height: 680px;
+      height: 70vh;
       background-color: rgba(0, 0, 0, 0.7);
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       overflow: auto;
-      
     }
     .modalFooter {
-      height: 60px;
+      height: 5vh;
       background-color: rgba(0, 0, 0, 0.75);
       display: flex;
       justify-content: right;
