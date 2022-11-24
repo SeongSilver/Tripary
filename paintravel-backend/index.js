@@ -3,10 +3,15 @@ const express = require("express"); //express를 받아와서
 const app = express(); //함수로 app을 생성
 const port = 5000; //포트번호 지정
 
-
+//user 라우팅
 const UserRouter = require('./route/user');
 app.use('/api/users',UserRouter);
+//post 라우팅
+const PostRouter = require('./route/post');
+app.use('/api/post',PostRouter);
 
+///static/images라는 가상 경로를 통해, public/images라는 폴더에서 static한 요소들을 탐색하도록 하는 코드
+app.use('/static/images', express.static('public/images'));
 
 const config = require("./config/key");
 
