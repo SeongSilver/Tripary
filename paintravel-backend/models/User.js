@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
     unique: 1,
   },
   nickName: {
-    type: String,s
+    type: String,
   },
   role: {
     type: Number,

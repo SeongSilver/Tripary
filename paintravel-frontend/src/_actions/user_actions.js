@@ -14,7 +14,15 @@ export function loginUser(dataToSubmit) {
         payload: request
     };
 }
+export function logoutUser() {
+    const request = axios.get("/api/users/logout")
+        .then((response) => (response.data),[])
 
+    return {
+        type: LOGIN_USER,
+        payload: request
+    };
+}
 export function signUpUser(dataToSubmit) {
     const request = axios.post("/api/users/signUp", dataToSubmit)
         .then((response) => (response.data))

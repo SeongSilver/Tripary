@@ -64,8 +64,10 @@ router.post("/signUp", (req, res) => {
           //받아온 token을 쿠키, 로컬스토리지, 등에 저장하는데 이번엔 쿠키에 저장
           res
             .cookie("x_auth", user.token) //쿠키에 "x_auth"라는 명으로 user.token 정보를 저장하고
-            .status(200) //정상 상태 반환하고
-            .json({ loginSuccess: true, userId: user.userId });
+            .status(200) //정상 상태 반환;
+            .json({
+              loginSuccess: true,
+            })
         });
       });
     });
@@ -88,11 +90,12 @@ router.post("/signUp", (req, res) => {
   });
   
   router.get("/logout", auth, (req, res) => {
+    console.log(req.user._id,"로그아웃시도중")
     User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
       if (err) return res.json({ sucess: false, err });
       console.log("유저 ID" + req.user._id + "로그아웃 완료");
       return res.status(200).send({
-        sucess: true,
+        logoutSucess: true,
       });
     });
   });
