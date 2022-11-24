@@ -3,6 +3,8 @@ import {useNavigate, useLocation} from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import "../../styles/post/postWrite.scss";
 import { auth } from '../../_actions/user_actions'
+import { postWrite } from "../../_actions/post_actions";
+import axios from 'axios';
 
 function Postwrite() {
   const dispatch = useDispatch();
@@ -101,6 +103,28 @@ function Postwrite() {
       console.log(key, ":", formData.get(key));
     }
 
+    axios.post(
+      '/api/post/upload',
+      formData,
+      {
+        headers:{
+          "Content-Type":"multipart/form-data"
+        }
+      }
+    ).then(res => {
+      console.log(res);
+    })
+    .catch(
+      err => {console.log(err)}
+    )
+    dispatch(postWrite(formData)).then(response => {
+      if(response.payload.postSuccess){
+        navigate('/')
+      } else{
+        alert('업로드 실패')
+        return;
+      }
+    })
   }
 
   const goMain = () => {

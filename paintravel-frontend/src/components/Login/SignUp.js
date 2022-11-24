@@ -7,11 +7,7 @@ import { useDispatch } from 'react-redux';
 import { signUpUser } from '../../_actions/user_actions'
 
 function SignUp({setOpenSignUpModal}){
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [email, setEmail] = useState('');
-  const [nickName, setNickName] = useState('');
 
   const [userIdMessage, setUserIdMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
@@ -66,9 +62,7 @@ function SignUp({setOpenSignUpModal}){
       ...signUpInfo,
       [e.target.name]:userIdCurrent,
     });
-    setUserId(userIdCurrent);
-    console.log(signUpInfo.userId);
-    if(userIdCurrent < 6 || userIdCurrent >12){
+    if(userIdCurrent.length < 6 || userIdCurrent.length >12){
       setUserIdMessage("6글자 이상 12글자 미만으로 입력해주세요");
       setIsUserId(false);
     } else{
@@ -95,18 +89,19 @@ function SignUp({setOpenSignUpModal}){
   }
   
   //비밀번호 확인
-  const onChangePasswordConfirm = useCallback((e) => {
+  const onChangePasswordConfirm = (e) => {
     const passwordConfirmCurrent = e.target.value;
-    if(signUpInfo.password === passwordConfirmCurrent){
-      setPasswordConfirmMessage("비밀번호가 같습니다");
-      setIsPasswordConfirm(true);
-    } else{
+    setPasswordConfirm(passwordConfirmCurrent);
+    if(signUpInfo.password !== passwordConfirmCurrent){
       setPasswordConfirmMessage("비밀번호가 다릅니다. 확인해주세요");
       setIsPasswordConfirm(false);
+    } else{
+      setPasswordConfirmMessage("비밀번호가 같습니다");
+      setIsPasswordConfirm(true);
     }
-  },[]);
+  }
 
-  const onChangeEmail = useCallback((e) => {
+  const onChangeEmail = (e) => {
     const emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
     const emailCurrent = e.target.value;
     setSignUpInfo({
@@ -120,23 +115,21 @@ function SignUp({setOpenSignUpModal}){
       setEmailMessage("사용 가능한 이메일입니다!");
       setIsEmail(true);
     }
-  },[]);
-
-  const onChangeNickName = useCallback((e) => {
+  }
+  const onChangeNickName = (e) => {
     const nickNameCurrent = e.target.value;
     setSignUpInfo({
       ...signUpInfo,
       [e.target.name]:nickNameCurrent,
     });
-    if(nickNameCurrent< 4 || nickNameCurrent >10 ){
+    if(nickNameCurrent.length < 4 || nickNameCurrent.length >10 ){
       setNicknameMessage("4글자 이상 10글자 미만으로 입력해주세요");
       setIsNickname(false);
     } else{
       setNicknameMessage("올바른 아이디 형식입니다");
       setIsNickname(true);
     }
-  },[]);
-  
+  }
   
   return (
     <div className="signUpContainer">
@@ -151,26 +144,39 @@ function SignUp({setOpenSignUpModal}){
             <div>
               <p>아이디/비밀번호</p>
               <div className="formBox">
-                <input type="text" placeholder="아이디"  maxlength="12" name = 'userId' onChange={onChangeUserId}/>
-                <button type="button" className="doubleCheckBtn">중복 확인</button>
-                {signUpInfo.userId !== "" && <span className={`message ${isUserId ? 'success' : 'error'}`}>{userIdMessage}</span>}
+                <input type="text" className="d" placeholder="아이디" maxLength="15" name='userId' onChange={onChangeUserId}/>
+                {/* <button type="button" className="doubleCheckBtn">중복 확인</button> */}
+                {signUpInfo.userId.length > 0 && <span className={`message ${isUserId ? 'success' : 'error'}`}>{userIdMessage}</span>}
               </div>
               <div className="formBox">
-              <input type="password" placeholder="비밀번호" name = 'password' onChange={onChangePassword}/>
+                <input type="password" placeholder="비밀번호" name='password' onChange={onChangePassword}/> 
+                {signUpInfo.password.length > 0 && <span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>}
               </div>
               <div className="formBox">
-              <input type="password" placeholder="비밀번호 확인" name = 'passwordConfrim' onChange={onChangePasswordConfirm}/>
+                <input type="password" placeholder="비밀번호 확인" name='passwordConfrim' onChange={onChangePasswordConfirm}/>
+                {passwordConfirm.length > 0 && (
+                  <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>
+                )}
               </div> 
             </div>
             <div>
               <p>이메일</p>
-              <input type="email" placeholder="이메일을 입력하세요" name = 'email' onChange={onChangeEmail}/>
-              <button type="button" className="doubleCheckBtn">중복 확인</button>
+              <div className="formBox">
+                <input type="email" placeholder="이메일을 입력하세요" name='email' onChange={onChangeEmail}/>
+                {/* <button type="button" className="doubleCheckBtn">중복 확인</button> */}
+                {signUpInfo.email.length > 0 && (
+                  <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>
+                )}
+              </div>
             </div>
             <div>
               <p>닉네임</p>
-              <input type="text" placeholder="닉네임을 입력하세요" name = 'nickName' onChange={onChangeNickName}/>
-              
+              <div className="formBox">
+                <input type="text" placeholder="닉네임을 입력하세요" maxLength="15" name='nickName' onChange={onChangeNickName}/>
+                {signUpInfo.nickName.length > 0 && (
+                  <span className={`message ${isNickname ? 'success' : 'error'}`}>{nicknameMessage}</span>
+                )}
+              </div>
             </div>
             <button type="submit" id="signUpButton">
               가입하기
