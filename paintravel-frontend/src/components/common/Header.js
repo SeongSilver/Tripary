@@ -5,6 +5,7 @@ import axios from "axios";
 import {useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom"
 import { auth } from '../../_actions/user_actions'
+import { logoutUser } from '../../_actions/user_actions'
 
 function Header() {
   const navigate = useNavigate();
@@ -23,10 +24,9 @@ function Header() {
 
 
   const onClickHandler = () => {
-    axios.get('/api/users/logout')
+    dispatch(logoutUser())
     .then(response=>{
-      console.log(response.data)
-      if(response.data.sucess) {
+      if(response.payload.logoutSucess) {
         navigate("/Login")
       }else{
         alert("로그인아웃 실패..!")
