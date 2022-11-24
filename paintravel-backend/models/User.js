@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
   userId: {
     type: String,
     maxlength: 50,
+    unique: 1,
   },
   password: {
     type: String,
@@ -22,7 +23,6 @@ const userSchema = mongoose.Schema({
   },
   nickName: {
     type: String,
-    maxlength: 8,
   },
   role: {
     type: Number,
