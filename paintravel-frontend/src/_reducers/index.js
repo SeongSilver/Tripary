@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
-import user from './user_reducer'
+import user from './user_reducer';
+import post from './post_reducer';
 //import comment from './comment_reducer'
 
 const rootReducer = combineReducers({
-  user
+  user,
+  post,
 });
 
 export default rootReducer;
