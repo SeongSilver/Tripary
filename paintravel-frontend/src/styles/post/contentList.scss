@@ -1,83 +1,102 @@
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src: url('../../fonts/NanumMyeongjo-Regular.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-Bold.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-ExtraBold.ttf') format("truetype");
+  // 영문(대소문자)
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('../../fonts/NotoSansKR-Thin.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Light.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Medium.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Regular.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Bold.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Black.otf') format("opentype");
+  // 국문, 숫자
+  unicode-range: U+AC00-D7A3, U+0030-0039;
+}
+@mixin font {
+  font-family: 'Nanum Myeongjo', 'Noto Sans KR';
+  color: #fff;
+  letter-spacing: 0.3rem;
+  font-weight:100;
+}
+@mixin hidden {
+  display: block;
+  width: 0; height: 0;
+  text-indent: -9999px;
+}
 .contentContainer {
   width: 100%;
   height: 80vh;
   margin-top: 10vh;
-  background-color:transparent;
+  @include font;
+  h1 {@include hidden;}
   .contentHeader {
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    font-weight: 900;
-    display:flex;
-    justify-content: space-between;
+    height: 5vh;
+    margin-bottom: 3vh;
+    position:relative;
     .selectedCountry{
-      margin-left:2vw;
+      text-align: center;
+      line-height: 5vh;
       color:white;
-      font-size:2.5rem;
+      font-size:2.8rem;
     }
     .postButton{
-      margin-right:2vw;
-      span{
-        align-items: center;
-        padding:10px;
-        border-radius:5px;
-        color:white;
-        font-weight:600;
-        font-size:4rem;
-      }
+      position: absolute; right: 2vw; top: 0;
+      font-size:3.2rem;
+      line-height: 5vh;
+      span {@include hidden;}
     }
   }
   .contentBody {
-    height: 670px;
+    height: 72vh;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     overflow: auto;
+    padding:0 calc((60vw - 45vw - 6vw - 10px)/2);
     .contentCard {
-      width: 400px;
-      height: 400px;
-      margin: 30px;
-      padding: 20px;
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      box-shadow:0 0 10px rgba(255,255,255,0.1);
-      background-color:rgba(0,0,0,0.3);
+      position:relative;
+      margin-bottom:3vh;
+      overflow:hidden;
+      div {
+        overflow:hidden;
+        width: 15vw; height: 10vw;
+      }
       .contentImage {
-        position:relative;
-        width: 320px;
-        height: 240px;
-        padding: 15px;
-        background-color: rgba(0, 0, 255, 0.5);
+        display:block;
+        position:relative; left: 50%; top: 50%;
+        min-width: 15vw; min-height: 10vw;
+        max-width: 20vw; max-height: 20vw;
+        transform: translate(-50%, -50%);
       }
       .cardTag {
-        position:absolute;
-        left:0;
-        top:0;
-        font-size: 1.6rem;
-        font-weight: 900;
-        color:white;
-        width:100%;
-        height:40px;
-        display:flex;
-        justify-content: center;
-        align-items: center;
+        height:4vh;
+        position:absolute; left:0; top:0;
+        z-index: 100;
+        font-size: 1.4rem;
+        padding:0 0.5vw;
+        line-height: 4vh;
         background-color:rgba(0,0,0,0.5);
+        white-space:pre;
       }
       .cardDate{
-        margin-top:40px;
-        font-size:1.6rem;
-        font-weight:700;
-        color:white;
+        line-height: 5vh;
+        font-size: 1.4rem;
+        text-align: right;
       }
       hr {
         margin: 15px 0px;
       }
+      a {
+        text-indent: -9999px;
+        width: 15vw; height: 10vw;
+        position: absolute; left: 0; top: 0;
+      }
     }
+    .contentCard:nth-child(3n-1) {margin:0 3vw;}
   }
   .contentBody::-webkit-scrollbar {
     width: 10px;
@@ -85,6 +104,7 @@
   
   .contentBody::-webkit-scrollbar-thumb{
     background-color: rgba(255,255,255,0.5);
+    border-radius: 5px;
     /* 스크롤바 둥글게 설정    */
   }
   

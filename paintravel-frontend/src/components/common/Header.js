@@ -1,7 +1,6 @@
 import React , {useState, useEffect }from "react";
 import "../../styles/common/header.scss";
 import { Link } from "react-router-dom";
-
 import axios from "axios";
 import {useDispatch} from 'react-redux'
 import { useNavigate } from "react-router-dom"
