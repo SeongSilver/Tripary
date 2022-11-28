@@ -156,10 +156,10 @@ function SignUp({setOpenSignUpModal}){
                 {signUpInfo.userId !== "" && <span className={`message ${isUserId ? 'success' : 'error'}`}>{userIdMessage}</span>}
               </div>
               <div className="formBox">
-              <input type="password" placeholder="비밀번호" name = 'password' onChange={onChangePassword}/>
+                <input type="password" placeholder="비밀번호" name = 'password' onChange={onChangePassword}/>
               </div>
               <div className="formBox">
-              <input type="password" placeholder="비밀번호 확인" name = 'passwordConfrim' onChange={onChangePasswordConfirm}/>
+                <input type="password" placeholder="비밀번호 확인" name = 'passwordConfrim' onChange={onChangePasswordConfirm}/>
               </div>
             </div>
             <div>
@@ -170,14 +170,13 @@ function SignUp({setOpenSignUpModal}){
             <div>
               <p>닉네임</p>
               <input type="text" placeholder="닉네임을 입력하세요" name = 'nickName' onChange={onChangeNickName}/>
-              
             </div>
             <button type="submit" id="signUpButton">
               가입하기
             </button>
           </form>
           <Link className="signUpCloseBtn" onClick={closeSignUp}>
-            x
+            <span>닫기</span>x
           </Link>
         </div>
       </div>

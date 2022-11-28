@@ -1,3 +1,39 @@
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src: url('../../fonts/NanumMyeongjo-Regular.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-Bold.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-ExtraBold.ttf') format("truetype");
+  // 영문(대소문자)
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('../../fonts/NotoSansKR-Thin.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Light.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Medium.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Regular.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Bold.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Black.otf') format("opentype");
+  // 국문, 숫자
+  unicode-range: U+AC00-D7A3, U+0030-0039;
+}
+@mixin font {
+  font-family: 'Nanum Myeongjo', 'Noto Sans KR';
+  color: #fff;
+  letter-spacing: 0.3rem;
+  font-weight:100;
+}
+@mixin noDrag {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@mixin hidden {
+  display: block;
+  width: 0; height: 0;
+  text-indent: -9999px;
+}
 .modalContainer {
   width: 100vw;
   height: 100vh;
@@ -7,44 +43,63 @@
   bottom: 0;
   left: 0;
   z-index: 100;
-  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
+  @include font;
+  @include noDrag;
   .modalDiv {
     position: absolute;
-    width: 70vw;
+    width: 60vw;
     height: 85vh;
     border-radius: 20px;
-    background-color: white;
+    background-color: rgba(0,0,0,0.5);
     transition: all 0.2s ease-out;
     .modalHeader {
       height: 10vh;
-      background-color: rgba(0, 0, 0, 0.9);
-      color:white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-left:2vw;
-      font-size: 2rem;
-      span {
-        border-radius: 10px;
-        margin-right: 2vw;
-        cursor:pointer;
+      padding-left:3vw;
+      position:relative;
+      margin-bottom:3vh;
+      * {@include font; overflow:hidden; display:block;}
+      h1 { 
+        width: 52vw;
+        line-height: 6vh;
+        font-size: 2rem;
+      }
+      h2 { 
+        width: 54vw;
+        line-height: 4vh;
+        font-size: 1.5rem;
+        white-space: pre;
+      }
+      a {
+        line-height: 3vh;
+        position: absolute; right: 3vw; top: 1.5vh;
         font-size:3rem;
+        span {
+          @include hidden;
+        }
       }
     }
     .modalBody {
-      height: 70vh;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      overflow: auto;
+      height: 64vh;
+      margin-bottom:3vh;
+      > li {
+        width: calc(100% - 6vw); height: 100%;
+        background-color: #fff;
+        margin:0 3vw;
+        overflow: hidden;
+        position:relative;
+        img {
+          min-width: 100%; min-height: 100%;
+          max-width: 150%; max-height: 150%;
+          position:absolute; left: 50%; top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
     }
-    .modalFooter {
+    .modalPagination {
       height: 5vh;
-      background-color: rgba(0, 0, 0, 0.75);
       display: flex;
       justify-content: right;
       align-items: center;

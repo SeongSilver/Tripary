@@ -7,7 +7,7 @@ import '../../styles/post/contentList.scss';
 function ContentList({selectedCountry}) {
   const [contentModal, setContentModal] = useState(false);
   const [contentModalStatus, setContentModalStatus] = useState(false);
-  const [cityName, setCityName] = useState("서울인건가");
+  const [cityName, setCityName] = useState("South Korea");
 
   const openContentModal = (event) => {
     setContentModal(true);
