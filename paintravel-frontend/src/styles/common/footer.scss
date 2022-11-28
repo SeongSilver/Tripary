@@ -43,7 +43,7 @@ footer {
   display: flex;
   align-items: center;
   position:absolute; left: 0; bottom: -28%;
-  z-index: 1000;
+  z-index: 500;
   color:#fff;
   transition: all 0.5s;
   @include font;

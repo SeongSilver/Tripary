@@ -23,7 +23,7 @@
       top: 0;
       width: 100vw;
       height: 100vh;
-      z-index: 100;
+      z-index: 10;
       @include font;
       .mypageWrap {
         width: 80%;
@@ -51,6 +51,7 @@
             background: transparent;
             @include font;
             font-size: 1.6rem;
+            cursor:pointer;
             option {
               font-size: 1.4rem;
               background:#000;

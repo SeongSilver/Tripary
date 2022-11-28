@@ -45,7 +45,7 @@ html {
   @include font;
   @include noDrag;
   position: fixed;
-  z-index: 1000;
+  z-index: 500;
 }
 .headerWrapper {
   width: 100%;
