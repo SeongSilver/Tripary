@@ -49,7 +49,7 @@ function ContentList({ selectedCountry }) {
             </Link>
           ) : (
             <Link to="/login" className="postButton">
-              <span>다이어리 추가</span>+
+              <span>다이어리 추가</span>로그인
             </Link>
           )}
         </div>
