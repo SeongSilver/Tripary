@@ -3,16 +3,21 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import countriesData from "@amcharts/amcharts5-geodata/data/countries";
+import am5geodata_data_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import "../../styles/map/globeMap.scss";
 
 import ContentList from "../post/ContentList";
+console.log(countriesData);
+const countryArr = Object.keys(countriesData).map((key) => [key]);
+console.log("countryArr : " + countryArr);
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
   const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [nationCode, setNationCode] = useState('');
+  const [nationCode, setNationCode] = useState("");
   const [starBg, setStarBg] = useState("true");
 
   /* Chart code */
@@ -44,7 +49,7 @@ const GlobeMap = () => {
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
-        fill: "#289145",
+        fill: "#b7b9b7",
       })
     );
 
@@ -62,7 +67,7 @@ const GlobeMap = () => {
     // polygonSeries.mapPolygons.template.states.create("hover", {
     //   fill: "skyblue",
     // });
-    
+
     polygonSeries.mapPolygons.template.states.create("active", {
       fill: "blue",
     });
@@ -98,13 +103,14 @@ const GlobeMap = () => {
     function selectCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
+      console.log(dataItem);
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
       console.log(dataItem.dataContext.id);
       // setSelectedCountry(target);
       setTimeout(() => {
-          //타겟의 중심 포인트에 
-          chart.zoomToGeoPoint(target.geoCentroid(), 1.3, target.geoCentroid());
+        //타겟의 중심 포인트에
+        chart.zoomToGeoPoint(target.geoCentroid(), 1.3, target.geoCentroid());
       }, 1500);
       setGlobeWidth("40%");
       setContentPositionRight("0");
@@ -157,7 +163,7 @@ const GlobeMap = () => {
       }
     }
     //국가 선택 취소 때 css
-    function nationDivStyleHandler(){
+    function nationDivStyleHandler() {
       setGlobeWidth("100%");
       setContentPositionRight("-60vw");
       setContentDisplay("hidden");
@@ -245,13 +251,25 @@ const GlobeMap = () => {
   return (
     <div className="globeMap">
       <div
-        style={{ width: `${globeWidth}`}}
+        style={{ width: `${globeWidth}` }}
         id="chartdiv"
-        className="chartdiv">
+        className="chartdiv"
+      >
         {/* <canvas id="stars" onLoad={canvasStar}></canvas> */}
       </div>
-      <div className="nationdiv" style={{right: `${contentPositionRight}`, display: `${ContentDisplay}`, position:'absolute', width:'60vw'}}>
-        <ContentList selectedCountry={selectedCountry} nationCode={nationCode}/>
+      <div
+        className="nationdiv"
+        style={{
+          right: `${contentPositionRight}`,
+          display: `${ContentDisplay}`,
+          position: "absolute",
+          width: "60vw",
+        }}
+      >
+        <ContentList
+          selectedCountry={selectedCountry}
+          nationCode={nationCode}
+        />
       </div>
     </div>
   );
