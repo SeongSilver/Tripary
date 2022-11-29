@@ -98,10 +98,9 @@ const GlobeMap = () => {
     function selectCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
-      console.log(dataItem)
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
-      console.log(nationCode);
+      console.log(dataItem.dataContext.id);
       // setSelectedCountry(target);
       setTimeout(() => {
           //타겟의 중심 포인트에 

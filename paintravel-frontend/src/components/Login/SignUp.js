@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { signUpUser } from '../../_actions/user_actions'
 
 function SignUp({setOpenSignUpModal}){
+  //[성은] 유효성 검사 완료, 버튼에 is해당항목 중 하나라도 false면 disable되게 함 (22.11.24 14:20)
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const [userIdMessage, setUserIdMessage] = useState('');
