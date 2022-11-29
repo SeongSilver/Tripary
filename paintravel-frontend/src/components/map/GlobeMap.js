@@ -3,14 +3,9 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import countriesData from "@amcharts/amcharts5-geodata/data/countries";
-import am5geodata_data_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import "../../styles/map/globeMap.scss";
 
 import ContentList from "../post/ContentList";
-console.log(countriesData);
-const countryArr = Object.keys(countriesData).map((key) => [key]);
-console.log("countryArr : " + countryArr);
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
@@ -49,20 +44,21 @@ const GlobeMap = () => {
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
-        fill: "#b7b9b7",
+        fill: "#289145",
       })
     );
 
-    // polygonSeries.mapPolygons.template.events.on("click", function (ev) {
-    //   polygonSeries.zoomToDataItem(ev.target.dataItem);
-    //   console.log(ev.target.dataItem);
-    // });
+    if (countryArr)
+      // polygonSeries.mapPolygons.template.events.on("click", function (ev) {
+      //   polygonSeries.zoomToDataItem(ev.target.dataItem);
+      //   console.log(ev.target.dataItem);
+      // });
 
-    polygonSeries.mapPolygons.template.setAll({
-      tooltipText: "{name}",
-      toggleKey: "active",
-      interactive: true,
-    });
+      polygonSeries.mapPolygons.template.setAll({
+        tooltipText: "{name}",
+        toggleKey: "active",
+        interactive: true,
+      });
 
     // polygonSeries.mapPolygons.template.states.create("hover", {
     //   fill: "skyblue",
