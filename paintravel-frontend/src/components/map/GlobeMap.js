@@ -4,7 +4,6 @@ import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import countriesData from "@amcharts/amcharts5-geodata/data/countries";
-import am5geodata_data_countries2 from "@amcharts/amcharts5-geodata/data/countries2";
 import "../../styles/map/globeMap.scss";
 
 import ContentList from "../post/ContentList";
@@ -254,7 +253,8 @@ const GlobeMap = () => {
       <div
         style={{ width: `${globeWidth}` }}
         id="chartdiv"
-        className="chartdiv">
+        className="chartdiv"
+      >
         {/* <canvas id="stars" onLoad={canvasStar}></canvas> */}
       </div>
       <div
@@ -264,7 +264,8 @@ const GlobeMap = () => {
           display: `${ContentDisplay}`,
           position: "absolute",
           width: "60vw",
-        }}>
+        }}
+      >
         <ContentList
           selectedCountry={selectedCountry}
           nationCode={nationCode}
