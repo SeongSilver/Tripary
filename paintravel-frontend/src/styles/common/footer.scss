@@ -34,8 +34,53 @@
   -ms-user-select: none;
   user-select: none;
 }
-html {
-  font-size:0.5vw !important;
+
+// 모바일
+@media all and (max-width:767px) {
+  .footerButton{
+    span {
+      width: 5vw; height: 5vw;
+      top: -2.5vw;
+      img {
+        display:block;
+        width: 2vw; height: 1vw;
+        margin-bottom:2vw;
+      }
+    }
+  }
+  .footerMenu {
+    ul:not(.sns) {
+      li {
+        margin-right:6vw;
+      }
+      li:not(li:nth-child(1))::after {
+        margin: 0.75vh 0 0 -3vw;
+      }
+    }
+  }
+}
+// 테블릿 & PC
+@media all and (min-width:768px) {
+  .footerButton{
+    span {
+      width: 2.4vw; height: 3vw;
+      top: -1.5vw;
+      img {
+        width: 0.6vw; height: 0.5vw;
+        margin-bottom:1.5vw;
+      }
+    }
+  }
+  .footerMenu {
+    ul:not(.sns) {
+      li {
+        margin-right:10vw;
+      }
+      li:not(li:nth-child(1))::after {
+        margin: 0.75rem 0 0 -5vw;
+      }
+    }
+  }
 }
 footer {
   width: 100%; height: 28%;
@@ -53,28 +98,20 @@ footer {
   .footerButton{
     span {
       background-color: #000;
-      width: 2.4vw; height: 3vw;
       display: flex;
       align-items: center;
       justify-content: center;
       position: absolute;
-      left: calc(2% + (5% - 1.2vw)/2); top: -1.5vw;
+      left: calc(2% + (5% - 1.2vw)/2);
       border-top-left-radius: 20%;
       border-top-right-radius: 20%;
       clip-path:polygon(0 0, 100% 0, 100% 50%, 0 50%);
       cursor:pointer;
       img {
         display:block;
-        width: 0.6vw; height: 0.5vw;
-        margin-bottom:1.5vw;
       }
     }
     .footerClose {display:none;}
-  }
-  .footerLogo {
-    display:block;
-    width: auto; height: 25%;
-    margin-left:15%;
   }
   .footerMenu {
     width: 50%; height: auto;
@@ -117,11 +154,10 @@ footer {
       display: flex;
       width: 100%; height: 100%;
       margin-top:5%;
+      line-height: 3vh;
       li {
         float:left;
         font-size: 1.2rem;
-        line-height: 3rem;
-        margin-right:10vw;
         a {
           float:left;
           color:#fff;
@@ -131,19 +167,23 @@ footer {
         content:"";
         display: block;
         width: 1px; height: 50%;
-        margin: 0.75rem 0 0 -5vw;
         background-color: #fff;
       }
     }
     address {
       font-size: 1.2rem;
-      line-height: 3rem;
+      line-height: 3vh;
     }
     p {
       display:block;
       font-size: 1.2rem;
-      line-height: 3rem;
+      line-height: 3vh;
     }
+  }
+  .footerLogo {
+    display:block;
+    width: auto; height: 25%;
+    margin-left:15%;
   }
 }
 .footerOpen {

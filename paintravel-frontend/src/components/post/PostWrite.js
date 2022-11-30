@@ -2,7 +2,8 @@ import React , {useState, useEffect} from "react";
 import {useNavigate, useLocation} from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import "../../styles/post/postWrite.scss";
-import { auth } from '../../_actions/user_actions'
+import { auth } from '../../_actions/user_actions';
+
 
 function Postwrite() {
   const dispatch = useDispatch();
@@ -109,12 +110,15 @@ function Postwrite() {
   return (
   <div className="postWriteContainer">
     <div className="postWrite">
-      <h1>Diary [{selectedCountry}]</h1>
+      <h1>{selectedCountry}'s Dairy</h1>
       <form className="postWriteWrap" encType="multipart/form-data">
         <div className="gallery">
           <h2>Gallery</h2>
-          <label htmlFor="galleryUpload">+</label>
-          <input type="file" name="file" multiple={true} id="galleryUpload" onChange={onLoadFile} accept="image/jpg,image/png,image/jpeg,image/gif"/>
+          <a href="#galleryUpload">
+            <span>사진 첨부 버튼</span>
+            <label htmlFor="galleryUpload">+</label>
+            <input type="file" name="file" multiple={true} id="galleryUpload" onChange={onLoadFile} accept="image/jpg,image/png,image/jpeg,image/gif"/>
+          </a>
           <div className="galleryContainer">
             {uploadImages.map((image, id) => (
               <div className="" key={id} style={{width:'100px', height:'75px', display:'block'}}>
@@ -145,8 +149,8 @@ function Postwrite() {
           </li>
         </ul>
         <div className="postWriteBtn">
-          <span onClick={onSubmit}>등록</span>
-          <span onClick={goMain}>메인으로</span>
+          <button onClick={onSubmit}>등록</button>
+          <button onClick={goMain}>메인으로</button>
         </div>
       </form>
     </div>

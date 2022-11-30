@@ -34,8 +34,17 @@
   width: 0; height: 0;
   text-indent: -9999px;
 }
-html {
-  font-size:0.5vw !important;
+// 모바일
+@media all and (max-width:767px) {
+  html {
+    font-size:1vw !important;
+  }
+}
+// 테블릿 & PC
+@media all and (min-width:768px) {
+  html {
+    font-size:0.5vw !important;
+  }
 }
 .header {
   width: 100%;
