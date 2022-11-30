@@ -7,9 +7,6 @@ import countriesData from "@amcharts/amcharts5-geodata/data/countries";
 import "../../styles/map/globeMap.scss";
 
 import ContentList from "../post/ContentList";
-console.log(countriesData);
-const countryArr = Object.keys(countriesData).map((key) => [key]);
-console.log("countryArr : " + countryArr);
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
@@ -48,7 +45,7 @@ const GlobeMap = () => {
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
-        fill: "#b7b9b7",
+        fill: "#289145",
       })
     );
 
@@ -106,7 +103,7 @@ const GlobeMap = () => {
       console.log(dataItem);
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
-      console.log(nationCode);
+      console.log(dataItem.dataContext.id);
       // setSelectedCountry(target);
       setTimeout(() => {
         //타겟의 중심 포인트에

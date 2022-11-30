@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from "react";
+import React, {useState} from "react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import "../../styles/login/signUp.scss";
@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { signUpUser } from '../../_actions/user_actions'
 
 function SignUp({setOpenSignUpModal}){
+  //[성은] 유효성 검사 완료, 버튼에 is해당항목 중 하나라도 false면 disable되게 함 (22.11.24 14:20)
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const [userIdMessage, setUserIdMessage] = useState('');
@@ -65,6 +66,7 @@ function SignUp({setOpenSignUpModal}){
     if(userIdCurrent.length < 6 || userIdCurrent.length >12){
       setUserIdMessage("6글자 이상 12글자 미만으로 입력해주세요");
       setIsUserId(false);
+      return;
     } else{
       setUserIdMessage("올바른 아이디 형식입니다");
       setIsUserId(true);
@@ -82,6 +84,7 @@ function SignUp({setOpenSignUpModal}){
     if(!passwordRegex.test(passwordCurrent)){
       setPasswordMessage("숫자 + 영문자 + 특수문자 조합으로 8자 이상 20자 미만으로 입력해주세요!");
       setIsPassword(false);
+      return;
     } else{
       setPasswordMessage("안전한 비밀번호 입니다");
       setIsPassword(true);
@@ -95,6 +98,7 @@ function SignUp({setOpenSignUpModal}){
     if(signUpInfo.password !== passwordConfirmCurrent){
       setPasswordConfirmMessage("비밀번호가 다릅니다. 확인해주세요");
       setIsPasswordConfirm(false);
+      return;
     } else{
       setPasswordConfirmMessage("비밀번호가 같습니다");
       setIsPasswordConfirm(true);
@@ -111,6 +115,7 @@ function SignUp({setOpenSignUpModal}){
     if(!emailRegex.test(emailCurrent)){
       setEmailMessage("이메일 양식을 지켜주세요!");
       setIsEmail(false);
+      return;
     } else{
       setEmailMessage("사용 가능한 이메일입니다!");
       setIsEmail(true);
@@ -125,6 +130,7 @@ function SignUp({setOpenSignUpModal}){
     if(nickNameCurrent.length < 4 || nickNameCurrent.length >10 ){
       setNicknameMessage("4글자 이상 10글자 미만으로 입력해주세요");
       setIsNickname(false);
+      return;
     } else{
       setNicknameMessage("올바른 아이디 형식입니다");
       setIsNickname(true);
@@ -178,11 +184,11 @@ function SignUp({setOpenSignUpModal}){
                 )}
               </div>
             </div>
-            <button type="submit" id="signUpButton">
+            <button type="submit" id="signUpButton"  disabled={!(isUserId && isPassword && isEmail && isNickname)}>
               가입하기
             </button>
           </form>
-          <Link className="signUpCloseBtn" onClick={closeSignUp}>
+          <Link className="signUpCloseBtn" onClick={closeSignUp} >
             x
           </Link>
         </div>

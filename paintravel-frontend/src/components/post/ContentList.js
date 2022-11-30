@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import ContentModal from "./ContentModal";
 import "../../styles/post/contentList.scss";
-import { useDispatch } from "react-redux";
 import { auth } from "../../_actions/user_actions";
 
 function ContentList({ selectedCountry }) {
