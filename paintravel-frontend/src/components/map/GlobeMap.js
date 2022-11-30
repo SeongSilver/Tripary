@@ -5,8 +5,11 @@ import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import countriesData from "@amcharts/amcharts5-geodata/data/countries";
 import "../../styles/map/globeMap.scss";
-
 import ContentList from "../post/ContentList";
+
+console.log(countriesData);
+const countryArr = Object.keys(countriesData).map((key) => [key]);
+console.log("countryArr : " + countryArr);
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
@@ -49,17 +52,16 @@ const GlobeMap = () => {
       })
     );
 
-    if (countryArr)
-      // polygonSeries.mapPolygons.template.events.on("click", function (ev) {
-      //   polygonSeries.zoomToDataItem(ev.target.dataItem);
-      //   console.log(ev.target.dataItem);
-      // });
+    // polygonSeries.mapPolygons.template.events.on("click", function (ev) {
+    //   polygonSeries.zoomToDataItem(ev.target.dataItem);
+    //   console.log(ev.target.dataItem);
+    // });
 
-      polygonSeries.mapPolygons.template.setAll({
-        tooltipText: "{name}",
-        toggleKey: "active",
-        interactive: true,
-      });
+    polygonSeries.mapPolygons.template.setAll({
+      tooltipText: "{name}",
+      toggleKey: "active",
+      interactive: true,
+    });
 
     // polygonSeries.mapPolygons.template.states.create("hover", {
     //   fill: "skyblue",
@@ -103,8 +105,8 @@ const GlobeMap = () => {
       console.log(dataItem);
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
-      console.log(dataItem.dataContext.id);
-      // setSelectedCountry(target);
+      console.log("국가코드" + dataItem.dataContext.id);
+      // setSelectedCountry(target)R;
       setTimeout(() => {
         //타겟의 중심 포인트에
         chart.zoomToGeoPoint(target.geoCentroid(), 1.3, target.geoCentroid());

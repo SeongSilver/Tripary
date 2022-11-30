@@ -5,7 +5,7 @@ import ContentModal from "./ContentModal";
 import "../../styles/post/contentList.scss";
 import { auth } from "../../_actions/user_actions";
 
-function ContentList({ selectedCountry }) {
+function ContentList({ selectedCountry, nationCode }) {
   const [contentModal, setContentModal] = useState(false);
   const [contentModalStatus, setContentModalStatus] = useState(false);
   const [cityName, setCityName] = useState("서울인건가");
@@ -42,7 +42,10 @@ function ContentList({ selectedCountry }) {
           {isLogined ? (
             <Link
               to="/postwrite"
-              state={{ selectedCountry: selectedCountry }}
+              state={{
+                selectedCountry: selectedCountry,
+                nationCode: nationCode,
+              }}
               className="postButton"
             >
               <span>다이어리 추가</span>+
