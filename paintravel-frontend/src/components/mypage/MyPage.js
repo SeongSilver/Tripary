@@ -13,6 +13,10 @@ function MyPage() {
           <h1>My Journeys</h1>
           <div className="mypageSelection">
             <select>
+              <option>최신 작성순</option>
+              <option>여행 날짜순</option>
+            </select>
+            <select>
               <option>All Country</option>
               <option>South Korea</option>
               <option>Japan</option>

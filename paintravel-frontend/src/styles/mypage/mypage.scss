@@ -44,8 +44,8 @@
           align-items: center;
           select {
             width: auto; height: 60%;
-            margin-left:0.5vw;
             padding:0 1vw;
+            margin-left:1.5vw;
             border: 1px solid #fff;
             border-radius: 10px;
             background: transparent;
@@ -53,8 +53,8 @@
             font-size: 1.6rem;
             cursor:pointer;
             option {
-              font-size: 1.4rem;
               background:#000;
+              text-align: left;
             }
           }
         }
@@ -140,10 +140,11 @@
           li:nth-child(1) {background-color: #000;}
         }
         .memberWithdrawal {
-          width: 5vw; height: 3vh;
+          width: 10vw; height: 3vh;
           position:absolute; right:0; bottom:4vh;
           line-height: 3vh;
           font-size: 1.6rem;
+          text-align: right;
         }
       }
     }
