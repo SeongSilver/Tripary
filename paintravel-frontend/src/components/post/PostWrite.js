@@ -134,26 +134,28 @@ function Postwrite() {
   return (
     <div className="postWriteContainer">
       <div className="postWrite">
-        <h1>Diary [{selectedCountry}]</h1>
+        <h1>{selectedCountry}'s Dairy</h1>
         <form className="postWriteWrap" encType="multipart/form-data">
           <div className="gallery">
             <h2>Gallery</h2>
-            <label htmlFor="galleryUpload">+</label>
-            <input
-              type="file"
-              name="file"
-              multiple={true}
-              id="galleryUpload"
-              onChange={onLoadFile}
-              accept="image/jpg,image/png,image/jpeg,image/gif"
-            />
+            <a href="#galleryUpload">
+              <span>사진 첨부 버튼</span>
+              <label htmlFor="galleryUpload">+</label>
+              <input
+                type="file"
+                name="file"
+                multiple={true}
+                id="galleryUpload"
+                onChange={onLoadFile}
+                accept="image/jpg,image/png,image/jpeg,image/gif"
+              />
+            </a>
             <div className="galleryContainer">
               {uploadImages.map((image, id) => (
                 <div
                   className=""
                   key={id}
-                  style={{ width: "100px", height: "75px", display: "block" }}
-                >
+                  style={{ width: "100px", height: "75px", display: "block" }}>
                   <img src={image} alt={`${image} - ${id}`} />
                   <span onClick={deleteImage}>X</span>
                 </div>
@@ -170,16 +172,14 @@ function Postwrite() {
               <input
                 type="text"
                 name="location"
-                onChange={onChangePost}
-              ></input>
+                onChange={onChangePost}></input>
             </li>
             <li>
               <p>일정</p>
               <input
                 type="date"
                 name="fromDate"
-                onChange={onChangePost}
-              ></input>
+                onChange={onChangePost}></input>
               <span>~</span>
               <input type="date" name="toDate" onChange={onChangePost}></input>
             </li>
@@ -189,8 +189,8 @@ function Postwrite() {
             </li>
           </ul>
           <div className="postWriteBtn">
-            <span onClick={onSubmit}>등록</span>
-            <span onClick={goMain}>메인으로</span>
+            <button onClick={onSubmit}>등록</button>
+            <button onClick={goMain}>메인으로</button>
           </div>
         </form>
       </div>

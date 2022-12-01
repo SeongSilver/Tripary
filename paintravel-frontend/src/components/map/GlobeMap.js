@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useRef, useState, useLayoutEffect, useEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
@@ -17,7 +17,6 @@ const GlobeMap = () => {
   const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState("");
-  const [starBg, setStarBg] = useState("true");
 
   /* Chart code */
   // Create root element
@@ -180,82 +179,89 @@ const GlobeMap = () => {
     };
   }, []);
 
-  // // 별 내리는 함수
-  // const canvasStar = () =>  {
-  //   var canvas = document.getElementById("stars");
-  //   var ctx = canvas.getContext("2d");
+  // 별 내리는 함수
+  const canvasRef = useRef(null);
+  const contextRef = useRef(null);
+  const [canvasStar, setCanvasStar] = useState();
 
-  //   canvas.width = window.innerWidth;
-  //   canvas.height = window.innerHeight;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    contextRef.current = ctx;
 
-  //   var starsLength = getRandomArbitrary(canvas.width / 10, canvas.width / 10);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-  //   var starsA = stars("#fff", 0.5);
-  //   var starsB = stars("#fff", 0.7);
-  //   setStarBg = 0;
-  //   // 별 생성
-  //   const stars = (color, radius) =>  {
-  //     var starsArr = [];
+    const starsLength = getRandomArbitrary(
+      canvas.width / 10,
+      canvas.width / 10
+    );
 
-  //     for (var i = 0; i < starsLength; i++) {
-  //       ctx.beginPath();
-  //       var x = getRandomArbitrary(0, canvas.width);
-  //       var y = getRandomArbitrary(0, canvas.height);
-  //       ctx.arc(x, y, radius, 0, 2 * Math.PI);
-  //       ctx.fillStyle = color;
-  //       ctx.fill();
-  //       starsArr.push({ x, y, radius, color });
-  //     }
-  //     return starsArr;
-  //   }
-  //   // 별 떨어지는 동작
-  //   const update = (starsArr) => {
-  //     for (var i = 0; i < starsArr.length; i++) {
-  //       ctx.beginPath();
-  //       starsArr[i].x += starsArr[i].radius * 0.1;
-  //       starsArr[i].y += starsArr[i].radius * 0.1;
-  //       ctx.arc(
-  //         starsArr[i].x,
-  //         starsArr[i].y,
-  //         starsArr[i].radius,
-  //         0.3,
-  //         2 * Math.PI
-  //       );
-  //       ctx.fillStyle = starsArr[i].color;
-  //       ctx.fill();
+    const starsA = stars("#fff", 0.5);
+    const starsB = stars("#fff", 0.7);
+    // 별 생성
+    function stars(color, radius) {
+      const starsArr = [];
 
-  //       if (starsArr[i].x > canvas.width) {
-  //         starsArr[i].x = 0;
-  //       }
-  //       if (starsArr[i].y > canvas.height) {
-  //         starsArr[i].y = 0;
-  //       }
-  //     }
-  //   }
+      for (var i = 0; i < starsLength; i++) {
+        ctx.beginPath();
+        var x = getRandomArbitrary(0, canvas.width);
+        var y = getRandomArbitrary(0, canvas.height);
+        ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = color;
+        ctx.fill();
+        starsArr.push({ x, y, radius, color });
+      }
+      return starsArr;
+    }
+    // 별 떨어지는 동작
+    function update(starsArr) {
+      for (var i = 0; i < starsArr.length; i++) {
+        ctx.beginPath();
+        starsArr[i].x += starsArr[i].radius * 0.1;
+        starsArr[i].y += starsArr[i].radius * 0.1;
+        ctx.arc(
+          starsArr[i].x,
+          starsArr[i].y,
+          starsArr[i].radius,
+          0.3,
+          2 * Math.PI
+        );
+        ctx.fillStyle = starsArr[i].color;
+        ctx.fill();
 
-  //   // 별 떨어지는 동작 실행
-  //   const render = () => {
-  //     ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //     update(starsA);
-  //     update(starsB);
-  //     requestAnimationFrame(render);
-  //   }
-  //   requestAnimationFrame(render);
+        if (starsArr[i].x > canvas.width) {
+          starsArr[i].x = 0;
+        }
+        if (starsArr[i].y > canvas.height) {
+          starsArr[i].y = 0;
+        }
+      }
+    }
 
-  //   // 난수
-  //   const getRandomArbitrary = (min, max) => {
-  //     return Math.random() * (max - min) + min;
-  //   }
-  // }
+    // 별 떨어지는 동작 실행
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      update(starsA);
+      update(starsB);
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+
+    // 난수
+    function getRandomArbitrary(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+    setCanvasStar(contextRef.current);
+  }, []);
+
   return (
     <div className="globeMap">
       <div
         style={{ width: `${globeWidth}` }}
         id="chartdiv"
-        className="chartdiv"
-      >
-        {/* <canvas id="stars" onLoad={canvasStar}></canvas> */}
-      </div>
+        className="chartdiv"></div>
+      <canvas className="stars" ref={canvasRef}></canvas>
       <div
         className="nationdiv"
         style={{
@@ -263,8 +269,7 @@ const GlobeMap = () => {
           display: `${ContentDisplay}`,
           position: "absolute",
           width: "60vw",
-        }}
-      >
+        }}>
         <ContentList
           selectedCountry={selectedCountry}
           nationCode={nationCode}

@@ -46,16 +46,14 @@ function ContentList({ selectedCountry, nationCode }) {
                 selectedCountry: selectedCountry,
                 nationCode: nationCode,
               }}
-              className="postButton"
-            >
+              className="postButton">
               <span>다이어리 추가</span>+
             </Link>
           ) : (
             <Link
               to="/login"
               state={{ selectedCountry: selectedCountry }}
-              className="postButton"
-            >
+              className="postButton">
               <span>다이어리 추가</span>+
             </Link>
           )}
