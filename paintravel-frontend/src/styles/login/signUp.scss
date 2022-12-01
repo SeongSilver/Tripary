@@ -11,7 +11,8 @@
 }
 @mixin hidden {
   display: block;
-  width: 0; height: 0;
+  width: 0;
+  height: 0;
   text-indent: -9999px;
 }
 .signUpContainer {
@@ -53,14 +54,14 @@
         @include noDrag;
         div {
           // 아이디 width
-          div:nth-child(2) input{
-            width: 80%; 
+          div:nth-child(2) input {
+            width: 80%;
             margin-right: 2%;
           }
           > input {
             @include font;
             width: 100%;
-            height: 5vh;
+            height: 4vh;
             background: transparent;
             border: 1px solid #000;
             padding: 0 5%;
@@ -70,11 +71,11 @@
         }
         // 이메일 width
         div:nth-child(2):not(.formBox) > input {
-          width: 80%; 
+          width: 80%;
           margin-right: 2%;
         }
-        .formBox{
-          position:relative;
+        .formBox {
+          position: relative;
           height: 8vh;
           input::placeholder {
             color: #000;
@@ -84,17 +85,17 @@
             outline: none;
           }
           .message {
-            font-weight:500;
-            font-size:1.2rem;
-            line-height:3vh;
-            position:absolute;
-            bottom:0;
-            left:0;
-            padding:0 0.5vw;
-            &.success{
-              color:#8f8c8b;
+            font-weight: 500;
+            font-size: 1.2rem;
+            line-height: 3vh;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 0 0.5vw;
+            &.success {
+              color: #8f8c8b;
             }
-            &.error{
+            &.error {
               color: #ff2727;
             }
           }
@@ -136,8 +137,10 @@
         right: 4vh;
         top: 2vh;
         font-size: 3rem;
-        color:#000;
-        span {@include hidden;}
+        color: #000;
+        span {
+          @include hidden;
+        }
       }
     }
   }
