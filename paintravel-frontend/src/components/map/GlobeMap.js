@@ -3,16 +3,20 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import countriesData from "@amcharts/amcharts5-geodata/data/countries";
 import "../../styles/map/globeMap.scss";
-
 import ContentList from "../post/ContentList";
+
+console.log(countriesData);
+const countryArr = Object.keys(countriesData).map((key) => [key]);
+console.log("countryArr : " + countryArr);
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
   const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [nationCode, setNationCode] = useState('');
+  const [nationCode, setNationCode] = useState("");
 
   /* Chart code */
   // Create root element
@@ -43,7 +47,7 @@ const GlobeMap = () => {
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
-        fill: "#289145",
+        fill: "#289146c8",
       })
     );
 
@@ -61,7 +65,7 @@ const GlobeMap = () => {
     // polygonSeries.mapPolygons.template.states.create("hover", {
     //   fill: "skyblue",
     // });
-    
+
     polygonSeries.mapPolygons.template.states.create("active", {
       fill: "blue",
     });
@@ -73,7 +77,7 @@ const GlobeMap = () => {
     );
     //지도에서 바다색칠하는 부분
     backgroundSeries.mapPolygons.template.setAll({
-      fill: "#3b75af",
+      fill: "#3b75afbe",
       stroke: am5.color(0xd4f1f9),
     });
     backgroundSeries.data.push({
@@ -97,14 +101,14 @@ const GlobeMap = () => {
     function selectCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
-      console.log(dataItem)
+      console.log(dataItem);
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
-      console.log(nationCode);
-      // setSelectedCountry(target);
+      console.log("국가코드" + dataItem.dataContext.id);
+      // setSelectedCountry(target)R;
       setTimeout(() => {
-          //타겟의 중심 포인트에 
-          chart.zoomToGeoPoint(target.geoCentroid(), 1.3, target.geoCentroid());
+        //타겟의 중심 포인트에
+        chart.zoomToGeoPoint(target.geoCentroid(), 1.3, target.geoCentroid());
       }, 1500);
       setGlobeWidth("40%");
       setContentPositionRight("0");
@@ -157,7 +161,7 @@ const GlobeMap = () => {
       }
     }
     //국가 선택 취소 때 css
-    function nationDivStyleHandler(){
+    function nationDivStyleHandler() {
       setGlobeWidth("100%");
       setContentPositionRight("-60vw");
       setContentDisplay("hidden");
@@ -179,7 +183,7 @@ const GlobeMap = () => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [canvasStar, setCanvasStar] = useState();
-  
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -188,7 +192,10 @@ const GlobeMap = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const starsLength = getRandomArbitrary(canvas.width / 10, canvas.width / 10);
+    const starsLength = getRandomArbitrary(
+      canvas.width / 10,
+      canvas.width / 10
+    );
 
     const starsA = stars("#fff", 0.5);
     const starsB = stars("#fff", 0.7);
@@ -247,17 +254,26 @@ const GlobeMap = () => {
     }
     setCanvasStar(contextRef.current);
   }, []);
-    
- return (
+
+  return (
     <div className="globeMap">
       <div
-        style={{ width: `${globeWidth}`}}
+        style={{ width: `${globeWidth}` }}
         id="chartdiv"
-        className="chartdiv">
-      </div>
+        className="chartdiv"></div>
       <canvas className="stars" ref={canvasRef}></canvas>
-      <div className="nationdiv" style={{right: `${contentPositionRight}`, display: `${ContentDisplay}`, position:'absolute', width:'60vw'}}>
-        <ContentList selectedCountry={selectedCountry} nationCode={nationCode}/>
+      <div
+        className="nationdiv"
+        style={{
+          right: `${contentPositionRight}`,
+          display: `${ContentDisplay}`,
+          position: "absolute",
+          width: "60vw",
+        }}>
+        <ContentList
+          selectedCountry={selectedCountry}
+          nationCode={nationCode}
+        />
       </div>
     </div>
   );
