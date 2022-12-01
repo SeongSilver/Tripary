@@ -33,7 +33,7 @@
   height: 80vh;
   margin-top: 10vh;
   @include font;
-  h1 {@include hidden;}
+  > h1 {@include hidden;}
   .contentHeader {
     height: 5vh;
     margin-bottom: 3vh;

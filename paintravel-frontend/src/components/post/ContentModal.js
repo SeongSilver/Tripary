@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../../styles/post/contentModal.scss';
+import { Link } from "react-router-dom";
 
 function ContentModal({contentModalStatus, setContentModalStatus, setContentModal, cityName }) {
   
@@ -29,13 +30,19 @@ function ContentModal({contentModalStatus, setContentModalStatus, setContentModa
     <div className="modalContainer" style={{background: `${modalBg}`}}>
       <div className="modalDiv" style={{top: `${modalOpenAnimation}`, opacity:`${modalOpenOpacity}`}}>
         <div className="modalHeader">
-          {cityName}
-          <span onClick={closeModal}>x</span>
+          <h1>{cityName}</h1>
+          <h2>제목!!!! oo이랑 같이 다녀온 부산 여행~</h2>
+          <Link to="#" onClick={closeModal}><span>닫기</span>x</Link>
         </div>
-        <div className="modalBody"></div>
-        <div className="modalFooter">
-          
-        </div>
+        <ul className="modalBody">
+          <li><img src={require("../../img/login/loginBg.jpg")}/></li>
+        </ul>
+        <ol className="modalPagination">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ol>
       </div>
     </div>
   );

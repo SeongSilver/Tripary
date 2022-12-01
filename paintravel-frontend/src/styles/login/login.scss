@@ -24,9 +24,9 @@
     z-index: 100;
     @include font;
     .loginWrap {
-      width: 30%;
-      height: 60%;
-      margin: 20vh auto 0 auto;
+      width: 400px;
+      height: 50%;
+      margin: 25vh auto 0 auto;
     }
     h1 {
       font-size: 2.4rem;
@@ -43,26 +43,24 @@
     }
     form {
       @include noDrag;
-      
-          input {
-            @include font;
-          width: 100%;
-          height: 6vh;
-          background: transparent;
-          border: 1px solid #fff;
-          padding: 0 5%;
-          font-size: 1.6rem;
-          border-radius: 10px;
-          margin-bottom: 3vh;
-        }
-        input::placeholder {
-          color: #fff;
-          opacity: 0.5;
-        }
-        input:focus {
-          outline: none;
-        }
-      
+      input {
+         @include font;
+        width: 100%;
+        height: 6vh;
+        background: transparent;
+        border: 1px solid #fff;
+        padding: 0 5%;
+        font-size: 1.6rem;
+        border-radius: 10px;
+        margin-bottom: 3vh;
+      }
+      input::placeholder {
+        color: #fff;
+        opacity: 0.5;
+      }
+      input:focus {
+        outline: none;
+      }
       p {
         color: yellow;
         font-size: 1.6rem;
@@ -76,7 +74,7 @@
         font-size: 1.8rem;
         border: none;
         border-radius: 10px;
-        margin-bottom: 1vh;
+        margin: 2vh 0;
         cursor: pointer;
       }
       span {
