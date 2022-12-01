@@ -47,7 +47,7 @@ const GlobeMap = () => {
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
-        fill: "#289145",
+        fill: "#289146c8",
       })
     );
 
@@ -77,7 +77,7 @@ const GlobeMap = () => {
     );
     //지도에서 바다색칠하는 부분
     backgroundSeries.mapPolygons.template.setAll({
-      fill: "#3b75af",
+      fill: "#3b75afbe",
       stroke: am5.color(0xd4f1f9),
     });
     backgroundSeries.data.push({
