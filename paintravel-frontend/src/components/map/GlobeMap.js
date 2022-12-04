@@ -11,6 +11,8 @@ console.log(countriesData);
 const countryArr = Object.keys(countriesData).map((key) => [key]);
 console.log("countryArr : " + countryArr);
 
+const nationCodeExample = ["KR", "UK", "RU", "SA"];
+
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
@@ -37,7 +39,7 @@ const GlobeMap = () => {
         panX: "rotateX",
         panY: "rotateY",
         wheelY: "zoom",
-        zoomStep: 2,
+        zoomStep: 4,
         projection: am5map.geoOrthographic(),
       })
     );
@@ -47,9 +49,29 @@ const GlobeMap = () => {
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
-        fill: "#289146c8",
+        fill: "rgba(255,255,255,0.2)",
+        exclude: ["AQ"],
       })
     );
+
+    /*
+    [성은] 전체 국가 코드 배열과 해당 아이디(일단 임시 배열)의 값이
+    같을 때 해당 아이디의 국가가 색칠되도록 하기는 왜 안되지????
+    */
+    if (nationCodeExample.length > 0) {
+      for (let j = 0; j < nationCodeExample.length; j++) {
+        const ncexam = '"' + nationCodeExample[j] + '"';
+        console.log(ncexam);
+        polygonSeries.data.setAll([
+          {
+            id: "KR",
+            polygonSettings: {
+              fill: am5.color(0xff3c38),
+            },
+          },
+        ]);
+      }
+    }
 
     // polygonSeries.mapPolygons.template.events.on("click", function (ev) {
     //   polygonSeries.zoomToDataItem(ev.target.dataItem);
@@ -67,7 +89,7 @@ const GlobeMap = () => {
     // });
 
     polygonSeries.mapPolygons.template.states.create("active", {
-      fill: "blue",
+      fill: "rgba(0,0,255,0.5)",
     });
 
     // Create series for background fill
@@ -78,7 +100,7 @@ const GlobeMap = () => {
     //지도에서 바다색칠하는 부분
     backgroundSeries.mapPolygons.template.setAll({
       fill: "#3b75afbe",
-      stroke: am5.color(0xd4f1f9),
+      stroke: am5.color("rgba(100, 100, 255, 0.2)"),
     });
     backgroundSeries.data.push({
       geometry: am5map.getGeoRectangle(90, 180, -90, -180),
@@ -260,7 +282,8 @@ const GlobeMap = () => {
       <div
         style={{ width: `${globeWidth}` }}
         id="chartdiv"
-        className="chartdiv"></div>
+        className="chartdiv"
+      ></div>
       <canvas className="stars" ref={canvasRef}></canvas>
       <div
         className="nationdiv"
@@ -269,7 +292,8 @@ const GlobeMap = () => {
           display: `${ContentDisplay}`,
           position: "absolute",
           width: "60vw",
-        }}>
+        }}
+      >
         <ContentList
           selectedCountry={selectedCountry}
           nationCode={nationCode}

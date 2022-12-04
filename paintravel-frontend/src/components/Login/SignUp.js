@@ -178,7 +178,8 @@ function SignUp({ setOpenSignUpModal }) {
                 />
                 {signUpInfo.password.length > 0 && (
                   <span
-                    className={`message ${isPassword ? "success" : "error"}`}>
+                    className={`message ${isPassword ? "success" : "error"}`}
+                  >
                     {passwordMessage}
                   </span>
                 )}
@@ -194,7 +195,8 @@ function SignUp({ setOpenSignUpModal }) {
                   <span
                     className={`message ${
                       isPasswordConfirm ? "success" : "error"
-                    }`}>
+                    }`}
+                  >
                     {passwordConfirmMessage}
                   </span>
                 )}
@@ -229,7 +231,8 @@ function SignUp({ setOpenSignUpModal }) {
                 />
                 {signUpInfo.nickName.length > 0 && (
                   <span
-                    className={`message ${isNickname ? "success" : "error"}`}>
+                    className={`message ${isNickname ? "success" : "error"}`}
+                  >
                     {nicknameMessage}
                   </span>
                 )}
@@ -238,7 +241,8 @@ function SignUp({ setOpenSignUpModal }) {
             <button
               type="submit"
               id="signUpButton"
-              disabled={!(isUserId && isPassword && isEmail && isNickname)}>
+              disabled={!(isUserId && isPassword && isEmail && isNickname)}
+            >
               가입하기
             </button>
           </form>
