@@ -152,7 +152,7 @@ function SignUp({ setOpenSignUpModal }) {
           <form onSubmit={onSubmitHandler}>
             <div>
               <p>아이디/비밀번호</p>
-              <div className="formBox">
+              <div className="formBox id">
                 <input
                   type="text"
                   placeholder="아이디"
