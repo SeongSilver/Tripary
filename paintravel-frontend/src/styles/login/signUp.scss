@@ -30,7 +30,8 @@
     z-index: 1000;
     @include font;
     .signUpWrap {
-      width: 600px;
+      min-width: 400px;
+      max-width: 600px;
       height: 80%;
       margin: 10vh auto 0 auto;
       position: relative;
@@ -53,11 +54,6 @@
       form {
         @include noDrag;
         div {
-          // 아이디 width
-          div:nth-child(2) input {
-            width: 80%;
-            margin-right: 2%;
-          }
           > input {
             @include font;
             width: 100%;
@@ -68,11 +64,6 @@
             font-size: 1.6rem;
             border-radius: 10px;
           }
-        }
-        // 이메일 width
-        div:nth-child(2):not(.formBox) > input {
-          width: 80%;
-          margin-right: 2%;
         }
         .formBox {
           position: relative;
@@ -87,7 +78,7 @@
           .message {
             font-weight: 500;
             font-size: 1.2rem;
-            line-height: 3vh;
+            line-height: 4vh;
             position: absolute;
             bottom: 0;
             left: 0;
@@ -100,9 +91,18 @@
             }
           }
         }
+        // 아이디 width
+        .id input {
+          width: 80%;
+          margin-right: 2%;
+        }
+        // 이메일, 닉네임 formBox height
+        .formBox:nth-child(2):not(.id) {
+          height:4vh;
+        }
         .doubleCheckBtn {
           width: 18%;
-          height: 5vh;
+          height: 4vh;
           border: 1px solid #000;
           border-radius: 10px;
           background-color: #000;
