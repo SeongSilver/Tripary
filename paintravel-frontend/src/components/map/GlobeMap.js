@@ -7,18 +7,18 @@ import countriesData from "@amcharts/amcharts5-geodata/data/countries";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
 
-console.log(countriesData);
-const countryArr = Object.keys(countriesData).map((key) => [key]);
-console.log("countryArr : " + countryArr);
-
-const nationCodeExample = ["KR", "UK", "RU", "SA"];
-
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
   const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState("");
+
+  console.log(countriesData);
+  const countryArr = Object.keys(countriesData).map((key) => [key]);
+  console.log("countryArr : " + countryArr);
+
+  const nationCodeExample = ["KR", "UK", "RU", "SA"];
 
   /* Chart code */
   // Create root element
@@ -49,11 +49,14 @@ const GlobeMap = () => {
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
-        fill: "rgba(255,255,255,0.2)",
         exclude: ["AQ"],
       })
     );
 
+    polygonSeries.mapPolygons.template.setAll({
+      tooltipText: "{name}",
+      templateField: "polygonSettings",
+    });
     /*
     [성은] 전체 국가 코드 배열과 해당 아이디(일단 임시 배열)의 값이
     같을 때 해당 아이디의 국가가 색칠되도록 하기는 왜 안되지????
@@ -64,7 +67,7 @@ const GlobeMap = () => {
         console.log(ncexam);
         polygonSeries.data.setAll([
           {
-            id: "KR",
+            id: nationCodeExample[j],
             polygonSettings: {
               fill: am5.color(0xff3c38),
             },
@@ -89,7 +92,7 @@ const GlobeMap = () => {
     // });
 
     polygonSeries.mapPolygons.template.states.create("active", {
-      fill: "rgba(0,0,255,0.5)",
+      fill: "rgba(0,0,255,0.15)",
     });
 
     // Create series for background fill
@@ -282,8 +285,7 @@ const GlobeMap = () => {
       <div
         style={{ width: `${globeWidth}` }}
         id="chartdiv"
-        className="chartdiv"
-      ></div>
+        className="chartdiv"></div>
       <canvas className="stars" ref={canvasRef}></canvas>
       <div
         className="nationdiv"
@@ -292,8 +294,7 @@ const GlobeMap = () => {
           display: `${ContentDisplay}`,
           position: "absolute",
           width: "60vw",
-        }}
-      >
+        }}>
         <ContentList
           selectedCountry={selectedCountry}
           nationCode={nationCode}
