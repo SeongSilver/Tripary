@@ -41,9 +41,6 @@ function ContentModal({contentModalStatus, setContentModalStatus, setContentModa
       setModalSlideBtn4th({backgroundColor:"#000"});
     }
   },[modalCurrentSlide]);
-  // useEffect(()=> {
-  //   slidePaginationBtn();
-  // },[slidePaginationBtn]);
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
   const closeModal = () => {
     setModalOpenAnimation("50vh");
