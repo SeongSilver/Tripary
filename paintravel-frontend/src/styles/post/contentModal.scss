@@ -19,7 +19,7 @@
 }
 @mixin font {
   font-family: 'Nanum Myeongjo', 'Noto Sans KR';
-  color: #fff;
+  color: #222;
   letter-spacing: 0.3rem;
   font-weight:100;
 }
@@ -42,7 +42,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 100;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,56 +53,82 @@
     width: 60vw;
     height: 85vh;
     border-radius: 20px;
-    background-color: rgba(0,0,0,0.5);
+    background-color: white;
     transition: all 0.2s ease-out;
     .modalHeader {
-      height: 10vh;
+      height: 12vh;
       padding-left:3vw;
       position:relative;
-      margin-bottom:3vh;
       * {@include font; overflow:hidden; display:block;}
       h1 { 
         width: 52vw;
+        margin-top:2vh;
         line-height: 6vh;
         font-size: 2rem;
+        font-weight:600;
       }
       h2 { 
         width: 54vw;
         line-height: 4vh;
         font-size: 1.5rem;
         white-space: pre;
-      }
-      a {
-        line-height: 3vh;
-        position: absolute; right: 3vw; top: 1.5vh;
-        font-size:3rem;
-        span {
-          @include hidden;
-        }
+        font-weight:600;
       }
     }
     .modalBody {
-      height: 64vh;
-      margin-bottom:3vh;
+      width: calc(100% - 6vw); height: 60vh;
+      margin:0 3vw;
+      position:relative;
+      overflow:hidden;
       > li {
-        width: calc(100% - 6vw); height: 100%;
+        width: 100%; height: 100%;
         background-color: #fff;
-        margin:0 3vw;
         overflow: hidden;
-        position:relative;
+        position:absolute; top: 0%;
+        transition:all 0.5s ease;
         img {
           min-width: 100%; min-height: 100%;
-          max-width: 150%; max-height: 150%;
+          max-width: 200%; max-height: 100%;
           position:absolute; left: 50%; top: 50%;
           transform: translate(-50%, -50%);
         }
       }
+      > li:nth-child(1) { left: 0%; }
+      > li:nth-child(2) { left: 100%; }
+      > li:nth-child(3) { left: 200%; }
+      > li:nth-child(4) { left: 300%; }
     }
     .modalPagination {
-      height: 5vh;
+      height: 11vh;
       display: flex;
-      justify-content: right;
+      justify-content: center;
       align-items: center;
+      li {
+        margin:0 1vw;
+        span {@include hidden;}
+        a {
+          display:block;
+          width: 2vw; height:2vw;
+          border-radius:50%;
+          font-size:2vw;
+          line-height: 2vw;
+          text-align: center;
+          color:#888;
+        }
+      }
+      li a:not(.modalPagination li:first-child a, .modalPagination li:last-child a) {
+        width: 1vw; height:1vw;
+        line-height: 1vw;
+      }
+    }
+    > a {
+      line-height: 3vh;
+      position: absolute; right: 3vw; top: 2.5vh;
+      font-size:3rem;
+      color:#222;
+      span {
+        @include hidden;
+      }
     }
   }
 }

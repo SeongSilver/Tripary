@@ -15,6 +15,14 @@
   height: 0;
   text-indent: -9999px;
 }
+
+@media all and (max-width:600px) {
+  .signUpWrap {padding: 2vh 30px;}
+}
+@media all and (min-width:601px) {
+  .signUpWrap {padding: 2vh 60px;}
+}
+
 .signUpContainer {
   background: url(../../img/login/loginBg.jpg);
   background-size: 100vw 100vh;
@@ -37,12 +45,11 @@
       position: relative;
       background: #fff;
       border-radius: 10px;
-      padding: 2vh 5vw;
       h1 {
         font-size: 2.4rem;
         text-align: left;
         line-height: 5vh;
-        margin-bottom: 3vh;
+        margin-bottom: 2vh;
         @include font;
         @include noDrag;
         span {
@@ -96,10 +103,7 @@
           width: 80%;
           margin-right: 2%;
         }
-        // 이메일, 닉네임 formBox height
-        .formBox:nth-child(2):not(.id) {
-          height:4vh;
-        }
+        
         .doubleCheckBtn {
           width: 18%;
           height: 4vh;
@@ -113,11 +117,12 @@
         span {
           color: red;
           font-size: 1.6rem;
+          overflow:visible;
         }
         p {
           font-size: 1.8rem;
           line-height: 3vh;
-          margin: 2vh 0 1vh 0;
+          margin: 1vh 0;
         }
         #signUpButton {
           color: #fff;
@@ -128,7 +133,7 @@
           font-size: 1.8rem;
           border: none;
           border-radius: 10px;
-          margin-top: 5vh;
+          margin-top: 2vh;
           cursor: pointer;
         }
       }
