@@ -77,7 +77,7 @@ function SignUp({ setOpenSignUpModal }) {
     });
     if (!passwordRegex.test(passwordCurrent)) {
       setPasswordMessage(
-        "숫자 + 영문자 + 특수문자 조합으로 8자 이상 20자 미만으로 입력해주세요!"
+        "숫자,영문자,특수문자 조합으로 8자 이상 20자 미만으로 입력해주세요"
       );
       setIsPassword(false);
       return;
@@ -110,11 +110,11 @@ function SignUp({ setOpenSignUpModal }) {
       [e.target.name]: emailCurrent,
     });
     if (!emailRegex.test(emailCurrent)) {
-      setEmailMessage("이메일 양식을 지켜주세요!");
+      setEmailMessage("이메일 양식을 지켜주세요");
       setIsEmail(false);
       return;
     } else {
-      setEmailMessage("사용 가능한 이메일입니다!");
+      setEmailMessage("사용 가능한 이메일입니다");
       setIsEmail(true);
     }
   };

@@ -27,6 +27,10 @@ svg {
     opacity: 0.9;
     padding-top: 10vh;
     transition:1s ease-in-out;
+    // 캔버스 워터마크 지우기
+    > div > div > div > canvas:nth-child(2) {
+      display:none;
+    }
   }
   .nationdiv{
     width:100%;
