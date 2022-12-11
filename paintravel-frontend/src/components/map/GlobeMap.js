@@ -18,7 +18,7 @@ const GlobeMap = () => {
   const countryArr = Object.keys(countriesData).map((key) => [key]);
   console.log("countryArr : " + countryArr);
 
-  const nationCodeExample = ["KR", "UK", "RU", "SA"];
+  const nationCodeExample = ["KR", "UK", "RU"];
 
   /* Chart code */
   // Create root element
@@ -56,15 +56,27 @@ const GlobeMap = () => {
     polygonSeries.mapPolygons.template.setAll({
       tooltipText: "{name}",
       templateField: "polygonSettings",
+      toggleKey: "active",
+      interactive: true,
     });
     /*
     [성은] 전체 국가 코드 배열과 해당 아이디(일단 임시 배열)의 값이
     같을 때 해당 아이디의 국가가 색칠되도록 하기는 왜 안되지????
     */
+
+    polygonSeries.mapPolygons.template.states.create("active", {
+      fill: "rgba(0,0,255,0.15)",
+    });
+
+    polygonSeries.mapPolygons.template.states.create("hover", {
+      cursorOverStyle: "pointer",
+    });
+
+    var colors = am5.ColorSet.new(root, {});
+    polygonSeries.mapPolygons.template.set("fill", colors.getIndex(3));
+
     if (nationCodeExample.length > 0) {
       for (let j = 0; j < nationCodeExample.length; j++) {
-        const ncexam = '"' + nationCodeExample[j] + '"';
-        console.log(ncexam);
         polygonSeries.data.setAll([
           {
             id: nationCodeExample[j],
@@ -75,31 +87,12 @@ const GlobeMap = () => {
         ]);
       }
     }
-
-    // polygonSeries.mapPolygons.template.events.on("click", function (ev) {
-    //   polygonSeries.zoomToDataItem(ev.target.dataItem);
-    //   console.log(ev.target.dataItem);
-    // });
-
-    polygonSeries.mapPolygons.template.setAll({
-      tooltipText: "{name}",
-      toggleKey: "active",
-      interactive: true,
-    });
-
-    // polygonSeries.mapPolygons.template.states.create("hover", {
-    //   fill: "skyblue",
-    // });
-
-    polygonSeries.mapPolygons.template.states.create("active", {
-      fill: "rgba(0,0,255,0.15)",
-    });
-
     // Create series for background fill
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
     let backgroundSeries = chart.series.unshift(
       am5map.MapPolygonSeries.new(root, {})
     );
+
     //지도에서 바다색칠하는 부분
     backgroundSeries.mapPolygons.template.setAll({
       fill: "#3b75afbe",
@@ -126,14 +119,13 @@ const GlobeMap = () => {
     function selectCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
-      console.log(dataItem);
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
       console.log("국가코드" + dataItem.dataContext.id);
       // setSelectedCountry(target)R;
       setTimeout(() => {
         //타겟의 중심 포인트에
-        chart.zoomToGeoPoint(target.geoCentroid(), 1.3, target.geoCentroid());
+        chart.zoomToGeoPoint(target.geoCentroid(), 2, target.geoCentroid());
       }, 1500);
       setGlobeWidth("40%");
       setContentPositionRight("0");
