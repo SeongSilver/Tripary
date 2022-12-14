@@ -20,16 +20,16 @@ svg {
   display: flex;
   flex-direction: row;
   transition:0.5s;
+  padding-top: 10vh;
   .chartdiv {
     display: block;
     height: 80vh;
     background: transparent;
     opacity: 0.9;
-    padding-top: 10vh;
     transition:1s ease-in-out;
     // 캔버스 워터마크 지우기
     > div > div > div > canvas:nth-child(2) {
-      display:none;
+      clip-path: circle(50%);
     }
   }
   .nationdiv{
