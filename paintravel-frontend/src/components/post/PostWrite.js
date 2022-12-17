@@ -118,14 +118,6 @@ function Postwrite() {
       .catch((err) => {
         console.log(err);
       });
-    dispatch(postWrite(formData)).then((response) => {
-      if (response.payload.postSuccess) {
-        navigate("/");
-      } else {
-        alert("업로드 실패");
-        return;
-      }
-    });
   };
 
   const goMain = () => {

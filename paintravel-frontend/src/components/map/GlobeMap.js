@@ -72,21 +72,22 @@ const GlobeMap = () => {
       cursorOverStyle: "pointer",
     });
 
-    var colors = am5.ColorSet.new(root, {});
-    polygonSeries.mapPolygons.template.set("fill", colors.getIndex(3));
+    // var colors = am5.ColorSet.new(root, {});
+    // polygonSeries.mapPolygons.template.set("fill", colors.getIndex(3));
 
-    if (nationCodeExample.length > 0) {
-      for (let j = 0; j < nationCodeExample.length; j++) {
-        polygonSeries.data.setAll([
-          {
-            id: nationCodeExample[j],
-            polygonSettings: {
-              fill: am5.color(0xff3c38),
-            },
-          },
-        ]);
-      }
-    }
+    // if (nationCodeExample.length > 0) {
+    //   for (let j = 0; j < nationCodeExample.length; j++) {
+    //     polygonSeries.data.setAll([
+    //       {
+    //         id: nationCodeExample[j],
+    //         polygonSettings: {
+    //           fill: am5.color(0xff3c38),
+    //         },
+    //       },
+    //     ]);
+    //   }
+    // }
+
     // Create series for background fill
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
     let backgroundSeries = chart.series.unshift(
@@ -95,7 +96,7 @@ const GlobeMap = () => {
 
     //지도에서 바다색칠하는 부분
     backgroundSeries.mapPolygons.template.setAll({
-      fill: "#3b75afbe",
+      fill: "#243f60bc",
       stroke: am5.color("rgba(100, 100, 255, 0.2)"),
     });
     backgroundSeries.data.push({

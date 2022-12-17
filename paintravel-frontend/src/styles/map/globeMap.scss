@@ -19,22 +19,22 @@ svg {
 .globeMap {
   display: flex;
   flex-direction: row;
-  transition:0.5s;
+  transition: 0.5s;
   .chartdiv {
     display: block;
     height: 80vh;
     background: transparent;
     opacity: 0.9;
     padding-top: 10vh;
-    transition:1s ease-in-out;
+    transition: 1s ease-in-out;
     // 캔버스 워터마크 지우기
-    > div > div > div > canvas:nth-child(2) {
-      display:none;
-    }
+    // > div > div > div > canvas:nth-child(2) {
+    //   display: none;
+    // }
   }
-  .nationdiv{
-    width:100%;
-    transition:1s ease-in-out;
+  .nationdiv {
+    width: 100%;
+    transition: 1s ease-in-out;
   }
 }
 
@@ -45,5 +45,5 @@ svg {
   left: 0;
   top: 0;
   background: black;
-  z-index:-1;
+  z-index: -1;
 }
