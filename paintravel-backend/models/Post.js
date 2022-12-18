@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const formData = new FormData();
+
 const postSchema = mongoose.Schema({
     writer: {
         type: mongoose.SchemaTypes.ObjectId,
@@ -7,6 +9,10 @@ const postSchema = mongoose.Schema({
         ref: "User",
     },
     country: {
+        type: String,
+        required: true,
+    },
+    nationCode: {
         type: String,
         required: true,
     },
@@ -34,19 +40,10 @@ const postSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    file_1: {
-        type: String,
+    file: {
+        type: [String],
         required: true,
     },
-    file_2: {
-        type: String,
-    },
-    file_3: {
-        type: String,
-    },
-    file_4: {
-        type: String,
-    }
 })
 
 

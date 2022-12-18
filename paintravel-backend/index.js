@@ -24,12 +24,5 @@ mongoose
   })
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
-
-app.get("/", (req, res) => res.send("Hello World 새복많!!!!!꾫꾫"));
-
-//프론트 연결
-app.get("/api/hello", (req, res) => {
-  res.send("안녕하세요@@@");
-});
-
+  
 app.listen(port, () => console.log(`Example app listening on port ${port}`));
