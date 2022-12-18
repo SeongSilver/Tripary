@@ -40,12 +40,6 @@ function SignUp({ setOpenSignUpModal }) {
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
-    // if(signUpInfo.password!==signUpInfo.passwordConfrim){
-    //   return alert("비밀번호와 비밀번호 확인은 일치해야합니다")
-    // }
-
-    console.log(signUpInfo);
-
     dispatch(signUpUser(signUpInfo)).then((response) => {
       if (response.payload.success) {
         closeSignUp();
@@ -57,14 +51,14 @@ function SignUp({ setOpenSignUpModal }) {
 
   //아이디 유효성 검사
   const onChangeUserId = (e) => {
+    const userIdRegex = /^[a-z0-9]{6,12}$/;
     const userIdCurrent = e.target.value;
     setSignUpInfo({
       ...signUpInfo,
       [e.target.name]: userIdCurrent,
     });
-    if (userIdCurrent.length < 6 || userIdCurrent.length > 12) {
-      setUserIdMessage("6글자 이상 12글자 미만으로 입력해주세요");
-      setIsUserId(false);
+    if (!userIdRegex.test(userIdCurrent)) {
+      setUserIdMessage("영어 소문자와 숫자 조합으로 입력해주세요(6~12자)");
       return;
     } else {
       setUserIdMessage("올바른 아이디 형식입니다");
@@ -83,7 +77,7 @@ function SignUp({ setOpenSignUpModal }) {
     });
     if (!passwordRegex.test(passwordCurrent)) {
       setPasswordMessage(
-        "숫자 + 영문자 + 특수문자 조합으로 8자 이상 20자 미만으로 입력해주세요!"
+        "숫자,영문자,특수문자 조합으로 8자 이상 20자 미만으로 입력해주세요"
       );
       setIsPassword(false);
       return;
@@ -116,11 +110,11 @@ function SignUp({ setOpenSignUpModal }) {
       [e.target.name]: emailCurrent,
     });
     if (!emailRegex.test(emailCurrent)) {
-      setEmailMessage("이메일 양식을 지켜주세요!");
+      setEmailMessage("이메일 양식을 지켜주세요");
       setIsEmail(false);
       return;
     } else {
-      setEmailMessage("사용 가능한 이메일입니다!");
+      setEmailMessage("사용 가능한 이메일입니다");
       setIsEmail(true);
     }
   };
@@ -178,8 +172,7 @@ function SignUp({ setOpenSignUpModal }) {
                 />
                 {signUpInfo.password.length > 0 && (
                   <span
-                    className={`message ${isPassword ? "success" : "error"}`}
-                  >
+                    className={`message ${isPassword ? "success" : "error"}`}>
                     {passwordMessage}
                   </span>
                 )}
@@ -195,8 +188,7 @@ function SignUp({ setOpenSignUpModal }) {
                   <span
                     className={`message ${
                       isPasswordConfirm ? "success" : "error"
-                    }`}
-                  >
+                    }`}>
                     {passwordConfirmMessage}
                   </span>
                 )}
@@ -231,8 +223,7 @@ function SignUp({ setOpenSignUpModal }) {
                 />
                 {signUpInfo.nickName.length > 0 && (
                   <span
-                    className={`message ${isNickname ? "success" : "error"}`}
-                  >
+                    className={`message ${isNickname ? "success" : "error"}`}>
                     {nicknameMessage}
                   </span>
                 )}
@@ -241,8 +232,7 @@ function SignUp({ setOpenSignUpModal }) {
             <button
               type="submit"
               id="signUpButton"
-              disabled={!(isUserId && isPassword && isEmail && isNickname)}
-            >
+              disabled={!(isUserId && isPassword && isEmail && isNickname)}>
               가입하기
             </button>
           </form>

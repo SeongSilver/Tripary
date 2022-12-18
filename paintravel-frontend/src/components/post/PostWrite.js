@@ -22,8 +22,6 @@ function Postwrite() {
   const [currentId, setCurrentId] = useState("");
   const [post, setPost] = useState({
     title: "",
-    country: "",
-    nationCode: "",
     location: "",
     fromDate: "",
     toDate: "",
@@ -90,11 +88,15 @@ function Postwrite() {
     formData.append("title", post.title);
     formData.append("country", selectedCountry);
     formData.append("nationCode", nationCode);
+    formData.append("country", selectedCountry);
+    formData.append("nationCode", nationCode);
     formData.append("location", post.location);
     formData.append("fromDate", post.fromDate);
     formData.append("toDate", post.toDate);
     formData.append("content", post.content);
     formData.append("writer", post.writer);
+    //[현아] fromData에 "myfile"라는 이름으로 각각의 사진 파일들을 하나씩 추가해줌.
+    //    한번에 fileList로 추가할 경우, 백단에서 파일 업로드를 수행 할 수 없기 때문.
     for (let i = 0; i < post.myfile.length; i++) {
       formData.append("myfile", post.myfile[i]);
     }

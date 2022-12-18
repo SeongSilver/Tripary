@@ -45,12 +45,12 @@ function Header() {
         </div>
         <div className="headerRight">
           <Link to="/mypage" className="headLink">
-            my page
+            My page
           </Link>
           {isLogined ? (
-            <span className="headLink" onClick={onClickHandler}>
-              Logout
-            </span>
+            <a href="#" className="headLink" onClick={onClickHandler}>
+              logout
+            </a>
           ) : (
             <Link to="/Login" className="headLink">
               sign in

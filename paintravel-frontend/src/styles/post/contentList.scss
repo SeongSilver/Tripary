@@ -1,88 +1,147 @@
 @font-face {
-  font-family: 'Nanum Myeongjo';
-  src: url('../../fonts/NanumMyeongjo-Regular.ttf') format("truetype"),
-       url('../../fonts/NanumMyeongjo-Bold.ttf') format("truetype"),
-       url('../../fonts/NanumMyeongjo-ExtraBold.ttf') format("truetype");
+  font-family: "Nanum Myeongjo";
+  src: url("../../fonts/NanumMyeongjo-Regular.ttf") format("truetype"),
+    url("../../fonts/NanumMyeongjo-Bold.ttf") format("truetype"),
+    url("../../fonts/NanumMyeongjo-ExtraBold.ttf") format("truetype");
   // 영문(대소문자)
   unicode-range: U+0041-005A, U+0061-007A;
 }
 @font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../../fonts/NotoSansKR-Thin.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Light.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Medium.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Regular.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Bold.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Black.otf') format("opentype");
+  font-family: "Noto Sans KR";
+  src: url("../../fonts/NotoSansKR-Thin.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Light.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Medium.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Regular.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Bold.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Black.otf") format("opentype");
   // 국문, 숫자
   unicode-range: U+AC00-D7A3, U+0030-0039;
 }
 @mixin font {
-  font-family: 'Nanum Myeongjo', 'Noto Sans KR';
+  font-family: "Nanum Myeongjo", "Noto Sans KR";
   color: #fff;
   letter-spacing: 0.3rem;
-  font-weight:100;
+  font-weight: 100;
 }
 @mixin hidden {
   display: block;
-  width: 0; height: 0;
+  width: 0;
+  height: 0;
   text-indent: -9999px;
+}
+// 모바일, 태블릿
+@media all and (max-width: 1024px) {
+  .contentCard {
+    margin: 0 auto;
+    display: block;
+    div {
+      width: 50vw;
+      height: 30vw;
+    }
+    .contentImage {
+      min-width: 50vw;
+      min-height: 30vw;
+      max-width: 60vw;
+      max-height: 40vw;
+    }
+    a {
+      width: 50vw;
+      height: 30vw;
+    }
+  }
+}
+// PC
+@media all and (min-width: 1025px) {
+  .contentCard {
+    div {
+      width: 15vw;
+      height: 10vw;
+    }
+    .contentImage {
+      min-width: 15vw;
+      min-height: 10vw;
+      max-width: 20vw;
+      max-height: 20vw;
+    }
+    a {
+      width: 15vw;
+      height: 10vw;
+    }
+  }
+  .contentCard:nth-child(3n-1) {
+    margin: 0 3vw;
+  }
 }
 .contentContainer {
   width: 100%;
   height: 80vh;
   margin-top: 10vh;
   @include font;
-  > h1 {@include hidden;}
+  > h1 {
+    @include hidden;
+  }
   .contentHeader {
     height: 5vh;
     margin-bottom: 3vh;
-    position:relative;
-    .selectedCountry{
+    position: relative;
+    .selectedCountry {
       text-align: center;
       line-height: 5vh;
-      color:white;
-      font-size:2.8rem;
+      color: white;
+      font-size: 2.8rem;
     }
-    .postButton{
-      position: absolute; right: 2vw; top: 0;
-      font-size:3.2rem;
+    .backButton {
+      position: absolute;
+      left: 2vw;
+      top: 0;
+      font-size: 3rem;
       line-height: 5vh;
-      span {@include hidden;}
+    }
+    .postButton {
+      position: absolute;
+      right: 2vw;
+      top: 0;
+      font-size: 3.2rem;
+      line-height: 5vh;
+      span {
+        @include hidden;
+      }
     }
   }
   .contentBody {
     height: 72vh;
+    height: 82vh;
     display: flex;
     flex-wrap: wrap;
     overflow: auto;
-    padding:0 calc((60vw - 45vw - 6vw - 10px)/2);
+    padding: 0 calc((60vw - 45vw - 6vw - 10px) / 2);
     .contentCard {
-      position:relative;
-      margin-bottom:3vh;
-      overflow:hidden;
+      position: relative;
+      margin-bottom: 3vh;
+      overflow: hidden;
       div {
-        overflow:hidden;
-        width: 15vw; height: 10vw;
+        overflow: hidden;
       }
       .contentImage {
-        display:block;
-        position:relative; left: 50%; top: 50%;
-        min-width: 15vw; min-height: 10vw;
-        max-width: 20vw; max-height: 20vw;
+        display: block;
+        position: relative;
+        left: 50%;
+        top: 50%;
         transform: translate(-50%, -50%);
       }
       .cardTag {
-        height:4vh;
-        position:absolute; left:0; top:0;
+        height: 4vh;
+        position: absolute;
+        left: 0;
+        top: 0;
         z-index: 100;
         font-size: 1.4rem;
-        padding:0 0.5vw;
+        padding: 0 0.5vw;
         line-height: 4vh;
-        background-color:rgba(0,0,0,0.5);
-        white-space:pre;
+        background-color: rgba(0, 0, 0, 0.5);
+        white-space: pre;
       }
-      .cardDate{
+      .cardDate {
         line-height: 5vh;
         font-size: 1.4rem;
         text-align: right;
@@ -92,25 +151,70 @@
       }
       a {
         text-indent: -9999px;
-        width: 15vw; height: 10vw;
-        position: absolute; left: 0; top: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
       }
     }
-    .contentCard:nth-child(3n-1) {margin:0 3vw;}
   }
   .contentBody::-webkit-scrollbar {
     width: 10px;
   }
-  
-  .contentBody::-webkit-scrollbar-thumb{
-    background-color: rgba(255,255,255,0.5);
+
+  .contentCard {
+    position: relative;
+    margin-bottom: 3vh;
+    overflow: hidden;
+    div {
+      overflow: hidden;
+    }
+    .contentImage {
+      display: block;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .cardTag {
+      height: 4vh;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 100;
+      font-size: 1.4rem;
+      padding: 0 0.5vw;
+      line-height: 4vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      white-space: pre;
+    }
+    .cardDate {
+      line-height: 5vh;
+      font-size: 1.4rem;
+      text-align: right;
+    }
+    hr {
+      margin: 15px 0px;
+    }
+    a {
+      text-indent: -9999px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+  .contentBody::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .contentBody::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 5px;
     /* 스크롤바 둥글게 설정    */
   }
-  
+
   /* 스크롤바 뒷 배경 설정*/
-  .contentBody::-webkit-scrollbar-track{
-    background-color: rgba(0,0,0,0);
+  .contentBody::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
   }
   .modalFooter {
     height: 50px;
@@ -127,4 +231,3 @@
     }
   }
 }
-
