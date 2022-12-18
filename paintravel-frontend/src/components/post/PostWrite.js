@@ -2,11 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "../../styles/post/postWrite.scss";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { auth } from "../../_actions/user_actions";
-import { postWrite } from "../../_actions/post_actions";
-import axios from "axios";
 
 function Postwrite() {
+  /*
+    [성은 22.12.18, 22:14] 2개의 input date로는 서로 유효성 검사 찾는거보다
+    다른 기능이 더 잘나와서 react-datepicker를 사용해서 기간을 지정할 수 있도록
+    세팅하기 위한 start, end date설정
+  */
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
   const dispatch = useDispatch();
   /*
     [성은] useSelector 말고 useEffect를 쓰는 이유
@@ -164,6 +174,12 @@ function Postwrite() {
             </li>
             <li>
               <p>일정</p>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                isClearable
+                placeholderText="I have been cleared!"
+              />
               <input
                 type="date"
                 name="fromDate"
