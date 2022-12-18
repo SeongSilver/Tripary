@@ -32,11 +32,13 @@ function Postwrite() {
   const [currentId, setCurrentId] = useState("");
   const [post, setPost] = useState({
     title: "",
+    country: "",
+    nationCode: "",
     location: "",
     fromDate: "",
     toDate: "",
     content: "",
-    file: "",
+    myfile: "",
     writer: "",
   });
   useEffect(() => {
@@ -61,7 +63,6 @@ function Postwrite() {
   };
   const onLoadFile = (e) => {
     const files = e.target.files;
-    console.log(files);
     //업로드한 파일을 미리보기로 보여주기 위한 과정
     if (files.length > 4) {
       e.preventDefault();
@@ -92,7 +93,7 @@ function Postwrite() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    console.log(post.myfile[1])
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
     //일반변수를 담기 위한 과정
@@ -104,26 +105,28 @@ function Postwrite() {
     formData.append("toDate", post.toDate);
     formData.append("content", post.content);
     formData.append("writer", post.writer);
-    formData.append("files", post.file);
-
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + typeof pair[1]);
-      if (pair[0] === "files") {
-        console.log(typeof pair[1]);
-      }
+    //[현아] fromData에 "myfile"라는 이름으로 각각의 사진 파일들을 하나씩 추가해줌.
+    //    한번에 fileList로 추가할 경우, 백단에서 파일 업로드를 수행 할 수 없기 때문.
+    for (let i = 0; i < post.myfile.length; i++) {
+      formData.append("myfile", post.myfile[i]);
     }
-    // axios
-    //   .post("/api/post/upload", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    for (var pair of formData.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]);
+    }
+
+    axios
+      .post("/api/post/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        alert("글 등록 성공!");
+        navigate("/")
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const goMain = () => {
@@ -141,7 +144,7 @@ function Postwrite() {
               <label htmlFor="galleryUpload">+</label>
               <input
                 type="file"
-                name="file"
+                name="myfile"
                 multiple={true}
                 id="galleryUpload"
                 onChange={onLoadFile}
