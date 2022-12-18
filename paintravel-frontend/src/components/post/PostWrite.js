@@ -22,8 +22,6 @@ function Postwrite() {
   const [currentId, setCurrentId] = useState("");
   const [post, setPost] = useState({
     title: "",
-    country: "",
-    nationCode: "",
     location: "",
     fromDate: "",
     toDate: "",
@@ -89,43 +87,33 @@ function Postwrite() {
     const formData = new FormData();
     //일반변수를 담기 위한 과정
     formData.append("title", post.title);
-    formData.append("country", post.country);
+    formData.append("country", selectedCountry);
+    formData.append("nationCode", nationCode);
     formData.append("location", post.location);
     formData.append("fromDate", post.fromDate);
     formData.append("toDate", post.toDate);
     formData.append("content", post.content);
     formData.append("writer", post.writer);
-    formData.append("nationCode", nationCode);
+    formData.append("files", post.file);
 
-    //파일변수를 담기 위한 과정
-    const fileList = post.file;
-    for (let j = 0; j < fileList.length; j++) {
-      formData.append(`file${j + 1}`, fileList[j]);
-    }
-    for (let key of formData.keys()) {
-      console.log(key, ":", formData.get(key));
-    }
-
-    axios
-      .post("/api/post/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    dispatch(postWrite(formData)).then((response) => {
-      if (response.payload.postSuccess) {
-        navigate("/");
-      } else {
-        alert("업로드 실패");
-        return;
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + typeof pair[1]);
+      if (pair[0] === "files") {
+        console.log(typeof pair[1]);
       }
-    });
+    }
+    // axios
+    //   .post("/api/post/upload", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const goMain = () => {
