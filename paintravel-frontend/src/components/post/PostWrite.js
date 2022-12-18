@@ -22,6 +22,8 @@ function Postwrite() {
   const [currentId, setCurrentId] = useState("");
   const [post, setPost] = useState({
     title: "",
+    country: "",
+    nationCode: "",
     location: "",
     fromDate: "",
     toDate: "",
@@ -88,8 +90,6 @@ function Postwrite() {
     formData.append("title", post.title);
     formData.append("country", selectedCountry);
     formData.append("nationCode", nationCode);
-    formData.append("country", selectedCountry);
-    formData.append("nationCode", nationCode);
     formData.append("location", post.location);
     formData.append("fromDate", post.fromDate);
     formData.append("toDate", post.toDate);
@@ -111,8 +111,9 @@ function Postwrite() {
         },
       })
       .then((res) => {
+        console.log(res)
         alert("글 등록 성공!");
-        navigate("/")
+        //navigate("/")
       })
       .catch((err) => {
         console.log(err);
