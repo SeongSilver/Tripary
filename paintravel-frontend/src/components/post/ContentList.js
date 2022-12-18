@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import ContentModal from "./ContentModal";
+import { BiArrowBack } from "react-icons/bi";
 import "../../styles/post/contentList.scss";
 import { auth } from "../../_actions/user_actions";
 
-function ContentList({ selectedCountry, nationCode }) {
+function ContentList({ selectedCountry, nationCode, contentListClose }) {
   const [contentModal, setContentModal] = useState(false);
   const [contentModalStatus, setContentModalStatus] = useState(false);
   const [cityName, setCityName] = useState("서울인건가");
@@ -37,6 +38,9 @@ function ContentList({ selectedCountry, nationCode }) {
     <div className="contentContainer">
       <h1>다이어리 리스트</h1>
       <div className="contentHeader">
+        <div className="backButton" onClick={contentListClose}>
+          <BiArrowBack />
+        </div>
         <h2 className="selectedCountry">{selectedCountry}</h2>
         <div className="postButton">
           {isLogined ? (
@@ -46,16 +50,14 @@ function ContentList({ selectedCountry, nationCode }) {
                 selectedCountry: selectedCountry,
                 nationCode: nationCode,
               }}
-              className="postButton"
-            >
+              className="postButton">
               <span>다이어리 추가</span>+
             </Link>
           ) : (
             <Link
               to="/login"
               state={{ selectedCountry: selectedCountry }}
-              className="postButton"
-            >
+              className="postButton">
               <span>다이어리 추가</span>+
             </Link>
           )}

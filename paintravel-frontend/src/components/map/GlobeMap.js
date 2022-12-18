@@ -1,4 +1,10 @@
-import React, { useRef, useState, useLayoutEffect, useEffect } from "react";
+import React, {
+  useRef,
+  useState,
+  useLayoutEffect,
+  useEffect,
+  useCallback,
+} from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
@@ -14,12 +20,21 @@ const GlobeMap = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState("");
 
-  console.log(countriesData);
+  const contentListOpen = () => {
+    setGlobeWidth("40%");
+    setContentPositionRight("0");
+    setContentDisplay("block");
+  };
+  const contentListClose = () => {
+    setGlobeWidth("100%");
+    setContentPositionRight("-60vw");
+    setContentDisplay("hidden");
+  };
+
   const countryArr = Object.keys(countriesData).map((key) => [key]);
   console.log("countryArr : " + countryArr);
 
   const nationCodeExample = ["KR", "UK", "RU"];
-
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
@@ -59,10 +74,6 @@ const GlobeMap = () => {
       toggleKey: "active",
       interactive: true,
     });
-    /*
-    [성은] 전체 국가 코드 배열과 해당 아이디(일단 임시 배열)의 값이
-    같을 때 해당 아이디의 국가가 색칠되도록 하기는 왜 안되지????
-    */
 
     polygonSeries.mapPolygons.template.states.create("active", {
       fill: "rgba(0,0,255,0.15)",
@@ -72,21 +83,45 @@ const GlobeMap = () => {
       cursorOverStyle: "pointer",
     });
 
-    // var colors = am5.ColorSet.new(root, {});
-    // polygonSeries.mapPolygons.template.set("fill", colors.getIndex(3));
+    // let colorSet = am5.ColorSet.new(root, {});
 
-    // if (nationCodeExample.length > 0) {
-    //   for (let j = 0; j < nationCodeExample.length; j++) {
-    //     polygonSeries.data.setAll([
-    //       {
-    //         id: nationCodeExample[j],
-    //         polygonSettings: {
-    //           fill: am5.color(0xff3c38),
-    //         },
-    //       },
-    //     ]);
+    // let i = 0;
+    // polygonSeries.mapPolygons.template.adapters.add(
+    //   "fill",
+    //   function (fill, target) {
+    //     /*
+    //     dataContext를 배열로 만든 후 사용자의 게시물이 있는 나라(지금은 더미데이터 nationCodeExample)
+    //     데이터를 조회했을 때 컬러셋을 주는 것을 목표로 하기는 왜 안되는거니
+    //     */
+
+    //     // if (nationCodeExample.length > 0) {
+    //     //   for (let i = 0; i < countryArr.lengthl; i++) {
+    //     //     for (let j = 0; j < nationCodeExample.length; j++) {
+    //     //       if (countryArr[i] === nationCodeExample[j]) {
+    //     //         //해당 나라에colorWasSet이 false라면 .colorWasSet을 true로
+    //     //         let color = am5.Color.saturate(colorSet.getIndex(i), 0.3);
+    //     //         return color
+    //     //       }else {
+    //     //         return fill;
+    //     //     }
+    //     //   }
+    //     // }
+    //     if (i < 10) {
+    //       i++;
+    //     } else {
+    //       i = 0;
+    //     }
+    //     let dataContext = target.dataItem.dataContext.id;
+    //     if (!dataContext.colorWasSet) {
+    //       dataContext.colorWasSet = true;
+    //       let color = am5.Color.saturate(colorSet.getIndex(i), 0.3);
+    //       target.setRaw("fill", color);
+    //       return color;
+    //     } else {
+    //       return fill;
+    //     }
     //   }
-    // }
+    // );
 
     // Create series for background fill
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
@@ -128,9 +163,7 @@ const GlobeMap = () => {
         //타겟의 중심 포인트에
         chart.zoomToGeoPoint(target.geoCentroid(), 2, target.geoCentroid());
       }, 1500);
-      setGlobeWidth("40%");
-      setContentPositionRight("0");
-      setContentDisplay("block");
+      contentListOpen();
       if (target) {
         let centroid = target.geoCentroid();
         if (centroid) {
@@ -154,8 +187,18 @@ const GlobeMap = () => {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
       chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
-      nationDivStyleHandler();
+      contentListClose();
     }
+
+    // const unSelectCountry = useCallback(
+    //   (id) => {
+    //     let dataItem = polygonSeries.getDataItemById(id);
+    //     let target = dataItem.get("mapPolygon");
+    //     chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
+    //     contentListClose();
+    //   },
+    //   [contentListClose]
+    // );
 
     function homeCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
@@ -177,12 +220,6 @@ const GlobeMap = () => {
           });
         }
       }
-    }
-    //국가 선택 취소 때 css
-    function nationDivStyleHandler() {
-      setGlobeWidth("100%");
-      setContentPositionRight("-60vw");
-      setContentDisplay("hidden");
     }
     // Uncomment this to pre-center the globe on a country when it loads
     polygonSeries.events.on("datavalidated", function () {
@@ -291,6 +328,7 @@ const GlobeMap = () => {
         <ContentList
           selectedCountry={selectedCountry}
           nationCode={nationCode}
+          contentListClose={contentListClose}
         />
       </div>
     </div>
