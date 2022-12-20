@@ -31,14 +31,15 @@ const GlobeMap = () => {
     setContentDisplay("hidden");
   };
 
-  const countryArr = Object.keys(countriesData).map((key) => [key]);
-  console.log("countryArr : " + countryArr);
-
-  const nationCodeExample = ["KR", "UK", "RU"];
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
   useLayoutEffect(() => {
+    const countryArr = Object.keys(countriesData).map((key) => [key]);
+    console.log("countryArr : " + countryArr);
+
+    const nationCodeExample = ["KR", "UK", "RU"];
+
     let root = am5.Root.new("chartdiv");
 
     // Set themes
