@@ -2,11 +2,25 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "../../styles/post/postWrite.scss";
-import { auth } from "../../_actions/user_actions";
-import { postWrite } from "../../_actions/post_actions";
 import axios from "axios";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import { auth } from "../../_actions/user_actions";
+
+import { MdDeleteForever } from "react-icons/md";
+import { RiFolderAddFill } from "react-icons/ri";
+
 function Postwrite() {
+  /*
+    [성은 22.12.18, 22:14] 2개의 input date로는 서로 유효성 검사 찾는거보다
+    다른 기능이 더 잘나와서 react-datepicker를 사용해서 기간을 지정할 수 있도록
+    세팅하기 위한 start, end date설정
+  */
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
+
   const dispatch = useDispatch();
   /*
     [성은] useSelector 말고 useEffect를 쓰는 이유
@@ -22,11 +36,11 @@ function Postwrite() {
   const [currentId, setCurrentId] = useState("");
   const [post, setPost] = useState({
     title: "",
+    country: "",
+    nationCode: "",
     location: "",
-    fromDate: "",
-    toDate: "",
     content: "",
-    file: "",
+    myfile: "",
     writer: "",
   });
   useEffect(() => {
@@ -51,7 +65,6 @@ function Postwrite() {
   };
   const onLoadFile = (e) => {
     const files = e.target.files;
-    console.log(files);
     //업로드한 파일을 미리보기로 보여주기 위한 과정
     if (files.length > 4) {
       e.preventDefault();
@@ -76,13 +89,13 @@ function Postwrite() {
   const deleteImage = (id) => {
     setPost({
       ...post,
-      [post.filesthumnails]: post.thumnails.filter((index) => index !== id),
+      [post.myfile]: post.myfile.filter((index) => index !== id),
     });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    console.log(post.myfile[1]);
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
     //일반변수를 담기 위한 과정
@@ -90,30 +103,32 @@ function Postwrite() {
     formData.append("country", selectedCountry);
     formData.append("nationCode", nationCode);
     formData.append("location", post.location);
-    formData.append("fromDate", post.fromDate);
-    formData.append("toDate", post.toDate);
+    formData.append("fromDate", startDate);
+    formData.append("toDate", endDate);
     formData.append("content", post.content);
     formData.append("writer", post.writer);
-    formData.append("files", post.file);
-
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + typeof pair[1]);
-      if (pair[0] === "files") {
-        console.log(typeof pair[1]);
-      }
+    //[현아] fromData에 "myfile"라는 이름으로 각각의 사진 파일들을 하나씩 추가해줌.
+    //    한번에 fileList로 추가할 경우, 백단에서 파일 업로드를 수행 할 수 없기 때문.
+    for (let i = 0; i < post.myfile.length; i++) {
+      formData.append("myfile", post.myfile[i]);
     }
-    // axios
-    //   .post("/api/post/upload", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    axios
+      .post("/api/post/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        alert("글 등록 성공!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const goMain = () => {
@@ -126,12 +141,15 @@ function Postwrite() {
         <form className="postWriteWrap" encType="multipart/form-data">
           <div className="gallery">
             <h2>Gallery</h2>
+            <p>4 *3 이미지를 첨부해주세요</p>
             <a href="#galleryUpload">
               <span>사진 첨부 버튼</span>
-              <label htmlFor="galleryUpload">+</label>
+              <label htmlFor="galleryUpload">
+                <RiFolderAddFill />
+              </label>
               <input
                 type="file"
-                name="file"
+                name="myfile"
                 multiple={true}
                 id="galleryUpload"
                 onChange={onLoadFile}
@@ -140,12 +158,11 @@ function Postwrite() {
             </a>
             <div className="galleryContainer">
               {uploadImages.map((image, id) => (
-                <div
-                  className=""
-                  key={id}
-                  style={{ width: "100px", height: "75px", display: "block" }}>
+                <div className="galleryImageContainer" key={id}>
                   <img src={image} alt={`${image} - ${id}`} />
-                  <span onClick={deleteImage}>X</span>
+                  <span onClick={deleteImage}>
+                    <MdDeleteForever />
+                  </span>
                 </div>
               ))}
             </div>
@@ -164,12 +181,24 @@ function Postwrite() {
             </li>
             <li>
               <p>일정</p>
-              <input
+              {/**성은 22.12.18 23:22 : react-datePicker의 Date Range using input with clear button 사용*/}
+              <DatePicker
+                selectsRange={true}
+                startDate={startDate}
+                endDate={endDate}
+                onChange={(update) => {
+                  setDateRange(update);
+                }}
+                isClearable={true}
+                dateFormat="yyyy-MM-dd"
+                placeholderText="여행 기간 선택"
+              />
+              {/* <input
                 type="date"
                 name="fromDate"
                 onChange={onChangePost}></input>
               <span>~</span>
-              <input type="date" name="toDate" onChange={onChangePost}></input>
+              <input type="date" name="toDate" onChange={onChangePost}></input> */}
             </li>
             <li>
               <p>일기</p>
@@ -177,8 +206,8 @@ function Postwrite() {
             </li>
           </ul>
           <div className="postWriteBtn">
-            <button onClick={onSubmit}>등록</button>
             <button onClick={goMain}>메인으로</button>
+            <button onClick={onSubmit}>등록</button>
           </div>
         </form>
       </div>
