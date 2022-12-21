@@ -141,7 +141,7 @@ function Postwrite() {
         <form className="postWriteWrap" encType="multipart/form-data">
           <div className="gallery">
             <h2>Gallery</h2>
-            <p>4 *3 이미지를 첨부해주세요</p>
+            {/* <p>4 *3 이미지를 첨부해주세요</p> */}
             <a href="#galleryUpload">
               <span>사진 첨부 버튼</span>
               <label htmlFor="galleryUpload">
