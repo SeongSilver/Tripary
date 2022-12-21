@@ -45,7 +45,7 @@ function Header() {
         </div>
         <div className="headerRight">
           <Link to="/mypage" className="headLink">
-            My page
+            my page
           </Link>
           {isLogined ? (
             <a href="#" className="headLink" onClick={onClickHandler}>
