@@ -332,11 +332,12 @@
           @include font;
         }
         button:nth-child(1) {
+          background: rgba(175, 144, 126, 0.3);
           margin-right: 5vw;
         }
         button:hover {
           background: rgb(175, 144, 126);
-          transition: 0.2s ease-in;
+          transition: 0.3s ease-in-out;
         }
       }
     }

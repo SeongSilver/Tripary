@@ -38,9 +38,6 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
     <div className="contentContainer">
       <h1>다이어리 리스트</h1>
       <div className="contentHeader">
-        <div className="backButton" onClick={contentListClose}>
-          <BiArrowBack />
-        </div>
         <h2 className="selectedCountry">{selectedCountry}</h2>
         <div className="postButton">
           {isLogined ? (
@@ -61,6 +58,10 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
               <span>다이어리 추가</span>+
             </Link>
           )}
+        </div>
+        <div className="backButton" onClick={contentListClose}>
+          <span>리스트 닫기</span>
+          <BiArrowBack />
         </div>
       </div>
       <ul className="contentBody">
