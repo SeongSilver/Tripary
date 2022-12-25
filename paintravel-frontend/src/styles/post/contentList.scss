@@ -29,6 +29,12 @@
   height: 0;
   text-indent: -9999px;
 }
+@mixin noDrag {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 // 모바일, 태블릿
 @media all and (max-width: 1024px) {
   .contentCard {
@@ -76,12 +82,14 @@
   width: 100%;
   height: 80vh;
   @include font;
+  @include noDrag;
   > h1 {
     @include hidden;
   }
   .contentHeader {
+    width: 52vw;
     height: 5vh;
-    margin-bottom: 3vh;
+    margin: 0 auto 3vh auto;
     position: relative;
     .selectedCountry {
       text-align: center;
@@ -91,14 +99,16 @@
     }
     .backButton {
       position: absolute;
-      left: 2vw;
+      left: 0;
       top: 0;
-      font-size: 3rem;
+      font-size: 2.5rem;
       line-height: 5vh;
+      cursor:pointer;
+      > span {@include hidden;}
     }
     .postButton {
       position: absolute;
-      right: 2vw;
+      right: 0;
       top: 0;
       font-size: 3.2rem;
       line-height: 5vh;
