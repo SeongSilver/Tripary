@@ -3,13 +3,11 @@ import React, {
   useState,
   useLayoutEffect,
   useEffect,
-  useCallback,
 } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import countriesData from "@amcharts/amcharts5-geodata/data/countries";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
 
@@ -35,11 +33,6 @@ const GlobeMap = () => {
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
   useLayoutEffect(() => {
-    const countryArr = Object.keys(countriesData).map((key) => [key]);
-    console.log("countryArr : " + countryArr);
-
-    const nationCodeExample = ["KR", "UK", "RU"];
-
     let root = am5.Root.new("chartdiv");
 
     // Set themes
@@ -102,24 +95,6 @@ polygonSeries.mapPolygons.template.adapters.add("fill", function (fill, target) 
     return fill;
   }
 })
-
-        /*
-        dataContext를 배열로 만든 후 사용자의 게시물이 있는 나라(지금은 더미데이터 nationCodeExample)
-        데이터를 조회했을 때 컬러셋을 주는 것을 목표로 하기는 왜 안되는거니
-        */
-
-        // if (nationCodeExample.length > 0) {
-        //   for (let i = 0; i < countryArr.lengthl; i++) {
-        //     for (let j = 0; j < nationCodeExample.length; j++) {
-        //       if (countryArr[i] === nationCodeExample[j]) {
-        //         //해당 나라에colorWasSet이 false라면 .colorWasSet을 true로
-        //         let color = am5.Color.saturate(colorSet.getIndex(i), 0.3);
-        //         return color
-        //       }else {
-        //         return fill;
-        //     }
-        //   }
-
 
     // Create series for background fill
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
