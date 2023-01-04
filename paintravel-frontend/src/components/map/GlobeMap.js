@@ -1,15 +1,11 @@
-import React, {
-  useRef,
-  useState,
-  useLayoutEffect,
-  useEffect,
-} from "react";
+import React, { useRef, useState, useLayoutEffect, useEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
+import axios from "axios";
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
@@ -29,6 +25,15 @@ const GlobeMap = () => {
     setContentDisplay("hidden");
   };
 
+  //로그인된 아이디 받아오는 state
+  const [currentId, setCurrentId] = useState("");
+
+  //로그인된 아이디 받아오는 useEffect
+  useEffect(() => {
+    dispatch(auth()).then((response) => {
+      setCurrentId(response.payload._id);
+    });
+  }, []);
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
@@ -77,24 +82,25 @@ const GlobeMap = () => {
       cursorOverStyle: "pointer",
     });
 
-    const visitedCountry = ["KR", "CN", "UK", "SA"];
+    const visitedCountry = ["KR", "CN", "US", "SA", "AU"];
     //나라 개수 만큼 반복문 형식
-polygonSeries.mapPolygons.template.adapters.add("fill", function (fill, target) {
-  
-  let dataContext = target.dataItem.dataContext;
+    polygonSeries.mapPolygons.template.adapters.add(
+      "fill",
+      function (fill, target) {
+        let dataContext = target.dataItem.dataContext;
 
-    if (visitedCountry.includes(dataContext.id)) {
-      dataContext.colorWasSet = true;
-      
-      //방문한 국가 색칠하는 색 지정
-      let color = "rgba(0,255,100,0.8)";
-      target.setRaw("fill", color);
-      return color;
-    }
-  else {
-    return fill;
-  }
-})
+        if (visitedCountry.includes(dataContext.id)) {
+          dataContext.colorWasSet = true;
+
+          //방문한 국가 색칠하는 색 지정
+          let color = "rgba(0,255,100,0.8)";
+          target.setRaw("fill", color);
+          return color;
+        } else {
+          return fill;
+        }
+      }
+    );
 
     // Create series for background fill
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
@@ -131,6 +137,17 @@ polygonSeries.mapPolygons.template.adapters.add("fill", function (fill, target) 
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
       console.log("국가코드" + dataItem.dataContext.id);
+      //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
+      const url = "/api/post/getPostList";
+      const postData = {
+        loginId: currentId,
+        nationCode: dataItem.dataContext.id,
+      };
+      axios
+        .post(url, postData)
+        .then((res) => console.log("data보내기 성공" + res))
+        .catch((err) => console.log("에러발생이어라" + err));
+
       // setSelectedCountry(target)R;
       setTimeout(() => {
         //타겟의 중심 포인트에
@@ -162,16 +179,6 @@ polygonSeries.mapPolygons.template.adapters.add("fill", function (fill, target) 
       chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
       contentListClose();
     }
-
-    // const unSelectCountry = useCallback(
-    //   (id) => {
-    //     let dataItem = polygonSeries.getDataItemById(id);
-    //     let target = dataItem.get("mapPolygon");
-    //     chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
-    //     contentListClose();
-    //   },
-    //   [contentListClose]
-    // );
 
     function homeCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);

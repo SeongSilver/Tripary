@@ -122,6 +122,7 @@ function Postwrite() {
       alert("내용을 입력하세요");
       return;
     }
+
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
     //일반변수를 담기 위한 과정
@@ -140,9 +141,9 @@ function Postwrite() {
       formData.append("myfile", myfile[i]);
     }
 
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
 
     axios
       .post("/api/post/upload", formData, {
