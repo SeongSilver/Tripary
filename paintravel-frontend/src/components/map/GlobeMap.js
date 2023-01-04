@@ -6,8 +6,11 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { auth } from "../../_actions/user_actions";
 
 const GlobeMap = () => {
+  const dispatch = useDispatch();
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
   const [ContentDisplay, setContentDisplay] = useState("hidden");
