@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const formData = new FormData();
+// const formData = new FormData();
 
 const postSchema = mongoose.Schema({
     writer: {

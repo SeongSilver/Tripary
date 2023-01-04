@@ -1,3 +1,22 @@
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src: url('../../fonts/NanumMyeongjo-Regular.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-Bold.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-ExtraBold.ttf') format("truetype");
+  // 영문(대소문자)
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('../../fonts/NotoSansKR-Thin.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Light.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Medium.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Regular.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Bold.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Black.otf') format("opentype");
+  // 국문, 숫자
+  unicode-range: U+AC00-D7A3, U+0030-0039;
+}
 @mixin font {
   font-family: "Nanum Myeongjo", "Noto Sans KR";
   color: #fff;
@@ -32,21 +51,8 @@
             width: 100%;
             height: 24vh;
             .galleryImageContainer {
-              width: 200px;
-              height: 150px;
-              display: flex;
-              align-items: center;
-              img {
-                width: 160px;
-                height: 120px;
-                margin: 20px;
-                display: block;
-              }
-              span {
-                font-size: 3rem;
-                font-weight: 100;
-                z-index: 100;
-              }
+              width: calc((32vw - 3vw - 4px)/2);
+              height: calc((24vh - 3vw - 4px)/2);
             }
           }
         }
@@ -63,15 +69,13 @@
           p:not(li:nth-child(4) p)::after {
             margin-left: 3vw;
           }
-          input {
+          input, .react-datepicker-wrapper {
             width: 34vw;
             height: 5vh;
             line-height: 5vh;
           }
-          // 일정 iuput 길이 조정
-          li:nth-child(3) input {
-            width: 16vw;
-          }
+          .react-datepicker-wrapper {width: 34vw !important;}
+          .react-datepicker__input-container {width: 34vw !important;}
           // 일기 조정
           li:nth-child(4) {
             margin-left: 0;
@@ -105,14 +109,15 @@
       .postWriteWrap {
         .gallery {
           position: relative;
-          width: 26vw;
+          width: 31vw;
           height: 60vh;
-          margin-right: 8vw;
+          margin-right: 3vw;
           .galleryContainer {
-            width: 100%;
             height: 55vh;
-            display: flex;
-            overflow-x: hidden;
+            .galleryImageContainer {
+              width: calc((31vw - 3vw - 4px)/2);
+              height: calc((55vh - 3vw - 4px)/2);
+            }
           }
         }
         ul {
@@ -120,7 +125,7 @@
           height: 55vh;
           p {
             width: 10vw;
-            line-height: 5vh;
+            line-height: 8vh;
             margin-right: 3vw;
           }
           p:not(li:nth-child(4) p)::after {
@@ -129,19 +134,17 @@
             line-height: 5vh;
             margin-left: 5vw;
           }
-          input {
+          input, .react-datepicker-wrapper {
             width: 33vw;
-            height: 3vh;
+            height: 5vh;
             margin-top: 1vh;
             line-height: 3vh;
           }
-          // 일정 iuput 길이 조정
-          li:nth-child(3) input {
-            width: 15.5vw;
-          }
+          .react-datepicker-wrapper {width: 33vw !important;}
+          .react-datepicker__input-container {width: 33vw !important;}
           textarea {
             width: 46vw;
-            height: 35vh;
+            height: 23vh;
           }
         }
         .postWriteBtn {
@@ -217,26 +220,33 @@
           border-radius: 10px;
           display: flex;
           flex-wrap: wrap;
-          justify-content: center;
           //사진 추가 부분
           .galleryImageContainer {
-            width: 400px;
-            height: 300px;
-            display: flex;
-            align-items: center;
+            display: inline-block;
+            position: relative;
+            caret-color: transparent;
             img {
-              width: 320px;
-              height: 240px;
-              margin: 20px;
+              width: 100%;
+              height: 100%;
               display: block;
             }
             span {
-              font-size: 3rem;
+              font-size: 2rem;
               font-weight: 100;
               z-index: 100;
+              padding:0.2vw;
               cursor: pointer;
+              background-color: #000;
+              border-radius: 50%;
+              position:absolute;
+              right:-1rem;
+              top:-1rem;
             }
           }
+          .galleryImageContainer:nth-child(1) {margin:1vw 0.5vw 0.5vw 1vw;}
+          .galleryImageContainer:nth-child(2) {margin:1vw 1vw 0.5vw 0.5vw;}
+          .galleryImageContainer:nth-child(3) {margin:0.5vw 0.5vw 1vw 1vw;}
+          .galleryImageContainer:nth-child(4) {margin:0.5vw 1vw 1vw 0.5vw;}
         }
         .galleryContainer::-webkit-scrollbar {
           width: 12px;
@@ -256,8 +266,8 @@
       ul {
         display: block;
         margin-top: 5vh;
-        li {
-          span {
+        > li {
+          > span {
             display: inline-block;
             width: 2vw;
             text-align: center;
@@ -266,6 +276,7 @@
         p {
           display: inline-block;
           font-size: 1vw;
+          font-weight: 400;
           @include noDrag;
         }
         p:not(li:nth-child(4) p)::after {
@@ -275,7 +286,7 @@
           line-height: 5vh;
           @include noDrag;
         }
-        input {
+        input, > .react-datepicker-wrapper {
           margin-top: 1vh;
           line-height: 3vh;
           border: 1px solid #fff;
@@ -284,7 +295,10 @@
           background: transparent;
           color: #fff;
           padding: 0 1vw;
-          font-size: 1vw;
+          font-size: 1.5rem;
+          font-weight: 100;
+          overflow: hidden;
+          @include font;
         }
         input:focus {
           outline: none;
@@ -296,8 +310,9 @@
           border-radius: 10px;
           background: transparent;
           color: #fff;
-          font-size: 1vw;
+          font-size: 1.5rem;
           white-space: pre;
+          @include font;
         }
         textarea:focus {
           outline: none;
@@ -308,7 +323,7 @@
         display: flex;
         justify-content: center;
         button {
-          background: rgba(175, 144, 126, 0.6);
+          background: rgba(175, 144, 126, 0.3);
           border-radius: 20px;
           color: #fff;
           font-size: 1.6rem;
@@ -317,12 +332,12 @@
           @include font;
         }
         button:nth-child(1) {
-          background: transparent;
+          background: rgba(175, 144, 126, 0.3);
           margin-right: 5vw;
         }
         button:hover {
           background: rgb(175, 144, 126);
-          transition: 0.2s ease-in;
+          transition: 0.3s ease-in-out;
         }
       }
     }
@@ -337,4 +352,64 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: -1;
   }
+}
+//datepicker 
+.react-datepicker-popper > div {
+  position: relative;
+  left:6.5vw;
+}
+.react-datepicker {
+  caret-color: transparent;
+  .react-datepicker__navigation {
+    top:calc((5vh + 8px - 32px)/2);
+  }
+}
+.react-datepicker__input-container {
+  caret-color: transparent;
+}
+.react-datepicker__month-container {
+  width: 20vw !important;
+  margin:0 auto;
+  .react-datepicker__month {
+    .react-datepicker__week {
+      > div {
+        margin: 0.5vw;
+        width: 1vw !important;
+        height: 1vw !important;
+      }
+      > div:first-child {
+        color:red !important;
+      }
+      > div:nth-child(7n) {
+        color:blue !important;
+      }
+    }
+  }
+}
+.react-datepicker__header {
+  height: calc(5vh + 8px);
+  .react-datepicker__current-month, .react-datepicker__day-names {
+    line-height: 2vh;
+  }
+  .react-datepicker__day-names {
+    .react-datepicker__day-name {
+      margin:0 0.5vw;
+      width: 1vw !important;
+      height: 1vw !important;
+    }
+    .react-datepicker__day-name:first-child {
+      color:red !important;
+    }
+    .react-datepicker__day-name:last-child {
+      color:blue !important;
+    }
+  }
+}
+.react-datepicker__close-icon {
+  height:calc(100% - 1vh) !important;
+  margin-top:1vh;
+  caret-color: transparent;
+}
+.react-datepicker__close-icon::after {
+  background-color:black !important;
 }
