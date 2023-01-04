@@ -10,13 +10,17 @@ import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
+import { useDispatch } from "react-redux";
+import { auth } from "../../_actions/user_actions";
 
 const GlobeMap = () => {
+  const dispatch = useDispatch();
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
   const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState("");
+
 
   const contentListOpen = () => {
     setGlobeWidth("40%");
@@ -63,39 +67,38 @@ const GlobeMap = () => {
     );
 
     polygonSeries.mapPolygons.template.setAll({
+      //tooltipText: "{name}",
       tooltipText: "{name} : {value}",
       templateField: "polygonSettings",
       toggleKey: "active",
       interactive: true,
     });
 
-    polygonSeries.mapPolygons.template.states.create("active", {
-      fill: "rgba(0,0,255,0.15)",
-    });
-
     polygonSeries.mapPolygons.template.states.create("hover", {
       cursorOverStyle: "pointer",
     });
 
-    const visitedCountry = ["KR", "CN", "UK", "SA"];
+// [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
+    // 기존에 방문한 국가 배열로 백엔드에서 받아오기
+    const visitedCountry = ["KR", "CN", "US", "SA", "AU"];
     //나라 개수 만큼 반복문 형식
-polygonSeries.mapPolygons.template.adapters.add("fill", function (fill, target) {
-  
-  let dataContext = target.dataItem.dataContext;
+    polygonSeries.mapPolygons.template.adapters.add(
+      "fill",
+      function (fill, target) {
+        let dataContext = target.dataItem.dataContext;
 
-    if (visitedCountry.includes(dataContext.id)) {
-      dataContext.colorWasSet = true;
-      
-      //방문한 국가 색칠하는 색 지정
-      let color = "rgba(0,255,100,0.8)";
-      target.setRaw("fill", color);
-      return color;
-    }
-  else {
-    return fill;
-  }
-})
+        if (visitedCountry.includes(dataContext.id)) {
+          dataContext.colorWasSet = true;
 
+          //방문한 국가 색칠하는 색 지정
+          let color = "rgba(0,255,100,0.8)";
+          target.setRaw("fill", color);
+          return color;
+        } else {
+          return fill;
+        }
+      }
+    );
     // Create series for background fill
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
     let backgroundSeries = chart.series.unshift(
@@ -113,8 +116,13 @@ polygonSeries.mapPolygons.template.adapters.add("fill", function (fill, target) 
 
     // Set up events
     let previousPolygon;
+    
+    polygonSeries.mapPolygons.template.states.create("active", {
+      fill: "rgba(0,0,255,0.15)",
+    });
 
     polygonSeries.mapPolygons.template.on("active", function (active, target) {
+      console.log("클릭되었습니다")
       if (previousPolygon && previousPolygon !== target.dataItem) {
         previousPolygon.set("active", false);
         unSelectCountry(target.dataItem.get("id"));
