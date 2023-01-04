@@ -59,13 +59,14 @@ const GlobeMap = () => {
 
     // Create main polygon series for countries
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/
+    // 폴리곤 시리즈 생성, goe데이터 및 기본 국가 설정
     let polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
         exclude: ["AQ"],
       })
     );
-
+    // 폴리곤 시리즈 세팅
     polygonSeries.mapPolygons.template.setAll({
       //tooltipText: "{name}",
       tooltipText: "{name} : {value}",
@@ -115,14 +116,10 @@ const GlobeMap = () => {
             break;
         }
 
-        console.log(visitCount + fillColer);
         if (visitedCountry.includes(dataContext.id)) {
           dataContext.colorWasSet = true;
-
-          //방문한 국가 색칠하는 색 지정
-          let color = fillColer;
-          target.setRaw("fill", color);
-          return color;
+          target.setRaw("fill", fillColer);
+          return fillColer;
         } else {
           return fill;
         }
@@ -146,14 +143,15 @@ const GlobeMap = () => {
     // Set up events
     let previousPolygon;
     
+    //toggel event 에서 active 변수를 이용해 클릭시 색상 변경
     polygonSeries.mapPolygons.template.states.create("active", {
       fill: "rgba(0,0,255,0.15)",
     });
 
+    //toggel event 에서 active 변수를 이용해 클릭/재클릭시 실행할 함수 적용
     polygonSeries.mapPolygons.template.on("active", function (active, target) {
-      console.log("클릭되었습니다")
       if (previousPolygon && previousPolygon !== target.dataItem) {
-        previousPolygon.set("active", false);
+        previousPolygon.set("active", false); 
         unSelectCountry(target.dataItem.get("id"));
       }
       if (target.get("active")) {
