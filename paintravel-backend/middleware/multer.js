@@ -24,7 +24,8 @@ const Storage = multer.diskStorage({
   },
   filename(req, file, cb) {
     const ext = path.extname(file.originalname);
-    console.log("ggggg"+file.originalname);
+    file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
+    console.log("업로드 할 파일"+file.originalname);
     cb(null, "uploadImage_"+ new Date().valueOf()+ext); // 시스템 시간으로 파일이름을 변경해서 저장
   },
   onFileUploadStart: function (file) {
