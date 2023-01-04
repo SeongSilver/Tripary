@@ -80,18 +80,47 @@ const GlobeMap = () => {
 
 // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
     // 기존에 방문한 국가 배열로 백엔드에서 받아오기
-    const visitedCountry = ["KR", "CN", "US", "SA", "AU"];
+    const visitedCountry = ["KR", "CN", "CN", "US", "US", "US", "US", "SA","SA","SA","SA","SA","SA", "AU", "AU", "AU", "AU", "AU", "AU", "AU", "AU", "AU", "AU"];
     //나라 개수 만큼 반복문 형식
     polygonSeries.mapPolygons.template.adapters.add(
       "fill",
       function (fill, target) {
         let dataContext = target.dataItem.dataContext;
+        let visitCount = visitedCountry.reduce((cnt, element) => cnt + (dataContext.id === element), 0);
+        let fillColer;
+        switch (visitCount) {
+          case 0: //0번 방문한 국가의 경우 색을 지정하지 않음
+            break;
+          case 1: //1번 방문한 국가 색 지정
+            fillColer = "rgba(0,255,100,0.2)";
+            break;
+          case 2: //2-3번 방문한 국가 색 지정
+          case 3:
+            fillColer = "rgba(0,255,100,0.4)";
+            break;
+          case 4: //4-5번 방문한 국가 색 지정
+          case 5:
+            fillColer = "rgba(0,255,100,0.6)";
+            break;
+          case 6: //6-9번 방문한 국가 색 지정
+          case 7:
+          case 8:
+          case 9:
+            fillColer = "rgba(0,255,100,0.8)";
+            break;
+          default:
+            if(visitCount>9){ //10번 이상 방문한 국가 색 지정
+              fillColer = "rgba(0,255,100,1)";
+            }
+            break;
+        }
 
+        console.log(visitCount + fillColer);
         if (visitedCountry.includes(dataContext.id)) {
           dataContext.colorWasSet = true;
 
           //방문한 국가 색칠하는 색 지정
-          let color = "rgba(0,255,100,0.8)";
+          let color = fillColer;
           target.setRaw("fill", color);
           return color;
         } else {
