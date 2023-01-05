@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-const formData = new FormData();
-
 const postSchema = mongoose.Schema({
     writer: {
         type: mongoose.SchemaTypes.ObjectId,

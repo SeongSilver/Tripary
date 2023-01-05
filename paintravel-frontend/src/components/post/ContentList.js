@@ -7,6 +7,10 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { auth } from "../../_actions/user_actions";
 
+import LoginButton from "./ContentList/LoginButton";
+import EmptyList from "./ContentList/EmptyList";
+import LoginedList from "./ContentList/LoginedList";
+
 function ContentList({ selectedCountry, nationCode, contentListClose }) {
   const [contentModal, setContentModal] = useState(false);
   const [contentModalStatus, setContentModalStatus] = useState(false);
@@ -14,10 +18,14 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
 
   //로그인 유무 확인
   const [isLogined, setIsLogined] = useState();
-  //로그인된 아이디 받아오는 state
-  const [currentId, setCurrentId] = useState("");
+  const [existingPost, setExistingPost] = useState(false);
 
   const dispatch = useDispatch();
+
+  //글이 있는지 여부를 아직 백엔드에서 못받아오기 때문에 existingPost를 껏다 켯다 함수
+  const existingOnOff = () => {
+    setExistingPost(!existingPost);
+  };
 
   useEffect(() => {
     dispatch(auth()).then((response) => {
@@ -91,101 +99,30 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
           <BiArrowBack />
         </div>
       </div>
-      <ul className="contentBody">
-        <li className="contentCard">
-          <span className="cardTag">
-            서울에서 얼마나 길어지는지 태에ddd에에그
-          </span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">광화문</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">여수</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">속초</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">제주도</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">부산</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">서울</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-      </ul>
+      {/*null 자리에
+        게시물이있다면(state 변수) ? <LoginedList openContentModal={openContentModal}/> : <EmptyList/> />
+      */}
+      {isLogined ? (
+        existingPost ? (
+          <LoginedList
+            openContentModal={openContentModal}
+            existingOnOff={existingOnOff}
+          />
+        ) : (
+          <EmptyList
+            existingOnOff={existingOnOff}
+            selectedCountry={selectedCountry}
+            nationCode={nationCode}
+          />
+        )
+      ) : (
+        <LoginButton />
+      )}
+
+      {/* <LoginButton /> */}
+      {/* <EmptyList/> */}
+      {/* <LoginedList openContentModal={openContentModal} /> */}
+
       {contentModal && (
         <ContentModal
           className="contentModal"
