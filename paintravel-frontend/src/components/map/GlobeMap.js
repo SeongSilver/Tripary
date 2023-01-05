@@ -5,12 +5,8 @@ import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { auth } from "../../_actions/user_actions";
 
 const GlobeMap = () => {
-  const dispatch = useDispatch();
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
   const [ContentDisplay, setContentDisplay] = useState("hidden");
@@ -28,15 +24,6 @@ const GlobeMap = () => {
     setContentDisplay("hidden");
   };
 
-  //로그인된 아이디 받아오는 state
-  const [currentId, setCurrentId] = useState("");
-
-  //로그인된 아이디 받아오는 useEffect
-  useEffect(() => {
-    dispatch(auth()).then((response) => {
-      setCurrentId(response.payload._id);
-    });
-  }, []);
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
@@ -191,23 +178,11 @@ const GlobeMap = () => {
       }
       previousPolygon = target;
     });
-
     function selectCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
-      console.log("국가코드" + dataItem.dataContext.id);
-      //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
-      const url = "/api/post/getPostList";
-      const postData = {
-        loginId: currentId,
-        nationCode: dataItem.dataContext.id,
-      };
-      axios
-        .post(url, postData)
-        .then((res) => console.log("data보내기 성공" + res))
-        .catch((err) => console.log("에러발생이어라" + err));
 
       // setSelectedCountry(target)R;
       setTimeout(() => {

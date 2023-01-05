@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import ContentModal from "./ContentModal";
 import { BiArrowBack } from "react-icons/bi";
 import "../../styles/post/contentList.scss";
-import { auth } from "../../_actions/user_actions";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { auth } from "../../_actions/user_actions";
 
 function ContentList({ selectedCountry, nationCode, contentListClose }) {
   const [contentModal, setContentModal] = useState(false);
   const [contentModalStatus, setContentModalStatus] = useState(false);
   const [cityName, setCityName] = useState("서울인건가");
+
+  //로그인 유무 확인
   const [isLogined, setIsLogined] = useState();
+  //로그인된 아이디 받아오는 state
+  const [currentId, setCurrentId] = useState("");
 
   const dispatch = useDispatch();
 
-  
-
   useEffect(() => {
-    //로그인 여부 판단
     dispatch(auth()).then((response) => {
       if (!response.payload.isAuth) {
         //로그인 안된 경우
@@ -27,8 +28,29 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
         //로그인 된 경우
         setIsLogined(true);
       }
+      setCurrentId(response.payload._id);
     });
   }, []);
+  console.log(currentId);
+  console.log(nationCode);
+  //로그인된 아이디 받아오는 useEffect
+
+  const url = "/api/post/getPostList";
+  const postData = {
+    currentId: currentId,
+    nationCode: nationCode,
+  };
+
+  //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
+
+  // axios
+  //   .get(url, postData, {
+  //     headers: {
+  //       "Content-Type": `application/json`,
+  //     },
+  //   })
+  //   .then((res) => console.log("data보내기 성공 " + res))
+  //   .catch((err) => console.log("data 보내기 에러 " + err));
 
   const openContentModal = (event) => {
     setContentModal(true);
