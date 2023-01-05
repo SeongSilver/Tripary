@@ -18,7 +18,7 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
 
   //로그인 유무 확인
   const [isLogined, setIsLogined] = useState();
-  const [existingPost, setExistingPost] = useState(false);
+  const [existingPost, setExistingPost] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -26,6 +26,8 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
   const existingOnOff = () => {
     setExistingPost(!existingPost);
   };
+
+  const [currentId, setCurrentId] = useState("");
 
   useEffect(() => {
     dispatch(auth()).then((response) => {
@@ -39,15 +41,13 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
       setCurrentId(response.payload._id);
     });
   }, []);
-  console.log(currentId);
-  console.log(nationCode);
   //로그인된 아이디 받아오는 useEffect
 
-  const url = "/api/post/getPostList";
-  const postData = {
-    currentId: currentId,
-    nationCode: nationCode,
-  };
+  // const url = "/api/post/getPostList";
+  // const postData = {
+  //   currentId: currentId,
+  //   nationCode: nationCode,
+  // };
 
   //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
 

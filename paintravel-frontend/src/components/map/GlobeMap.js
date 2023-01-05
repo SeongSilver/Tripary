@@ -36,7 +36,6 @@ const GlobeMap = () => {
   //로그인된 아이디 받아오는 useEffect
   useEffect(() => {
     dispatch(auth()).then((response) => {
-      setCurrentId(response.payload._id);
       if (!response.payload.isAuth) {
         //로그인 안된 경우
         setIsLogined(false);
@@ -44,6 +43,7 @@ const GlobeMap = () => {
         //로그인 된 경우
         setIsLogined(true);
       }
+      setCurrentId(response.payload._id);
     });
   }, []);
 
@@ -51,11 +51,11 @@ const GlobeMap = () => {
   const url = "/api/post/getPostList";
   const postData = {
     currentId: currentId,
-    nationCode: selectedCountry,
   };
   if (isLogined) {
+    console.log("로그인됬시다");
     console.log("로그인된 아이디", currentId);
-    console.log("국가코드", nationCode);
+    console.log("postData", postData);
     axios
       .get(url, postData)
       .then((res) => console.log("data보내기 성공" + res))
