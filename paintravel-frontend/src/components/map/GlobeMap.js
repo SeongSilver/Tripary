@@ -1,26 +1,22 @@
-import React, {
-  useRef,
-  useState,
-  useLayoutEffect,
-  useEffect,
-} from "react";
+import React, { useRef, useState, useLayoutEffect, useEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { auth } from "../../_actions/user_actions";
 
 const GlobeMap = () => {
-  const dispatch = useDispatch();
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
   const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState("");
-
+  
+  const dispatch = useDispatch();
 
   const contentListOpen = () => {
     setGlobeWidth("40%");
@@ -32,6 +28,16 @@ const GlobeMap = () => {
     setContentPositionRight("-60vw");
     setContentDisplay("hidden");
   };
+
+  // //로그인된 아이디 받아오는 state
+  // const [currentId, setCurrentId] = useState("");
+
+  // //로그인된 아이디 받아오는 useEffect
+  // useEffect(() => {
+  //   dispatch(auth()).then((response) => {
+  //     setCurrentId(response.payload._id);
+  //   });
+  // }, []);
 
   /* Chart code */
   // Create root element
@@ -88,38 +94,38 @@ const GlobeMap = () => {
       function (fill, target) {
         let dataContext = target.dataItem.dataContext;
         let visitCount = visitedCountry.reduce((cnt, element) => cnt + (dataContext.id === element), 0);
-        let fillColer;
+        let fillColor;
         switch (visitCount) {
           case 0: //0번 방문한 국가의 경우 색을 지정하지 않음
             break;
           case 1: //1번 방문한 국가 색 지정
-            fillColer = "rgba(0,255,100,0.2)";
+            fillColor = "rgba(0,255,100,0.2)";
             break;
           case 2: //2-3번 방문한 국가 색 지정
           case 3:
-            fillColer = "rgba(0,255,100,0.4)";
+            fillColor = "rgba(0,255,100,0.4)";
             break;
           case 4: //4-5번 방문한 국가 색 지정
           case 5:
-            fillColer = "rgba(0,255,100,0.6)";
+            fillColor = "rgba(0,255,100,0.6)";
             break;
           case 6: //6-9번 방문한 국가 색 지정
           case 7:
           case 8:
           case 9:
-            fillColer = "rgba(0,255,100,0.8)";
+            fillColor = "rgba(0,255,100,0.8)";
             break;
           default:
             if(visitCount>9){ //10번 이상 방문한 국가 색 지정
-              fillColer = "rgba(0,255,100,1)";
+              fillColor = "rgba(0,255,100,1)";
             }
             break;
         }
 
         if (visitedCountry.includes(dataContext.id)) {
           dataContext.colorWasSet = true;
-          target.setRaw("fill", fillColer);
-          return fillColer;
+          target.setRaw("fill", fillColor);
+          return fillColor;
         } else {
           return fill;
         }
@@ -166,6 +172,20 @@ const GlobeMap = () => {
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
       console.log("국가코드" + dataItem.dataContext.id);
+
+      //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
+      // const url = "/api/post/getPostList";
+      // const postData = {
+      //   currentId: currentId,
+      //   nationCode: dataItem.dataContext.id,
+      // };
+      // console.log("로그인된 아이디", currentId)
+      // console.log("국가코드", nationCode)
+      // axios
+      //   .get(url, postData)
+      //   .then((res) => console.log("data보내기 성공" + res))
+      //   .catch((err) => console.log("에러발생이어라" + err));
+
       // setSelectedCountry(target)R;
       setTimeout(() => {
         //타겟의 중심 포인트에
@@ -197,16 +217,6 @@ const GlobeMap = () => {
       chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
       contentListClose();
     }
-
-    // const unSelectCountry = useCallback(
-    //   (id) => {
-    //     let dataItem = polygonSeries.getDataItemById(id);
-    //     let target = dataItem.get("mapPolygon");
-    //     chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
-    //     contentListClose();
-    //   },
-    //   [contentListClose]
-    // );
 
     function homeCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
