@@ -139,12 +139,11 @@ const GlobeMap = () => {
     polygonSeries.mapPolygons.template.adapters.add(
       "fill",
       function (fill, target) {
+        console.log(polygonSeries.mapPolygons.template.states.create+"야여")
         let dataContext = target.dataItem.dataContext;
-        let visitCount = visitedCountry.reduce(
-          (cnt, element) => cnt + (dataContext.id === element),
-          0
-        );
+        let visitCount = visitedCountry.reduce((cnt, element) => cnt + (dataContext.id === element), 0);
         let fillColor;
+        let selectedColor;
         switch (visitCount) {
           case 0: //0번 방문한 국가의 경우 색을 지정하지 않음
             break;
@@ -166,8 +165,7 @@ const GlobeMap = () => {
             fillColor = "rgba(0,255,100,0.8)";
             break;
           default:
-            if (visitCount > 9) {
-              //10번 이상 방문한 국가 색 지정
+            if(visitCount>9){ //10번 이상 방문한 국가 색 지정
               fillColor = "rgba(0,255,100,1)";
             }
             break;
