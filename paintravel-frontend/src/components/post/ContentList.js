@@ -5,6 +5,7 @@ import ContentModal from "./ContentModal";
 import { BiArrowBack } from "react-icons/bi";
 import "../../styles/post/contentList.scss";
 import { auth } from "../../_actions/user_actions";
+import axios from "axios";
 
 function ContentList({ selectedCountry, nationCode, contentListClose }) {
   const [contentModal, setContentModal] = useState(false);
@@ -14,12 +15,16 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
 
   const dispatch = useDispatch();
 
+  
+
   useEffect(() => {
+    //로그인 여부 판단
     dispatch(auth()).then((response) => {
       if (!response.payload.isAuth) {
         //로그인 안된 경우
         setIsLogined(false);
       } else {
+        //로그인 된 경우
         setIsLogined(true);
       }
     });
