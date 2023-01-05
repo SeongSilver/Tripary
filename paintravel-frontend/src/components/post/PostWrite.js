@@ -20,7 +20,6 @@ function Postwrite() {
   //[성은] 지구본에서 선택된 나라 이름 (22.11.23  20:32)
   const selectedCountry = location.state.selectedCountry;
   const nationCode = location.state.nationCode;
-  console.log("아바라")
 
   /*
     [성은 22.12.18, 22:14] 2개의 input date로는 서로 유효성 검사 찾는거보다

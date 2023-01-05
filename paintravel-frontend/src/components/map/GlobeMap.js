@@ -29,16 +29,40 @@ const GlobeMap = () => {
     setContentDisplay("hidden");
   };
 
-  // //로그인된 아이디 받아오는 state
-  // const [currentId, setCurrentId] = useState("");
+  //로그인된 아이디 받아오는 state
+  const [currentId, setCurrentId] = useState("");
+  const [isLogined, setIsLogined] = useState();
 
-  // //로그인된 아이디 받아오는 useEffect
-  // useEffect(() => {
-  //   dispatch(auth()).then((response) => {
-  //     setCurrentId(response.payload._id);
-  //   });
-  // }, []);
+  //로그인된 아이디 받아오는 useEffect
+  useEffect(() => {
+    dispatch(auth()).then((response) => {
+      setCurrentId(response.payload._id);
+      if (!response.payload.isAuth) {
+        //로그인 안된 경우
+        setIsLogined(false);
+      } else {
+        //로그인 된 경우
+        setIsLogined(true);
+      }
+    });
+  }, []);
 
+   //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
+    const url = "/api/post/getPostList";
+    const postData = {
+      currentId: currentId,
+      nationCode: selectedCountry,
+    };
+  if (isLogined) {
+    console.log("로그인된 아이디", currentId)
+    console.log("국가코드", nationCode)
+    axios
+    .get(url, postData)
+    .then((res) => console.log("data보내기 성공" + res))
+    .catch((err) => console.log("에러발생이어라" + err));
+  }
+    
+    
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
@@ -171,22 +195,7 @@ const GlobeMap = () => {
       let target = dataItem.get("mapPolygon");
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
-      console.log("국가코드" + dataItem.dataContext.id);
 
-      //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
-      // const url = "/api/post/getPostList";
-      // const postData = {
-      //   currentId: currentId,
-      //   nationCode: dataItem.dataContext.id,
-      // };
-      // console.log("로그인된 아이디", currentId)
-      // console.log("국가코드", nationCode)
-      // axios
-      //   .get(url, postData)
-      //   .then((res) => console.log("data보내기 성공" + res))
-      //   .catch((err) => console.log("에러발생이어라" + err));
-
-      // setSelectedCountry(target)R;
       setTimeout(() => {
         //타겟의 중심 포인트에
         chart.zoomToGeoPoint(target.geoCentroid(), 2, target.geoCentroid());
