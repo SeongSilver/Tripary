@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-function EmptyList(existingOnOff, selectedCountry, nationCode) {
+function EmptyList({ selectedCountry, nationCode }) {
   return (
     <div className="contentBody">
       <div>
@@ -20,7 +20,6 @@ function EmptyList(existingOnOff, selectedCountry, nationCode) {
           여행 게시물을 추가하세요!라는 이동 버튼 하나 있으면 좋겠스요
         </Link>
       </div>
-      <div onClick={existingOnOff}>게시물 있다고 거짓말하는 버튼</div>
     </div>
   )
 }

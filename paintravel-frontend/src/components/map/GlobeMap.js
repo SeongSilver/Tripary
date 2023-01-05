@@ -15,7 +15,7 @@ const GlobeMap = () => {
   const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState("");
-  
+
   const dispatch = useDispatch();
 
   const contentListOpen = () => {
@@ -29,15 +29,38 @@ const GlobeMap = () => {
     setContentDisplay("hidden");
   };
 
-  // //로그인된 아이디 받아오는 state
-  // const [currentId, setCurrentId] = useState("");
+  //로그인된 아이디 받아오는 state
+  const [currentId, setCurrentId] = useState("");
+  const [isLogined, setIsLogined] = useState();
 
-  // //로그인된 아이디 받아오는 useEffect
-  // useEffect(() => {
-  //   dispatch(auth()).then((response) => {
-  //     setCurrentId(response.payload._id);
-  //   });
-  // }, []);
+  //로그인된 아이디 받아오는 useEffect
+  useEffect(() => {
+    dispatch(auth()).then((response) => {
+      if (!response.payload.isAuth) {
+        //로그인 안된 경우
+        setIsLogined(false);
+      } else {
+        //로그인 된 경우
+        setIsLogined(true);
+      }
+      setCurrentId(response.payload._id);
+    });
+  }, []);
+
+  //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
+  const url = "/api/post/getPostList";
+  const postData = {
+    currentId: currentId,
+  };
+  if (isLogined) {
+    console.log("로그인됬시다");
+    console.log("로그인된 아이디", currentId);
+    console.log("postData", postData);
+    axios
+      .get(url, postData)
+      .then((res) => console.log("data보내기 성공" + res))
+      .catch((err) => console.log("에러발생이어라" + err));
+  }
 
   /* Chart code */
   // Create root element
@@ -85,15 +108,42 @@ const GlobeMap = () => {
       cursorOverStyle: "pointer",
     });
 
-// [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
+    // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
     // 기존에 방문한 국가 배열로 백엔드에서 받아오기
-    const visitedCountry = ["KR", "CN", "CN", "US", "US", "US", "US", "SA","SA","SA","SA","SA","SA", "AU", "AU", "AU", "AU", "AU", "AU", "AU", "AU", "AU", "AU"];
+    const visitedCountry = [
+      "KR",
+      "CN",
+      "CN",
+      "US",
+      "US",
+      "US",
+      "US",
+      "SA",
+      "SA",
+      "SA",
+      "SA",
+      "SA",
+      "SA",
+      "AU",
+      "AU",
+      "AU",
+      "AU",
+      "AU",
+      "AU",
+      "AU",
+      "AU",
+      "AU",
+      "AU",
+    ];
     //나라 개수 만큼 반복문 형식
     polygonSeries.mapPolygons.template.adapters.add(
       "fill",
       function (fill, target) {
         let dataContext = target.dataItem.dataContext;
-        let visitCount = visitedCountry.reduce((cnt, element) => cnt + (dataContext.id === element), 0);
+        let visitCount = visitedCountry.reduce(
+          (cnt, element) => cnt + (dataContext.id === element),
+          0
+        );
         let fillColor;
         switch (visitCount) {
           case 0: //0번 방문한 국가의 경우 색을 지정하지 않음
@@ -116,7 +166,8 @@ const GlobeMap = () => {
             fillColor = "rgba(0,255,100,0.8)";
             break;
           default:
-            if(visitCount>9){ //10번 이상 방문한 국가 색 지정
+            if (visitCount > 9) {
+              //10번 이상 방문한 국가 색 지정
               fillColor = "rgba(0,255,100,1)";
             }
             break;
@@ -148,7 +199,7 @@ const GlobeMap = () => {
 
     // Set up events
     let previousPolygon;
-    
+
     //toggel event 에서 active 변수를 이용해 클릭시 색상 변경
     polygonSeries.mapPolygons.template.states.create("active", {
       fill: "rgba(0,0,255,0.15)",
@@ -157,7 +208,7 @@ const GlobeMap = () => {
     //toggel event 에서 active 변수를 이용해 클릭/재클릭시 실행할 함수 적용
     polygonSeries.mapPolygons.template.on("active", function (active, target) {
       if (previousPolygon && previousPolygon !== target.dataItem) {
-        previousPolygon.set("active", false); 
+        previousPolygon.set("active", false);
         unSelectCountry(target.dataItem.get("id"));
       }
       if (target.get("active")) {
@@ -165,28 +216,12 @@ const GlobeMap = () => {
       }
       previousPolygon = target;
     });
-
     function selectCountry(id) {
       let dataItem = polygonSeries.getDataItemById(id);
       let target = dataItem.get("mapPolygon");
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
-      console.log("국가코드" + dataItem.dataContext.id);
 
-      //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
-      // const url = "/api/post/getPostList";
-      // const postData = {
-      //   currentId: currentId,
-      //   nationCode: dataItem.dataContext.id,
-      // };
-      // console.log("로그인된 아이디", currentId)
-      // console.log("국가코드", nationCode)
-      // axios
-      //   .get(url, postData)
-      //   .then((res) => console.log("data보내기 성공" + res))
-      //   .catch((err) => console.log("에러발생이어라" + err));
-
-      // setSelectedCountry(target)R;
       setTimeout(() => {
         //타겟의 중심 포인트에
         chart.zoomToGeoPoint(target.geoCentroid(), 2, target.geoCentroid());
