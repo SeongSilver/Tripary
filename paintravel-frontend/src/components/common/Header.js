@@ -12,6 +12,8 @@ function Header() {
   const dispatch = useDispatch();
   const [isLogined, setIsLogined] = useState();
 
+  const existlocalStorage = localStorage.getItem("LOGINEDID");
+
   useEffect(() => {
     dispatch(auth()).then((response) => {
       if (!response.payload.isAuth) {
@@ -24,6 +26,7 @@ function Header() {
   }, []);
 
   const onClickHandler = () => {
+    localStorage.removeItem("LOGINEDID");
     dispatch(logoutUser()).then((response) => {
       if (response.payload.logoutSucess) {
         navigate("/Login");
@@ -32,6 +35,7 @@ function Header() {
       }
     });
   };
+
   return (
     <header className="header">
       <div className="headerWrapper">
@@ -47,7 +51,7 @@ function Header() {
           <Link to="/mypage" className="headLink">
             my page
           </Link>
-          {isLogined ? (
+          {existlocalStorage !== null ? (
             <a href="#" className="headLink" onClick={onClickHandler}>
               logout
             </a>

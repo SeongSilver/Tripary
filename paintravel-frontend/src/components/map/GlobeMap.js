@@ -28,38 +28,51 @@ const GlobeMap = () => {
     setContentPositionRight("-60vw");
     setContentDisplay("hidden");
   };
+  //키, 값, 만료시간을 매개변수로 받는 localStorage setItem 하는 함수
+  const setLoginedItem = (key, value) => {
+    if (key === null || value === null) {
+      console.log("setItem에 매개변수 안들어감");
+      return;
+    }
+    const now = new Date();
+
+    const item = {
+      value: value,
+      expiry: now.getTime() + 1800000,
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+  };
 
   //로그인된 아이디 받아오는 state
   const [currentId, setCurrentId] = useState("");
-  const [isLogined, setIsLogined] = useState();
 
   //로그인된 아이디 받아오는 useEffect
   useEffect(() => {
     dispatch(auth()).then((response) => {
-      if (!response.payload.isAuth) {
-        //로그인 안된 경우
-        setIsLogined(false);
-      } else {
-        //로그인 된 경우
-        setIsLogined(true);
+      //localStorage에 LOGINEDID를 만드는 함수에 response에서 받아온 id넣음
+      setLoginedItem("LOGINEDID", response.payload._id);
+
+      if (response.payload._id === null || response.payload._id === "") {
+        localStorage.clear();
       }
-      setCurrentId(response.payload._id);
     });
   }, []);
 
-  //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
-  const url = "/api/post/getPostList";
-  const postData = {
-    currentId: currentId,
-  };
-  if (isLogined) {
-    console.log("로그인됬시다");
-    console.log("로그인된 아이디", currentId);
-    console.log("postData", postData);
-    axios
-      .get(url, postData)
-      .then((res) => console.log("data보내기 성공" + res))
-      .catch((err) => console.log("에러발생이어라" + err));
+  const existlocalStorage = localStorage.getItem("LOGINEDID");
+
+  //로컬스토리지에 LOGINEDID가 있을 경우 실행
+  if (existlocalStorage) {
+    //로그인된 아이디의 만료시간
+    const expireTime = JSON.parse(localStorage.getItem("LOGINEDID")).expiry;
+
+    //현재시간이 LOGINEDID 만료시간보다 길면 localStorage에 있는 LOGINEDID 삭제
+    setInterval(() => {
+      const nowTime = new Date().getTime();
+
+      if (nowTime > expireTime) {
+        localStorage.removeItem("LOGINEDID");
+      }
+    }, 300000);
   }
 
   /* Chart code */
@@ -68,7 +81,7 @@ const GlobeMap = () => {
   useLayoutEffect(() => {
     let root = am5.Root.new("chartdiv");
 
-    // Set themes
+    // Set themes+
     // https://www.amcharts.com/docs/v5/concepts/themes/
     root.setThemes([am5themes_Animated.new(root)]);
 
@@ -221,6 +234,22 @@ const GlobeMap = () => {
       let target = dataItem.get("mapPolygon");
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
+
+      //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
+      if (existlocalStorage) {
+        const postData = {
+          currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+          nationCode: dataItem.dataContext.id,
+        };
+
+        console.log("로그인된 아이디", postData.currentId);
+        console.log("선택된 국가", postData.nationCode);
+        axios
+          .post("/api/post/getVisitedList", postData)
+          .then((res) => console.log("data보내기 성공" + res))
+          .then(console.log("넘어갔다"))
+          .catch((err) => console.log("에러발생이어라" + err));
+      }
 
       setTimeout(() => {
         //타겟의 중심 포인트에

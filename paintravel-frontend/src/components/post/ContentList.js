@@ -28,7 +28,6 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
   };
 
   const [currentId, setCurrentId] = useState("");
-
   useEffect(() => {
     dispatch(auth()).then((response) => {
       if (!response.payload.isAuth) {
