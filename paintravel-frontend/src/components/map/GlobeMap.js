@@ -48,20 +48,25 @@ const GlobeMap = () => {
   }, []);
 
   //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
-  const url = "/api/post/getPostList";
   const postData = {
     currentId: currentId,
-  };
+  }; 
+  //[현아, 성은] 기방문 국가 탐색을 위한 부분
+  let visitedCountry = [];
+  const setVisitedCountry = (countryList) => {
+    visitedCountry = countryList;
+  } 
+  console.log(isLogined);
   if (isLogined) {
-    console.log("로그인됬시다");
     console.log("로그인된 아이디", currentId);
-    console.log("postData", postData);
     axios
-      .get(url, postData)
-      .then((res) => console.log("data보내기 성공" + res))
+      .post("/api/post/getVisitedList", postData)
+      .then(function(res) {
+        setVisitedCountry(res.data.countryList);
+        console.log("국가 탐색 성공"+res.data.countryList);
+    })
       .catch((err) => console.log("에러발생이어라" + err));
   }
-
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
@@ -110,36 +115,12 @@ const GlobeMap = () => {
 
     // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
     // 기존에 방문한 국가 배열로 백엔드에서 받아오기
-    const visitedCountry = [
-      "KR",
-      "CN",
-      "CN",
-      "US",
-      "US",
-      "US",
-      "US",
-      "SA",
-      "SA",
-      "SA",
-      "SA",
-      "SA",
-      "SA",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-    ];
+    
     //나라 개수 만큼 반복문 형식
     polygonSeries.mapPolygons.template.adapters.add(
       "fill",
       function (fill, target) {
-        console.log(polygonSeries.mapPolygons.template.states.create+"야여")
+        //console.log(polygonSeries.mapPolygons.template.states.create+"야여")
         let dataContext = target.dataItem.dataContext;
         let visitCount = visitedCountry.reduce((cnt, element) => cnt + (dataContext.id === element), 0);
         let fillColor;

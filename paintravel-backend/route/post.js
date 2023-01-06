@@ -27,15 +27,18 @@ router.post("/upload", upload.array("myfile"), (req, res) => {
 });
 
 //글 리스트 가져오기
-router.get("/getVisitedList", async (req, res) => {
-  
-    if(!req.currentId==undefined){
-      console.log("현재 아이디" +req.currentId)
-      let postList = await Post.find().where('name').equals(req.currentId);
-      res.render("/", { postList });
+router.post("/getVisitedList", async (req, res) => {
+  console.log("현재 아이디" +req.body.currentId)
+  if (req.body.currentId == undefined){
+  } else{
+    let postList = await Post.find({ writer : req.body.currentId }).select('nationCode');
+    let countryList = [];
+    for(i in postList){
+      if(postList[i].nationCode){
+        countryList.push(postList[i].nationCode);
+      }
     }
-    else{
-      console.log("아직 로그인 안됨");
-    }
+    res.status(200).json({ countryList : countryList });//잘 보내줬음....
+  }
 })
 module.exports = router;
