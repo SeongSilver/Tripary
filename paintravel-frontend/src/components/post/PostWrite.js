@@ -43,7 +43,11 @@ function Postwrite() {
   const [myfile, setMyFile] = useState([]);
   const [previewImg, setPreviewImg] = useState([]);
 
-  const [currentId, setCurrentId] = useState("");
+  const [loginedId, setLoginedId] = useState();
+
+  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
+  const existlocalStorage = localStorage.getItem("LOGINEDID");
+
   const [post, setPost] = useState({
     title: "",
     country: "",
@@ -54,16 +58,16 @@ function Postwrite() {
   });
 
   useEffect(() => {
-    dispatch(auth()).then((response) => {
-      setCurrentId(response.payload._id);
-    });
+    if (existlocalStorage) {
+      setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+    }
   }, []);
 
   const onChangePost = (e) => {
     setPost({
       ...post,
       [e.target.name]: e.target.value,
-      writer: currentId,
+      writer: loginedId,
     });
   };
 
@@ -79,7 +83,7 @@ function Postwrite() {
     //1. post 객체에 files 정보 담아주기
     setPost({
       ...post,
-      writer: currentId,
+      writer: loginedId,
     });
     setMyFile([...files]);
     //2. 썸네일 생성을 위한 과정
