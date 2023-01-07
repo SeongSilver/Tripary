@@ -28,6 +28,7 @@ const GlobeMap = () => {
     setContentPositionRight("-60vw");
     setContentDisplay("hidden");
   };
+
   //키, 값, 만료시간을 매개변수로 받는 localStorage setItem 하는 함수
   const setLoginedItem = (key, value) => {
     if (key === null || value === null) {
@@ -57,6 +58,12 @@ const GlobeMap = () => {
 
   const existlocalStorage = localStorage.getItem("LOGINEDID");
 
+  let visitedCountry = [];
+
+  const setVisitedCountry = (countryList) => {
+    visitedCountry = countryList;
+  };
+
   //로컬스토리지에 LOGINEDID가 있을 경우 실행
   if (existlocalStorage) {
     //로그인된 아이디의 만료시간
@@ -70,6 +77,20 @@ const GlobeMap = () => {
         localStorage.removeItem("LOGINEDID");
       }
     }, 300000);
+
+    const postData = {
+      currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+    };
+
+    //[현아, 성은] 기방문 국가 탐색을 위한 부분
+    console.log("로그인된 아이디", postData.currentId);
+    axios
+      .post("/api/post/getVisitedList", postData)
+      .then(function (res) {
+        setVisitedCountry(res.data.countryList);
+        console.log("국가 탐색 성공" + res.data.countryList);
+      })
+      .catch((err) => console.log("에러발생이어라" + err));
   }
 
   /* Chart code */
@@ -120,41 +141,19 @@ const GlobeMap = () => {
 
     // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
     // 기존에 방문한 국가 배열로 백엔드에서 받아오기
-    const visitedCountry = [
-      "KR",
-      "CN",
-      "CN",
-      "US",
-      "US",
-      "US",
-      "US",
-      "SA",
-      "SA",
-      "SA",
-      "SA",
-      "SA",
-      "SA",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-      "AU",
-    ];
+
     //나라 개수 만큼 반복문 형식
     polygonSeries.mapPolygons.template.adapters.add(
       "fill",
       function (fill, target) {
+        //console.log(polygonSeries.mapPolygons.template.states.create+"야여")
         let dataContext = target.dataItem.dataContext;
         let visitCount = visitedCountry.reduce(
           (cnt, element) => cnt + (dataContext.id === element),
           0
         );
         let fillColor;
+        let selectedColor;
         switch (visitCount) {
           case 0: //0번 방문한 국가의 경우 색을 지정하지 않음
             break;
@@ -231,22 +230,6 @@ const GlobeMap = () => {
       let target = dataItem.get("mapPolygon");
       setNationCode(dataItem.dataContext.id);
       setSelectedCountry(dataItem.dataContext.name);
-
-      //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
-      if (existlocalStorage) {
-        const postData = {
-          currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
-          nationCode: dataItem.dataContext.id,
-        };
-
-        console.log("로그인된 아이디", postData.currentId);
-        console.log("선택된 국가", postData.nationCode);
-        axios
-          .post("/api/post/getVisitedList", postData)
-          .then((res) => console.log("data보내기 성공" + res))
-          .then(console.log("넘어갔다"))
-          .catch((err) => console.log("에러발생이어라" + err));
-      }
 
       setTimeout(() => {
         //타겟의 중심 포인트에

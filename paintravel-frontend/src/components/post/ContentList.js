@@ -27,7 +27,6 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
     setExistingPost(!existingPost);
   };
 
-  const [currentId, setCurrentId] = useState("");
   useEffect(() => {
     dispatch(auth()).then((response) => {
       if (!response.payload.isAuth) {
@@ -37,27 +36,8 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
         //로그인 된 경우
         setIsLogined(true);
       }
-      setCurrentId(response.payload._id);
     });
   }, []);
-  //로그인된 아이디 받아오는 useEffect
-
-  // const url = "/api/post/getPostList";
-  // const postData = {
-  //   currentId: currentId,
-  //   nationCode: nationCode,
-  // };
-
-  //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
-
-  // axios
-  //   .get(url, postData, {
-  //     headers: {
-  //       "Content-Type": `application/json`,
-  //     },
-  //   })
-  //   .then((res) => console.log("data보내기 성공 " + res))
-  //   .catch((err) => console.log("data 보내기 에러 " + err));
 
   const openContentModal = (event) => {
     setContentModal(true);
