@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import "../../styles/common/header.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -14,7 +14,7 @@ function Header() {
 
   const existlocalStorage = localStorage.getItem("LOGINEDID");
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(auth()).then((response) => {
       if (!response.payload.isAuth) {
         //로그인 안된 경우
@@ -51,7 +51,7 @@ function Header() {
           <Link to="/mypage" className="headLink">
             my page
           </Link>
-          {existlocalStorage !== null ? (
+          {isLogined ? (
             <a href="#" className="headLink" onClick={onClickHandler}>
               logout
             </a>

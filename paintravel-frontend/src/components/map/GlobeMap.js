@@ -43,9 +43,6 @@ const GlobeMap = () => {
     localStorage.setItem(key, JSON.stringify(item));
   };
 
-  //로그인된 아이디 받아오는 state
-  const [currentId, setCurrentId] = useState("");
-
   //로그인된 아이디 받아오는 useEffect
   useEffect(() => {
     dispatch(auth()).then((response) => {
