@@ -53,7 +53,7 @@ function Header() {
             </a>
           ) : (
             <Link to="/Login" className="headLink">
-              sign in
+              log in
             </Link>
           )}
         </div>
