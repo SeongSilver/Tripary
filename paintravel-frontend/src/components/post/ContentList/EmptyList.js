@@ -1,25 +1,34 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom';
+import '../../../styles/post/contentList/emptyList.scss';
 
-function EmptyList({ selectedCountry, nationCode }) {
+function EmptyList(selectedCountry, nationCode) {
+  const [airplaneStyle, setAirplaneStyle] = useState({});
+  useEffect (() => {
+    document.querySelector(".emptyListContainer > a").addEventListener("mouseover", function(){
+      setAirplaneStyle({transform:"scale(2) translate(50%, -40%)"});
+    });
+    document.querySelector(".emptyListContainer > a").addEventListener("mouseleave", function(){
+      setAirplaneStyle({});
+    });
+  })
   return (
-    <div className="contentBody">
-      <div>
-        <Link
-          to="/postwrite"
-          state={{
-            selectedCountry: selectedCountry,
-            nationCode: nationCode,
-          }}
-        >
-          <span>다이어리 추가</span>
-          여기에 이미지 하나 놓으면 좋을거같은데 비행기같은거
-          <br/>
-          <br/>
-          <br/>
-          여행 게시물을 추가하세요!라는 이동 버튼 하나 있으면 좋겠스요
-        </Link>
-      </div>
+    <div className="emptyListContainer">
+      <figure>
+        <img src={require("../../../img/post/diary.png")} alt="다이어리 이미지" />
+        <img className="airplane" style={airplaneStyle}
+        src={require("../../../img/post/airplane.png")} alt="비행기 이미지" />
+      </figure>
+      <p>아직 여행 일지가 없어요 !</p>
+      <Link
+        to="/postwrite"
+        state={{
+          selectedCountry: selectedCountry,
+          nationCode: nationCode,
+        }}
+      >
+        다이어리 작성하기
+      </Link>
     </div>
   )
 }
