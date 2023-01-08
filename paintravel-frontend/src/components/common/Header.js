@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import "../../styles/common/header.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -12,7 +12,9 @@ function Header() {
   const dispatch = useDispatch();
   const [isLogined, setIsLogined] = useState();
 
-  useEffect(() => {
+  const existlocalStorage = localStorage.getItem("LOGINEDID");
+
+  useLayoutEffect(() => {
     dispatch(auth()).then((response) => {
       if (!response.payload.isAuth) {
         //로그인 안된 경우
@@ -24,6 +26,7 @@ function Header() {
   }, []);
 
   const onClickHandler = () => {
+    localStorage.removeItem("LOGINEDID");
     dispatch(logoutUser()).then((response) => {
       if (response.payload.logoutSucess) {
         navigate("/Login");
@@ -32,6 +35,7 @@ function Header() {
       }
     });
   };
+
   return (
     <header className="header">
       <div className="headerWrapper">
