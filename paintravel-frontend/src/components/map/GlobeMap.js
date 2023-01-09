@@ -9,7 +9,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { auth } from "../../_actions/user_actions";
 
-const GlobeMap = () => {
+const GlobeMap = ({visitedCountry}) => {
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
   const [ContentDisplay, setContentDisplay] = useState("hidden");
@@ -92,7 +92,6 @@ const GlobeMap = () => {
       })
       .catch((err) => console.log("에러발생이어라" + err));
   }
-
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
@@ -139,48 +138,46 @@ const GlobeMap = () => {
       cursorOverStyle: "pointer",
     });
 
-    // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
-    // 기존에 방문한 국가 배열로 백엔드에서 받아오기
-
-    //나라 개수 만큼 반복문 형식
-    polygonSeries.mapPolygons.template.adapters.add(
-      "fill",
-      function (fill, target) {
-        //console.log(polygonSeries.mapPolygons.template.states.create+"야여")
-        let dataContext = target.dataItem.dataContext;
-        let visitCount = visitedCountry.reduce(
-          (cnt, element) => cnt + (dataContext.id === element),
-          0
-        );
-        let fillColor;
-        let selectedColor;
-        switch (visitCount) {
-          case 0: //0번 방문한 국가의 경우 색을 지정하지 않음
-            break;
-          case 1: //1번 방문한 국가 색 지정
-            fillColor = "rgba(0,255,100,0.2)";
-            break;
-          case 2: //2-3번 방문한 국가 색 지정
-          case 3:
-            fillColor = "rgba(0,255,100,0.4)";
-            break;
-          case 4: //4-5번 방문한 국가 색 지정
-          case 5:
-            fillColor = "rgba(0,255,100,0.6)";
-            break;
-          case 6: //6-9번 방문한 국가 색 지정
-          case 7:
-          case 8:
-          case 9:
-            fillColor = "rgba(0,255,100,0.8)";
-            break;
-          default:
-            if (visitCount > 9) {
-              //10번 이상 방문한 국가 색 지정
-              fillColor = "rgba(0,255,100,1)";
-            }
-            break;
-        }
+    if(visitedCountry){
+      console.log(visitedCountry)
+      // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
+      // 기존에 방문한 국가 배열로 백엔드에서 받아오기
+      
+      //나라 개수 만큼 반복문 형식
+      polygonSeries.mapPolygons.template.adapters.add(
+        "fill",
+        function (fill, target) {
+          //console.log(polygonSeries.mapPolygons.template.states.create+"야여")
+          let dataContext = target.dataItem.dataContext;
+          let visitCount = visitedCountry.reduce((cnt, element) => cnt + (dataContext.id === element), 0);
+          let fillColor;
+          let selectedColor;
+          switch (visitCount) {
+            case 0: //0번 방문한 국가의 경우 색을 지정하지 않음
+              break;
+            case 1: //1번 방문한 국가 색 지정
+              fillColor = "rgba(0,255,100,0.2)";
+              break;
+            case 2: //2-3번 방문한 국가 색 지정
+            case 3:
+              fillColor = "rgba(0,255,100,0.4)";
+              break;
+            case 4: //4-5번 방문한 국가 색 지정
+            case 5:
+              fillColor = "rgba(0,255,100,0.6)";
+              break;
+            case 6: //6-9번 방문한 국가 색 지정
+            case 7:
+            case 8:
+            case 9:
+              fillColor = "rgba(0,255,100,0.8)";
+              break;
+            default:
+              if(visitCount>9){ //10번 이상 방문한 국가 색 지정
+                fillColor = "rgba(0,255,100,1)";
+              }
+              break;
+          }
 
         if (visitedCountry.includes(dataContext.id)) {
           dataContext.colorWasSet = true;
@@ -190,7 +187,9 @@ const GlobeMap = () => {
           return fill;
         }
       }
-    );
+      );
+    }
+
     // Create series for background fill
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
     let backgroundSeries = chart.series.unshift(
