@@ -45,7 +45,18 @@ function Header() {
           <Link to="/mypage" className="headLink">
             my page
           </Link>
-          {existLocalStorage ? (
+          {existLocalStorage &&
+            <a href="#" className="headLink" onClick={onClickHandler}>
+              logout
+            </a>
+          }
+          {
+            existLocalStorage ||
+            <Link to="/Login" className="headLink">
+              sign in
+            </Link>
+          }
+          {/* {existLocalStorage ? (
             <a href="#" className="headLink" onClick={onClickHandler}>
               logout
             </a>
@@ -53,7 +64,7 @@ function Header() {
             <Link to="/Login" className="headLink">
               sign in
             </Link>
-          )}
+          )} */}
         </div>
       </div>
     </header>
