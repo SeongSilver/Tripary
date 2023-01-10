@@ -10,8 +10,6 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [existLocalStorage, setExistLocalStorage] = useState(false);
-
   //키, 값을 매개변수로 받는 localStorage setItem 하는 함수
   const setLoginedItem = (key, value) => {
     if (key === null || value === null) {
@@ -32,30 +30,26 @@ function Header() {
       //localStorage에 LOGINEDID를 만드는 함수에 response에서 받아온 id넣음
       if (response.payload._id) {
         setLoginedItem("LOGINEDID", response.payload._id);
-        setExistLocalStorage(true);
-      } else {
-        setExistLocalStorage(false);
       }
       if (response.payload._id === null || response.payload._id === "") {
         localStorage.clear();
       }
     });
+    //로컬스토리지에 LOGINEDID가 있을 경우 실행
+    if (localStorage.key("LOGINEDID")) {
+      //로그인된 아이디의 만료시간
+      const expireTime = JSON.parse(localStorage.getItem("LOGINEDID")).expiry;
+
+      //현재시간이 LOGINEDID 만료시간보다 길면 localStorage에 있는 LOGINEDID 삭제
+      setInterval(() => {
+        const nowTime = new Date().getTime();
+
+        if (nowTime > expireTime) {
+          localStorage.removeItem("LOGINEDID");
+        }
+      }, 300000);
+    }
   }, []);
-
-  //로컬스토리지에 LOGINEDID가 있을 경우 실행
-  if (existLocalStorage) {
-    //로그인된 아이디의 만료시간
-    const expireTime = JSON.parse(localStorage.getItem("LOGINEDID")).expiry;
-
-    //현재시간이 LOGINEDID 만료시간보다 길면 localStorage에 있는 LOGINEDID 삭제
-    setInterval(() => {
-      const nowTime = new Date().getTime();
-
-      if (nowTime > expireTime) {
-        localStorage.removeItem("LOGINEDID");
-      }
-    }, 300000);
-  }
 
   const onClickHandler = () => {
     localStorage.removeItem("LOGINEDID");
@@ -93,7 +87,7 @@ function Header() {
               sign in
             </Link>
           )} */}
-          {existLocalStorage ? (
+          {localStorage.key("LOGINEDID") ? (
             <a href="#" className="headLink" onClick={onClickHandler}>
               logout
             </a>
