@@ -6,95 +6,63 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { auth } from "../../_actions/user_actions";
+import Loading from "../common/Loading"
 
-const GlobeMap = ({visitedCountry}) => {
+const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
   const [contentPositionRight, setContentPositionRight] = useState("-60vw");
   const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState("");
+  const [visitedCountry, setVisitedCountry] = useState([]);
+  const [needToFill, setNeedToFill] = useState(true);
+  const [login_id, setLogin_id] = useState("*");
+  const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
-
+  //selectedCountry될 때 실행되는 contentList CSS바꿔서 나타나게 하는함수
   const contentListOpen = () => {
     setGlobeWidth("40%");
     setContentPositionRight("0");
     setContentDisplay("block");
   };
+  //contetnList 닫는 함수
   const contentListClose = () => {
     setGlobeWidth("100%");
     setContentPositionRight("-60vw");
     setContentDisplay("hidden");
   };
 
-  //키, 값, 만료시간을 매개변수로 받는 localStorage setItem 하는 함수
-  const setLoginedItem = (key, value) => {
-    if (key === null || value === null) {
-      console.log("setItem에 매개변수 안들어감");
-      return;
-    }
-    const now = new Date();
+  const existLocalStorage = localStorage.key("LOGINEDID");
 
-    const item = {
-      value: value,
-      expiry: now.getTime() + 1800000,
-    };
-    localStorage.setItem(key, JSON.stringify(item));
-  };
-
-  //로그인된 아이디 받아오는 useEffect
-  useEffect(() => {
-    dispatch(auth()).then((response) => {
-      //localStorage에 LOGINEDID를 만드는 함수에 response에서 받아온 id넣음
-      setLoginedItem("LOGINEDID", response.payload._id);
-
-      if (response.payload._id === null || response.payload._id === "") {
-        localStorage.clear();
-      }
-    });
-  }, []);
-
-  const existlocalStorage = localStorage.getItem("LOGINEDID");
-
-  let visitedCountry = [];
-
-  const setVisitedCountry = (countryList) => {
-    visitedCountry = countryList;
-  };
-
-  //로컬스토리지에 LOGINEDID가 있을 경우 실행
-  if (existlocalStorage) {
-    //로그인된 아이디의 만료시간
-    const expireTime = JSON.parse(localStorage.getItem("LOGINEDID")).expiry;
-
-    //현재시간이 LOGINEDID 만료시간보다 길면 localStorage에 있는 LOGINEDID 삭제
-    setInterval(() => {
-      const nowTime = new Date().getTime();
-
-      if (nowTime > expireTime) {
-        localStorage.removeItem("LOGINEDID");
-      }
-    }, 300000);
-
-    const postData = {
-      currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
-    };
-
-    //[현아, 성은] 기방문 국가 탐색을 위한 부분
-    console.log("로그인된 아이디", postData.currentId);
-    axios
-      .post("/api/post/getVisitedList", postData)
-      .then(function (res) {
-        setVisitedCountry(res.data.countryList);
-        console.log("국가 탐색 성공" + res.data.countryList);
-      })
-      .catch((err) => console.log("에러발생이어라" + err));
-  }
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+  //로컬스토리지에 LOGINEDID가 있을 경우 실행
+  useEffect(() => {
+    if (existLocalStorage) {
+      setLogin_id(JSON.parse(localStorage.getItem("LOGINEDID")).value)
+    }
+    //[현아, 성은] 기방문 국가 탐색을 위한 부분
+    if (needToFill) {
+      if (login_id !== "*") {
+        console.log("DDDD")
+        setLoading(true);
+        const postData = {
+          currentId: login_id,
+        };
+        console.log("로그인된 아이디", postData.currentId);
+        axios
+          .post("/api/post/getVisitedList", postData)
+          .then(function (res) {
+            setVisitedCountry(res.data.countryList);
+            setNeedToFill(false)
+            console.log("국가 탐색 성공" + res.data.countryList);
+          })
+          .catch((err) => console.log("에러발생이어라" + err));
+      }
+    }
+  },)
+
   useLayoutEffect(() => {
     let root = am5.Root.new("chartdiv");
 
@@ -138,11 +106,11 @@ const GlobeMap = ({visitedCountry}) => {
       cursorOverStyle: "pointer",
     });
 
-    if(visitedCountry){
-      console.log(visitedCountry)
+    if (visitedCountry !== []) {
+      console.log("@@@@" + visitedCountry)
       // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
       // 기존에 방문한 국가 배열로 백엔드에서 받아오기
-      
+
       //나라 개수 만큼 반복문 형식
       polygonSeries.mapPolygons.template.adapters.add(
         "fill",
@@ -173,20 +141,21 @@ const GlobeMap = ({visitedCountry}) => {
               fillColor = "rgba(0,255,100,0.8)";
               break;
             default:
-              if(visitCount>9){ //10번 이상 방문한 국가 색 지정
+              if (visitCount > 9) { //10번 이상 방문한 국가 색 지정
                 fillColor = "rgba(0,255,100,1)";
               }
               break;
           }
 
-        if (visitedCountry.includes(dataContext.id)) {
-          dataContext.colorWasSet = true;
-          target.setRaw("fill", fillColor);
-          return fillColor;
-        } else {
-          return fill;
+          if (visitedCountry.includes(dataContext.id)) {
+            dataContext.colorWasSet = true;
+            target.setRaw("fill", fillColor);
+            return fillColor;
+          } else {
+            return fill;
+          }
+          setLoading(false)
         }
-      }
       );
     }
 
@@ -293,7 +262,7 @@ const GlobeMap = ({visitedCountry}) => {
     return () => {
       root.dispose();
     };
-  }, []);
+  }, [visitedCountry]);
 
   // 별 내리는 함수
   const canvasRef = useRef(null);

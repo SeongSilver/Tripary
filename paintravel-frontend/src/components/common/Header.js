@@ -1,7 +1,6 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/common/header.scss";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../_actions/user_actions";
@@ -10,19 +9,46 @@ import { logoutUser } from "../../_actions/user_actions";
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isLogined, setIsLogined] = useState();
 
-  const existlocalStorage = localStorage.getItem("LOGINEDID");
+  //키, 값을 매개변수로 받는 localStorage setItem 하는 함수
+  const setLoginedItem = (key, value) => {
+    if (key === null || value === null) {
+      console.log("setItem에 매개변수 안들어감");
+      return;
+    }
+    const now = new Date();
 
-  useLayoutEffect(() => {
+    const item = {
+      value: value,
+      expiry: now.getTime() + 1800000,
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+  };
+
+  useEffect(() => {
     dispatch(auth()).then((response) => {
-      if (!response.payload.isAuth) {
-        //로그인 안된 경우
-        setIsLogined(false);
-      } else {
-        setIsLogined(true);
+      //localStorage에 LOGINEDID를 만드는 함수에 response에서 받아온 id넣음
+      if (response.payload._id) {
+        setLoginedItem("LOGINEDID", response.payload._id);
+      }
+      if (response.payload._id === null || response.payload._id === "") {
+        localStorage.clear();
       }
     });
+    //로컬스토리지에 LOGINEDID가 있을 경우 실행
+    if (localStorage.key("LOGINEDID")) {
+      //로그인된 아이디의 만료시간
+      const expireTime = JSON.parse(localStorage.getItem("LOGINEDID")).expiry;
+
+      //현재시간이 LOGINEDID 만료시간보다 길면 localStorage에 있는 LOGINEDID 삭제
+      setInterval(() => {
+        const nowTime = new Date().getTime();
+
+        if (nowTime > expireTime) {
+          localStorage.removeItem("LOGINEDID");
+        }
+      }, 300000);
+    }
   }, []);
 
   const onClickHandler = () => {
@@ -51,7 +77,17 @@ function Header() {
           <Link to="/mypage" className="headLink">
             my page
           </Link>
-          {isLogined ? (
+          {/* {existLocalStorage && (
+            <a href="#" className="headLink" onClick={onClickHandler}>
+              logout
+            </a>
+          )}
+          {existLocalStorage || (
+            <Link to="/Login" className="headLink">
+              sign in
+            </Link>
+          )} */}
+          {localStorage.key("LOGINEDID") ? (
             <a href="#" className="headLink" onClick={onClickHandler}>
               logout
             </a>
