@@ -6,8 +6,6 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { auth } from "../../_actions/user_actions";
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
@@ -16,47 +14,20 @@ const GlobeMap = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState("");
 
-  const dispatch = useDispatch();
-
+  //selectedCountry될 때 실행되는 contentList CSS바꿔서 나타나게 하는함수
   const contentListOpen = () => {
     setGlobeWidth("40%");
     setContentPositionRight("0");
     setContentDisplay("block");
   };
+  //contetnList 닫는 함수
   const contentListClose = () => {
     setGlobeWidth("100%");
     setContentPositionRight("-60vw");
     setContentDisplay("hidden");
   };
 
-  //키, 값, 만료시간을 매개변수로 받는 localStorage setItem 하는 함수
-  const setLoginedItem = (key, value) => {
-    if (key === null || value === null) {
-      console.log("setItem에 매개변수 안들어감");
-      return;
-    }
-    const now = new Date();
-
-    const item = {
-      value: value,
-      expiry: now.getTime() + 1800000,
-    };
-    localStorage.setItem(key, JSON.stringify(item));
-  };
-
-  //로그인된 아이디 받아오는 useEffect
-  useEffect(() => {
-    dispatch(auth()).then((response) => {
-      //localStorage에 LOGINEDID를 만드는 함수에 response에서 받아온 id넣음
-      setLoginedItem("LOGINEDID", response.payload._id);
-
-      if (response.payload._id === null || response.payload._id === "") {
-        localStorage.clear();
-      }
-    });
-  }, []);
-
-  const existlocalStorage = localStorage.getItem("LOGINEDID");
+  const existLocalStorage = localStorage.key("LOGINEDID");
 
   let visitedCountry = [];
 
@@ -64,20 +35,11 @@ const GlobeMap = () => {
     visitedCountry = countryList;
   };
 
+  /* Chart code */
+  // Create root element
+  // https://www.amcharts.com/docs/v5/getting-started/#Root_element
   //로컬스토리지에 LOGINEDID가 있을 경우 실행
-  if (existlocalStorage) {
-    //로그인된 아이디의 만료시간
-    const expireTime = JSON.parse(localStorage.getItem("LOGINEDID")).expiry;
-
-    //현재시간이 LOGINEDID 만료시간보다 길면 localStorage에 있는 LOGINEDID 삭제
-    setInterval(() => {
-      const nowTime = new Date().getTime();
-
-      if (nowTime > expireTime) {
-        localStorage.removeItem("LOGINEDID");
-      }
-    }, 300000);
-
+  if (existLocalStorage) {
     const postData = {
       currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
     };
@@ -93,9 +55,6 @@ const GlobeMap = () => {
       .catch((err) => console.log("에러발생이어라" + err));
   }
 
-  /* Chart code */
-  // Create root element
-  // https://www.amcharts.com/docs/v5/getting-started/#Root_element
   useLayoutEffect(() => {
     let root = am5.Root.new("chartdiv");
 
