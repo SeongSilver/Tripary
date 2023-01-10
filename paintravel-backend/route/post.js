@@ -26,7 +26,7 @@ router.post("/upload", upload.array("myfile"), (req, res) => {
   });
 });
 
-//글 리스트 가져오기
+//방문 국가 가져오기
 router.post("/getVisitedList", async (req, res) => {
   if (req.body.currentId == undefined) {
   } else {
@@ -41,6 +41,24 @@ router.post("/getVisitedList", async (req, res) => {
     }
     console.log("현재 아이디가 글 쓴 국가" + countryList);
     res.status(200).json({ countryList: countryList }); //잘 보내줬음....
+  }
+});
+
+
+//글 리스트 가져오기
+router.post("/getPostList", async (req, res) => {
+  if (req.body.currentId == undefined) {
+  } else {
+    let post = await Post.find({ writer: req.body.currentId }).select(
+    );
+    let postList = [];
+    for (i in post) {
+      if (post[i].nationCode) {
+        postList.push(post[i].nationCode);
+      }
+    }
+    console.log("현재 아이디가 쓴 글" + postList);
+    res.status(200).json({ postList: postList }); //잘 보내줬음....
   }
 });
 module.exports = router;
