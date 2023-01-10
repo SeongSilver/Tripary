@@ -12,6 +12,8 @@ import promiseMiddleware from "redux-promise";
 import ReduxThunk from "redux-thunk";
 import Reducer from "./_reducers";
 
+import Store from "./store/store";
+
 //redux-promise, redux-thunk를 사용하기 위한과정
 //1)
 const createStoreWithMiddleware = applyMiddleware(
@@ -19,14 +21,19 @@ const createStoreWithMiddleware = applyMiddleware(
   ReduxThunk
 )(createStore);
 
-const store = createStoreWithMiddleware(Reducer,window.__REDUX_DEVTOOLS_EXTENSION__ &&window.__REDUX_DEVTOOLS_EXTENSION__())
+const store = createStoreWithMiddleware(
+  Reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Store>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Store>
   </Provider>
 );
 

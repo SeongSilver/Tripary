@@ -6,6 +6,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { auth } from "../_actions/user_actions";
 
+
 function MapPage() {
   return (
     <div>
