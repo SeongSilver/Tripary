@@ -28,7 +28,6 @@ router.post("/upload", upload.array("myfile"), (req, res) => {
 
 //글 리스트 가져오기
 router.post("/getVisitedList", async (req, res) => {
-  console.log("현재 아이디" + req.body.currentId);
   if (req.body.currentId == undefined) {
   } else {
     let postList = await Post.find({ writer: req.body.currentId }).select(
@@ -40,6 +39,7 @@ router.post("/getVisitedList", async (req, res) => {
         countryList.push(postList[i].nationCode);
       }
     }
+    console.log("현재 아이디가 글 쓴 국가" + countryList);
     res.status(200).json({ countryList: countryList }); //잘 보내줬음....
   }
 });
