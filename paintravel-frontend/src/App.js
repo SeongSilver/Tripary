@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from "react";
 import { Routes, Route } from "react-router";
 import MyPagePage from "./pages/MyPagePage";
