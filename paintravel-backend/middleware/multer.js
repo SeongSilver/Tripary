@@ -1,7 +1,7 @@
 const { Post } = require("../models/Post");
 const multer = require("multer");
 const fs = require("fs");
-const path = require("path")
+const path = require("path");
 
 try {
   fs.readdirSync("upload");
@@ -24,20 +24,21 @@ const Storage = multer.diskStorage({
   },
   filename(req, file, cb) {
     const ext = path.extname(file.originalname);
-    file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
-    console.log("업로드 할 파일"+file.originalname);
-    cb(null, "uploadImage_"+ new Date().valueOf()+ext); // 시스템 시간으로 파일이름을 변경해서 저장
+    file.originalname = Buffer.from(file.originalname, "latin1").toString(
+      "utf8"
+    );
+    console.log("업로드 할 파일" + file.originalname);
+    cb(null, "uploadImage_" + new Date().valueOf() + ext); // 시스템 시간으로 파일이름을 변경해서 저장
   },
   onFileUploadStart: function (file) {
-    console.log(file.originalname + ' is starting ...');
+    console.log(file.originalname + " is starting ...");
   },
   onFileUploadComplete: function (file) {
-    console.log(file.fieldname + ' uploaded to  ' + file.path);
-  }
+    console.log(file.fieldname + " uploaded to  " + file.path);
+  },
 });
 
 // multer()는 미들웨어를 위한 메소드를 가진 Multer 객체를 반환, 옵션값을 줄 수 있음
 
 const upload = multer({ storage: Storage });
 module.exports = { upload };
-
