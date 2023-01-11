@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import "../../styles/post/postWrite.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -142,7 +141,6 @@ function Postwrite() {
       .catch((err) => {
         console.log(err);
       });
-    console.log(formData);
   };
 
   const goMain = () => {
