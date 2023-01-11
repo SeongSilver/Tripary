@@ -3,11 +3,9 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
-try {
-  fs.readdirSync("upload");
-} catch (err) {
+if(!fs.existsSync("paintravel-frontend/public/img")){
   console.error("upload 폴더가 없습니다. 폴더를 생성합니다.");
-  fs.mkdirSync("upload");
+  fs.mkdirSync("paintravel-frontend/public/img", { recursive: true })
 }
 // diskStorage는 disk에 file을 저장하게 함
 

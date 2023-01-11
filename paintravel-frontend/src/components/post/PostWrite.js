@@ -6,7 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { MdDeleteForever } from "react-icons/md";
 import { RiFolderAddFill } from "react-icons/ri";
 import axios from "axios";
-import axios from "axios";
 
 function Postwrite() {
   const navigate = useNavigate();
