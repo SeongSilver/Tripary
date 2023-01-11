@@ -7,7 +7,7 @@ import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
 import axios from "axios";
 import Loading from "../common/Loading";
-import { rgbToHsl } from "@amcharts/amcharts5/.internal/core/util/Utils";
+import { BiArrowBack } from "react-icons/bi";
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
@@ -19,6 +19,8 @@ const GlobeMap = () => {
   const [needToFill, setNeedToFill] = useState(true);
   const [login_id, setLogin_id] = useState("*");
   const [loading, setLoading] = useState(false);
+  //LoginedList에서 쓰일 데이터
+  const [listData, setListData] = useState();
 
   //selectedCountry될 때 실행되는 contentList CSS바꿔서 나타나게 하는함수
   const contentListOpen = () => {
@@ -54,13 +56,13 @@ const GlobeMap = () => {
         const postData = {
           currentId: login_id,
         };
-        console.log("로그인된 아이디", postData.currentId);
+        // console.log("로그인된 아이디", postData.currentId);
         axios
           .post("/api/post/getVisitedList", postData)
           .then(function (res) {
             setVisitedCountry(res.data.countryList);
             setNeedToFill(false);
-            console.log("국가 탐색 성공" + res.data.countryList);
+            // console.log("국가 탐색 성공" + res.data.countryList);
             setLoading(false);
           })
           .catch((err) => console.log("에러발생이어라" + err));
@@ -115,7 +117,7 @@ const GlobeMap = () => {
       });
 
       if (visitedCountry !== []) {
-        console.log("@@@@" + visitedCountry);
+        // console.log("@@@@" + visitedCountry);
         // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
         // 기존에 방문한 국가 배열로 백엔드에서 받아오기
 
@@ -214,18 +216,16 @@ const GlobeMap = () => {
         setSelectedCountry(dataItem.dataContext.name);
 
         //로그인 아이디가 "*"(기본값)이 아닐 때 -> 로그인된 아이디가 있을 때
-        //postData에 데이터를 담고 axios로 getPostList에 로그인 된 아이디, 클릭된 국가 코드보내기
+        // postData에 데이터를 담고 axios로 getPostList에 로그인 된 아이디, 클릭된 국가 코드보내기
         if (login_id !== "*") {
           const postData = {
             currentId: login_id,
             selectCountry: dataItem.dataContext.id,
           };
-          console.log("로그인된 아이디", postData.currentId);
-          console.log("클릭한 국가", postData.selectCountry);
           axios
             .post("/api/post/getPostList", postData)
             .then(function (res) {
-              console.log(res);
+              setListData(res.data.postList);
             })
             .catch((err) => console.log("에러발생이어라" + err));
         }
@@ -391,10 +391,15 @@ const GlobeMap = () => {
             position: "absolute",
             width: "60vw",
           }}>
+          {/* <div className="backButton" onClick={contentListClose}>
+            <span>리스트 닫기</span>
+            <BiArrowBack />
+          </div> */}
           <ContentList
             selectedCountry={selectedCountry}
             nationCode={nationCode}
             contentListClose={contentListClose}
+            listData={listData}
           />
         </div>
       )}

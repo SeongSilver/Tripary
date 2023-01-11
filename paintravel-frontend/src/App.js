@@ -5,6 +5,7 @@ import Login from "./components/Login/Login";
 import NotFound from "./NotFound";
 import MapPage from "./pages/MapPage";
 import PostWritePage from "./pages/PostWritePage";
+import PostEditPage from "./pages/PostEditPage";
 import "./App.css";
 import Auth from "./hoc/auth";
 
@@ -15,6 +16,7 @@ function App() {
   const AuthLogin = Auth(Login, false);
   const AuthMyPagePage = Auth(MyPagePage, true);
   const AuthPostWritePage = Auth(PostWritePage, true);
+  const AuthPostEditPage = Auth(PostEditPage, true);
 
   return (
     <Routes>
@@ -22,6 +24,7 @@ function App() {
       <Route path="/login" element={<AuthLogin />} />
       <Route path="/mypage" element={<AuthMyPagePage />} />
       <Route path="/postwrite" element={<AuthPostWritePage />} />
+      <Route path="/postEdit" element={<AuthPostEditPage />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );
