@@ -17,48 +17,32 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
   const [cityName, setCityName] = useState("서울인건가");
 
   //로그인 유무 확인
-  const [isLogined, setIsLogined] = useState();
+  // const dispatch = useDispatch();
+  // const [isLogined, setIsLogined] = useState();
+
+  //게시물 존재여부만 확인하는 더미 state
   const [existingPost, setExistingPost] = useState(true);
 
-  const dispatch = useDispatch();
-
-  //글이 있는지 여부를 아직 백엔드에서 못받아오기 때문에 existingPost를 껏다 켯다 함수
-  const existingOnOff = () => {
-    setExistingPost(!existingPost);
-  };
-
-  const [currentId, setCurrentId] = useState("");
-
+  const [existLocalStorage, setExistLocalStorage] = useState(false);
   useEffect(() => {
-    dispatch(auth()).then((response) => {
-      if (!response.payload.isAuth) {
-        //로그인 안된 경우
-        setIsLogined(false);
-      } else {
-        //로그인 된 경우
-        setIsLogined(true);
-      }
-      setCurrentId(response.payload._id);
-    });
+    if (window.localStorage.key("LOGINEDID")) {
+      setExistLocalStorage(true);
+    } else {
+      setExistLocalStorage(false);
+    }
   }, []);
-  //로그인된 아이디 받아오는 useEffect
 
-  // const url = "/api/post/getPostList";
-  // const postData = {
-  //   currentId: currentId,
-  //   nationCode: nationCode,
-  // };
-
-  //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
-
-  // axios
-  //   .get(url, postData, {
-  //     headers: {
-  //       "Content-Type": `application/json`,
-  //     },
-  //   })
-  //   .then((res) => console.log("data보내기 성공 " + res))
-  //   .catch((err) => console.log("data 보내기 에러 " + err));
+  // useEffect(() => {
+  //   dispatch(auth()).then((response) => {
+  //     if (!response.payload.isAuth) {
+  //       //로그인 안된 경우
+  //       setIsLogined(false);
+  //     } else {
+  //       //로그인 된 경우
+  //       setIsLogined(true);
+  //     }
+  //   });
+  // }, []);
 
   const openContentModal = (event) => {
     setContentModal(true);
@@ -75,20 +59,13 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
       <div className="contentHeader">
         <h2 className="selectedCountry">{selectedCountry}</h2>
         <div className="postButton">
-          {isLogined ? (
+          {existLocalStorage && (
             <Link
               to="/postwrite"
               state={{
                 selectedCountry: selectedCountry,
                 nationCode: nationCode,
               }}
-              className="postButton">
-              <span>다이어리 추가</span>+
-            </Link>
-          ) : (
-            <Link
-              to="/login"
-              state={{ selectedCountry: selectedCountry }}
               className="postButton">
               <span>다이어리 추가</span>+
             </Link>
@@ -102,15 +79,15 @@ function ContentList({ selectedCountry, nationCode, contentListClose }) {
       {/*null 자리에
         게시물이있다면(state 변수) ? <LoginedList openContentModal={openContentModal}/> : <EmptyList/> />
       */}
-      {isLogined ? (
+      {existLocalStorage ? (
         existingPost ? (
           <LoginedList
             openContentModal={openContentModal}
-            existingOnOff={existingOnOff}
+            selectedCountry={selectedCountry}
+            nationCode={nationCode}
           />
         ) : (
           <EmptyList
-            existingOnOff={existingOnOff}
             selectedCountry={selectedCountry}
             nationCode={nationCode}
           />

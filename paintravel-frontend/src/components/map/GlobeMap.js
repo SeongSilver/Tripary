@@ -6,8 +6,8 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { auth } from "../../_actions/user_actions";
+import Loading from "../common/Loading";
+import { rgbToHsl } from "@amcharts/amcharts5/.internal/core/util/Utils";
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
@@ -15,256 +15,282 @@ const GlobeMap = () => {
   const [ContentDisplay, setContentDisplay] = useState("hidden");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [nationCode, setNationCode] = useState("");
+  const [visitedCountry, setVisitedCountry] = useState([]);
+  const [needToFill, setNeedToFill] = useState(true);
+  const [login_id, setLogin_id] = useState("*");
+  const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
-
+  //selectedCountry될 때 실행되는 contentList CSS바꿔서 나타나게 하는함수
   const contentListOpen = () => {
     setGlobeWidth("40%");
     setContentPositionRight("0");
     setContentDisplay("block");
   };
+  //contetnList 닫는 함수
   const contentListClose = () => {
     setGlobeWidth("100%");
     setContentPositionRight("-60vw");
     setContentDisplay("hidden");
   };
 
-  //로그인된 아이디 받아오는 state
-  const [currentId, setCurrentId] = useState("");
-  const [isLogined, setIsLogined] = useState();
+  const existLocalStorage = localStorage.key("LOGINEDID");
 
-  //로그인된 아이디 받아오는 useEffect
-  useEffect(() => {
-    dispatch(auth()).then((response) => {
-      if (!response.payload.isAuth) {
-        //로그인 안된 경우
-        setIsLogined(false);
-      } else {
-        //로그인 된 경우
-        setIsLogined(true);
-      }
-      setCurrentId(response.payload._id);
-    });
-  }, []);
-
-  //[ 성은 23.01.04 ] axios로 백엔드에 로그인된 아이디, 국가 코드 보내기
-  const postData = {
-    currentId: currentId,
-  }; 
-  //[현아, 성은] 기방문 국가 탐색을 위한 부분
-  let visitedCountry = [];
-  const setVisitedCountry = (countryList) => {
-    visitedCountry = countryList;
-  } 
-  console.log(isLogined);
-  if (isLogined) {
-    console.log("로그인된 아이디", currentId);
-    axios
-      .post("/api/post/getVisitedList", postData)
-      .then(function(res) {
-        setVisitedCountry(res.data.countryList);
-        console.log("국가 탐색 성공"+res.data.countryList);
-    })
-      .catch((err) => console.log("에러발생이어라" + err));
-  }
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+  //로컬스토리지에 LOGINEDID가 있을 경우 실행
+  useEffect(() => {
+    if (existLocalStorage) {
+      setLogin_id(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+    }
+    //[현아, 성은] 기방문 국가 탐색을 위한 부분
+    if (needToFill) {
+      if (login_id !== "*") {
+        setLoading(true);
+        const postData = {
+          currentId: login_id,
+        };
+        console.log("로그인된 아이디", postData.currentId);
+        axios
+          .post("/api/post/getVisitedList", postData)
+          .then(function (res) {
+            setVisitedCountry(res.data.countryList);
+            setNeedToFill(false);
+            console.log("국가 탐색 성공" + res.data.countryList);
+            setLoading(false);
+          })
+          .catch((err) => console.log("에러발생이어라" + err));
+      }
+    }
+  });
+
   useLayoutEffect(() => {
-    let root = am5.Root.new("chartdiv");
+    if (!loading) {
+      let root = am5.Root.new("chartdiv");
 
-    // Set themes
-    // https://www.amcharts.com/docs/v5/concepts/themes/
-    root.setThemes([am5themes_Animated.new(root)]);
+      // Set themes+
+      // https://www.amcharts.com/docs/v5/concepts/themes/
+      root.setThemes([am5themes_Animated.new(root)]);
 
-    // Create the map chart
-    // https://www.amcharts.com/docs/v5/charts/map-chart/
-    let chart = root.container.children.push(
-      am5map.MapChart.new(root, {
-        homeGeoPoint: { longitude: 127, latitude: 36 },
-        homeZoomLevel: 0,
-        panX: "rotateX",
-        panY: "rotateY",
-        wheelY: "zoom",
-        zoomStep: 4,
-        projection: am5map.geoOrthographic(),
-      })
-    );
+      // Create the map chart
+      // https://www.amcharts.com/docs/v5/charts/map-chart/
+      let chart = root.container.children.push(
+        am5map.MapChart.new(root, {
+          homeGeoPoint: { longitude: 127, latitude: 36 },
+          homeZoomLevel: 0,
+          panX: "rotateX",
+          panY: "rotateY",
+          wheelY: "zoom",
+          zoomStep: 4,
+          projection: am5map.geoOrthographic(),
+        })
+      );
 
-    // Create main polygon series for countries
-    // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/
-    // 폴리곤 시리즈 생성, goe데이터 및 기본 국가 설정
-    let polygonSeries = chart.series.push(
-      am5map.MapPolygonSeries.new(root, {
-        geoJSON: am5geodata_worldLow,
-        exclude: ["AQ"],
-      })
-    );
-    // 폴리곤 시리즈 세팅
-    polygonSeries.mapPolygons.template.setAll({
-      //tooltipText: "{name}",
-      tooltipText: "{name} : {value}",
-      templateField: "polygonSettings",
-      toggleKey: "active",
-      interactive: true,
-    });
+      // Create main polygon series for countries
+      // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/
+      // 폴리곤 시리즈 생성, goe데이터 및 기본 국가 설정
+      let polygonSeries = chart.series.push(
+        am5map.MapPolygonSeries.new(root, {
+          geoJSON: am5geodata_worldLow,
+          exclude: ["AQ"],
+          fill: "#809cb0b7",
+          strokeWidth: "3px",
+        })
+      );
+      // 폴리곤 시리즈 세팅
+      polygonSeries.mapPolygons.template.setAll({
+        //tooltipText: "{name}",
+        tooltipText: "{name} : {value}",
+        templateField: "polygonSettings",
+        toggleKey: "active",
+        interactive: true,
+      });
 
-    polygonSeries.mapPolygons.template.states.create("hover", {
-      cursorOverStyle: "pointer",
-    });
+      polygonSeries.mapPolygons.template.states.create("hover", {
+        cursorOverStyle: "pointer",
+      });
 
-    // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
-    // 기존에 방문한 국가 배열로 백엔드에서 받아오기
-    
-    //나라 개수 만큼 반복문 형식
-    polygonSeries.mapPolygons.template.adapters.add(
-      "fill",
-      function (fill, target) {
-        //console.log(polygonSeries.mapPolygons.template.states.create+"야여")
-        let dataContext = target.dataItem.dataContext;
-        let visitCount = visitedCountry.reduce((cnt, element) => cnt + (dataContext.id === element), 0);
-        let fillColor;
-        let selectedColor;
-        switch (visitCount) {
-          case 0: //0번 방문한 국가의 경우 색을 지정하지 않음
-            break;
-          case 1: //1번 방문한 국가 색 지정
-            fillColor = "rgba(0,255,100,0.2)";
-            break;
-          case 2: //2-3번 방문한 국가 색 지정
-          case 3:
-            fillColor = "rgba(0,255,100,0.4)";
-            break;
-          case 4: //4-5번 방문한 국가 색 지정
-          case 5:
-            fillColor = "rgba(0,255,100,0.6)";
-            break;
-          case 6: //6-9번 방문한 국가 색 지정
-          case 7:
-          case 8:
-          case 9:
-            fillColor = "rgba(0,255,100,0.8)";
-            break;
-          default:
-            if(visitCount>9){ //10번 이상 방문한 국가 색 지정
-              fillColor = "rgba(0,255,100,1)";
+      if (visitedCountry !== []) {
+        console.log("@@@@" + visitedCountry);
+        // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
+        // 기존에 방문한 국가 배열로 백엔드에서 받아오기
+
+        //나라 개수 만큼 반복문 형식
+        polygonSeries.mapPolygons.template.adapters.add(
+          "fill",
+          function (fill, target) {
+            //console.log(polygonSeries.mapPolygons.template.states.create+"야여")
+            let dataContext = target.dataItem.dataContext;
+            let visitCount = visitedCountry.reduce(
+              (cnt, element) => cnt + (dataContext.id === element),
+              0
+            );
+            let fillColor;
+            let selectedColor;
+            switch (visitCount) {
+              case 0: //0번 방문한 국가의 경우 색을 지정하지 않음
+                break;
+              case 1: //1번 방문한 국가 색 지정
+                fillColor = "rgba(0,255,100,0.2)";
+                break;
+              case 2: //2-3번 방문한 국가 색 지정
+              case 3:
+                fillColor = "rgba(0,255,100,0.4)";
+                break;
+              case 4: //4-5번 방문한 국가 색 지정
+              case 5:
+                fillColor = "rgba(0,255,100,0.6)";
+                break;
+              case 6: //6-9번 방문한 국가 색 지정
+              case 7:
+              case 8:
+              case 9:
+                fillColor = "rgba(0,255,100,0.8)";
+                break;
+              default:
+                if (visitCount > 9) {
+                  //10번 이상 방문한 국가 색 지정
+                  fillColor = "rgba(0,255,100,1)";
+                }
+                break;
             }
-            break;
+
+            if (visitedCountry.includes(dataContext.id)) {
+              dataContext.colorWasSet = true;
+              target.setRaw("fill", fillColor);
+              return fillColor;
+            } else {
+              return fill;
+            }
+          }
+        );
+      }
+
+      // Create series for background fill
+      // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
+      let backgroundSeries = chart.series.unshift(
+        am5map.MapPolygonSeries.new(root, {})
+      );
+
+      //지도에서 바다색칠하는 부분
+      backgroundSeries.mapPolygons.template.setAll({
+        fill: "#1633569c",
+        stroke: "transparent",
+      });
+      backgroundSeries.data.push({
+        geometry: am5map.getGeoRectangle(90, 180, -90, -180),
+      });
+
+      // Set up events
+      let previousPolygon;
+
+      //toggel event 에서 active 변수를 이용해 클릭시 색상 변경
+      polygonSeries.mapPolygons.template.states.create("active", {
+        fill: "#2323db58",
+      });
+
+      //toggel event 에서 active 변수를 이용해 클릭/재클릭시 실행할 함수 적용
+      polygonSeries.mapPolygons.template.on(
+        "active",
+        function (active, target) {
+          if (previousPolygon && previousPolygon !== target.dataItem) {
+            previousPolygon.set("active", false);
+            unSelectCountry(target.dataItem.get("id"));
+          }
+          if (target.get("active")) {
+            selectCountry(target.dataItem.get("id"));
+          }
+          previousPolygon = target;
+        }
+      );
+      function selectCountry(id) {
+        let dataItem = polygonSeries.getDataItemById(id);
+        let target = dataItem.get("mapPolygon");
+        setNationCode(dataItem.dataContext.id);
+        setSelectedCountry(dataItem.dataContext.name);
+
+        //로그인 아이디가 "*"(기본값)이 아닐 때 -> 로그인된 아이디가 있을 때
+        //postData에 데이터를 담고 axios로 getPostList에 로그인 된 아이디, 클릭된 국가 코드보내기
+        if (login_id !== "*") {
+          const postData = {
+            currentId: login_id,
+            selectCountry: dataItem.dataContext.id,
+          };
+          console.log("로그인된 아이디", postData.currentId);
+          console.log("클릭한 국가", postData.selectCountry);
+          axios
+            .post("/api/post/getPostList", postData)
+            .then(function (res) {
+              console.log(res);
+            })
+            .catch((err) => console.log("에러발생이어라" + err));
         }
 
-        if (visitedCountry.includes(dataContext.id)) {
-          dataContext.colorWasSet = true;
-          target.setRaw("fill", fillColor);
-          return fillColor;
-        } else {
-          return fill;
+        setTimeout(() => {
+          //타겟의 중심 포인트에
+          chart.zoomToGeoPoint(target.geoCentroid(), 2, target.geoCentroid());
+        }, 1500);
+        contentListOpen();
+        if (target) {
+          let centroid = target.geoCentroid();
+          if (centroid) {
+            chart.animate({
+              key: "rotationX",
+              to: -centroid.longitude,
+              duration: 1500,
+              easing: am5.ease.inOut(am5.ease.cubic),
+            });
+            chart.animate({
+              key: "rotationY",
+              to: -centroid.latitude,
+              duration: 1500,
+              easing: am5.ease.inOut(am5.ease.cubic),
+            });
+          }
         }
       }
-    );
-    // Create series for background fill
-    // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/#Background_polygon
-    let backgroundSeries = chart.series.unshift(
-      am5map.MapPolygonSeries.new(root, {})
-    );
 
-    //지도에서 바다색칠하는 부분
-    backgroundSeries.mapPolygons.template.setAll({
-      fill: "#243f60bc",
-      stroke: am5.color("rgba(100, 100, 255, 0.2)"),
-    });
-    backgroundSeries.data.push({
-      geometry: am5map.getGeoRectangle(90, 180, -90, -180),
-    });
-
-    // Set up events
-    let previousPolygon;
-
-    //toggel event 에서 active 변수를 이용해 클릭시 색상 변경
-    polygonSeries.mapPolygons.template.states.create("active", {
-      fill: "rgba(0,0,255,0.15)",
-    });
-
-    //toggel event 에서 active 변수를 이용해 클릭/재클릭시 실행할 함수 적용
-    polygonSeries.mapPolygons.template.on("active", function (active, target) {
-      if (previousPolygon && previousPolygon !== target.dataItem) {
-        previousPolygon.set("active", false);
-        unSelectCountry(target.dataItem.get("id"));
+      function unSelectCountry(id) {
+        let dataItem = polygonSeries.getDataItemById(id);
+        let target = dataItem.get("mapPolygon");
+        chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
+        contentListClose();
       }
-      if (target.get("active")) {
-        selectCountry(target.dataItem.get("id"));
-      }
-      previousPolygon = target;
-    });
-    function selectCountry(id) {
-      let dataItem = polygonSeries.getDataItemById(id);
-      let target = dataItem.get("mapPolygon");
-      setNationCode(dataItem.dataContext.id);
-      setSelectedCountry(dataItem.dataContext.name);
 
-      setTimeout(() => {
-        //타겟의 중심 포인트에
-        chart.zoomToGeoPoint(target.geoCentroid(), 2, target.geoCentroid());
-      }, 1500);
-      contentListOpen();
-      if (target) {
-        let centroid = target.geoCentroid();
-        if (centroid) {
-          chart.animate({
-            key: "rotationX",
-            to: -centroid.longitude,
-            duration: 1500,
-            easing: am5.ease.inOut(am5.ease.cubic),
-          });
-          chart.animate({
-            key: "rotationY",
-            to: -centroid.latitude,
-            duration: 1500,
-            easing: am5.ease.inOut(am5.ease.cubic),
-          });
+      function homeCountry(id) {
+        let dataItem = polygonSeries.getDataItemById(id);
+        let target = dataItem.get("mapPolygon");
+        if (target) {
+          let centroid = target.geoCentroid();
+          if (centroid) {
+            chart.animate({
+              key: "rotationX",
+              to: -centroid.longitude,
+              duration: 1500,
+              easing: am5.ease.inOut(am5.ease.cubic),
+            });
+            chart.animate({
+              key: "rotationY",
+              to: -centroid.latitude,
+              duration: 1500,
+              easing: am5.ease.inOut(am5.ease.cubic),
+            });
+          }
         }
       }
+      // Uncomment this to pre-center the globe on a country when it loads
+      polygonSeries.events.on("datavalidated", function () {
+        homeCountry("KR");
+      });
+
+      // Make stuff animate on load
+      chart.appear(1000, 100);
+
+      return () => {
+        root.dispose();
+      };
     }
-
-    function unSelectCountry(id) {
-      let dataItem = polygonSeries.getDataItemById(id);
-      let target = dataItem.get("mapPolygon");
-      chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
-      contentListClose();
-    }
-
-    function homeCountry(id) {
-      let dataItem = polygonSeries.getDataItemById(id);
-      let target = dataItem.get("mapPolygon");
-      if (target) {
-        let centroid = target.geoCentroid();
-        if (centroid) {
-          chart.animate({
-            key: "rotationX",
-            to: -centroid.longitude,
-            duration: 1500,
-            easing: am5.ease.inOut(am5.ease.cubic),
-          });
-          chart.animate({
-            key: "rotationY",
-            to: -centroid.latitude,
-            duration: 1500,
-            easing: am5.ease.inOut(am5.ease.cubic),
-          });
-        }
-      }
-    }
-    // Uncomment this to pre-center the globe on a country when it loads
-    polygonSeries.events.on("datavalidated", function () {
-      homeCountry("KR");
-    });
-
-    // Make stuff animate on load
-    chart.appear(1000, 100);
-
-    return () => {
-      root.dispose();
-    };
-  }, []);
+  }, [visitedCountry]);
 
   // 별 내리는 함수
   const canvasRef = useRef(null);
@@ -349,20 +375,25 @@ const GlobeMap = () => {
         id="chartdiv"
         className="chartdiv"></div>
       <canvas className="stars" ref={canvasRef}></canvas>
-      <div
-        className="nationdiv"
-        style={{
-          right: `${contentPositionRight}`,
-          display: `${ContentDisplay}`,
-          position: "absolute",
-          width: "60vw",
-        }}>
-        <ContentList
-          selectedCountry={selectedCountry}
-          nationCode={nationCode}
-          contentListClose={contentListClose}
-        />
-      </div>
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <div
+          className="nationdiv"
+          style={{
+            right: `${contentPositionRight}`,
+            display: `${ContentDisplay}`,
+            position: "absolute",
+            width: "60vw",
+          }}>
+          <ContentList
+            selectedCountry={selectedCountry}
+            nationCode={nationCode}
+            contentListClose={contentListClose}
+          />
+        </div>
+      )}
     </div>
   );
 };

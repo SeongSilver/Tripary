@@ -2,48 +2,30 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "../../styles/post/postWrite.scss";
-import axios from "axios";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-import { auth } from "../../_actions/user_actions";
-
 import { MdDeleteForever } from "react-icons/md";
 import { RiFolderAddFill } from "react-icons/ri";
 
 function Postwrite() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [myfile, setMyFile] = useState([]);
+  const [previewImg, setPreviewImg] = useState([]);
+  const [loginedId, setLoginedId] = useState();
+
+  //Date 구조분해할당
+  const [startDate, endDate] = dateRange;
 
   //[성은] 지구본에서 선택된 나라 이름 (22.11.23  20:32)
   const selectedCountry = location.state.selectedCountry;
   const nationCode = location.state.nationCode;
 
-  /*
-    [성은 22.12.18, 22:14] 2개의 input date로는 서로 유효성 검사 찾는거보다
-    다른 기능이 더 잘나와서 react-datepicker를 사용해서 기간을 지정할 수 있도록
-    세팅하기 위한 start, end date설정
-    */
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [startDate, endDate] = dateRange;
+  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
+  const existlocalStorage = localStorage.getItem("LOGINEDID");
 
-  /*
-    [성은] useSelector 말고 useEffect를 쓰는 이유
-    useSelector를 사용해서 state를 가져오면 리듀서에서 auth()가 실행되지 않은 상태에서는
-    state에 값이 받아지지 않은 상태이고 그 정의가 안된 state의 값을 useState에 저장하려고하니
-    undefined된 거시기를 담으려고 하니 에러가 발생하고 동기적으로 다음 코드들은 실행이 안된다
-
-    useEffect로 컴포넌트가 처음 렌더링 될 때  dispatch로 auth()를 실행시켜서 리듀서 안에 있는
-    auth에 포함된 미들웨어로 해당 정보에 대한 검증을 하고 response로 정보를 받는데 해당 정보는
-    payload에 저장이 된다. useSelector는 가벼운 정보를 가져올 때는 사용해도 좋지만 민감한 정보는
-    이렇게 검증이 필요한 미들웨어를 사용한 리듀서의 메서드를 사용해서 가져와서 사용하면 좋다
-  */
-  const [myfile, setMyFile] = useState([]);
-  const [previewImg, setPreviewImg] = useState([]);
-
-  const [currentId, setCurrentId] = useState("");
   const [post, setPost] = useState({
     title: "",
     country: "",
@@ -54,16 +36,16 @@ function Postwrite() {
   });
 
   useEffect(() => {
-    dispatch(auth()).then((response) => {
-      setCurrentId(response.payload._id);
-    });
+    if (existlocalStorage) {
+      setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+    }
   }, []);
 
   const onChangePost = (e) => {
     setPost({
       ...post,
       [e.target.name]: e.target.value,
-      writer: currentId,
+      writer: loginedId,
     });
   };
 
@@ -79,7 +61,7 @@ function Postwrite() {
     //1. post 객체에 files 정보 담아주기
     setPost({
       ...post,
-      writer: currentId,
+      writer: loginedId,
     });
     setMyFile([...files]);
     //2. 썸네일 생성을 위한 과정
@@ -98,40 +80,41 @@ function Postwrite() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!post.title) {
-      alert("제목을 입력하세요");
-      return;
-    }
-    if (!post.location) {
-      alert("위치를 입력하세요");
-      return;
-    }
-    if (!myfile) {
-      alert("사진을 업로드하세요");
-      return;
-    }
-    if (!startDate) {
-      alert("일정이 시작하는 날짜를 입력하세요");
-      return;
-    }
-    if (!endDate) {
-      alert("일정이 끝나는 날짜를 입력하세요");
-      return;
-    }
-    if (!post.content) {
-      alert("내용을 입력하세요");
-      return;
-    }
+    // if (!post.title) {
+    //   alert("제목을 입력하세요");
+    //   return;
+    // }
+    // if (!post.location) {
+    //   alert("위치를 입력하세요");
+    //   return;
+    // }
+    // if (!myfile) {
+    //   alert("사진을 업로드하세요");
+    //   return;
+    // }
+    // if (!startDate) {
+    //   alert("일정이 시작하는 날짜를 입력하세요");
+    //   return;
+    // }
+    // if (!endDate) {
+    //   alert("일정이 끝나는 날짜를 입력하세요");
+    //   return;
+    // }
+    // if (!post.content) {
+    //   alert("내용을 입력하세요");
+    //   return;
+    // }
 
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
+
     //일반변수를 담기 위한 과정
     formData.append("title", post.title);
     formData.append("country", selectedCountry);
     formData.append("nationCode", nationCode);
     formData.append("location", post.location);
-    formData.append("fromDate", startDate);
-    formData.append("toDate", endDate);
+    formData.append("fromDate", startDate.toLocaleDateString());
+    formData.append("toDate", endDate.toLocaleDateString());
     formData.append("content", post.content);
     formData.append("writer", post.writer);
 
@@ -145,19 +128,20 @@ function Postwrite() {
       console.log(pair[0] + ", " + pair[1]);
     }
 
-    axios
-      .post("/api/post/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        alert("글 등록 성공!");
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios
+    //   .post("/api/post/upload", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     alert("글 등록 성공!");
+    //     navigate("/");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    console.log(formData);
   };
 
   const goMain = () => {
@@ -228,12 +212,6 @@ function Postwrite() {
                 dateFormat="yyyy-MM-dd"
                 placeholderText="여행 기간 선택"
               />
-              {/* <input
-                type="date"
-                name="fromDate"
-                onChange={onChangePost}></input>
-              <span>~</span>
-              <input type="date" name="toDate" onChange={onChangePost}></input> */}
             </li>
             <li>
               <p>일기</p>

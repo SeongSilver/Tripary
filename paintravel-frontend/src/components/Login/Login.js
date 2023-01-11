@@ -29,7 +29,7 @@ function Login() {
     dispatch(loginUser(body))
       .then(response => {
         if(response.payload.loginSuccess) {
-          navigate('/')
+          location.reload('/')
         }else {
           alert('로그인 실패! 다시 시도하세요')
         }
