@@ -46,14 +46,13 @@ router.post("/getVisitedList", async (req, res) => {
 
 //글 리스트 가져오기
 router.post("/getPostList", async (req, res) => {
-  if (req.body.currentId === undefined || req.body.selectCountry) {
+  if (req.body.currentId === undefined) {
   } else {
-    console.log("로그인된 아이디 성은 확인" + req.body.currentId);
     let post = await Post.find({ writer: req.body.currentId }).select();
     let postList = [];
     for (i in post) {
       if (post[i].nationCode) {
-        postList.push(post[i].nationCode);
+        postList.push(post[i]);
       }
     }
     console.log("현재 아이디가 쓴 글" + postList);

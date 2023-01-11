@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import "../../styles/post/postWrite.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdDeleteForever } from "react-icons/md";
 import { RiFolderAddFill } from "react-icons/ri";
+import axios from "axios";
 
 function Postwrite() {
   const navigate = useNavigate();
@@ -80,30 +80,30 @@ function Postwrite() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // if (!post.title) {
-    //   alert("제목을 입력하세요");
-    //   return;
-    // }
-    // if (!post.location) {
-    //   alert("위치를 입력하세요");
-    //   return;
-    // }
-    // if (!myfile) {
-    //   alert("사진을 업로드하세요");
-    //   return;
-    // }
-    // if (!startDate) {
-    //   alert("일정이 시작하는 날짜를 입력하세요");
-    //   return;
-    // }
-    // if (!endDate) {
-    //   alert("일정이 끝나는 날짜를 입력하세요");
-    //   return;
-    // }
-    // if (!post.content) {
-    //   alert("내용을 입력하세요");
-    //   return;
-    // }
+    if (!post.title) {
+      alert("제목을 입력하세요");
+      return;
+    }
+    if (!post.location) {
+      alert("위치를 입력하세요");
+      return;
+    }
+    if (!myfile) {
+      alert("사진을 업로드하세요");
+      return;
+    }
+    if (!startDate) {
+      alert("일정이 시작하는 날짜를 입력하세요");
+      return;
+    }
+    if (!endDate) {
+      alert("일정이 끝나는 날짜를 입력하세요");
+      return;
+    }
+    if (!post.content) {
+      alert("내용을 입력하세요");
+      return;
+    }
 
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
@@ -113,8 +113,8 @@ function Postwrite() {
     formData.append("country", selectedCountry);
     formData.append("nationCode", nationCode);
     formData.append("location", post.location);
-    formData.append("fromDate", startDate.toLocaleDateString());
-    formData.append("toDate", endDate.toLocaleDateString());
+    formData.append("fromDate", startDate);
+    formData.append("toDate", endDate);
     formData.append("content", post.content);
     formData.append("writer", post.writer);
 
@@ -128,20 +128,19 @@ function Postwrite() {
       console.log(pair[0] + ", " + pair[1]);
     }
 
-    // axios
-    //   .post("/api/post/upload", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     alert("글 등록 성공!");
-    //     navigate("/");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    console.log(formData);
+    axios
+      .post("/api/post/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        alert("글 등록 성공!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const goMain = () => {
