@@ -20,7 +20,7 @@ try {
 
 const Storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "./upload"); // 전송된 파일이 저장되는 디렉토리
+    cb(null, "paintravel-frontend/public/img/"); // 전송된 파일이 저장되는 디렉토리
   },
   filename(req, file, cb) {
     const ext = path.extname(file.originalname);
