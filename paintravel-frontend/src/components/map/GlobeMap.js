@@ -6,8 +6,8 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import "../../styles/map/globeMap.scss";
 import ContentList from "../post/ContentList";
 import axios from "axios";
-import Loading from "../common/Loading"
-import { render } from "react-dom";
+import Loading from "../common/Loading";
+import { rgbToHsl } from "@amcharts/amcharts5/.internal/core/util/Utils";
 
 const GlobeMap = () => {
   const [globeWidth, setGlobeWidth] = useState("100%");
@@ -41,12 +41,11 @@ const GlobeMap = () => {
   //로컬스토리지에 LOGINEDID가 있을 경우 실행
   useEffect(() => {
     if (existLocalStorage) {
-      setLogin_id(JSON.parse(localStorage.getItem("LOGINEDID")).value)
+      setLogin_id(JSON.parse(localStorage.getItem("LOGINEDID")).value);
     }
     //[현아, 성은] 기방문 국가 탐색을 위한 부분
     if (needToFill) {
       if (login_id !== "*") {
-        console.log("DDDD")
         setLoading(true);
         const postData = {
           currentId: login_id,
@@ -56,14 +55,14 @@ const GlobeMap = () => {
           .post("/api/post/getVisitedList", postData)
           .then(function (res) {
             setVisitedCountry(res.data.countryList);
-            setNeedToFill(false)
+            setNeedToFill(false);
             console.log("국가 탐색 성공" + res.data.countryList);
-            setLoading(false)
+            setLoading(false);
           })
           .catch((err) => console.log("에러발생이어라" + err));
       }
     }
-  },)
+  });
 
   useLayoutEffect(() => {
     if (!loading) {
@@ -94,6 +93,8 @@ const GlobeMap = () => {
         am5map.MapPolygonSeries.new(root, {
           geoJSON: am5geodata_worldLow,
           exclude: ["AQ"],
+          fill: "#809cb0b7",
+          strokeWidth: "3px",
         })
       );
       // 폴리곤 시리즈 세팅
@@ -110,7 +111,7 @@ const GlobeMap = () => {
       });
 
       if (visitedCountry !== []) {
-        console.log("@@@@" + visitedCountry)
+        console.log("@@@@" + visitedCountry);
         // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
         // 기존에 방문한 국가 배열로 백엔드에서 받아오기
 
@@ -120,7 +121,10 @@ const GlobeMap = () => {
           function (fill, target) {
             //console.log(polygonSeries.mapPolygons.template.states.create+"야여")
             let dataContext = target.dataItem.dataContext;
-            let visitCount = visitedCountry.reduce((cnt, element) => cnt + (dataContext.id === element), 0);
+            let visitCount = visitedCountry.reduce(
+              (cnt, element) => cnt + (dataContext.id === element),
+              0
+            );
             let fillColor;
             let selectedColor;
             switch (visitCount) {
@@ -144,7 +148,8 @@ const GlobeMap = () => {
                 fillColor = "rgba(0,255,100,0.8)";
                 break;
               default:
-                if (visitCount > 9) { //10번 이상 방문한 국가 색 지정
+                if (visitCount > 9) {
+                  //10번 이상 방문한 국가 색 지정
                   fillColor = "rgba(0,255,100,1)";
                 }
                 break;
@@ -169,8 +174,8 @@ const GlobeMap = () => {
 
       //지도에서 바다색칠하는 부분
       backgroundSeries.mapPolygons.template.setAll({
-        fill: "#243f60bc",
-        stroke: am5.color("rgba(100, 100, 255, 0.2)"),
+        fill: "#1633569c",
+        stroke: "transparent",
       });
       backgroundSeries.data.push({
         geometry: am5map.getGeoRectangle(90, 180, -90, -180),
@@ -181,45 +186,45 @@ const GlobeMap = () => {
 
       //toggel event 에서 active 변수를 이용해 클릭시 색상 변경
       polygonSeries.mapPolygons.template.states.create("active", {
-        fill: "rgba(0,0,255,0.15)",
+        fill: "#2323db58",
       });
 
       //toggel event 에서 active 변수를 이용해 클릭/재클릭시 실행할 함수 적용
-      polygonSeries.mapPolygons.template.on("active", function (active, target) {
-        if (previousPolygon && previousPolygon !== target.dataItem) {
-          previousPolygon.set("active", false);
-          unSelectCountry(target.dataItem.get("id"));
+      polygonSeries.mapPolygons.template.on(
+        "active",
+        function (active, target) {
+          if (previousPolygon && previousPolygon !== target.dataItem) {
+            previousPolygon.set("active", false);
+            unSelectCountry(target.dataItem.get("id"));
+          }
+          if (target.get("active")) {
+            selectCountry(target.dataItem.get("id"));
+          }
+          previousPolygon = target;
         }
-        if (target.get("active")) {
-          selectCountry(target.dataItem.get("id"));
-        }
-        previousPolygon = target;
-      });
+      );
       function selectCountry(id) {
         let dataItem = polygonSeries.getDataItemById(id);
         let target = dataItem.get("mapPolygon");
         setNationCode(dataItem.dataContext.id);
         setSelectedCountry(dataItem.dataContext.name);
 
-        // if (login_id !== "*") {
-        //   console.log("#########")
-        //   setLoading(true);
-        //   const postData = {
-        //     currentId: login_id,
-        //     selectCountry : id,
-        //   };
-        //   console.log("로그인된 아이디", postData.currentId);
-        //   console.log("클릭한 국가", postData.id);
-        //   axios
-        //     .post("/api/post/getPostList", postData)
-        //     .then(function (res) {
-        //       setVisitedCountry(res.data.countryList);
-        //       setNeedToFill(false)
-        //       console.log(res.data.countryList);
-        //       setLoading(false)
-        //     })
-        //     .catch((err) => console.log("에러발생이어라" + err));
-        // }
+        //로그인 아이디가 "*"(기본값)이 아닐 때 -> 로그인된 아이디가 있을 때
+        //postData에 데이터를 담고 axios로 getPostList에 로그인 된 아이디, 클릭된 국가 코드보내기
+        if (login_id !== "*") {
+          const postData = {
+            currentId: login_id,
+            selectCountry: dataItem.dataContext.id,
+          };
+          console.log("로그인된 아이디", postData.currentId);
+          console.log("클릭한 국가", postData.selectCountry);
+          axios
+            .post("/api/post/getPostList", postData)
+            .then(function (res) {
+              console.log(res);
+            })
+            .catch((err) => console.log("에러발생이어라" + err));
+        }
 
         setTimeout(() => {
           //타겟의 중심 포인트에
@@ -371,24 +376,24 @@ const GlobeMap = () => {
         className="chartdiv"></div>
       <canvas className="stars" ref={canvasRef}></canvas>
 
-      {loading ? <Loading /> :
-        (
-          <div
-            className="nationdiv"
-            style={{
-              right: `${contentPositionRight}`,
-              display: `${ContentDisplay}`,
-              position: "absolute",
-              width: "60vw",
-            }}>
-            <ContentList
-              selectedCountry={selectedCountry}
-              nationCode={nationCode}
-              contentListClose={contentListClose}
-            />
-          </div>
-        )
-      }
+      {loading ? (
+        <Loading />
+      ) : (
+        <div
+          className="nationdiv"
+          style={{
+            right: `${contentPositionRight}`,
+            display: `${ContentDisplay}`,
+            position: "absolute",
+            width: "60vw",
+          }}>
+          <ContentList
+            selectedCountry={selectedCountry}
+            nationCode={nationCode}
+            contentListClose={contentListClose}
+          />
+        </div>
+      )}
     </div>
   );
 };
