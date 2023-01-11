@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "../../styles/post/postWrite.scss";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { MdDeleteForever } from "react-icons/md";
-import { RiFolderAddFill } from "react-icons/ri";
-import axios from "axios";
 import axios from "axios";
 
-function Postwrite() {
+import "../../styles/post/postEdit.scss";
+import "react-datepicker/dist/react-datepicker.css";
+
+import { MdDeleteForever } from "react-icons/md";
+import { RiFolderAddFill } from "react-icons/ri";
+
+function PostEdit() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,13 +21,7 @@ function Postwrite() {
   //Date 구조분해할당
   const [startDate, endDate] = dateRange;
 
-  //[성은] 지구본에서 선택된 나라 이름 (22.11.23  20:32)
-  const selectedCountry = location.state.selectedCountry;
-  const nationCode = location.state.nationCode;
-
-  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
-  const existlocalStorage = localStorage.getItem("LOGINEDID");
-
+  //axios로 기존 게시물의 정보를 받아와서 post에 넣은 후 그 값들로 value에 채워줄 것
   const [post, setPost] = useState({
     title: "",
     country: "",
@@ -36,10 +31,25 @@ function Postwrite() {
     writer: "",
   });
 
-  useEffect(() => {
+  //[성은] 지구본에서 선택된 나라 이름 (22.11.23  20:32)
+  const selectedCountry = location.state.selectedCountry;
+  const nationCode = location.state.nationCode;
+
+  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
+  const existlocalStorage = localStorage.getItem("LOGINEDID");
+
+  useLayoutEffect(() => {
     if (existlocalStorage) {
       setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
     }
+    axios
+      .get("/api/post/getPostInfo")
+      .then((response) => {
+        console.log("수정할 데이터 가져오기 성공" + response);
+      })
+      .catch((error) => {
+        console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
+      });
   }, []);
 
   const onChangePost = (e) => {
@@ -130,13 +140,13 @@ function Postwrite() {
     }
 
     axios
-      .post("/api/post/upload", formData, {
+      .post("/api/post/getPostEdit", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        alert("글 등록 성공!");
+        alert("글 수정 성공!");
         navigate("/");
       })
       .catch((err) => {
@@ -149,10 +159,10 @@ function Postwrite() {
   };
 
   return (
-    <div className="postWriteContainer">
-      <div className="postWrite">
+    <div className="postEditContainer">
+      <div className="postEdit">
         <h1>{selectedCountry}'s Dairy</h1>
-        <form className="postWriteWrap" encType="multipart/form-data">
+        <form className="postEditWrap" encType="multipart/form-data">
           <div className="gallery">
             <h2>Gallery</h2>
             {/* <p>4 *3 이미지를 첨부해주세요</p> */}
@@ -218,7 +228,7 @@ function Postwrite() {
               <textarea name="content" onChange={onChangePost}></textarea>
             </li>
           </ul>
-          <div className="postWriteBtn">
+          <div className="postEditBtn">
             <button onClick={goMain}>메인으로</button>
             <button onClick={onSubmit}>등록</button>
           </div>
@@ -228,4 +238,4 @@ function Postwrite() {
   );
 }
 
-export default Postwrite;
+export default PostEdit;

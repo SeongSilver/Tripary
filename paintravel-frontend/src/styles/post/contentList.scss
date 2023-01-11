@@ -103,8 +103,10 @@
       top: 0;
       font-size: 2.5rem;
       line-height: 5vh;
-      cursor:pointer;
-      > span {@include hidden;}
+      cursor: pointer;
+      > span {
+        @include hidden;
+      }
     }
     .postButton {
       position: absolute;
