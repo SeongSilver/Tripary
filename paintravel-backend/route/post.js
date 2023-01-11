@@ -28,7 +28,7 @@ router.post("/upload", upload.array("myfile"), (req, res) => {
 
 //방문 국가 가져오기
 router.post("/getVisitedList", async (req, res) => {
-  if (req.body.currentId == undefined) {
+  if (req.body.currentId === undefined) {
   } else {
     let postList = await Post.find({ writer: req.body.currentId }).select(
       "nationCode"
@@ -44,13 +44,12 @@ router.post("/getVisitedList", async (req, res) => {
   }
 });
 
-
 //글 리스트 가져오기
 router.post("/getPostList", async (req, res) => {
-  if (req.body.currentId == undefined) {
+  if (req.body.currentId === undefined || req.body.selectCountry) {
   } else {
-    let post = await Post.find({ writer: req.body.currentId }).select(
-    );
+    console.log("로그인된 아이디 성은 확인" + req.body.currentId);
+    let post = await Post.find({ writer: req.body.currentId }).select();
     let postList = [];
     for (i in post) {
       if (post[i].nationCode) {
