@@ -104,30 +104,6 @@ function Postwrite() {
       alert("내용을 입력하세요");
       return;
     }
-    if (!post.title) {
-      alert("제목을 입력하세요");
-      return;
-    }
-    if (!post.location) {
-      alert("위치를 입력하세요");
-      return;
-    }
-    if (!myfile) {
-      alert("사진을 업로드하세요");
-      return;
-    }
-    if (!startDate) {
-      alert("일정이 시작하는 날짜를 입력하세요");
-      return;
-    }
-    if (!endDate) {
-      alert("일정이 끝나는 날짜를 입력하세요");
-      return;
-    }
-    if (!post.content) {
-      alert("내용을 입력하세요");
-      return;
-    }
 
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
@@ -137,8 +113,6 @@ function Postwrite() {
     formData.append("country", selectedCountry);
     formData.append("nationCode", nationCode);
     formData.append("location", post.location);
-    formData.append("fromDate", startDate);
-    formData.append("toDate", endDate);
     formData.append("fromDate", startDate);
     formData.append("toDate", endDate);
     formData.append("content", post.content);
@@ -165,19 +139,7 @@ function Postwrite() {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
-      });
-    axios
-      .post("/api/post/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        alert("글 등록 성공!");
-        navigate("/");
-      })
-      .catch((err) => {
+        alert("글 등록 실패!");
         console.log(err);
       });
   };

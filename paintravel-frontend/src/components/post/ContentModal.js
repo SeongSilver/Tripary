@@ -6,7 +6,7 @@ function ContentModal({
   contentModalStatus,
   setContentModalStatus,
   setContentModal,
-  cityName,
+  listData,
 }) {
   const [modalOpenAnimation, setModalOpenAnimation] = useState("50vh");
   const [modalOpenOpacity, setModalOpenOpacity] = useState("0");
@@ -25,17 +25,7 @@ function ContentModal({
   const [modalSlideBtn4th, setModalSlideBtn4th] = useState({
     backgroundColor: "#999",
   });
-  useLayoutEffect(() => {
-    axios
-      .get("getPostInfo")
-      .then((response) => {
-        console.log("수정할 데이터 가져오기 성공" + response);
-      })
-      .catch((error) => {
-        console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
-      });
-  }, []);
-
+  
   useEffect(() => {
     if (contentModalStatus) {
       setModalOpenAnimation("7.5vh");
@@ -103,7 +93,7 @@ function ContentModal({
           opacity: `${modalOpenOpacity}`,
         }}>
         <div className="modalHeader">
-          <h1>{cityName}</h1>
+          {/* <h1>{cityName}</h1> */}
           <h2>제목!!!! oo이랑 같이 다녀온 부산 여행~</h2>
         </div>
         <ul className="modalBody">

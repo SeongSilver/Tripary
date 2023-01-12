@@ -13,11 +13,12 @@ function PostEdit() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [editResData, setEditResData] = useState();
   const [dateRange, setDateRange] = useState([null, null]);
   const [myfile, setMyFile] = useState([]);
   const [previewImg, setPreviewImg] = useState([]);
   const [loginedId, setLoginedId] = useState();
-
+  
   //Date 구조분해할당
   const [startDate, endDate] = dateRange;
 
@@ -31,26 +32,36 @@ function PostEdit() {
     writer: "",
   });
 
-  //[성은] 지구본에서 선택된 나라 이름 (22.11.23  20:32)
-  const selectedCountry = location.state.selectedCountry;
-  const nationCode = location.state.nationCode;
-
+  const editSelectedCountry = location.state.selectedCountry;
+  const editNationCode = location.state.nationCode;
+  const edit_id = location.state._id;
+  const editWriter = location.state.writer;
+  
   //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
   const existlocalStorage = localStorage.getItem("LOGINEDID");
-
+  
   useLayoutEffect(() => {
     if (existlocalStorage) {
       setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
     }
+
+    const editData = {
+      currentId: editWriter,
+      selectCountry: editNationCode,
+      post_id:edit_id
+    }
+    console.log(editData)
     axios
-      .get("/api/post/getPostInfo")
+      .post("/api/post/getPostInfo",editData)
       .then((response) => {
         console.log("수정할 데이터 가져오기 성공" + response);
+        setEditResData(response.data.postInfo[0]);
       })
       .catch((error) => {
         console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
       });
-  }, []);
+  }, []); 
+  console.log(editResData)
 
   const onChangePost = (e) => {
     setPost({
@@ -76,7 +87,7 @@ function PostEdit() {
     });
     setMyFile([...files]);
     //2. 썸네일 생성을 위한 과정
-    let imageUrlLists = [];
+    let imageUrlLists = editFile;
     for (let i = 0; i < files.length; i++) {
       const currentImageUrl = URL.createObjectURL(files[i]);
       imageUrlLists.push(currentImageUrl);
@@ -121,8 +132,8 @@ function PostEdit() {
 
     //일반변수를 담기 위한 과정
     formData.append("title", post.title);
-    formData.append("country", selectedCountry);
-    formData.append("nationCode", nationCode);
+    formData.append("country", editSelectedCountry);
+    formData.append("nationCode", editNationCode);
     formData.append("location", post.location);
     formData.append("fromDate", startDate);
     formData.append("toDate", endDate);
@@ -159,36 +170,38 @@ function PostEdit() {
   };
 
   return (
-    <div className="postEditContainer">
+    <>
+      {editResData ? (
+      <div className="postEditContainer">
       <div className="postEdit">
-        <h1>{selectedCountry}'s Dairy</h1>
+        <h1>{editSelectedCountry}'s Dairy</h1>
         <form className="postEditWrap" encType="multipart/form-data">
           <div className="gallery">
-            <h2>Gallery</h2>
+          <h2>Gallery</h2>
             {/* <p>4 *3 이미지를 첨부해주세요</p> */}
             <a href="#galleryUpload">
               <span>사진 첨부 버튼</span>
               <label htmlFor="galleryUpload">
                 <RiFolderAddFill />
-              </label>
-              <input
+                </label>
+                <input
                 type="file"
                 name="myfile"
                 multiple={true}
                 id="galleryUpload"
                 onChange={onLoadFile}
                 accept="image/jpg,image/png,image/jpeg,image/gif"
-              />
-            </a>
+                />
+                </a>
             <div className="galleryContainer">
-              {previewImg.map((image, id) => (
+              {editResData.file.map((image, id) => (
                 <div className="galleryImageContainer" key={id}>
                   <img
-                    src={image}
+                    src={`/upload/${image}`}
                     alt={`${image} - ${id}`}
                     id={id}
                     onClick={(event) => console.dir(event.target)}
-                  />
+                    />
                   <span onClick={() => deleteImage(id)}>
                     <MdDeleteForever />
                   </span>
@@ -198,15 +211,17 @@ function PostEdit() {
           </div>
           <ul>
             <li>
-              <p>제목</p>
-              <input type="text" name="title" onChange={onChangePost}></input>
-            </li>
-            <li>
+            <p>제목</p>
+              <input type="text" name="title" onChange={onChangePost} value={editResData.title}></input>
+              </li>
+              <li>
               <p>위치</p>
               <input
-                type="text"
-                name="location"
-                onChange={onChangePost}></input>
+              type="text"
+              name="location"
+                    onChange={onChangePost}
+                    value={editResData.location}
+              ></input>
             </li>
             <li>
               <p>일정</p>
@@ -220,12 +235,12 @@ function PostEdit() {
                 }}
                 isClearable={true}
                 dateFormat="yyyy-MM-dd"
-                placeholderText="여행 기간 선택"
+                    placeholderText="여행 기간 선택"
               />
             </li>
             <li>
               <p>일기</p>
-              <textarea name="content" onChange={onChangePost}></textarea>
+              <textarea name="content" onChange={onChangePost} value={editResData.content}></textarea>
             </li>
           </ul>
           <div className="postEditBtn">
@@ -234,8 +249,10 @@ function PostEdit() {
           </div>
         </form>
       </div>
-    </div>
-  );
-}
+      </div>
+      ) : null}
+                </>
+      );
+    }
 
 export default PostEdit;
