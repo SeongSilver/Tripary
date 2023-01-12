@@ -14,7 +14,6 @@ function ContentList({
   contentListClose,
   listData,
 }) {
-  console.log(nationCode + "dd");
   const [contentModal, setContentModal] = useState(false);
   const [contentModalStatus, setContentModalStatus] = useState(false);
   // const [loginedListData, setLoginedListData] = useState();
