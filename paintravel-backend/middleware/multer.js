@@ -3,6 +3,10 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
+if(!fs.existsSync("paintravel-frontend/public/upload")){
+  console.error("upload 폴더가 없습니다. 폴더를 생성합니다.");
+  fs.mkdirSync("paintravel-frontend/public/upload", { recursive: true })
+}
 // diskStorage는 disk에 file을 저장하게 함
 
 // destination 함수는 파일이 어디에 저장될 것인지 지정

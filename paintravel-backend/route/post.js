@@ -9,10 +9,10 @@ const fs = require("fs");
 
 function deletePhoto(file_name) {
   console.log("파일 삭제하러 옴");
-  if (fs.existsSync("paintravel-frontend/public/img/" + file_name)) {
+  if (fs.existsSync("paintravel-frontend/public/upload/" + file_name)) {
     // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
     try {
-      fs.unlinkSync("paintravel-frontend/public/img/" + file_name);
+      fs.unlinkSync("paintravel-frontend/public/upload/" + file_name);
       console.log("image delete 성공!");
     } catch (error) {
       console.log(error);
@@ -150,5 +150,12 @@ router.post("/getPostDelete", async (req, res) => {
       errMessage: "작성자가 일치하지 않습니다",
     });
   }
+});
+module.exports = router;
+
+//Mypage
+router.post("/getMypage", async (req, res) => {
+  let postList = await Post.find({ writer: req.body.currentId}).select();
+  res.status(200).json({ postList: postList });
 });
 module.exports = router;
