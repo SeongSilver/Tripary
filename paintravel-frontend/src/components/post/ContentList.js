@@ -14,7 +14,7 @@ function ContentList({
   contentListClose,
   listData,
 }) {
-  console.log(nationCode + "dd");
+  console.log(nationCode)
   const [contentModal, setContentModal] = useState(false);
   const [contentModalStatus, setContentModalStatus] = useState(false);
   // const [loginedListData, setLoginedListData] = useState();
@@ -35,7 +35,6 @@ function ContentList({
     //해당 게시물의 디테일 정보를 가져올 get 연동 할 것들
     //axios.get(어쩌고 저쩌고)
   };
-
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
     // eslint-disable-next-line react/jsx-filename-extension
@@ -65,7 +64,7 @@ function ContentList({
         게시물이있다면(state 변수) ? <LoginedList openContentModal={openContentModal}/> : <EmptyList/> />
       */}
       {localStorage.key("LOGINEDID") ? (
-        listData ? (
+        listData && (listData.length !== 0 ? (
           <LoginedList
             openContentModal={openContentModal}
             listData={listData}
@@ -75,7 +74,7 @@ function ContentList({
             selectedCountry={selectedCountry}
             nationCode={nationCode}
           />
-        )
+        ))
       ) : (
         <LoginButton />
       )}
