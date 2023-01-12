@@ -3,12 +3,6 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
-try {
-  fs.readdirSync("upload");
-} catch (err) {
-  console.error("upload 폴더가 없습니다. 폴더를 생성합니다.");
-  fs.mkdirSync("upload");
-}
 // diskStorage는 disk에 file을 저장하게 함
 
 // destination 함수는 파일이 어디에 저장될 것인지 지정
@@ -20,7 +14,7 @@ try {
 
 const Storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "paintravel-frontend/public/img/"); // 전송된 파일이 저장되는 디렉토리
+    cb(null, "paintravel-frontend/public/upload/"); // 전송된 파일이 저장되는 디렉토리
   },
   filename(req, file, cb) {
     const ext = path.extname(file.originalname);
