@@ -140,6 +140,7 @@ function Postwrite() {
         navigate("/");
       })
       .catch((err) => {
+        alert("글 등록 실패!");
         console.log(err);
       });
   };
