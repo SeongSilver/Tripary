@@ -1,31 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "../../styles/post/postWrite.scss";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { MdDeleteForever } from "react-icons/md";
-import { RiFolderAddFill } from "react-icons/ri";
 import axios from "axios";
 
-function Postwrite() {
+import "../../styles/post/postEdit.scss";
+import "react-datepicker/dist/react-datepicker.css";
+
+import { MdDeleteForever } from "react-icons/md";
+import { RiFolderAddFill } from "react-icons/ri";
+
+function PostEdit() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [editResData, setEditResData] = useState();
   const [dateRange, setDateRange] = useState([null, null]);
   const [myfile, setMyFile] = useState([]);
   const [previewImg, setPreviewImg] = useState([]);
   const [loginedId, setLoginedId] = useState();
-
+  
   //Date 구조분해할당
   const [startDate, endDate] = dateRange;
 
-  //[성은] 지구본에서 선택된 나라 이름 (22.11.23  20:32)
-  const selectedCountry = location.state.selectedCountry;
-  const nationCode = location.state.nationCode;
-
-  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
-  const existlocalStorage = localStorage.getItem("LOGINEDID");
-
+  //axios로 기존 게시물의 정보를 받아와서 post에 넣은 후 그 값들로 value에 채워줄 것
   const [post, setPost] = useState({
     title: "",
     country: "",
@@ -35,11 +32,36 @@ function Postwrite() {
     writer: "",
   });
 
-  useEffect(() => {
+  const editSelectedCountry = location.state.selectedCountry;
+  const editNationCode = location.state.nationCode;
+  const edit_id = location.state._id;
+  const editWriter = location.state.writer;
+  
+  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
+  const existlocalStorage = localStorage.getItem("LOGINEDID");
+  
+  useLayoutEffect(() => {
     if (existlocalStorage) {
       setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
     }
-  }, []);
+
+    const editData = {
+      currentId: editWriter,
+      selectCountry: editNationCode,
+      post_id:edit_id
+    }
+    console.log(editData)
+    axios
+      .post("/api/post/getPostInfo",editData)
+      .then((response) => {
+        console.log("수정할 데이터 가져오기 성공" + response);
+        setEditResData(response.data.postInfo[0]);
+      })
+      .catch((error) => {
+        console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
+      });
+  }, []); 
+  console.log(editResData)
 
   const onChangePost = (e) => {
     setPost({
@@ -65,7 +87,7 @@ function Postwrite() {
     });
     setMyFile([...files]);
     //2. 썸네일 생성을 위한 과정
-    let imageUrlLists = [];
+    let imageUrlLists = editFile;
     for (let i = 0; i < files.length; i++) {
       const currentImageUrl = URL.createObjectURL(files[i]);
       imageUrlLists.push(currentImageUrl);
@@ -110,8 +132,8 @@ function Postwrite() {
 
     //일반변수를 담기 위한 과정
     formData.append("title", post.title);
-    formData.append("country", selectedCountry);
-    formData.append("nationCode", nationCode);
+    formData.append("country", editSelectedCountry);
+    formData.append("nationCode", editNationCode);
     formData.append("location", post.location);
     formData.append("fromDate", startDate);
     formData.append("toDate", endDate);
@@ -129,17 +151,16 @@ function Postwrite() {
     }
 
     axios
-      .post("/api/post/upload", formData, {
+      .post("/api/post/getPostEdit", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        alert("글 등록 성공!");
+        alert("글 수정 성공!");
         navigate("/");
       })
       .catch((err) => {
-        alert("글 등록 실패!");
         console.log(err);
       });
   };
@@ -149,36 +170,38 @@ function Postwrite() {
   };
 
   return (
-    <div className="postWriteContainer">
-      <div className="postWrite">
-        <h1>{selectedCountry}'s Dairy</h1>
-        <form className="postWriteWrap" encType="multipart/form-data">
+    <>
+      {editResData ? (
+      <div className="postEditContainer">
+      <div className="postEdit">
+        <h1>{editSelectedCountry}'s Dairy</h1>
+        <form className="postEditWrap" encType="multipart/form-data">
           <div className="gallery">
-            <h2>Gallery</h2>
+          <h2>Gallery</h2>
             {/* <p>4 *3 이미지를 첨부해주세요</p> */}
             <a href="#galleryUpload">
               <span>사진 첨부 버튼</span>
               <label htmlFor="galleryUpload">
                 <RiFolderAddFill />
-              </label>
-              <input
+                </label>
+                <input
                 type="file"
                 name="myfile"
                 multiple={true}
                 id="galleryUpload"
                 onChange={onLoadFile}
                 accept="image/jpg,image/png,image/jpeg,image/gif"
-              />
-            </a>
+                />
+                </a>
             <div className="galleryContainer">
-              {previewImg.map((image, id) => (
+              {editResData.file.map((image, id) => (
                 <div className="galleryImageContainer" key={id}>
                   <img
-                    src={image}
+                    src={`/upload/${image}`}
                     alt={`${image} - ${id}`}
                     id={id}
                     onClick={(event) => console.dir(event.target)}
-                  />
+                    />
                   <span onClick={() => deleteImage(id)}>
                     <MdDeleteForever />
                   </span>
@@ -188,15 +211,17 @@ function Postwrite() {
           </div>
           <ul>
             <li>
-              <p>제목</p>
-              <input type="text" name="title" onChange={onChangePost}></input>
-            </li>
-            <li>
+            <p>제목</p>
+              <input type="text" name="title" onChange={onChangePost} value={editResData.title}></input>
+              </li>
+              <li>
               <p>위치</p>
               <input
-                type="text"
-                name="location"
-                onChange={onChangePost}></input>
+              type="text"
+              name="location"
+                    onChange={onChangePost}
+                    value={editResData.location}
+              ></input>
             </li>
             <li>
               <p>일정</p>
@@ -210,22 +235,24 @@ function Postwrite() {
                 }}
                 isClearable={true}
                 dateFormat="yyyy-MM-dd"
-                placeholderText="여행 기간 선택"
+                    placeholderText="여행 기간 선택"
               />
             </li>
             <li>
               <p>일기</p>
-              <textarea name="content" onChange={onChangePost}></textarea>
+              <textarea name="content" onChange={onChangePost} value={editResData.content}></textarea>
             </li>
           </ul>
-          <div className="postWriteBtn">
+          <div className="postEditBtn">
             <button onClick={goMain}>메인으로</button>
             <button onClick={onSubmit}>등록</button>
           </div>
         </form>
       </div>
-    </div>
-  );
-}
+      </div>
+      ) : null}
+                </>
+      );
+    }
 
-export default Postwrite;
+export default PostEdit;

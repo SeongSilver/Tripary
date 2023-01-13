@@ -1,104 +1,33 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import ContentModal from "../ContentModal";
 
-function LoginedList(openContentModal) {
+function LoginedList({ listData }) {
+  const [check, setCheck] = useState(false);
+
+  const openContentModal = () => {
+    setCheck(true);
+  };
+  console.log(listData[0]);
   return (
+    // <div className="contentBody">하하</div>
     <ul className="contentBody">
-        <li className="contentCard">
-          <span className="cardTag">
-            서울에서 얼마나 길어지는지 태에ddd에에그
-          </span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">광화문</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">여수</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">속초</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">제주도</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">부산</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-        <li className="contentCard">
-          <span className="cardTag">서울</span>
-          <div>
-            <img
-              className="contentImage"
-              src={require("../../../img/login/loginBg.jpg")}
-            />
-          </div>
-          <p className="cardDate">2022-01-01 ~ 2022-12-31</p>
-          <Link to="#" onClick={openContentModal}>
-            일기 자세히 보기
-          </Link>
-        </li>
-      </ul>
-  )
+      {listData &&
+        listData.map((data) => (
+          <li className="contentCard" key={data._id}>
+            <span className="cardTag">{data.location}</span>
+            <div onClick={openContentModal}>
+              <img className="contentImage" src={`/upload/${data.file[0]}`} />
+            </div>
+            <p className="cardDate">
+              {new Date(data.fromDate).toLocaleDateString()} ~{" "}
+              {new Date(data.toDate).toLocaleDateString()}
+            </p>
+            {check && <ContentModal data={data} setCheck={setCheck} />}
+          </li>
+        ))}
+    </ul>
+  );
 }
 
-export default LoginedList
+export default LoginedList;
