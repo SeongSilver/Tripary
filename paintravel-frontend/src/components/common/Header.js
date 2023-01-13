@@ -74,9 +74,15 @@ function Header() {
           </Link>
         </div>
         <div className="headerRight">
+        {localStorage.key("LOGINEDID") ? (
           <Link to="/mypage" className="headLink">
             my page
           </Link>
+          ) : (
+            <Link to="/Login" className="headLink">
+              my page
+            </Link>
+          )}
           {/* {existLocalStorage && (
             <a href="#" className="headLink" onClick={onClickHandler}>
               logout
