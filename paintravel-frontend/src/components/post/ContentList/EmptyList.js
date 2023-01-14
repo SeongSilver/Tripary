@@ -12,7 +12,7 @@ function EmptyList({ selectedCountry, nationCode }) {
     document.querySelector(".emptyListContainer > a").addEventListener("mouseleave", function(){
       setAirplaneStyle({});
     });
-  })
+  });
   return (
     <div className="emptyListContainer">
       <figure>
