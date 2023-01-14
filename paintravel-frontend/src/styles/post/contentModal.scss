@@ -1,20 +1,188 @@
+@font-face {
+  font-family: 'Nanum Myeongjo';
+  src: url('../../fonts/NanumMyeongjo-Regular.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-Bold.ttf') format("truetype"),
+       url('../../fonts/NanumMyeongjo-ExtraBold.ttf') format("truetype");
+  // 영문(대소문자)
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('../../fonts/NotoSansKR-Thin.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Light.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Medium.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Regular.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Bold.otf') format("opentype"),
+       url('../../fonts/NotoSansKR-Black.otf') format("opentype");
+  // 국문, 숫자
+  unicode-range: U+AC00-D7A3, U+0030-0039;
+}
+@mixin font {
+  font-family: 'Nanum Myeongjo', 'Noto Sans KR';
+  color: #222;
+  letter-spacing: 0.3rem;
+  font-weight:100;
+}
+@mixin noDrag {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@mixin hidden {
+  display: block;
+  width: 0; height: 0;
+  text-indent: -9999px;
+}
 .modalContainer {
   width: 100vw;
   height: 100vh;
   position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  color: black;
+  background: rgba(0,0,0,0.1);
+  @include font;
+  @include noDrag;
   .modalDiv {
-    width: 60vw;
-    height: 85vh;
-    top: 50%;
     position: absolute;
+    width: 50vw;
+    height: 85vh;
     border-radius: 20px;
     background-color: white;
     transition: all 0.2s ease-out;
+    .modalHeader {
+      height: 7vh;
+      padding-left:3vw;
+      position:relative;
+      * {@include font; overflow:hidden; display:block;}
+      h1 { 
+        width: 44vw;
+        margin-top:2vh;
+        line-height: 3vh;
+        font-size: 2rem;
+        font-weight:600;
+      }
+      h2 { 
+        width: 44vw;
+        line-height: 2vh;
+        font-size: 1.5rem;
+        color:#555;
+      }
+    }
+    .modalBody {
+      position:relative;
+      ul {
+        width: calc(100% - 6vw); height: 73vh;
+        margin:0 3vw;
+        position:relative;
+        overflow:hidden;
+        > li {
+          width: 100%; height: 100%;
+          background-color: #fff;
+          overflow: hidden;
+          position:absolute; top: 0%;
+          transition:all 0.5s ease;
+          img {
+            min-width: 100%; min-height: 56vh;
+            max-width: 200%; max-height: 56vh;
+            position:absolute; left: 50%; top: 0%;
+            transform: translateX(-50%);
+            z-index: 1100;
+          }
+          img:nth-child(2) {
+            left: 50%; top: 17vh;
+            z-index: 1099;
+            filter: blur(5px);
+          }
+        }
+        > li:nth-child(1) { left: 0%; }
+        > li:nth-child(2) { left: 100%; }
+        > li:nth-child(3) { left: 200%; }
+        > li:nth-child(4) { left: 300%; }
+      }
+      .modalPagination {
+        width: 100%; height: 5vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position:absolute;
+        left: 0; bottom:17vh;
+        background-color: rgba(255,255,255,0.5);
+        li {
+          margin:0 1vw;
+          span {@include hidden;}
+          a {
+            display:block;
+            width: 10px; height:10px;
+            border-radius:50%;
+            font-size:20px;
+            line-height: 5px;
+            text-align: center;
+            color:#888;
+          }
+        }
+        li a:not(.modalPagination li:first-child a, .modalPagination li:last-child a) {
+          width: 10px; height:10px;
+          line-height: 8px;
+        }
+      }
+      > pre {
+        width: calc(100% - 6vw); height:17vh;
+        padding:0.5vw;
+        background-color: rgba(0,0,0,0.4);
+        color:#fff;
+        overflow:auto;
+        line-height: 3vh;
+        white-space: pre;
+        font-size: 1.5rem;
+        position:absolute; 
+        left:3vw; bottom:0;
+      }
+    }
+    // .modalFooter {
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   > a {
+    //     display:inline-block;
+    //     border-radius: 10px;
+    //     text-align: center;
+    //     line-height: 2vh;
+    //     padding: 1.5vh 1.5vw;
+    //     background-color: black;
+    //     color:#fff;
+    //     font-size: 1.5rem;
+    //     margin:0 4vw;
+    //   }
+    // }
+    
+    > a {
+      display:inline-block;
+      // border-radius: 10px;
+      position: absolute;
+    }
+    .postEditBtn {
+      right:4vw; top:59vh;
+      color:#222;
+      font-size: 3rem;
+      text-align: center;
+      line-height: 5vh;
+      span {@include hidden}
+      svg {
+        margin-top:-0.5vh;
+      }
+    }
+    .modalCloseBtn {
+      right:2vh; top:2vh;
+      font-size: 3rem;
+      @include font;
+      span {@include hidden}
+    }
   }
 }
