@@ -80,30 +80,30 @@ function Postwrite() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // if (!post.title) {
-    //   alert("제목을 입력하세요");
-    //   return;
-    // }
-    // if (!post.location) {
-    //   alert("위치를 입력하세요");
-    //   return;
-    // }
-    // if (!myfile) {
-    //   alert("사진을 업로드하세요");
-    //   return;
-    // }
-    // if (!startDate) {
-    //   alert("일정이 시작하는 날짜를 입력하세요");
-    //   return;
-    // }
-    // if (!endDate) {
-    //   alert("일정이 끝나는 날짜를 입력하세요");
-    //   return;
-    // }
-    // if (!post.content) {
-    //   alert("내용을 입력하세요");
-    //   return;
-    // }
+    if (!post.title) {
+      alert("제목을 입력하세요");
+      return;
+    }
+    if (!post.location) {
+      alert("위치를 입력하세요");
+      return;
+    }
+    if (!myfile) {
+      alert("사진을 업로드하세요");
+      return;
+    }
+    if (!startDate) {
+      alert("일정이 시작하는 날짜를 입력하세요");
+      return;
+    }
+    if (!endDate) {
+      alert("일정이 끝나는 날짜를 입력하세요");
+      return;
+    }
+    if (!post.content) {
+      alert("내용을 입력하세요");
+      return;
+    }
 
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
@@ -129,21 +129,19 @@ function Postwrite() {
     }
 
     console.log(myfile);
-    // axios
-    //   .post("/api/post/upload", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     alert("글 등록 성공!");
-    //     navigate("/");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    console.log(formData);
+    axios
+      .post("/api/post/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        alert("글 등록 성공!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const goMain = () => {
