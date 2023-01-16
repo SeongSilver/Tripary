@@ -40,7 +40,7 @@
   .contentCard {
     margin: 0 auto;
     display: block;
-    div {
+    > div:not(.modalContainer) {
       width: 50vw;
       height: 30vw;
     }
@@ -50,7 +50,7 @@
       max-width: 60vw;
       max-height: 40vw;
     }
-    a {
+    > a {
       width: 50vw;
       height: 30vw;
     }
@@ -59,7 +59,7 @@
 // PC
 @media all and (min-width: 1025px) {
   .contentCard {
-    div {
+    > div:not(.modalContainer) {
       width: 15vw;
       height: 10vw;
     }
@@ -69,7 +69,7 @@
       max-width: 20vw;
       max-height: 20vw;
     }
-    a {
+    > a {
       width: 15vw;
       height: 10vw;
     }
@@ -159,7 +159,7 @@
       hr {
         margin: 15px 0px;
       }
-      a {
+      > a {
         text-indent: -9999px;
         position: absolute;
         left: 0;
@@ -175,7 +175,7 @@
     position: relative;
     margin-bottom: 3vh;
     overflow: hidden;
-    div {
+    > div:not(.modalContainer) {
       overflow: hidden;
     }
     .contentImage {
@@ -205,7 +205,7 @@
     hr {
       margin: 15px 0px;
     }
-    a {
+    > a {
       text-indent: -9999px;
       position: absolute;
       left: 0;
@@ -225,19 +225,5 @@
   /* 스크롤바 뒷 배경 설정*/
   .contentBody::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0);
-  }
-  .modalFooter {
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    button {
-      width: 80px;
-      height: 40px;
-      border-radius: 10px;
-      border: none;
-      margin-right: 50px;
-    }
   }
 }
