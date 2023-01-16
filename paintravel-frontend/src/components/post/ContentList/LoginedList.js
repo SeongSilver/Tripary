@@ -8,7 +8,6 @@ function LoginedList({ listData }) {
   const openContentModal = () => {
     setCheck(true);
   };
-  console.log(listData[0]);
   return (
     // <div className="contentBody">하하</div>
     <ul className="contentBody">
@@ -16,9 +15,21 @@ function LoginedList({ listData }) {
         listData.map((data) => (
           <li className="contentCard" key={data._id}>
             <span className="cardTag">{data.location}</span>
-            <div onClick={openContentModal}>
+            <Link
+              to="/postEdit"
+              state={{
+                selectedCountry: data.country,
+                nationCode: data.nationCode,
+                _id: data._id,
+                writer: data.writer,
+              }}>
+              <div>
+                <img className="contentImage" src={`/upload/${data.file[0]}`} />
+              </div>
+            </Link>
+            {/* <div onClick={openContentModal}>
               <img className="contentImage" src={`/upload/${data.file[0]}`} />
-            </div>
+            </div> */}
             <p className="cardDate">
               {new Date(data.fromDate).toLocaleDateString()} ~{" "}
               {new Date(data.toDate).toLocaleDateString()}
