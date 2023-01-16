@@ -3,17 +3,44 @@ import "../../styles/post/contentModal.scss";
 import { Link } from "react-router-dom";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
+import axios from "axios";
 
 function ContentModal({ data, setCheck }) {
+  useLayoutEffect(() => {
+    console.log(data);
+    const editData = {
+      currentId: data.writer,
+      selectCountry: data.country,
+      post_id: data._id,
+    };
+    axios
+      .post("/api/post/getPostInfo", editData)
+      .then((response) => {
+        console.log("수정할 데이터 가져오기 성공" + response);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
+      });
+  }, []);
+
   const closeModal = () => {
     setCheck(false);
   };
   const [modalImgPosition, setModalImgPosition] = useState("0");
   const [modalCurrentSlide, setModalCurrentSlide] = useState(0);
-  const [modalSlideBtn1st, setModalSlideBtn1st] = useState({backgroundColor: "#000"});
-  const [modalSlideBtn2nd, setModalSlideBtn2nd] = useState({backgroundColor: "#999"});
-  const [modalSlideBtn3rd, setModalSlideBtn3rd] = useState({backgroundColor: "#999"});
-  const [modalSlideBtn4th, setModalSlideBtn4th] = useState({backgroundColor: "#999"});
+  const [modalSlideBtn1st, setModalSlideBtn1st] = useState({
+    backgroundColor: "#000",
+  });
+  const [modalSlideBtn2nd, setModalSlideBtn2nd] = useState({
+    backgroundColor: "#999",
+  });
+  const [modalSlideBtn3rd, setModalSlideBtn3rd] = useState({
+    backgroundColor: "#999",
+  });
+  const [modalSlideBtn4th, setModalSlideBtn4th] = useState({
+    backgroundColor: "#999",
+  });
   // 슬라이드 animation 이전 버튼
   const imgSlidePre = () => {
     if (modalCurrentSlide <= 0) {
@@ -65,20 +92,24 @@ function ContentModal({ data, setCheck }) {
     <div className="modalContainer">
       <div className="modalDiv">
         <div className="modalHeader">
-        {/* <h1>{cityName}</h1> */}
-        {/* <h2>{data.title}</h2> */}
-        {/* </div> */}
-        <h1>{data.title}</h1>
-        <h2>{data.location}</h2>
+          {/* <h1>{cityName}</h1> */}
+          {/* <h2>{data.title}</h2> */}
+          {/* </div> */}
+          <h1>{data.title}</h1>
+          <h2>{data.location}</h2>
         </div>
         <div className="modalBody">
           <ul>
-            {data.file.map((image, index) => 
-              <li key={index} style={{ transform: "translateX(" + `${modalImgPosition}` + "%)" }}>
-                <img src={`/upload/${image}`} alt="이미지"/>
-                <img src={`/upload/${image}`} alt="이미지 배경"/>
+            {data.file.map((image, index) => (
+              <li
+                key={index}
+                style={{
+                  transform: "translateX(" + `${modalImgPosition}` + "%)",
+                }}>
+                <img src={`/upload/${image}`} alt="이미지" />
+                <img src={`/upload/${image}`} alt="이미지 배경" />
               </li>
-            )}
+            ))}
           </ul>
           <ol className="modalPagination">
             <li onClick={imgSlidePre}>
@@ -122,10 +153,18 @@ function ContentModal({ data, setCheck }) {
               <a href="#">&#62;</a>
             </li>
           </ol>
-          <pre>{data.content}<br/>스크롤<br/>테스트용<br/>글<br/>쓰<br/>기</pre>
+          <pre>
+            {data.content}
+            <br />
+            스크롤
+            <br />
+            테스트용
+            <br />글<br />쓰<br />기
+          </pre>
         </div>
         <Link
-          to="/postEdit" className="postEditBtn"
+          to="/postEdit"
+          className="postEditBtn"
           state={{
             selectedCountry: data.country,
             nationCode: data.nationCode,
@@ -133,11 +172,11 @@ function ContentModal({ data, setCheck }) {
             writer: data.writer,
           }}>
           <span>수정</span>
-          <BiEdit/>
+          <BiEdit />
         </Link>
         <a href="#" onClick={closeModal} className="modalCloseBtn">
           <span>닫기</span>
-          <AiFillCloseCircle/>
+          <AiFillCloseCircle />
         </a>
       </div>
     </div>

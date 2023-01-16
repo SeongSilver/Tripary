@@ -15,7 +15,7 @@ function LoginedList({ listData }) {
         listData.map((data) => (
           <li className="contentCard" key={data._id}>
             <span className="cardTag">{data.location}</span>
-            <Link
+            {/* <Link
               to="/postEdit"
               state={{
                 selectedCountry: data.country,
@@ -26,10 +26,10 @@ function LoginedList({ listData }) {
               <div>
                 <img className="contentImage" src={`/upload/${data.file[0]}`} />
               </div>
-            </Link>
-            {/* <div onClick={openContentModal}>
+            </Link> */}
+            <div onClick={openContentModal}>
               <img className="contentImage" src={`/upload/${data.file[0]}`} />
-            </div> */}
+            </div>
             <p className="cardDate">
               {new Date(data.fromDate).toLocaleDateString()} ~{" "}
               {new Date(data.toDate).toLocaleDateString()}
