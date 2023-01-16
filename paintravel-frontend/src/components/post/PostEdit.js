@@ -18,14 +18,13 @@ function PostEdit() {
   const [editToDate, setEditToDate] = useState();
   const [dateRange, setDateRange] = useState([null, null]);
   const [myFile, setMyFile] = useState([]);
-  const [previewImg, setPreviewImg] = useState([]);
+  const [previewImg, setPreviewImg] = useState();
   const [loginedId, setLoginedId] = useState();
+  //유효성 검사를 위한 state
+  const [post, setPost] = useState({});
 
   //Date 구조분해할당
   const [startDate, endDate] = dateRange;
-
-  //axios로 기존 게시물의 정보를 받아와서 post에 넣은 후 그 값들로 value에 채워줄 것
-  const [post, setPost] = useState({});
 
   const editSelectedCountry = location.state.selectedCountry;
   const editNationCode = location.state.nationCode;
@@ -45,11 +44,11 @@ function PostEdit() {
       selectCountry: editNationCode,
       post_id: edit_id,
     };
+
     axios
       .post("/api/post/getPostInfo", editData)
       .then((response) => {
         console.log("수정할 데이터 가져오기 성공" + response);
-        console.log(response.data.postInfo[0].file);
         setEditResData(response.data.postInfo[0]);
         setPost({
           title: response.data.postInfo[0].title,
@@ -92,16 +91,9 @@ function PostEdit() {
     setMyFile([...files]);
     //2. 썸네일 생성을 위한 과정
     let imageUrlLists = [];
-    if (files) {
-      for (let i = 0; i < files.length; i++) {
-        const currentImageUrl = URL.createObjectURL(files[i]);
-        imageUrlLists.push(currentImageUrl);
-      }
-    } else {
-      for (let i = 0; i < myFile.length; i++) {
-        const currentImageUrl = URL.createObjectURL(myFile[i]);
-        imageUrlLists.push(currentImageUrl);
-      }
+    for (let i = 0; i < files.length; i++) {
+      const currentImageUrl = URL.createObjectURL(files[i]);
+      imageUrlLists.push(currentImageUrl);
     }
     setPreviewImg(imageUrlLists);
   };
@@ -113,30 +105,30 @@ function PostEdit() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // if (!post.title) {
-    //   alert("제목을 입력하세요");
-    //   return;
-    // }
-    // if (!post.location) {
-    //   alert("위치를 입력하세요");
-    //   return;
-    // }
-    // if (!myFile) {
-    //   alert("사진을 업로드하세요");
-    //   return;
-    // }
-    // if (!startDate) {
-    //   alert("일정이 시작하는 날짜를 입력하세요");
-    //   return;
-    // }
-    // if (!endDate) {
-    //   alert("일정이 끝나는 날짜를 입력하세요");
-    //   return;
-    // }
-    // if (!post.content) {
-    //   alert("내용을 입력하세요");
-    //   return;
-    // }
+    if (!post.title) {
+      alert("제목을 입력하세요");
+      return;
+    }
+    if (!post.location) {
+      alert("위치를 입력하세요");
+      return;
+    }
+    if (!myFile) {
+      alert("사진을 업로드하세요");
+      return;
+    }
+    if (!startDate) {
+      alert("일정이 시작하는 날짜를 입력하세요");
+      return;
+    }
+    if (!endDate) {
+      alert("일정이 끝나는 날짜를 입력하세요");
+      return;
+    }
+    if (!post.content) {
+      alert("내용을 입력하세요");
+      return;
+    }
 
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
@@ -146,8 +138,6 @@ function PostEdit() {
     formData.append("country", editSelectedCountry);
     formData.append("nationCode", editNationCode);
     formData.append("location", post.location);
-    formData.append("fromDate", startDate);
-    formData.append("toDate", endDate);
     if (dateRange[0] !== null) {
       formData.append("fromDate", startDate);
       formData.append("toDate", endDate);
@@ -169,21 +159,19 @@ function PostEdit() {
       console.log(pair[0] + ", " + pair[1]);
     }
 
-    // axios
-    //   .post("/api/post/getPostEdit", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     alert("글 수정 성공!");
-    //     navigate("/");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    console.log(formData);
+    axios
+      .post("/api/post/getPostEdit", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        alert("글 수정 성공!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const goMain = () => {
@@ -215,19 +203,33 @@ function PostEdit() {
                   />
                 </a>
                 <div className="galleryContainer">
-                  {editResData.file.map((image, id) => (
-                    <div className="galleryImageContainer" key={id}>
-                      <img
-                        src={`/upload/${image}`}
-                        alt={`${image} - ${id}`}
-                        id={id}
-                        onClick={(event) => console.dir(event.target)}
-                      />
-                      <span onClick={() => deleteImage(id)}>
-                        <MdDeleteForever />
-                      </span>
-                    </div>
-                  ))}
+                  {previewImg !== undefined
+                    ? previewImg.map((image, id) => (
+                        <div className="galleryImageContainer" key={id}>
+                          <img
+                            src={image}
+                            alt={`${image} - ${id}`}
+                            id={id}
+                            onClick={(event) => console.dir(event.target)}
+                          />
+                          <span onClick={() => deleteImage(id)}>
+                            <MdDeleteForever />
+                          </span>
+                        </div>
+                      ))
+                    : editResData.file.map((image, id) => (
+                        <div className="galleryImageContainer" key={id}>
+                          <img
+                            src={`/upload/${image}`}
+                            alt={`${image} - ${id}`}
+                            id={id}
+                            onClick={(event) => console.dir(event.target)}
+                          />
+                          <span onClick={() => deleteImage(id)}>
+                            <MdDeleteForever />
+                          </span>
+                        </div>
+                      ))}
                 </div>
               </div>
               <ul>
