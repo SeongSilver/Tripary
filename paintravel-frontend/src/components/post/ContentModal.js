@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../../styles/post/contentModal.scss";
 import { Link } from "react-router-dom";
 import { AiFillCloseCircle } from "react-icons/ai";
-import { BiEdit } from "react-icons/bi";
+import { BiEdit, BiTrash } from "react-icons/bi";
 import Loading from "../common/Loading";
+import axios from "axios";
 
 function ContentModal({ modalData, setCheck }) {
   console.log(modalData);
@@ -70,6 +71,26 @@ function ContentModal({ modalData, setCheck }) {
       setModalSlideBtn4th({ backgroundColor: "#000" });
     }
   }, [modalCurrentSlide]);
+
+  const postDeleteHandler = () => {
+    const deletePostInfo = {
+      currentId: modalData.writer,
+      post_id: modalData._id,
+    };
+    console.log(deletePostInfo);
+    axios
+      .post("api/post/getPostDelete", deletePostInfo)
+      .then((response) => {
+        console.log("게시물 삭제 성공");
+        console.log(response);
+        // setCheck(false);
+      })
+      .catch((error) => {
+        console.log("게시물 삭제 실패");
+        console.log(error);
+      });
+  };
+
   return (
     <>
       {!modalData ? (
@@ -157,6 +178,12 @@ function ContentModal({ modalData, setCheck }) {
               <span>닫기</span>
               <AiFillCloseCircle />
             </a>
+            <button
+              className="postEditBtn"
+              onClick={postDeleteHandler}
+              style={{ zIndex: "999", cursor: "pointer" }}>
+              <BiTrash />
+            </button>
           </div>
         </div>
       )}

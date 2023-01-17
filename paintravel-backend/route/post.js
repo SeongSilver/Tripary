@@ -136,7 +136,7 @@ router.post("/getPostDelete", async (req, res) => {
   let postWritedInfo = await Post.find({ _id: req.body.post_id }).select(
     "writer file"
   );
-  if (postWriterInfo.writer === req.body.currentId) {
+  if (postWritedInfo.writer === req.body.currentId) {
     for (i = 0; i < postWriterInfo.file.length; i++) {
       console.log("삭제할 파일 리스트 [" + postWriterInfo.file + "]");
       if (postWriterInfo.file[i]) {
@@ -145,12 +145,12 @@ router.post("/getPostDelete", async (req, res) => {
       }
     }
     let post = await await Post.findByIdAndRemove(req.body.post_id).exec();
-    if (!post) return res.state(400).json({ postDeleteSuccess: false });
+    if (!post) return res.status(400).json({ postDeleteSuccess: false });
     return res
       .status(200)
       .json({ postDeleteSuccess: true, errMessage: "DB데이터 수정 실패" });
   } else {
-    return res.state(400).json({
+    return res.status(400).json({
       postEditSuccess: false,
       errMessage: "작성자가 일치하지 않습니다",
     });
