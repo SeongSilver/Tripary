@@ -78,8 +78,6 @@ module.exports = router;
 router.post("/getPostInfo", async (req, res) => {
   console.log("게시글 정보 찾으러 옴");
   let postList = [];
-  console.log(req.body.currentId);
-  console.log(req.body._id);
   let post = await Post.find({
     writer: req.body.currentId,
     _id: req.body.post_id,
@@ -136,12 +134,15 @@ router.post("/getPostDelete", async (req, res) => {
   let postWritedInfo = await Post.find({ _id: req.body.post_id }).select(
     "writer file"
   );
-  if (postWritedInfo.writer === req.body.currentId) {
-    for (i = 0; i < postWriterInfo.file.length; i++) {
-      console.log("삭제할 파일 리스트 [" + postWriterInfo.file + "]");
-      if (postWriterInfo.file[i]) {
-        console.log("현재 삭제할 파일 : " + postWritedInfo.file[i]);
-        deletePhoto(postWritedInfo.file[i]);
+  console.log(postWritedInfo);
+  console.log(postWritedInfo[0].writer + " / " + req.body.currentId);
+  console.log(postWritedInfo[0].writer == req.body.currentId);
+  if (postWritedInfo[0].writer == req.body.currentId) {
+    for (i = 0; i < postWritedInfo[0].file.length; i++) {
+      console.log("삭제할 파일 리스트 [" + postWritedInfo[0].file + "]");
+      if (postWritedInfo[0].file[i]) {
+        console.log("현재 삭제할 파일 : " + postWritedInfo[0].file[i]);
+        deletePhoto(postWritedInfo[0].file[i]);
       }
     }
     let post = await await Post.findByIdAndRemove(req.body.post_id).exec();
@@ -160,7 +161,14 @@ module.exports = router;
 
 //Mypage
 router.post("/getMypage", async (req, res) => {
-  let postList = await Post.find({ writer: req.body.currentId }).select();
-  res.status(200).json({ postList: postList });
+  let sortBy = '{ "' + req.body.sortBy + '" : ' + req.body.sort + " } "; //정렬 기준
+  console.log(sortBy);
+  let mypageList = [];
+  let postList = await Post.find({ writer: req.body.currentId }).sort(sortBy);
+  for (i in postList) {
+    mypageList.push(postList[i]);
+    console.log(postList[i].title);
+  }
+  res.status(200).json({ mypageList: mypageList });
 });
 module.exports = router;

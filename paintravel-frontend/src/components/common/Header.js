@@ -62,16 +62,22 @@ function Header() {
     });
   };
 
+  const goMain = () => {
+    if (window.location.href === "http://localhost:3000/") {
+      location.reload();
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <header className="header">
       <div className="headerWrapper">
         <div className="skipNav">
           <Link to="/">본문바로가기</Link>
         </div>
-        <div className="logo">
-          <Link to="/">
-            <img src={require("../../img/common/logo.png")} alt="logo" />
-          </Link>
+        <div className="logo" onClick={goMain}>
+          <img src={require("../../img/common/logo.png")} alt="logo" />
         </div>
         <div className="headerRight">
           <Link to="/mypage" className="headLink">

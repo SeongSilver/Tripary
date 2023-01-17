@@ -396,6 +396,7 @@ const GlobeMap = () => {
             nationCode={nationCode}
             contentListClose={contentListClose}
             listData={listData}
+            setVisitedCountry={setVisitedCountry}
           />
         </div>
       )}

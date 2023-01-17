@@ -12,6 +12,7 @@ function ContentList({
   nationCode,
   contentListClose,
   listData,
+  setVisitedCountry,
 }) {
   const [existLocalStorage, setExistLocalStorage] = useState(false);
   useEffect(() => {
@@ -23,7 +24,6 @@ function ContentList({
     // setLoginedListData(listData);
   }, [listData]);
 
-  
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
     // eslint-disable-next-line react/jsx-filename-extension
@@ -53,9 +53,11 @@ function ContentList({
         게시물이있다면(state 변수) ? <LoginedList openContentModal={openContentModal}/> : <EmptyList/> />
       */}
       {localStorage.key("LOGINEDID") ? (
-        listData && (listData.length !== 0 ? (
+        listData &&
+        (listData.length !== 0 ? (
           <LoginedList
             listData={listData}
+            setVisitedCountry={setVisitedCountry}
           />
         ) : (
           <EmptyList
