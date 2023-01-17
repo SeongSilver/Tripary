@@ -1,29 +1,12 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/post/contentModal.scss";
 import { Link } from "react-router-dom";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
-import axios from "axios";
+import Loading from "../common/Loading";
 
-function ContentModal({ data, setCheck }) {
-  useLayoutEffect(() => {
-    console.log(data);
-    const editData = {
-      currentId: data.writer,
-      selectCountry: data.country,
-      post_id: data._id,
-    };
-    axios
-      .post("/api/post/getPostInfo", editData)
-      .then((response) => {
-        console.log("수정할 데이터 가져오기 성공" + response);
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
-      });
-  }, []);
-
+function ContentModal({ modalData, setCheck }) {
+  console.log(modalData);
   const closeModal = () => {
     setCheck(false);
   };
@@ -58,7 +41,6 @@ function ContentModal({ data, setCheck }) {
       setModalCurrentSlide(modalCurrentSlide + 1);
     }
   };
-  console.log(data.file);
 
   useEffect(() => {
     // if (contentModalStatus) {
@@ -89,97 +71,96 @@ function ContentModal({ data, setCheck }) {
     }
   }, [modalCurrentSlide]);
   return (
-    <div className="modalContainer">
-      <div className="modalDiv">
-        <div className="modalHeader">
-          {/* <h1>{cityName}</h1> */}
-          {/* <h2>{data.title}</h2> */}
-          {/* </div> */}
-          <h1>{data.title}</h1>
-          <h2>{data.location}</h2>
+    <>
+      {!modalData ? (
+        <Loading />
+      ) : (
+        <div className="modalContainer">
+          <div className="modalDiv">
+            <div className="modalHeader">
+              {/* <h1>{cityName}</h1> */}
+              {/* <h2>{modalData.title}</h2> */}
+              {/* </div> */}
+              <h1>{modalData.title}</h1>
+              <h2>{modalData.location}</h2>
+            </div>
+            <div className="modalBody">
+              <ul>
+                {modalData.file.map((image, index) => (
+                  <li
+                    key={index}
+                    style={{
+                      transform: "translateX(" + `${modalImgPosition}` + "%)",
+                    }}>
+                    <img src={`/upload/${image}`} alt="이미지" />
+                    {/* <img src={`/upload/${image}`} alt="이미지 배경" /> */}
+                  </li>
+                ))}
+              </ul>
+              <ol className="modalPagination">
+                <li onClick={imgSlidePre}>
+                  <span>이전</span>
+                  <a href="#">&#60;</a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    style={modalSlideBtn1st}
+                    onClick={() => {
+                      setModalCurrentSlide(0);
+                    }}></a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    style={modalSlideBtn2nd}
+                    onClick={() => {
+                      setModalCurrentSlide(1);
+                    }}></a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    style={modalSlideBtn3rd}
+                    onClick={() => {
+                      setModalCurrentSlide(2);
+                    }}></a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    style={modalSlideBtn4th}
+                    onClick={() => {
+                      setModalCurrentSlide(3);
+                    }}></a>
+                </li>
+                <li onClick={imgSlideNext}>
+                  <span>다음</span>
+                  <a href="#">&#62;</a>
+                </li>
+              </ol>
+              <pre>{modalData.content}</pre>
+            </div>
+            <Link
+              to="/postEdit"
+              className="postEditBtn"
+              state={{
+                selectedCountry: modalData.country,
+                nationCode: modalData.nationCode,
+                _id: modalData._id,
+                writer: modalData.writer,
+              }}>
+              <span>수정</span>
+              <BiEdit />
+            </Link>
+            <a href="#" onClick={closeModal} className="modalCloseBtn">
+              <span>닫기</span>
+              <AiFillCloseCircle />
+            </a>
+          </div>
         </div>
-        <div className="modalBody">
-          <ul>
-            {data.file.map((image, index) => (
-              <li
-                key={index}
-                style={{
-                  transform: "translateX(" + `${modalImgPosition}` + "%)",
-                }}>
-                <img src={`/upload/${image}`} alt="이미지" />
-                <img src={`/upload/${image}`} alt="이미지 배경" />
-              </li>
-            ))}
-          </ul>
-          <ol className="modalPagination">
-            <li onClick={imgSlidePre}>
-              <span>이전</span>
-              <a href="#">&#60;</a>
-            </li>
-            <li>
-              <a
-                href="#"
-                style={modalSlideBtn1st}
-                onClick={() => {
-                  setModalCurrentSlide(0);
-                }}></a>
-            </li>
-            <li>
-              <a
-                href="#"
-                style={modalSlideBtn2nd}
-                onClick={() => {
-                  setModalCurrentSlide(1);
-                }}></a>
-            </li>
-            <li>
-              <a
-                href="#"
-                style={modalSlideBtn3rd}
-                onClick={() => {
-                  setModalCurrentSlide(2);
-                }}></a>
-            </li>
-            <li>
-              <a
-                href="#"
-                style={modalSlideBtn4th}
-                onClick={() => {
-                  setModalCurrentSlide(3);
-                }}></a>
-            </li>
-            <li onClick={imgSlideNext}>
-              <span>다음</span>
-              <a href="#">&#62;</a>
-            </li>
-          </ol>
-          <pre>
-            {data.content}
-            <br />
-            스크롤
-            <br />
-            테스트용
-            <br />글<br />쓰<br />기
-          </pre>
-        </div>
-        <Link
-          to="/postEdit"
-          className="postEditBtn"
-          state={{
-            selectedCountry: data.country,
-            nationCode: data.nationCode,
-            _id: data._id,
-            writer: data.writer,
-          }}>
-          <span>수정</span>
-          <BiEdit />
-        </Link>
-        <a href="#" onClick={closeModal} className="modalCloseBtn">
-          <span>닫기</span>
-          <AiFillCloseCircle />
-        </a>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

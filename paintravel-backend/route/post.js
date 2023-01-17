@@ -77,14 +77,15 @@ module.exports = router;
 //글 가져오기(Front : 모달창, 글수정페이지 정보 전달 위함. 따라서 리스트에서 특정 게시글을 클릭하거나, 글수정 창을 띄울 시에 _id라고 프론트에 기존에 전달된 값을 'post_id'라는 값에 담아서 넘겨줘야 함)
 router.post("/getPostInfo", async (req, res) => {
   console.log("게시글 정보 찾으러 옴");
-  let postList = []
+  let postList = [];
+  console.log(req.body.currentId);
+  console.log(req.body._id);
   let post = await Post.find({
     writer: req.body.currentId,
-    nationCode: req.body.selectCountry,
-    post_id: req.body.post_id,
+    _id: req.body.post_id,
   }).select();
   for (i in post) {
-      postList.push(post[i]);
+    postList.push(post[i]);
   }
   res.status(200).json({ postInfo: postList });
 });
@@ -159,7 +160,7 @@ module.exports = router;
 
 //Mypage
 router.post("/getMypage", async (req, res) => {
-  let postList = await Post.find({ writer: req.body.currentId}).select();
+  let postList = await Post.find({ writer: req.body.currentId }).select();
   res.status(200).json({ postList: postList });
 });
 module.exports = router;
