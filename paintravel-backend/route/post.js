@@ -77,14 +77,15 @@ module.exports = router;
 //글 가져오기(Front : 모달창, 글수정페이지 정보 전달 위함. 따라서 리스트에서 특정 게시글을 클릭하거나, 글수정 창을 띄울 시에 _id라고 프론트에 기존에 전달된 값을 'post_id'라는 값에 담아서 넘겨줘야 함)
 router.post("/getPostInfo", async (req, res) => {
   console.log("게시글 정보 찾으러 옴");
-  let postList = []
+  let postList = [];
+  console.log(req.body.currentId);
+  console.log(req.body._id);
   let post = await Post.find({
     writer: req.body.currentId,
-    nationCode: req.body.selectCountry,
-    post_id: req.body.post_id,
+    _id: req.body.post_id,
   }).select();
   for (i in post) {
-      postList.push(post[i]);
+    postList.push(post[i]);
   }
   res.status(200).json({ postInfo: postList });
 });
@@ -135,7 +136,7 @@ router.post("/getPostDelete", async (req, res) => {
   let postWritedInfo = await Post.find({ _id: req.body.post_id }).select(
     "writer file"
   );
-  if (postWriterInfo.writer === req.body.currentId) {
+  if (postWritedInfo.writer === req.body.currentId) {
     for (i = 0; i < postWriterInfo.file.length; i++) {
       console.log("삭제할 파일 리스트 [" + postWriterInfo.file + "]");
       if (postWriterInfo.file[i]) {
@@ -144,12 +145,12 @@ router.post("/getPostDelete", async (req, res) => {
       }
     }
     let post = await await Post.findByIdAndRemove(req.body.post_id).exec();
-    if (!post) return res.state(400).json({ postDeleteSuccess: false });
+    if (!post) return res.status(400).json({ postDeleteSuccess: false });
     return res
       .status(200)
       .json({ postDeleteSuccess: true, errMessage: "DB데이터 수정 실패" });
   } else {
-    return res.state(400).json({
+    return res.status(400).json({
       postEditSuccess: false,
       errMessage: "작성자가 일치하지 않습니다",
     });
@@ -159,7 +160,7 @@ module.exports = router;
 
 //Mypage
 router.post("/getMypage", async (req, res) => {
-  let postList = await Post.find({ writer: req.body.currentId}).select();
+  let postList = await Post.find({ writer: req.body.currentId }).select();
   res.status(200).json({ postList: postList });
 });
 module.exports = router;

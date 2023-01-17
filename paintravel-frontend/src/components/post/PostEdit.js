@@ -41,26 +41,32 @@ function PostEdit() {
 
     const editData = {
       currentId: editWriter,
-      selectCountry: editNationCode,
       post_id: edit_id,
     };
-
+    console.log(editData);
     axios
       .post("/api/post/getPostInfo", editData)
       .then((response) => {
         console.log("수정할 데이터 가져오기 성공" + response);
+        console.log(response);
         setEditResData(response.data.postInfo[0]);
-        setPost({
-          title: response.data.postInfo[0].title,
-          country: response.data.postInfo[0].country,
-          nationCode: response.data.postInfo[0].nationCode,
-          location: response.data.postInfo[0].location,
-          content: response.data.postInfo[0].content,
-          writer: response.data.postInfo[0].writer,
-        });
-        setEditFromDate(response.data.postInfo[0].fromDate);
-        setEditToDate(response.data.postInfo[0].toDate);
-        setMyFile([...response.data.postInfo[0].file]);
+        for (let i = 0; i < response.data.postInfo.length; i++) {
+          if (editData.post_id === response.data.postInfo[i]._id) {
+            console.log(editData.post_id);
+            console.log(response.data.postInfo[i]._id);
+            setPost({
+              title: response.data.postInfo[i].title,
+              country: response.data.postInfo[i].country,
+              nationCode: response.data.postInfo[i].nationCode,
+              location: response.data.postInfo[i].location,
+              content: response.data.postInfo[i].content,
+              writer: response.data.postInfo[i].writer,
+            });
+            setEditFromDate(response.data.postInfo[i].fromDate);
+            setEditToDate(response.data.postInfo[i].toDate);
+            setMyFile([...response.data.postInfo[i].file]);
+          }
+        }
       })
       .catch((error) => {
         console.log("기존 정보를 받아오는데서 에러가 났다네" + error);

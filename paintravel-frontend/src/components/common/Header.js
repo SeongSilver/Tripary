@@ -47,7 +47,7 @@ function Header() {
         if (nowTime > expireTime) {
           localStorage.removeItem("LOGINEDID");
         }
-      }, 300000);
+      }, 600000);
     }
   }, []);
 
