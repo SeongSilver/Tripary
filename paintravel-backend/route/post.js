@@ -182,11 +182,11 @@ router.post("/getMypage", async (req, res) => {
   } else {
     if (sort === 1) {
       postList = await Post.find({ writer: req.body.currentId }).sort({
-        writer: 1,
+        fromDate: 1,
       });
     } else {
       postList = await Post.find({ writer: req.body.currentId }).sort({
-        writer: -1,
+        fromDate: -1,
       });
     }
   }

@@ -35,7 +35,7 @@ function LoginedList({ listData }) {
             key={data._id}
             value={data._id}
             onClick={openContentModal}>
-            <span style={{ display: "hidden" }}>{data._id}</span>
+            <span>{data._id}</span>
             <span className="cardTag">{data.location}</span>
             <div>
               <img

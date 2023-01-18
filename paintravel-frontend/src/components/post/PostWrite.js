@@ -137,8 +137,8 @@ function PostWrite() {
       })
       .then((res) => {
         alert("글 등록 성공!");
-        navigate("/");
       })
+      // .then(navigate("/"))
       .catch((err) => {
         alert("글 등록 실패!");
         console.log(err);

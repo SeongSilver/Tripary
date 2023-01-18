@@ -32,7 +32,7 @@ function PostEdit() {
 
   //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
   const existlocalStorage = localStorage.getItem("LOGINEDID");
-  
+
   useLayoutEffect(() => {
     if (existlocalStorage) {
       setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
@@ -67,8 +67,7 @@ function PostEdit() {
       .catch((error) => {
         console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
       });
-  }, []); 
-  console.log(editResData)
+  }, []);
 
   const onChangePost = (e) => {
     setPost({
@@ -252,7 +251,8 @@ function PostEdit() {
                     type="text"
                     name="title"
                     onChange={onChangePost}
-                    value={editResData.title}></input>
+                    defaultValue={editResData.title}
+                  />
                 </li>
                 <li>
                   <p>위치</p>
@@ -260,7 +260,8 @@ function PostEdit() {
                     type="text"
                     name="location"
                     onChange={onChangePost}
-                    value={editResData.location}></input>
+                    defaultValue={editResData.location}
+                  />
                 </li>
                 <li>
                   <p>일정</p>
@@ -279,10 +280,9 @@ function PostEdit() {
                 </li>
                 <li>
                   <p>일기</p>
-                  <textarea
-                    name="content"
-                    onChange={onChangePost}
-                    value={editResData.content}></textarea>
+                  <textarea name="content" onChange={onChangePost}>
+                    {editResData.content}
+                  </textarea>
                 </li>
               </ul>
               <div className="postEditBtn">
