@@ -7,7 +7,7 @@ const { Post } = require("../models/Post");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 
-function deletePhoto (file_name){
+function deletePhoto(file_name) {
   console.log("파일 삭제하러 옴");
   if (fs.existsSync("paintravel-frontend/public/upload/" + file_name)) {
     // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
@@ -60,7 +60,10 @@ router.post("/getVisitedList", async (req, res) => {
 
 //글 리스트 가져오기
 router.post("/getPostList", async (req, res) => {
-  let post = await Post.find({ writer: req.body.currentId, nationCode: req.body.selectCountry }).select();
+  let post = await Post.find({
+    writer: req.body.currentId,
+    nationCode: req.body.selectCountry,
+  }).select();
   let postList = [];
   for (i in post) {
     if (post[i].nationCode) {
@@ -73,22 +76,32 @@ module.exports = router;
 
 //글 가져오기(Front : 모달창, 글수정페이지 정보 전달 위함. 따라서 리스트에서 특정 게시글을 클릭하거나, 글수정 창을 띄울 시에 _id라고 프론트에 기존에 전달된 값을 'post_id'라는 값에 담아서 넘겨줘야 함)
 router.post("/getPostInfo", async (req, res) => {
-  console.log("게시글 정보 찾으러 옴")
-  let post = await Post.find({ writer: req.body.currentId, nationCode: req.body.selectCountry, _id: req.body.post_id }).select();
-  res.status(200).json({ postInfo: post });
+  console.log("게시글 정보 찾으러 옴");
+  let postList = []
+  let post = await Post.find({
+    writer: req.body.currentId,
+    _id: req.body.post_id,
+  }).select();
+  for (i in post) {
+      postList.push(post[i]);
+  }
+  console.log(postList)
+  res.status(200).json({ postInfo: postList });
 });
 module.exports = router;
 
 //글 수정하기(Front : 글수정 기능을 위함)
 router.post("/getPostEdit", upload.array("myfile"), async (req, res) => {
-  console.log("글수정하러 옴")
-  let postWritedInfo = await Post.find({ _id: req.body.post_id }).select("writer file");
+  console.log("글수정하러 옴");
+  let postWritedInfo = await Post.find({ _id: req.body.post_id }).select(
+    "writer file"
+  );
   if (postWritedInfo.writer === req.body.currentId) {
-    for(i = 0; i < postWriterInfo.file.length ; i++){
-      console.log("삭제할 파일 리스트 ["+postWriterInfo.file+"]");
-      if(postWriterInfo.file[i]){
-        console.log("현재 삭제할 파일 : "+postWritedInfo.file[i])
-        deletePhoto(postWritedInfo.file[i])
+    for (i = 0; i < postWriterInfo.file.length; i++) {
+      console.log("삭제할 파일 리스트 [" + postWriterInfo.file + "]");
+      if (postWriterInfo.file[i]) {
+        console.log("현재 삭제할 파일 : " + postWritedInfo.file[i]);
+        deletePhoto(postWritedInfo.file[i]);
       }
     }
     const editedPost = new Post(req.body);
@@ -96,42 +109,83 @@ router.post("/getPostEdit", upload.array("myfile"), async (req, res) => {
     for (i = 0; i < req.files.length; i++) {
       editedPost.file[i] = req.files[i].filename;
     }
-    let post = await Post.findByIdAndUpdate(req.body.post_id, editedPost, { new: true }).exec();
-    if (!post) return res.state(400).json({ postEditSuccess: false, errMessage : "DB데이터 수정 실패"});
+    let post = await Post.findByIdAndUpdate(req.body.post_id, editedPost, {
+      new: true,
+    }).exec();
+    if (!post)
+      return res
+        .state(400)
+        .json({ postEditSuccess: false, errMessage: "DB데이터 수정 실패" });
     return res.status(200).json({
       postEditSuccess: true,
       editedPostInfo: post,
     });
-  }else{
-    return res.state(400).json({ postEditSuccess: false, errMessage : "작성자가 일치하지 않습니다"});
+  } else {
+    return res.state(400).json({
+      postEditSuccess: false,
+      errMessage: "작성자가 일치하지 않습니다",
+    });
   }
 });
 module.exports = router;
 
 //글 삭제하기(Front : 글삭제 기능을 위함)
 router.post("/getPostDelete", async (req, res) => {
-  console.log("글삭제하러 옴")
-  let postWritedInfo = await Post.find({ _id: req.body.post_id }).select("writer file");
-  if (postWriterInfo.writer === req.body.currentId) {
-    for(i = 0; i < postWriterInfo.file.length ; i++){
-      console.log("삭제할 파일 리스트 ["+postWriterInfo.file+"]");
-      if(postWriterInfo.file[i]){
-        console.log("현재 삭제할 파일 : "+postWritedInfo.file[i])
-        deletePhoto(postWritedInfo.file[i])
+  console.log("글삭제하러 옴");
+  let postWritedInfo = await Post.find({ _id: req.body.post_id }).select(
+    "writer file"
+  );
+  console.log(postWritedInfo)
+  console.log(postWritedInfo[0].writer + " / " + req.body.currentId)
+  console.log(postWritedInfo[0].writer == req.body.currentId)
+  if (postWritedInfo[0].writer == req.body.currentId) {
+    for (i = 0; i < postWritedInfo[0].file.length; i++) {
+      console.log("삭제할 파일 리스트 [" + postWritedInfo[0].file + "]");
+      if (postWritedInfo[0].file[i]) {
+        console.log("현재 삭제할 파일 : " + postWritedInfo[0].file[i]);
+        deletePhoto(postWritedInfo[0].file[i]);
       }
     }
     let post = await await Post.findByIdAndRemove(req.body.post_id).exec();
-    if (!post) return res.state(400).json({ postDeleteSuccess: false });
-    return res.status(200).json({ postDeleteSuccess: true, errMessage : "DB데이터 수정 실패"});
-  }else{
-    return res.state(400).json({ postEditSuccess: false, errMessage : "작성자가 일치하지 않습니다"});
+    if (!post) return res.status(400).json({ postDeleteSuccess: false });
+    return res
+      .status(200)
+      .json({ postDeleteSuccess: true, errMessage: "DB데이터 수정 실패" });
+  } else {
+    return res.status(400).json({
+      postEditSuccess: false,
+      errMessage: "작성자가 일치하지 않습니다",
+    });
   }
 });
 module.exports = router;
 
 //Mypage
 router.post("/getMypage", async (req, res) => {
-  let postList = await Post.find({ writer: req.body.currentId}).select();
-  res.status(200).json({ postList: postList });
+  let sortBy = req.body.sortBy; //정렬 기준
+  let sort = req.body.sort; //정렬차순 - 내림차순 : -1 오름차순 : 1
+  console.log(sortBy + sort)
+  console.log(sort === 1)
+  let mypageList = []
+  let postList;
+
+  if(sortBy==="writeDate"){
+    if(sort===1){
+      postList = await Post.find({ writer: req.body.currentId}).sort({writeDate : 1});
+    }else{
+      postList = await Post.find({ writer: req.body.currentId}).sort({writeDate : -1});
+    }
+  }else{
+    if(sort === 1){
+      postList = await Post.find({ writer: req.body.currentId}).sort({writer : 1});
+    }else{
+      postList = await Post.find({ writer: req.body.currentId}).sort({writer : -1});
+    }
+  }
+  for (i in postList) {
+    mypageList.push(postList[i]);
+    console.log(postList[i].title)
+  }
+  res.status(200).json({ mypageList: mypageList });
 });
 module.exports = router;

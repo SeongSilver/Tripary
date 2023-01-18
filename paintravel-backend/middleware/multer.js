@@ -25,14 +25,8 @@ const Storage = multer.diskStorage({
     file.originalname = Buffer.from(file.originalname, "latin1").toString(
       "utf8"
     );
-    console.log("업로드 할 파일" + file.originalname);
+    console.log("업로드 할 파일 : " + file.originalname);
     cb(null, "uploadImage_" + new Date().valueOf() + ext); // 시스템 시간으로 파일이름을 변경해서 저장
-  },
-  onFileUploadStart: function (file) {
-    console.log(file.originalname + " is starting ...");
-  },
-  onFileUploadComplete: function (file) {
-    console.log(file.fieldname + " uploaded to  " + file.path);
   },
 });
 

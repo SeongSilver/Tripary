@@ -47,7 +47,7 @@ function Header() {
         if (nowTime > expireTime) {
           localStorage.removeItem("LOGINEDID");
         }
-      }, 300000);
+      }, 600000);
     }
   }, []);
 
@@ -62,6 +62,21 @@ function Header() {
     });
   };
 
+  const onClickMypage = () => {
+    const sendData = {
+      currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+      sort : sort,
+      sortBy: sortBy,
+    };
+    axios
+      .post("/api/post/getMypage", sendData)
+      .then(function (res) {
+        setMypageList(res.data.mypageList)
+        setNeedToReciveData(false);
+      })
+      .catch((err) => console.log("에러발생" + err));
+  }
+
   return (
     <header className="header">
       <div className="headerWrapper">
@@ -74,9 +89,15 @@ function Header() {
           </Link>
         </div>
         <div className="headerRight">
+        {localStorage.key("LOGINEDID") ? (
           <Link to="/mypage" className="headLink">
             my page
           </Link>
+          ) : (
+            <Link to="/Login" className="headLink">
+              my page
+            </Link>
+          )}
           {/* {existLocalStorage && (
             <a href="#" className="headLink" onClick={onClickHandler}>
               logout

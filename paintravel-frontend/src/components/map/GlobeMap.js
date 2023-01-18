@@ -35,10 +35,6 @@ const GlobeMap = () => {
     setContentDisplay("hidden");
   };
 
-  useEffect(() => {
-
-  }, [ContentDisplay]);
-
   const existLocalStorage = localStorage.key("LOGINEDID");
 
   /* Chart code */

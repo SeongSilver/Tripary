@@ -128,6 +128,7 @@ function Postwrite() {
       console.log(pair[0] + ", " + pair[1]);
     }
 
+    console.log(myfile);
     axios
       .post("/api/post/upload", formData, {
         headers: {
@@ -139,6 +140,7 @@ function Postwrite() {
         navigate("/");
       })
       .catch((err) => {
+        alert("글 등록 실패!");
         console.log(err);
       });
   };
