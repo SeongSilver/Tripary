@@ -14,7 +14,8 @@
     color: white;
     font-size: 1rem;
     &:hover {
-      background: rgba(0, 200, 150, 0.5);
+      background: rgba(0, 100, 150, 0.3);
+      color: black;
       cursor: pointer;
       transform: translateY(-2px);
     }

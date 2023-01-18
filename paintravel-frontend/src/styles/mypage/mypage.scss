@@ -18,6 +18,7 @@
   padding-top: calc(100px / 1080px * 100vh);
   height: calc(100vh - 100px / 1080px * 100%);
   height: calc(100vh - 100px / 1080px * 100vh);
+  font-size: 1.6em;
   position: relative;
   @include noDrag;
   .myPageBtn {

@@ -140,12 +140,14 @@ function MyPage() {
                         writer: data.writer,
                       }}>
                       <BiEdit />
+                      수정버튼이야
                     </Link>
                     <span
                       className="postEditBtn"
                       onClick={() => postDeleteHandler(data)}
                       style={{ zIndex: "999", cursor: "pointer" }}>
                       <BiTrash />
+                      삭제버튼이고
                     </span>
                   </li>
                 ))

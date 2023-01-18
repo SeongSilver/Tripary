@@ -92,7 +92,7 @@ function PostEdit() {
     });
     setMyFile([...files]);
     //2. 썸네일 생성을 위한 과정
-    let imageUrlLists = editFile;
+    let imageUrlLists = myFile;
     for (let i = 0; i < files.length; i++) {
       const currentImageUrl = URL.createObjectURL(files[i]);
       imageUrlLists.push(currentImageUrl);
