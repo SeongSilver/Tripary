@@ -62,6 +62,21 @@ function Header() {
     });
   };
 
+  const onClickMypage = () => {
+    const sendData = {
+      currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+      sort : sort,
+      sortBy: sortBy,
+    };
+    axios
+      .post("/api/post/getMypage", sendData)
+      .then(function (res) {
+        setMypageList(res.data.mypageList)
+        setNeedToReciveData(false);
+      })
+      .catch((err) => console.log("에러발생" + err));
+  }
+
   return (
     <header className="header">
       <div className="headerWrapper">

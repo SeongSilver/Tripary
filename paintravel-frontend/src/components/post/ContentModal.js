@@ -83,7 +83,7 @@ function ContentModal({ modalData, setCheck }) {
       .then((response) => {
         console.log("게시물 삭제 성공");
         console.log(response);
-        // setCheck(false);
+        setCheck(false);
       })
       .catch((error) => {
         console.log("게시물 삭제 실패");
