@@ -85,6 +85,7 @@ router.post("/getPostInfo", async (req, res) => {
   for (i in post) {
     postList.push(post[i]);
   }
+  console.log(postList);
   res.status(200).json({ postInfo: postList });
 });
 module.exports = router;
@@ -161,10 +162,34 @@ module.exports = router;
 
 //Mypage
 router.post("/getMypage", async (req, res) => {
-  let sortBy = '{ "' + req.body.sortBy + '" : ' + req.body.sort + " } "; //정렬 기준
-  console.log(sortBy);
+  let sortBy = req.body.sortBy; //정렬 기준
+  let sort = req.body.sort; //정렬차순 - 내림차순 : -1 오름차순 : 1
+  console.log(sortBy + sort);
+  console.log(sort === 1);
   let mypageList = [];
-  let postList = await Post.find({ writer: req.body.currentId }).sort(sortBy);
+  let postList;
+
+  if (sortBy === "writeDate") {
+    if (sort === 1) {
+      postList = await Post.find({ writer: req.body.currentId }).sort({
+        writeDate: 1,
+      });
+    } else {
+      postList = await Post.find({ writer: req.body.currentId }).sort({
+        writeDate: -1,
+      });
+    }
+  } else {
+    if (sort === 1) {
+      postList = await Post.find({ writer: req.body.currentId }).sort({
+        writer: 1,
+      });
+    } else {
+      postList = await Post.find({ writer: req.body.currentId }).sort({
+        writer: -1,
+      });
+    }
+  }
   for (i in postList) {
     mypageList.push(postList[i]);
     console.log(postList[i].title);

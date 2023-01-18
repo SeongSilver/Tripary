@@ -32,7 +32,7 @@ function PostEdit() {
 
   //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
   const existlocalStorage = localStorage.getItem("LOGINEDID");
-
+  
   useLayoutEffect(() => {
     if (existlocalStorage) {
       setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
@@ -67,7 +67,8 @@ function PostEdit() {
       .catch((error) => {
         console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
       });
-  }, []);
+  }, []); 
+  console.log(editResData)
 
   const onChangePost = (e) => {
     setPost({
@@ -92,7 +93,7 @@ function PostEdit() {
     });
     setMyFile([...files]);
     //2. 썸네일 생성을 위한 과정
-    let imageUrlLists = [];
+    let imageUrlLists = editFile;
     for (let i = 0; i < files.length; i++) {
       const currentImageUrl = URL.createObjectURL(files[i]);
       imageUrlLists.push(currentImageUrl);

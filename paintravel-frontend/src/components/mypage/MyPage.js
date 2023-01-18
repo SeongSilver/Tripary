@@ -1,93 +1,75 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/mypage/mypage.scss";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function MyPage() {
+  const [login_id, setLogin_id] = useState("*");
+  const [sortBy, setSortBy] = useState("writeDate");//정렬기준 - (기본값) writeDate, fromDate 
+  const [sort, setSort] = useState(1);//정렬차순 - (기본값)오름차순 : 1, 내림차순 : -1 
+  const [mypageList, setMypageList] = useState();
+  const [needToReciveData, setNeedToReciveData] = useState(true)
+  let maList = [];
+  const existLocalStorage = localStorage.key("LOGINEDID");
+  useEffect(() => {
+    if (existLocalStorage) {
+      setLogin_id(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+    }
+    if (needToReciveData) {
+      if (login_id !== "*") {
+        const sendData = {
+          currentId: login_id,
+          sort : sort,
+          sortBy: sortBy,
+        };
+        console.log(sendData)
+        axios
+          .post("/api/post/getMypage", sendData)
+          .then(function (res) {
+            setMypageList(res.data.mypageList)
+            setNeedToReciveData(false);
+          })
+          .catch((err) => console.log("에러발생" + err));
+      }
+    }
+
+  }, [login_id, sortBy, mypageList, sort]);
+
+  const sortByThis = (data) => {
+    console.log(data)
+    setSortBy(data);
+    setSort(1)
+    setNeedToReciveData(true);
+  }
+  const sorting = (data) => {
+    console.log(data)
+    setSort(data);
+    setNeedToReciveData(true);
+  }
+
   return (
-    <div className="mypageContainer">
-      <Header />
-      <div className="mypage">
-        <div className="mypageWrap">
-          <h1>My Journeys</h1>
-          <div className="mypageSelection">
-            <select>
-              <option>최신 작성순</option>
-              <option>여행 날짜순</option>
-            </select>
-            <select>
-              <option>All Country</option>
-              <option>South Korea</option>
-              <option>Japan</option>
-              <option>Russia</option>
-            </select>
-            <select>
-              <option>All Location</option>
-              <option>부산</option>
-              <option>제주도</option>
-              <option>도쿄</option>
-              <option>모스크바</option>
-            </select>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>갤러리</th>
-                <th>국가</th>
-                <th>위치</th>
-                <th>일정</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {/* 갤러리 이미지 */}
-                <td><img src={require("../../img/common/footer_logo.png")} alt="대표 이미지"/></td>
-                {/* 국가 */}
-                <td>South Korea</td>
-                {/* 위치 */}
-                <td>부산</td>
-                {/* 일정 */}
-                <td><span>2022.11.12</span> ~ <span>2022.11.14</span></td>
-                {/* 수정,삭제 버튼 */}
-                <td>
-                  <button>수정</button>
-                  <button>삭제</button>
-                </td>
-              </tr>
-              <tr>
-                <td><img src={require("../../img/common/footer_logo.png")} alt="대표 이미지"/></td>
-                <td>South Korea</td>
-                <td>부산</td>
-                <td><span>2022.11.12</span> ~ <span>2022.11.14</span></td>
-                <td>
-                  <button>수정</button>
-                  <button>삭제</button>
-                </td>
-              </tr>
-              <tr>
-                <td><img src={require("../../img/common/footer_logo.png")} alt="대표 이미지"/></td>
-                <td>South Korea</td>
-                <td>부산</td>
-                <td><span>2022.11.12</span> ~ <span>2022.11.14</span></td>
-                <td>
-                  <button>수정</button>
-                  <button>삭제</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <ul>
-            <li><Link to="#">1</Link></li>
-            <li><Link to="#">2</Link></li>
-            <li><Link to="#">3</Link></li>
-          </ul>
-          <Link to="#" className="memberWithdrawal">회원탈퇴</Link>
-        </div>
+    <div className="mypageContainer" style={{zIndex:"999"}}>
+      <button type="button" onClick={() => sortByThis("writeDate")}>정렬기준:작성일</button>
+      <button type="button" onClick={() => sortByThis("fromDate")}>정렬기준:여행시작일</button>
+      <button type="button" onClick={() => sorting(1)}>정렬순서:내림차순</button>
+      <button type="button" onClick={() => sorting(-1)}>정렬기준:오름차순</button>
+      <ul>
+      {mypageList ? (mypageList.map((data) => (
+        <li key = {data._id}>
+        <img  width = {40} height={40} src={`/upload/${data.file[0]}`}/>
+        <div>{data.title}</div>
+        <div>{data.country}</div>
+        <div>{new Date(data.writeDate).toLocaleDateString()}</div>
+        <p className="cardDate">
+              {new Date(data.fromDate).toLocaleDateString()} ~{" "}
+              {new Date(data.toDate).toLocaleDateString()}
+        </p>
+        </li>
+      ))) : (<div>작성된 글이 없습니다</div>)}
+      </ul>
       </div>
-      <Footer />
-    </div>
   )
 }
 

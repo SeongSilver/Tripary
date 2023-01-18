@@ -129,19 +129,20 @@ function PostWrite() {
     }
 
     console.log(myfile);
-    // axios
-    //   .post("/api/post/upload", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     alert("글 등록 성공!");
-    //   })
-    //   .then(navigate("/"))
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    axios
+      .post("/api/post/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        alert("글 등록 성공!");
+        navigate("/");
+      })
+      .catch((err) => {
+        alert("글 등록 실패!");
+        console.log(err);
+      });
   };
 
   const goMain = () => {
