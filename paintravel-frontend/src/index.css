@@ -125,7 +125,7 @@ table {
 
 a {
   text-decoration: none;
-  color: white;
+  color: black;
 }
 a:visited {
   text-decoration: none;
@@ -141,9 +141,9 @@ a:active {
   text-decoration: none;
 }
 html {
-  font-size:0.5vw !important;
+  font-size: 0.5vw !important;
 }
 button {
-  background:#000;
-  color:#fff;
+  background: #000;
+  color: #fff;
 }
