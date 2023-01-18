@@ -6,7 +6,7 @@ import { BiEdit, BiTrash } from "react-icons/bi";
 import Loading from "../common/Loading";
 import axios from "axios";
 
-function ContentModal({ modalData, setCheck, setVisitedCountry }) {
+function ContentModal({ modalData, setCheck }) {
   console.log(modalData);
   const closeModal = () => {
     setCheck(false);

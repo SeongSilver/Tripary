@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ContentModal from "../ContentModal";
 import axios from "axios";
 
-function LoginedList({ listData, setVisitedCountry }) {
+function LoginedList({ listData }) {
   const [check, setCheck] = useState(false);
   const [modalData, setModalData] = useState();
 
@@ -50,13 +50,7 @@ function LoginedList({ listData, setVisitedCountry }) {
             </p>
           </li>
         ))}
-      {check && (
-        <ContentModal
-          modalData={modalData}
-          setCheck={setCheck}
-          setVisitedCountr={setVisitedCountry}
-        />
-      )}
+      {check && <ContentModal modalData={modalData} setCheck={setCheck} />}
     </ul>
   );
 }

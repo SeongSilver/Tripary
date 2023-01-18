@@ -7,7 +7,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { RiFolderAddFill } from "react-icons/ri";
 import axios from "axios";
 
-function Postwrite() {
+function PostWrite() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -137,10 +137,10 @@ function Postwrite() {
       })
       .then((res) => {
         alert("글 등록 성공!");
-        navigate("/");
       })
-      .catch((err) => {
-        console.log(err);
+      .then(navigate("/"))
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -228,4 +228,4 @@ function Postwrite() {
   );
 }
 
-export default Postwrite;
+export default PostWrite;

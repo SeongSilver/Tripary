@@ -12,7 +12,6 @@ function ContentList({
   nationCode,
   contentListClose,
   listData,
-  setVisitedCountry,
 }) {
   const [existLocalStorage, setExistLocalStorage] = useState(false);
   useEffect(() => {
@@ -55,10 +54,7 @@ function ContentList({
       {localStorage.key("LOGINEDID") ? (
         listData &&
         (listData.length !== 0 ? (
-          <LoginedList
-            listData={listData}
-            setVisitedCountry={setVisitedCountry}
-          />
+          <LoginedList listData={listData} />
         ) : (
           <EmptyList
             selectedCountry={selectedCountry}
