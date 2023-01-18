@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import ContentModal from "../ContentModal";
 import axios from "axios";
 
@@ -7,14 +6,14 @@ function LoginedList({ listData }) {
   const [check, setCheck] = useState(false);
   const [modalData, setModalData] = useState();
 
-  console.log(listData);
   const openContentModal = (event) => {
     setCheck(true);
-
+    console.log(event.currentTarget.children[0].textContent);
     const modalData = {
       currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
       post_id: event.currentTarget.children[0].textContent,
     };
+
     axios
       .post("api/post/getPostInfo", modalData)
       .then((response) => {

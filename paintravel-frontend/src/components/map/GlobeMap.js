@@ -368,6 +368,10 @@ const GlobeMap = () => {
     setCanvasStar(contextRef.current);
   }, []);
 
+  const goMain = () => {
+    navigate("/");
+  };
+
   return (
     <div className="globeMap">
       <div

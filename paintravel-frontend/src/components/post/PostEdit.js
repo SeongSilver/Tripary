@@ -17,14 +17,13 @@ function PostEdit() {
   const [editFromDate, setEditFromDate] = useState();
   const [editToDate, setEditToDate] = useState();
   const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
   const [myFile, setMyFile] = useState([]);
+  const [editFile, setEditFile] = useState([]);
   const [previewImg, setPreviewImg] = useState();
   const [loginedId, setLoginedId] = useState();
   //유효성 검사를 위한 state
   const [post, setPost] = useState({});
-
-  //Date 구조분해할당
-  const [startDate, endDate] = dateRange;
 
   const editSelectedCountry = location.state.selectedCountry;
   const editNationCode = location.state.nationCode;
@@ -33,7 +32,7 @@ function PostEdit() {
 
   //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
   const existlocalStorage = localStorage.getItem("LOGINEDID");
-
+  
   useLayoutEffect(() => {
     if (existlocalStorage) {
       setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
@@ -43,7 +42,6 @@ function PostEdit() {
       currentId: editWriter,
       post_id: edit_id,
     };
-    console.log(editData);
     axios
       .post("/api/post/getPostInfo", editData)
       .then((response) => {
@@ -52,8 +50,6 @@ function PostEdit() {
         setEditResData(response.data.postInfo[0]);
         for (let i = 0; i < response.data.postInfo.length; i++) {
           if (editData.post_id === response.data.postInfo[i]._id) {
-            console.log(editData.post_id);
-            console.log(response.data.postInfo[i]._id);
             setPost({
               title: response.data.postInfo[i].title,
               country: response.data.postInfo[i].country,
@@ -64,14 +60,15 @@ function PostEdit() {
             });
             setEditFromDate(response.data.postInfo[i].fromDate);
             setEditToDate(response.data.postInfo[i].toDate);
-            setMyFile([...response.data.postInfo[i].file]);
+            setEditFile([...response.data.postInfo[i].file]);
           }
         }
       })
       .catch((error) => {
         console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
       });
-  }, []);
+  }, []); 
+  console.log(editResData)
 
   const onChangePost = (e) => {
     setPost({
@@ -96,12 +93,16 @@ function PostEdit() {
     });
     setMyFile([...files]);
     //2. 썸네일 생성을 위한 과정
-    let imageUrlLists = [];
+    let imageUrlLists = editFile;
     for (let i = 0; i < files.length; i++) {
       const currentImageUrl = URL.createObjectURL(files[i]);
       imageUrlLists.push(currentImageUrl);
     }
     setPreviewImg(imageUrlLists);
+  };
+
+  const deleteEditImage = (image, id) => {
+    setEditFile(editFile.filter((data) => data !== image));
   };
 
   const deleteImage = (id) => {
@@ -111,30 +112,30 @@ function PostEdit() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!post.title) {
-      alert("제목을 입력하세요");
-      return;
-    }
-    if (!post.location) {
-      alert("위치를 입력하세요");
-      return;
-    }
-    if (!myFile) {
-      alert("사진을 업로드하세요");
-      return;
-    }
-    if (!startDate) {
-      alert("일정이 시작하는 날짜를 입력하세요");
-      return;
-    }
-    if (!endDate) {
-      alert("일정이 끝나는 날짜를 입력하세요");
-      return;
-    }
-    if (!post.content) {
-      alert("내용을 입력하세요");
-      return;
-    }
+    // if (!post.title) {
+    //   alert("제목을 입력하세요");
+    //   return;
+    // }
+    // if (!post.location) {
+    //   alert("위치를 입력하세요");
+    //   return;
+    // }
+    // if (!myFile) {
+    //   alert("사진을 업로드하세요");
+    //   return;
+    // }
+    // if (!startDate) {
+    //   alert("일정이 시작하는 날짜를 입력하세요");
+    //   return;
+    // }
+    // if (!endDate) {
+    //   alert("일정이 끝나는 날짜를 입력하세요");
+    //   return;
+    // }
+    // if (!post.content) {
+    //   alert("내용을 입력하세요");
+    //   return;
+    // }
 
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
@@ -156,28 +157,34 @@ function PostEdit() {
 
     //[현아] fromData에 "myFile"라는 이름으로 각각의 사진 파일들을 하나씩 추가해줌.
     //    한번에 fileList로 추가할 경우, 백단에서 파일 업로드를 수행 할 수 없기 때문.
-    console.log(myFile);
-    for (let i = 0; i < myFile.length; i++) {
-      formData.append("myFile", myFile[i]);
+    if (editFile) {
+      for (let i = 0; i < editFile.length; i++) {
+        formData.append("file", editFile[i]);
+      }
+    }
+    if (myFile !== []) {
+      for (let i = 0; i < myFile.length; i++) {
+        formData.append("myFile", myFile[i]);
+      }
     }
 
     for (var pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
     }
 
-    axios
-      .post("/api/post/getPostEdit", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        alert("글 수정 성공!");
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios
+    //   .post("/api/post/getPostEdit", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     alert("글 수정 성공!");
+    //     navigate("/");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   const goMain = () => {
@@ -223,7 +230,7 @@ function PostEdit() {
                           </span>
                         </div>
                       ))
-                    : editResData.file.map((image, id) => (
+                    : editFile.map((image, id) => (
                         <div className="galleryImageContainer" key={id}>
                           <img
                             src={`/upload/${image}`}
@@ -231,7 +238,7 @@ function PostEdit() {
                             id={id}
                             onClick={(event) => console.dir(event.target)}
                           />
-                          <span onClick={() => deleteImage(id)}>
+                          <span onClick={() => deleteEditImage(image, id)}>
                             <MdDeleteForever />
                           </span>
                         </div>
