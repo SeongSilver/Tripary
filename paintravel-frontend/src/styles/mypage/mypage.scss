@@ -39,12 +39,19 @@
     text-align: center;
   }
   .myPageListContainer {
-    display: flex;
-    justify-content: center;
+    width: 80vw;
+    margin-left: 10vw;
+    text-align: center;
     .myPageList {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
       overflow: scroll;
+      white-space: nowrap;
       li {
-        width: 100%;
+        width: 200px;
+        height: 200px;
         padding: 20px;
         border: 2px solid rgba(0, 0, 0, 0.5);
         border-radius: 20px;
