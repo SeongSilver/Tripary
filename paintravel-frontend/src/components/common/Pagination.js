@@ -1,5 +1,5 @@
 import React from "react";
-import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import { RiArrowLeftSFill, RiArrowRightSFill } from "react-icons/ri";
 import "../../styles/common/pagination.scss";
 
 function Pagination({ total, limit, page, setPage }) {
@@ -8,12 +8,12 @@ function Pagination({ total, limit, page, setPage }) {
   return (
     <>
       <div className="pageContainer">
-        <span
+        <button
           className="pageBtn"
           onClick={() => setPage(page - 1)}
-          disabled={page === 1}>
-          <BiLeftArrow />
-        </span>
+          disabled={page === 1 || page < 1}>
+          <RiArrowLeftSFill />
+        </button>
         {Array(numPages)
           .fill()
           .map((_, i) => (
@@ -25,13 +25,12 @@ function Pagination({ total, limit, page, setPage }) {
               {i + 1}
             </span>
           ))}
-        <span
+        <button
           className="pageBtn"
           onClick={() => setPage(page + 1)}
-          //   disabled={page === numPages}
-        >
-          <BiRightArrow />
-        </span>
+          disabled={page === numPages}>
+          <RiArrowRightSFill />
+        </button>
       </div>
     </>
   );

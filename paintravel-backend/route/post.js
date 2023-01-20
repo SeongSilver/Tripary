@@ -97,9 +97,9 @@ router.post("/getPostEdit", upload.array("myfile"), async (req, res) => {
     "writer file"
   );
   if (postWritedInfo.writer === req.body.currentId) {
-    for (i = 0; i < postWriterInfo.file.length; i++) {
-      console.log("삭제할 파일 리스트 [" + postWriterInfo.file + "]");
-      if (postWriterInfo.file[i]) {
+    for (i = 0; i < postWritedInfo.file.length; i++) {
+      console.log("삭제할 파일 리스트 [" + postWritedInfo.file + "]");
+      if (postWritedInfo.file[i]) {
         console.log("현재 삭제할 파일 : " + postWritedInfo.file[i]);
         deletePhoto(postWritedInfo.file[i]);
       }
