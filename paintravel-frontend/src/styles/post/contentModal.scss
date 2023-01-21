@@ -47,20 +47,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.8);
   @include font;
   @include noDrag;
   .modalDiv {
     position: absolute;
     width: 50vw;
     height: 85vh;
-    border-radius: 20px;
     background-color: white;
     transition: all 0.2s ease-out;
+    border-radius: 20px;
     .closeBtn {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 15px;
+      right: 15px;
       text-align: right;
     }
     .modalHeader {
@@ -68,8 +68,10 @@
       height: 5vh;
       padding: 0 3vw;
       position: relative;
-      margin-bottom: 2vw;
-      mamrgin-top: 1vh;
+      margin: 2vw 0;
+      hr {
+        margin: 10px 0;
+      }
       .modalHeaderBottom {
         display: flex;
         justify-content: space-between;
@@ -89,7 +91,7 @@
         margin-top: 2vh;
         line-height: 3vh;
         font-size: 2rem;
-        font-weight: 600;
+        font-weight: 800;
       }
       h2 {
         line-height: 2vh;
@@ -100,16 +102,11 @@
     .modalBody {
       position: relative;
       text-align: center;
-      .slick-slider {
-        width: 50vw !important;
-        height: 65vh;
-      }
       > pre {
         width: calc(100% - 6vw);
-        height: 19vh;
+        height: 15vh;
         padding: 0.5vw;
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.3);
         color: #fff;
         overflow: auto;
         line-height: 3vh;
@@ -123,19 +120,27 @@
 
     .modalFooter {
       margin-top: 20px;
-      padding: 0 100px;
+      padding: 0 18vw;
       display: flex;
       justify-content: space-around;
-      font-size: 1.3em;
-      a {
-        color: black;
-      }
+      font-size: 1.1em;
       button {
-        background-color: transparent;
-        color: black;
-        border: none;
+        color: white;
         font-size: 1.5em;
         font-weight: 600;
+        border: none;
+        padding: 12px 8px 6px 8px;
+        border-radius: 10px;
+        svg {
+          font-size: 1.2em;
+          margin-bottom: 5px;
+        }
+      }
+      .editBtn {
+        background-color: rgba(0, 200, 100, 0.7);
+      }
+      .deleteBtn {
+        background-color: rgba(200, 37, 0, 0.7);
       }
     }
   }

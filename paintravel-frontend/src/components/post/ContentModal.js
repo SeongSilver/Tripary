@@ -55,7 +55,7 @@ function ContentModal({ modalData, setCheck }) {
             <div className="closeBtn">
               <a href="#" onClick={closeModal} className="modalCloseBtn">
                 <AiFillCloseCircle
-                  style={{ color: "black", fontSize: "20px" }}
+                  style={{ color: "#343434", fontSize: "30px" }}
                 />
               </a>
             </div>
@@ -88,7 +88,7 @@ function ContentModal({ modalData, setCheck }) {
               <pre>{modalData.content}</pre>
             </div>
             <div className="modalFooter">
-              <button>
+              <button className="editBtn">
                 <Link
                   to="/postEdit"
                   className="postEditBtn"
@@ -103,7 +103,7 @@ function ContentModal({ modalData, setCheck }) {
                 </Link>
               </button>
               <button
-                className="postEditBtn"
+                className="deleteBtn"
                 onClick={postDeleteHandler}
                 style={{ zIndex: "999", cursor: "pointer" }}>
                 삭제하기&nbsp;
