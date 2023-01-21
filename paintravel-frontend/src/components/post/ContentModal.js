@@ -20,21 +20,24 @@ function ContentModal({ modalData, setCheck }) {
       currentId: modalData.writer,
       post_id: modalData._id,
     };
-    const reloadVisitedData = {
-      currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
-    };
-    console.log(deletePostInfo);
-    axios
-      .post("api/post/getPostDelete", deletePostInfo)
-      .then((response) => {
-        console.log("게시물 삭제 성공");
-        console.log(response);
-        location.reload();
-      })
-      .catch((error) => {
-        console.log("게시물 삭제 실패");
-        console.log(error);
-      });
+    // const reloadVisitedData = {
+    //   currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+    // };
+    if (window.confirm("게시물을 삭제하시겠습니까?")) {
+      axios
+        .post("api/post/getPostDelete", deletePostInfo)
+        .then((response) => {
+          console.log("게시물 삭제 성공");
+          console.log(response);
+          location.reload();
+        })
+        .catch((error) => {
+          console.log("게시물 삭제 실패");
+          console.log(error);
+        });
+    } else {
+      alert("삭제를 취소합니다");
+    }
   };
 
   const slickSettings = {

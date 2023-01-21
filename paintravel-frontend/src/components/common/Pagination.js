@@ -3,7 +3,6 @@ import { RiArrowLeftSFill, RiArrowRightSFill } from "react-icons/ri";
 import "../../styles/common/pagination.scss";
 
 function Pagination({ total, limit, page, setPage }) {
-  console.log(total, limit, page);
   const numPages = Number(Math.ceil(total / limit));
   return (
     <>

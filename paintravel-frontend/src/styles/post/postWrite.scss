@@ -230,11 +230,13 @@
           border-radius: 10px;
           display: flex;
           flex-wrap: wrap;
+          overflow: scroll;
           //사진 추가 부분
           .galleryImageContainer {
             display: inline-block;
             position: relative;
             caret-color: transparent;
+            margin: 0.5vw;
             img {
               width: 100%;
               height: 100%;
