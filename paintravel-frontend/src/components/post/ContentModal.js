@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/post/contentModal.scss";
 import { Link } from "react-router-dom";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle, AiOutlineMinus } from "react-icons/ai";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import Loading from "../common/Loading";
 import axios from "axios";
@@ -52,21 +52,29 @@ function ContentModal({ modalData, setCheck }) {
       ) : (
         <div className="modalContainer">
           <div className="modalDiv">
-            <div className="modalHeader">
-              {/* <h1>{cityName}</h1> */}
-              {/* <h2>{modalData.title}</h2> */}
-              {/* </div> */}
-              <h1>{modalData.title}</h1>
-              <h2>{modalData.location}</h2>
+            <div className="closeBtn">
               <a href="#" onClick={closeModal} className="modalCloseBtn">
-                <span>닫기</span>
-                <AiFillCloseCircle />
+                <AiFillCloseCircle
+                  style={{ color: "black", fontSize: "20px" }}
+                />
               </a>
+            </div>
+            <div className="modalHeader">
+              <h1>{modalData.title}</h1>
+              <hr />
+              <div className="modalHeaderBottom">
+                <h2>{modalData.location}</h2>
+                <div className="modalDate">
+                  <h2>{new Date(modalData.fromDate).toLocaleDateString()}</h2>
+                  &emsp;~&emsp;
+                  <h2>{new Date(modalData.toDate).toLocaleDateString()}</h2>
+                </div>
+              </div>
             </div>
             <div className="modalBody">
               <Slider {...slickSettings}>
                 {modalData.file.map((image, index) => (
-                  <div className="slideImageContariner" key={index}>
+                  <div key={index}>
                     <img
                       src={`/upload/${image}`}
                       alt="이미지"
@@ -80,23 +88,25 @@ function ContentModal({ modalData, setCheck }) {
               <pre>{modalData.content}</pre>
             </div>
             <div className="modalFooter">
-              <Link
-                to="/postEdit"
-                className="postEditBtn"
-                state={{
-                  selectedCountry: modalData.country,
-                  nationCode: modalData.nationCode,
-                  _id: modalData._id,
-                  writer: modalData.writer,
-                }}>
-                수정하기
-                <BiEdit />
-              </Link>
+              <button>
+                <Link
+                  to="/postEdit"
+                  className="postEditBtn"
+                  state={{
+                    selectedCountry: modalData.country,
+                    nationCode: modalData.nationCode,
+                    _id: modalData._id,
+                    writer: modalData.writer,
+                  }}>
+                  수정하기&nbsp;
+                  <BiEdit />
+                </Link>
+              </button>
               <button
                 className="postEditBtn"
                 onClick={postDeleteHandler}
                 style={{ zIndex: "999", cursor: "pointer" }}>
-                삭제하기
+                삭제하기&nbsp;
                 <BiTrash />
               </button>
             </div>
