@@ -65,17 +65,25 @@ function Header() {
   const onClickMypage = () => {
     const sendData = {
       currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
-      sort : sort,
+      sort: sort,
       sortBy: sortBy,
     };
     axios
       .post("/api/post/getMypage", sendData)
       .then(function (res) {
-        setMypageList(res.data.mypageList)
+        setMypageList(res.data.mypageList);
         setNeedToReciveData(false);
       })
       .catch((err) => console.log("에러발생" + err));
-  }
+  };
+
+  const goMain = () => {
+    if (window.location.href === "http://localhost:3000/") {
+      location.reload();
+    } else {
+      navigate("/");
+    }
+  };
 
   return (
     <header className="header">
@@ -83,16 +91,14 @@ function Header() {
         <div className="skipNav">
           <Link to="/">본문바로가기</Link>
         </div>
-        <div className="logo">
-          <Link to="/">
-            <img src={require("../../img/common/logo.png")} alt="logo" />
-          </Link>
+        <div className="logo" onClick={goMain}>
+          <img src={require("../../img/common/logo.png")} alt="logo" />
         </div>
         <div className="headerRight">
-        {localStorage.key("LOGINEDID") ? (
-          <Link to="/mypage" className="headLink">
-            my page
-          </Link>
+          {localStorage.key("LOGINEDID") ? (
+            <Link to="/mypage" className="headLink">
+              my page
+            </Link>
           ) : (
             <Link to="/Login" className="headLink">
               my page

@@ -1,27 +1,27 @@
 @font-face {
-  font-family: 'Nanum Myeongjo';
-  src: url('../../fonts/NanumMyeongjo-Regular.ttf') format("truetype"),
-       url('../../fonts/NanumMyeongjo-Bold.ttf') format("truetype"),
-       url('../../fonts/NanumMyeongjo-ExtraBold.ttf') format("truetype");
+  font-family: "Nanum Myeongjo";
+  src: url("../../fonts/NanumMyeongjo-Regular.ttf") format("truetype"),
+    url("../../fonts/NanumMyeongjo-Bold.ttf") format("truetype"),
+    url("../../fonts/NanumMyeongjo-ExtraBold.ttf") format("truetype");
   // 영문(대소문자)
   unicode-range: U+0041-005A, U+0061-007A;
 }
 @font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../../fonts/NotoSansKR-Thin.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Light.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Medium.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Regular.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Bold.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Black.otf') format("opentype");
+  font-family: "Noto Sans KR";
+  src: url("../../fonts/NotoSansKR-Thin.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Light.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Medium.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Regular.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Bold.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Black.otf") format("opentype");
   // 국문, 숫자
   unicode-range: U+AC00-D7A3, U+0030-0039;
 }
 @mixin font {
-  font-family: 'Nanum Myeongjo', 'Noto Sans KR';
+  font-family: "Nanum Myeongjo", "Noto Sans KR";
   color: #fff;
   letter-spacing: 0.3rem;
-  font-weight:100;
+  font-weight: 100;
 }
 @mixin noDrag {
   -webkit-user-select: none;
@@ -31,19 +31,20 @@
 }
 @mixin hidden {
   display: block;
-  width: 0; height: 0;
+  width: 0;
+  height: 0;
   text-indent: -9999px;
 }
 // 모바일
-@media all and (max-width:767px) {
+@media all and (max-width: 767px) {
   html {
-    font-size:1vw !important;
+    font-size: 1vw !important;
   }
 }
 // 테블릿 & PC
-@media all and (min-width:768px) {
+@media all and (min-width: 768px) {
   html {
-    font-size:0.5vw !important;
+    font-size: 0.5vw !important;
   }
 }
 .header {
@@ -62,16 +63,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .skipNav {@include hidden;}
+  .skipNav {
+    @include hidden;
+  }
   .logo {
+    cursor: pointer;
     height: 50%;
     margin-left: 10vw;
     a {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       display: block;
     }
-    img{
-      width: 100%; height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
       display: block;
     }
   }

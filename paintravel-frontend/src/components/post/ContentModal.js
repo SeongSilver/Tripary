@@ -77,13 +77,16 @@ function ContentModal({ modalData, setCheck }) {
       currentId: modalData.writer,
       post_id: modalData._id,
     };
+    const reloadVisitedData = {
+      currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+    };
     console.log(deletePostInfo);
     axios
       .post("api/post/getPostDelete", deletePostInfo)
       .then((response) => {
         console.log("게시물 삭제 성공");
         console.log(response);
-        setCheck(false);
+        location.reload();
       })
       .catch((error) => {
         console.log("게시물 삭제 실패");
