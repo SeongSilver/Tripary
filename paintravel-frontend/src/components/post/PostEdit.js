@@ -46,8 +46,6 @@ function PostEdit() {
     axios
       .post("/api/post/getPostInfo", editData)
       .then((response) => {
-        console.log("수정할 데이터 가져오기 성공" + response);
-        //console.log(response);
         setEditResData(response.data.postInfo[0]);
         for (let i = 0; i < response.data.postInfo.length; i++) {
           if (editData.post_id === response.data.postInfo[i]._id) {
@@ -66,7 +64,7 @@ function PostEdit() {
         }
       })
       .catch((error) => {
-        console.log("기존 정보를 받아오는데서 에러가 났다네" + error);
+        console.log("기존에 등록된 글을 가져오는데 에러 발생" + error);
       });
   }, []);
 
@@ -84,7 +82,6 @@ function PostEdit() {
     for (let i = 0; i < editFile.length; i++) {
       editDeleteFile.push(editFile[i]);
     }
-
     //업로드한 파일을 미리보기로 보여주기 위한 과정
     if (files.length > 10) {
       e.preventDefault();
@@ -104,7 +101,7 @@ function PostEdit() {
       imageUrlLists.push(currentImageUrl);
     }
     setPreviewImg(imageUrlLists);
-    setEditFile();
+    setEditFile([]);
   };
 
   const deleteEditImage = (image, id) => {
@@ -127,12 +124,12 @@ function PostEdit() {
       alert("위치를 입력하세요");
       return;
     }
-    if (!myFile) {
-      alert("사진을 업로드하세요");
-      return;
-    }
     if (!post.content) {
       alert("내용을 입력하세요");
+      return;
+    }
+    if((editFile.length===0)&&(myFile.length===0)) {
+      alert("사진을 한 장 이상 추가해주세요")
       return;
     }
 
@@ -161,7 +158,7 @@ function PostEdit() {
     }
     //[현아] fromData에 "myFile"라는 이름으로 각각의 사진 파일들을 하나씩 추가해줌.
     //    한번에 fileList로 추가할 경우, 백단에서 파일 업로드를 수행 할 수 없기 때문.
-    if (editFile) {
+    if (editFile.length!==0) {
       formData.append("file", editFile);
     }
     if (myFile !== []) {
@@ -169,9 +166,10 @@ function PostEdit() {
         formData.append("myFile", myFile[i]);
       }
     }
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+    // [야나] 백으로 보낼 데이터 확인하기 위한 부분
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
 
     axios
       .post("/api/post/getPostEdit", formData, {
@@ -184,7 +182,7 @@ function PostEdit() {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        console.log("글 수정 실패"+ err);
       });
   };
 

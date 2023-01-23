@@ -10,7 +10,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function ContentModal({ modalData, setCheck }) {
-  // console.log(modalData);
   const closeModal = () => {
     setCheck(false);
   };
