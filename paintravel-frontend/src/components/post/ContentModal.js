@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import "../../styles/post/contentModal.scss";
 import { Link } from "react-router-dom";
 import { AiFillCloseCircle, AiOutlineMinus } from "react-icons/ai";
@@ -10,7 +10,6 @@ import "../../styles/post/modalSlickCarousel/slick-theme.css";
 import "../../styles/post/modalSlickCarousel/slick.css";
 
 function ContentModal({ modalData, setOpenPostModal }) {
-  const modalDiv = useRef();
   const closeModal = () => {
     setOpenPostModal(false);
   };
@@ -91,7 +90,7 @@ function ContentModal({ modalData, setOpenPostModal }) {
               <pre>{modalData.content}</pre>
             </div>
             <div className="modalFooter">
-              <button className="editBtn">
+              <button type="button" className="editBtn">
                 <Link
                   to="/postEdit"
                   className="postEditBtn"
@@ -106,6 +105,7 @@ function ContentModal({ modalData, setOpenPostModal }) {
                 </Link>
               </button>
               <button
+                type="button"
                 className="deleteBtn"
                 onClick={postDeleteHandler}
                 style={{ zIndex: "999", cursor: "pointer" }}>

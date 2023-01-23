@@ -48,13 +48,13 @@ function PostWrite() {
       writer: loginedId,
     });
   };
-  
+
   //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
   const handleOnKeyPress = (e) => {
-    if(e.key==="Tab"){
+    if (e.key === "Tab") {
       e.preventDefault();
     }
-  }
+  };
 
   const onLoadFile = (e) => {
     const files = e.target.files;
@@ -206,12 +206,10 @@ function PostWrite() {
                 type="text"
                 name="location"
                 onChange={onChangePost}
-                onKeyDown={handleOnKeyPress}>
-                </input>
+                onKeyDown={handleOnKeyPress}></input>
             </li>
             <li>
               <p>일정</p>
-              {/**성은 22.12.18 23:22 : react-datePicker의 Date Range using input with clear button 사용*/}
               <DatePicker
                 selectsRange={true}
                 startDate={startDate}
@@ -232,8 +230,12 @@ function PostWrite() {
             </li>
           </ul>
           <div className="postWriteBtn">
-            <button onClick={goMain}>메인으로</button>
-            <button onClick={onSubmit}>등록</button>
+            <button type="button" onClick={goMain}>
+              메인으로
+            </button>
+            <button type="button" onClick={onSubmit}>
+              등록
+            </button>
           </div>
         </form>
       </div>
