@@ -80,9 +80,9 @@ function PostEdit() {
   const onLoadFile = (e) => {
     const files = e.target.files;
     //업로드한 파일을 미리보기로 보여주기 위한 과정
-    if (files.length > 4) {
+    if (files.length > 10) {
       e.preventDefault();
-      alert("이미지 개수는 4개를 넘을 수 없습니다!");
+      alert("이미지 개수는 10개를 넘을 수 없습니다!");
       return;
     }
     //1. post 객체에 files 정보 담아주기
@@ -111,30 +111,30 @@ function PostEdit() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // if (!post.title) {
-    //   alert("제목을 입력하세요");
-    //   return;
-    // }
-    // if (!post.location) {
-    //   alert("위치를 입력하세요");
-    //   return;
-    // }
-    // if (!myFile) {
-    //   alert("사진을 업로드하세요");
-    //   return;
-    // }
-    // if (!startDate) {
-    //   alert("일정이 시작하는 날짜를 입력하세요");
-    //   return;
-    // }
-    // if (!endDate) {
-    //   alert("일정이 끝나는 날짜를 입력하세요");
-    //   return;
-    // }
-    // if (!post.content) {
-    //   alert("내용을 입력하세요");
-    //   return;
-    // }
+    if (!post.title) {
+      alert("제목을 입력하세요");
+      return;
+    }
+    if (!post.location) {
+      alert("위치를 입력하세요");
+      return;
+    }
+    if (!myFile) {
+      alert("사진을 업로드하세요");
+      return;
+    }
+    if (!startDate) {
+      alert("일정이 시작하는 날짜를 입력하세요");
+      return;
+    }
+    if (!endDate) {
+      alert("일정이 끝나는 날짜를 입력하세요");
+      return;
+    }
+    if (!post.content) {
+      alert("내용을 입력하세요");
+      return;
+    }
 
     //[성은] formData 사용해서 서버로 데이터 보내기
     const formData = new FormData();
@@ -171,19 +171,19 @@ function PostEdit() {
       console.log(pair[0] + ", " + pair[1]);
     }
 
-    // axios
-    //   .post("/api/post/getPostEdit", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     alert("글 수정 성공!");
-    //     navigate("/");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .post("/api/post/getPostEdit", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        alert("글 수정 성공!");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const goMain = () => {
@@ -252,6 +252,8 @@ function PostEdit() {
                     name="title"
                     onChange={onChangePost}
                     defaultValue={editResData.title}
+                    placeholder="30자 내로 작성하세요"
+                    maxLength="30"
                   />
                 </li>
                 <li>

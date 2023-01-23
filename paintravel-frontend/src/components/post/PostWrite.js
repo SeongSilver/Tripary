@@ -53,9 +53,9 @@ function PostWrite() {
     const files = e.target.files;
     console.log(files);
     //업로드한 파일을 미리보기로 보여주기 위한 과정
-    if (files.length > 4) {
+    if (files.length > 10) {
       e.preventDefault();
-      alert("이미지 개수는 4개를 넘을 수 없습니다!");
+      alert("이미지 개수는 10개를 넘을 수 없습니다!");
       return;
     }
     //1. post 객체에 files 정보 담아주기
@@ -138,7 +138,7 @@ function PostWrite() {
       .then((res) => {
         alert("글 등록 성공!");
       })
-      // .then(navigate("/"))
+      .then(navigate("/"))
       .catch((err) => {
         alert("글 등록 실패!");
         console.log(err);
@@ -190,7 +190,12 @@ function PostWrite() {
           <ul>
             <li>
               <p>제목</p>
-              <input type="text" name="title" onChange={onChangePost}></input>
+              <input
+                type="text"
+                name="title"
+                onChange={onChangePost}
+                placeholder="30자 내로 작성하세요"
+                maxLength="30"></input>
             </li>
             <li>
               <p>위치</p>
