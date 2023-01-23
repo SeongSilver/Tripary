@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef } from "react";
 import "../../styles/post/contentModal.scss";
 import { Link } from "react-router-dom";
 import { AiFillCloseCircle, AiOutlineMinus } from "react-icons/ai";
@@ -6,12 +6,13 @@ import { BiEdit, BiTrash } from "react-icons/bi";
 import Loading from "../common/Loading";
 import axios from "axios";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import "../../styles/post/modalSlickCarousel/slick-theme.css";
+import "../../styles/post/modalSlickCarousel/slick.css";
 
-function ContentModal({ modalData, setCheck }) {
+function ContentModal({ modalData, setOpenPostModal }) {
+  const modalDiv = useRef();
   const closeModal = () => {
-    setCheck(false);
+    setOpenPostModal(false);
   };
 
   const postDeleteHandler = () => {

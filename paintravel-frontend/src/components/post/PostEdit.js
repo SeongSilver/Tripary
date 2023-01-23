@@ -113,7 +113,12 @@ function PostEdit() {
     setPreviewImg(previewImg.filter((_, index) => index !== id));
     setMyFile(myFile.filter((_, index) => index !== id));
   };
-
+  //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
+  const handleOnKeyPress = (e) => {
+    if(e.keycode=9){
+      e.preventDefault();
+    }
+  }
   const onSubmit = (e) => {
     e.preventDefault();
     if (!post.title) {
@@ -128,8 +133,8 @@ function PostEdit() {
       alert("내용을 입력하세요");
       return;
     }
-    if((editFile.length===0)&&(myFile.length===0)) {
-      alert("사진을 한 장 이상 추가해주세요")
+    if (editFile.length === 0 && myFile.length === 0) {
+      alert("사진을 한 장 이상 추가해주세요");
       return;
     }
 
@@ -158,7 +163,7 @@ function PostEdit() {
     }
     //[현아] fromData에 "myFile"라는 이름으로 각각의 사진 파일들을 하나씩 추가해줌.
     //    한번에 fileList로 추가할 경우, 백단에서 파일 업로드를 수행 할 수 없기 때문.
-    if (editFile.length!==0) {
+    if (editFile.length !== 0) {
       formData.append("file", editFile);
     }
     if (myFile !== []) {
@@ -179,10 +184,10 @@ function PostEdit() {
       })
       .then((res) => {
         alert("글 수정 성공!");
-        navigate("/");
+        window.location.assign("/");
       })
       .catch((err) => {
-        console.log("글 수정 실패"+ err);
+        console.log("글 수정 실패" + err);
       });
   };
 
@@ -199,9 +204,7 @@ function PostEdit() {
             <form className="postEditWrap" encType="multipart/form-data">
               <div className="gallery">
                 <h2>Gallery</h2>
-                {/* <p>4 *3 이미지를 첨부해주세요</p> */}
-                <a href="#galleryUpload">
-                  <span>사진 첨부 버튼</span>
+                <span className="inputFileBtn">
                   <label htmlFor="galleryUpload">
                     <RiFolderAddFill />
                   </label>
@@ -213,7 +216,7 @@ function PostEdit() {
                     onChange={onLoadFile}
                     accept="image/jpg,image/png,image/jpeg,image/gif"
                   />
-                </a>
+                </span>
                 <div className="galleryContainer">
                   {previewImg !== undefined
                     ? previewImg.map((image, id) => (
@@ -263,6 +266,7 @@ function PostEdit() {
                     name="location"
                     onChange={onChangePost}
                     defaultValue={editResData.location}
+                    onKeyDown={handleOnKeyPress}
                   />
                 </li>
                 <li>
@@ -279,7 +283,7 @@ function PostEdit() {
                     dateFormat="yyyy-MM-dd"
                     placeholderText={
                       new Date(editFromDate).toLocaleDateString() +
-                      "~" +
+                      " ~ " +
                       new Date(editToDate).toLocaleDateString()
                     }
                   />

@@ -7,6 +7,7 @@ const { Post } = require("../models/Post");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 
+//업로드한 이미지 파일을 삭제하기 위한 함수
 function deletePhoto(file_name) {
   console.log("파일 삭제하러 옴");
   if (fs.existsSync("paintravel-frontend/public/upload/" + file_name)) {
@@ -23,6 +24,7 @@ function deletePhoto(file_name) {
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
+//글 등록 라우터
 router.post("/upload", upload.array("myfile"), (req, res) => {
   //받아온 값들을 post모델에 저장
   const post = new Post(req.body);
@@ -40,7 +42,7 @@ router.post("/upload", upload.array("myfile"), (req, res) => {
   });
 });
 
-//방문 국가 가져오기
+//기방문 국가 정보 제공 라우터
 router.post("/getVisitedList", async (req, res) => {
   if (req.body.currentId === undefined) {
   } else {
@@ -57,7 +59,7 @@ router.post("/getVisitedList", async (req, res) => {
   }
 });
 
-//글 리스트 가져오기
+//글 리스트 정보 제공 라우터
 router.post("/getPostList", async (req, res) => {
   let post = await Post.find({
     writer: req.body.currentId,
