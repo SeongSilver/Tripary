@@ -154,9 +154,7 @@ function PostWrite() {
         <form className="postWriteWrap" encType="multipart/form-data">
           <div className="gallery">
             <h2>Gallery</h2>
-            {/* <p>4 *3 이미지를 첨부해주세요</p> */}
-            <a href="#galleryUpload">
-              <span>사진 첨부 버튼</span>
+            <span className="inputFileBtn">
               <label htmlFor="galleryUpload">
                 <RiFolderAddFill />
               </label>
@@ -168,7 +166,7 @@ function PostWrite() {
                 onChange={onLoadFile}
                 accept="image/jpg,image/png,image/jpeg,image/gif"
               />
-            </a>
+            </span>
             <div className="galleryContainer">
               {previewImg.map((image, id) => (
                 <div className="galleryImageContainer" key={id}>
