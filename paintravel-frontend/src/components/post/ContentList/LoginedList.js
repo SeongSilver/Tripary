@@ -3,11 +3,11 @@ import ContentModal from "../ContentModal";
 import axios from "axios";
 
 function LoginedList({ listData }) {
-  const [check, setCheck] = useState(false);
+  const [openPostModal, setOpenPostModal] = useState(false);
   const [modalData, setModalData] = useState();
 
   const openContentModal = (event) => {
-    setCheck(true);
+    setOpenPostModal(true);
     const modalData = {
       currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
       post_id: event.currentTarget.children[0].textContent,
@@ -19,7 +19,7 @@ function LoginedList({ listData }) {
         setModalData(response.data.postInfo[0]);
       })
       .catch((error) => {
-        console.log("데이터 탐색 에러 발생"+error);
+        console.log("데이터 탐색 에러 발생" + error);
       });
   };
   return (
@@ -47,7 +47,12 @@ function LoginedList({ listData }) {
             </p>
           </li>
         ))}
-      {check && <ContentModal modalData={modalData} setCheck={setCheck} />}
+      {openPostModal && (
+        <ContentModal
+          modalData={modalData}
+          setOpenPostModal={setOpenPostModal}
+        />
+      )}
     </ul>
   );
 }

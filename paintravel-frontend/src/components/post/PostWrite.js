@@ -106,8 +106,8 @@ function PostWrite() {
       alert("내용을 입력하세요");
       return;
     }
-    if(myfile.length===0) {
-      alert("사진을 한 장 이상 추가해주세요")
+    if (myfile.length === 0) {
+      alert("사진을 한 장 이상 추가해주세요");
       return;
     }
 
@@ -142,8 +142,8 @@ function PostWrite() {
       })
       .then((res) => {
         alert("글 등록 성공!");
+        window.location.assign("/");
       })
-      .then(navigate("/"))
       .catch((err) => {
         alert("글 등록 실패!");
         console.log(err);
@@ -161,9 +161,7 @@ function PostWrite() {
         <form className="postWriteWrap" encType="multipart/form-data">
           <div className="gallery">
             <h2>Gallery</h2>
-            {/* <p>4 *3 이미지를 첨부해주세요</p> */}
-            <a href="#galleryUpload">
-              <span>사진 첨부 버튼</span>
+            <span className="inputFileBtn">
               <label htmlFor="galleryUpload">
                 <RiFolderAddFill />
               </label>
@@ -175,7 +173,7 @@ function PostWrite() {
                 onChange={onLoadFile}
                 accept="image/jpg,image/png,image/jpeg,image/gif"
               />
-            </a>
+            </span>
             <div className="galleryContainer">
               {previewImg.map((image, id) => (
                 <div className="galleryImageContainer" key={id}>
