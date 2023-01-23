@@ -164,15 +164,35 @@ function MyPage() {
               <li>
                 여행기간
                 <span>
-                  <GoChevronUp onClick={() => sorting(-1)} />
-                  <GoChevronDown onClick={() => sorting(1)} />
+                  <GoChevronUp
+                    onClick={() => {
+                      sorting(-1);
+                      sortByThis("fromDate");
+                    }}
+                  />
+                  <GoChevronDown
+                    onClick={() => {
+                      sorting(1);
+                      sortByThis("fromDate");
+                    }}
+                  />
                 </span>
               </li>
               <li>
                 업로드일
                 <span>
-                  <GoChevronUp onClick={() => sorting(-1)} />
-                  <GoChevronDown onClick={() => sorting(1)} />
+                  <GoChevronUp
+                    onClick={() => {
+                      sorting(-1);
+                      sortByThis("writeDate");
+                    }}
+                  />
+                  <GoChevronDown
+                    onClick={() => {
+                      sorting(1);
+                      sortByThis("writeDate");
+                    }}
+                  />
                 </span>
               </li>
               <li>수정/삭제</li>
