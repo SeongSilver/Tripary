@@ -51,7 +51,7 @@ function PostWrite() {
   
   //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
   const handleOnKeyPress = (e) => {
-    if(e.keycode=9){
+    if(e.key==="Tab"){
       e.preventDefault();
     }
   }
