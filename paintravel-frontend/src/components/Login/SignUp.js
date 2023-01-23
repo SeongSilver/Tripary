@@ -43,6 +43,7 @@ function SignUp({ setOpenSignUpModal }) {
     dispatch(signUpUser(signUpInfo)).then((response) => {
       if (response.payload.success) {
         closeSignUp();
+        alert("회원가입 성공!\n로그인 후 이용하세요 :)")
       } else {
         alert("회원가입 실패");
       }
@@ -146,7 +147,7 @@ function SignUp({ setOpenSignUpModal }) {
           <form onSubmit={onSubmitHandler}>
             <div>
               <p>아이디/비밀번호</p>
-              <div className="formBox id">
+              <div className="formBox">
                 <input
                   type="text"
                   placeholder="아이디"
@@ -154,9 +155,6 @@ function SignUp({ setOpenSignUpModal }) {
                   name="userId"
                   onChange={onChangeUserId}
                 />
-                <button type="button" className="doubleCheckBtn">
-                  중복 확인
-                </button>
                 {signUpInfo.userId.length > 0 && (
                   <span className={`message ${isUserId ? "success" : "error"}`}>
                     {userIdMessage}
