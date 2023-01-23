@@ -113,7 +113,12 @@ function PostEdit() {
     setPreviewImg(previewImg.filter((_, index) => index !== id));
     setMyFile(myFile.filter((_, index) => index !== id));
   };
-
+  //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
+  const handleOnKeyPress = (e) => {
+    if(e.keycode=9){
+      e.preventDefault();
+    }
+  }
   const onSubmit = (e) => {
     e.preventDefault();
     if (!post.title) {
@@ -261,6 +266,7 @@ function PostEdit() {
                     name="location"
                     onChange={onChangePost}
                     defaultValue={editResData.location}
+                    onKeyDown={handleOnKeyPress}
                   />
                 </li>
                 <li>
@@ -277,7 +283,7 @@ function PostEdit() {
                     dateFormat="yyyy-MM-dd"
                     placeholderText={
                       new Date(editFromDate).toLocaleDateString() +
-                      "~" +
+                      " ~ " +
                       new Date(editToDate).toLocaleDateString()
                     }
                   />

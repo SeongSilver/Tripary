@@ -352,6 +352,9 @@
         textarea:focus {
           outline: none;
         }
+        ::-webkit-input-placeholder { /* Safari, Chrome and Opera */
+          color: #fff;
+        }
       }
       .postEditBtn {
         width: 80vw;
@@ -449,3 +452,4 @@
 .react-datepicker__close-icon::after {
   background-color: black !important;
 }
+

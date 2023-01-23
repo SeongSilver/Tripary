@@ -48,6 +48,13 @@ function PostWrite() {
       writer: loginedId,
     });
   };
+  
+  //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
+  const handleOnKeyPress = (e) => {
+    if(e.keycode=9){
+      e.preventDefault();
+    }
+  }
 
   const onLoadFile = (e) => {
     const files = e.target.files;
@@ -198,7 +205,9 @@ function PostWrite() {
               <input
                 type="text"
                 name="location"
-                onChange={onChangePost}></input>
+                onChange={onChangePost}
+                onKeyDown={handleOnKeyPress}>
+                </input>
             </li>
             <li>
               <p>일정</p>
@@ -213,6 +222,8 @@ function PostWrite() {
                 isClearable={true}
                 dateFormat="yyyy-MM-dd"
                 placeholderText="여행 기간 선택"
+                className="datePicker"
+                tabindex="-1"
               />
             </li>
             <li>
