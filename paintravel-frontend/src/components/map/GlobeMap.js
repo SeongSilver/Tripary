@@ -387,10 +387,6 @@ const GlobeMap = () => {
             position: "absolute",
             width: "60vw",
           }}>
-          {/* <div className="backButton" onClick={contentListClose}>
-            <span>리스트 닫기</span>
-            <BiArrowBack />
-          </div> */}
           <ContentList
             selectedCountry={selectedCountry}
             nationCode={nationCode}
