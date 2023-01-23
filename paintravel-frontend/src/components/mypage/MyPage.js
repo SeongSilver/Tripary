@@ -86,7 +86,6 @@ function MyPage() {
   const sortByThis = (data) => {
     console.log(data);
     setSortBy(data);
-    setSort(1);
     setNeedToReciveData(true);
   };
   const sorting = (data) => {
@@ -135,17 +134,17 @@ function MyPage() {
               onChange={mypageSearchHandler}
               placeholder="제목 검색"
             />
-            <button type="button" onClick={() => sortByThis("writeDate")}>
-              정렬:작성일
-            </button>
             <button type="button" onClick={() => sortByThis("fromDate")}>
               정렬:여행시작일
             </button>
+            <button type="button" onClick={() => sortByThis("writeDate")}>
+              정렬:작성일
+            </button>
             <button type="button" onClick={() => sorting(1)}>
-              정렬:내림차순
+              정렬:오름차순
             </button>
             <button type="button" onClick={() => sorting(-1)}>
-              정렬:오름차순
+              정렬:내림차순
             </button>
             <label>
               게시물 수&emsp;
@@ -166,14 +165,18 @@ function MyPage() {
                 <span>
                   <GoChevronUp
                     onClick={() => {
-                      sorting(-1);
+                      console.log("fromDate 오름");
+                      sorting(1);
                       sortByThis("fromDate");
+                      setPage(1);
                     }}
                   />
                   <GoChevronDown
                     onClick={() => {
-                      sorting(1);
+                      console.log("fromDate 내림");
+                      sorting(-1);
                       sortByThis("fromDate");
+                      setPage(1);
                     }}
                   />
                 </span>
@@ -183,13 +186,13 @@ function MyPage() {
                 <span>
                   <GoChevronUp
                     onClick={() => {
-                      sorting(-1);
+                      sorting(1);
                       sortByThis("writeDate");
                     }}
                   />
                   <GoChevronDown
                     onClick={() => {
-                      sorting(1);
+                      sorting(-1);
                       sortByThis("writeDate");
                     }}
                   />
