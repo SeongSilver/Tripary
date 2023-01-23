@@ -22,6 +22,7 @@ function PostEdit() {
   const [editFile, setEditFile] = useState([]);
   const [previewImg, setPreviewImg] = useState();
   const [loginedId, setLoginedId] = useState();
+  const [editDeleteFile, setEditDeleteFile] = useState([]);
   //유효성 검사를 위한 state
   const [post, setPost] = useState({});
 
@@ -46,7 +47,7 @@ function PostEdit() {
       .post("/api/post/getPostInfo", editData)
       .then((response) => {
         console.log("수정할 데이터 가져오기 성공" + response);
-        console.log(response);
+        //console.log(response);
         setEditResData(response.data.postInfo[0]);
         for (let i = 0; i < response.data.postInfo.length; i++) {
           if (editData.post_id === response.data.postInfo[i]._id) {
@@ -79,6 +80,11 @@ function PostEdit() {
 
   const onLoadFile = (e) => {
     const files = e.target.files;
+    //기존에 등록했던 사진들 전부, 삭제할 리스트에 추가
+    for (let i = 0; i < editFile.length; i++) {
+      editDeleteFile.push(editFile[i]);
+    }
+
     //업로드한 파일을 미리보기로 보여주기 위한 과정
     if (files.length > 10) {
       e.preventDefault();
@@ -98,9 +104,11 @@ function PostEdit() {
       imageUrlLists.push(currentImageUrl);
     }
     setPreviewImg(imageUrlLists);
+    setEditFile();
   };
 
   const deleteEditImage = (image, id) => {
+    editDeleteFile.push(image);
     setEditFile(editFile.filter((data) => data !== image));
   };
 
@@ -123,14 +131,6 @@ function PostEdit() {
       alert("사진을 업로드하세요");
       return;
     }
-    if (!startDate) {
-      alert("일정이 시작하는 날짜를 입력하세요");
-      return;
-    }
-    if (!endDate) {
-      alert("일정이 끝나는 날짜를 입력하세요");
-      return;
-    }
     if (!post.content) {
       alert("내용을 입력하세요");
       return;
@@ -140,6 +140,8 @@ function PostEdit() {
     const formData = new FormData();
 
     //일반변수를 담기 위한 과정
+    formData.append("post_id", edit_id);
+    formData.append("currentId", loginedId);
     formData.append("title", post.title);
     formData.append("country", editSelectedCountry);
     formData.append("nationCode", editNationCode);
@@ -153,20 +155,20 @@ function PostEdit() {
     }
     formData.append("content", post.content);
     formData.append("writer", post.writer);
-
+    //삭제해야할 이미지 리스트
+    if (editDeleteFile.length !== 0) {
+      formData.append("editDeleteFile", editDeleteFile);
+    }
     //[현아] fromData에 "myFile"라는 이름으로 각각의 사진 파일들을 하나씩 추가해줌.
     //    한번에 fileList로 추가할 경우, 백단에서 파일 업로드를 수행 할 수 없기 때문.
     if (editFile) {
-      for (let i = 0; i < editFile.length; i++) {
-        formData.append("file", editFile[i]);
-      }
+      formData.append("file", editFile);
     }
     if (myFile !== []) {
       for (let i = 0; i < myFile.length; i++) {
         formData.append("myFile", myFile[i]);
       }
     }
-
     for (var pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
     }
@@ -277,14 +279,19 @@ function PostEdit() {
                     }}
                     isClearable={true}
                     dateFormat="yyyy-MM-dd"
-                    placeholderText="수정할 여행 기간을 입력하세요(미 입력시 기존 기간으로 등록)"
+                    placeholderText={
+                      new Date(editFromDate).toLocaleDateString() +
+                      "~" +
+                      new Date(editToDate).toLocaleDateString()
+                    }
                   />
                 </li>
                 <li>
                   <p>일기</p>
-                  <textarea name="content" onChange={onChangePost}>
-                    {editResData.content}
-                  </textarea>
+                  <textarea
+                    name="content"
+                    onChange={onChangePost}
+                    defaultValue={editResData.content}></textarea>
                 </li>
               </ul>
               <div className="postEditBtn">
