@@ -1,27 +1,27 @@
 @font-face {
-  font-family: 'Nanum Myeongjo';
-  src: url('../../fonts/NanumMyeongjo-Regular.ttf') format("truetype"),
-       url('../../fonts/NanumMyeongjo-Bold.ttf') format("truetype"),
-       url('../../fonts/NanumMyeongjo-ExtraBold.ttf') format("truetype");
+  font-family: "Nanum Myeongjo";
+  src: url("../../fonts/NanumMyeongjo-Regular.ttf") format("truetype"),
+    url("../../fonts/NanumMyeongjo-Bold.ttf") format("truetype"),
+    url("../../fonts/NanumMyeongjo-ExtraBold.ttf") format("truetype");
   // 영문(대소문자)
   unicode-range: U+0041-005A, U+0061-007A;
 }
 @font-face {
-  font-family: 'Noto Sans KR';
-  src: url('../../fonts/NotoSansKR-Thin.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Light.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Medium.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Regular.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Bold.otf') format("opentype"),
-       url('../../fonts/NotoSansKR-Black.otf') format("opentype");
+  font-family: "Noto Sans KR";
+  src: url("../../fonts/NotoSansKR-Thin.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Light.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Medium.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Regular.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Bold.otf") format("opentype"),
+    url("../../fonts/NotoSansKR-Black.otf") format("opentype");
   // 국문, 숫자
   unicode-range: U+AC00-D7A3, U+0030-0039;
 }
 @mixin font {
-  font-family: 'Nanum Myeongjo', 'Noto Sans KR';
+  font-family: "Nanum Myeongjo", "Noto Sans KR";
   color: #222;
   letter-spacing: 0.3rem;
-  font-weight:100;
+  font-weight: 100;
 }
 @mixin noDrag {
   -webkit-user-select: none;
@@ -31,7 +31,8 @@
 }
 @mixin hidden {
   display: block;
-  width: 0; height: 0;
+  width: 0;
+  height: 0;
   text-indent: -9999px;
 }
 .modalContainer {
@@ -46,143 +47,101 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.8);
   @include font;
   @include noDrag;
   .modalDiv {
     position: absolute;
     width: 50vw;
     height: 85vh;
-    border-radius: 20px;
     background-color: white;
     transition: all 0.2s ease-out;
+    border-radius: 20px;
+    .closeBtn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      text-align: right;
+    }
     .modalHeader {
-      height: 7vh;
-      padding-left:3vw;
-      position:relative;
-      * {@include font; overflow:hidden; display:block;}
-      h1 { 
+      font-size: 1.3em;
+      height: 5vh;
+      padding: 0 3vw;
+      position: relative;
+      margin: 2vw 0;
+      hr {
+        margin: 10px 0;
+      }
+      .modalHeaderBottom {
+        display: flex;
+        justify-content: space-between;
+        .modalDate {
+          display: flex;
+          flex-wrap: nowrap;
+          line-height: 16px;
+        }
+      }
+      * {
+        @include font;
+        overflow: hidden;
+        display: block;
+      }
+      h1 {
         width: 44vw;
-        margin-top:2vh;
+        margin-top: 2vh;
         line-height: 3vh;
         font-size: 2rem;
-        font-weight:600;
+        font-weight: 800;
       }
-      h2 { 
-        width: 44vw;
+      h2 {
         line-height: 2vh;
         font-size: 1.5rem;
-        color:#555;
+        color: #555;
       }
     }
     .modalBody {
-      position:relative;
-      ul {
-        width: calc(100% - 6vw); height: 73vh;
-        margin:0 3vw;
-        position:relative;
-        overflow:hidden;
-        > li {
-          width: 100%; height: 100%;
-          background-color: #fff;
-          overflow: hidden;
-          position:absolute; top: 0%;
-          transition:all 0.5s ease;
-          img {
-            min-width: 100%; min-height: 56vh;
-            max-width: 200%; max-height: 56vh;
-            position:absolute; left: 50%; top: 0%;
-            transform: translateX(-50%);
-            z-index: 1100;
-          }
-          img:nth-child(2) {
-            left: 50%; top: 17vh;
-            z-index: 1099;
-            filter: blur(5px);
-          }
-        }
-        > li:nth-child(1) { left: 0%; }
-        > li:nth-child(2) { left: 100%; }
-        > li:nth-child(3) { left: 200%; }
-        > li:nth-child(4) { left: 300%; }
-      }
-      .modalPagination {
-        width: 100%; height: 5vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position:absolute;
-        left: 0; bottom:17vh;
-        background-color: rgba(255,255,255,0.5);
-        li {
-          margin:0 1vw;
-          span {@include hidden;}
-          a {
-            display:block;
-            width: 10px; height:10px;
-            border-radius:50%;
-            font-size:20px;
-            line-height: 5px;
-            text-align: center;
-            color:#888;
-          }
-        }
-        li a:not(.modalPagination li:first-child a, .modalPagination li:last-child a) {
-          width: 10px; height:10px;
-          line-height: 8px;
-        }
-      }
+      position: relative;
+      text-align: center;
       > pre {
-        width: calc(100% - 6vw); height:17vh;
-        padding:0.5vw;
-        background-color: rgba(0,0,0,0.4);
-        color:#fff;
-        overflow:auto;
+        width: calc(100% - 6vw);
+        height: 15vh;
+        padding: 0.5vw;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: #fff;
+        overflow: auto;
         line-height: 3vh;
         white-space: pre;
         font-size: 1.5rem;
-        position:absolute; 
-        left:3vw; bottom:0;
+        display: block;
+        margin-top: 70px;
+        margin-left: 3vw;
       }
     }
-    // .modalFooter {
-    //   display: flex;
-    //   justify-content: center;
-    //   align-items: center;
-    //   > a {
-    //     display:inline-block;
-    //     border-radius: 10px;
-    //     text-align: center;
-    //     line-height: 2vh;
-    //     padding: 1.5vh 1.5vw;
-    //     background-color: black;
-    //     color:#fff;
-    //     font-size: 1.5rem;
-    //     margin:0 4vw;
-    //   }
-    // }
-    
-    > a {
-      display:inline-block;
-      // border-radius: 10px;
-      position: absolute;
-    }
-    .postEditBtn {
-      right:4vw; top:59vh;
-      color:#222;
-      font-size: 3rem;
-      text-align: center;
-      line-height: 5vh;
-      span {@include hidden}
-      svg {
-        margin-top:-0.5vh;
+
+    .modalFooter {
+      margin-top: 20px;
+      padding: 0 18vw;
+      display: flex;
+      justify-content: space-around;
+      font-size: 1.1em;
+      button {
+        color: white;
+        font-size: 1.5em;
+        font-weight: 600;
+        border: none;
+        padding: 12px 8px 6px 8px;
+        border-radius: 10px;
+        svg {
+          font-size: 1.2em;
+          margin-bottom: 5px;
+        }
       }
-    }
-    .modalCloseBtn {
-      right:2vh; top:2vh;
-      font-size: 3rem;
-      @include font;
-      span {@include hidden}
+      .editBtn {
+        background-color: rgba(0, 200, 100, 0.7);
+      }
+      .deleteBtn {
+        background-color: rgba(200, 37, 0, 0.7);
+      }
     }
   }
 }

@@ -1,0 +1,36 @@
+.pageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 16px;
+  font-size: 16px;
+  .pageBtn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 1.2rem;
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: black;
+      cursor: pointer;
+      transform: translateY(-2px);
+    }
+    &[disabled] {
+      background: grey;
+      cursor: revert;
+      transform: revert;
+    }
+
+    &[aria-current] {
+      background: rgba(255, 255, 255, 0.8);
+      color: black;
+      font-weight: bold;
+      cursor: revert;
+      transform: revert;
+    }
+  }
+}

@@ -84,11 +84,11 @@ function PostEdit() {
     for (let i = 0; i < editFile.length; i++) {
       editDeleteFile.push(editFile[i]);
     }
-    
+
     //업로드한 파일을 미리보기로 보여주기 위한 과정
-    if (files.length > 4) {
+    if (files.length > 10) {
       e.preventDefault();
-      alert("이미지 개수는 4개를 넘을 수 없습니다!");
+      alert("이미지 개수는 10개를 넘을 수 없습니다!");
       return;
     }
     //1. post 객체에 files 정보 담아주기
@@ -140,7 +140,7 @@ function PostEdit() {
     const formData = new FormData();
 
     //일반변수를 담기 위한 과정
-    formData.append("post_id",edit_id);
+    formData.append("post_id", edit_id);
     formData.append("currentId", loginedId);
     formData.append("title", post.title);
     formData.append("country", editSelectedCountry);
@@ -156,7 +156,7 @@ function PostEdit() {
     formData.append("content", post.content);
     formData.append("writer", post.writer);
     //삭제해야할 이미지 리스트
-    if(editDeleteFile.length!==0){
+    if (editDeleteFile.length !== 0) {
       formData.append("editDeleteFile", editDeleteFile);
     }
     //[현아] fromData에 "myFile"라는 이름으로 각각의 사진 파일들을 하나씩 추가해줌.
@@ -254,6 +254,8 @@ function PostEdit() {
                     name="title"
                     onChange={onChangePost}
                     defaultValue={editResData.title}
+                    placeholder="30자 내로 작성하세요"
+                    maxLength="30"
                   />
                 </li>
                 <li>
@@ -277,13 +279,19 @@ function PostEdit() {
                     }}
                     isClearable={true}
                     dateFormat="yyyy-MM-dd"
-                    placeholderText={new Date(editFromDate).toLocaleDateString()+"~"+new Date(editToDate).toLocaleDateString()}
+                    placeholderText={
+                      new Date(editFromDate).toLocaleDateString() +
+                      "~" +
+                      new Date(editToDate).toLocaleDateString()
+                    }
                   />
                 </li>
                 <li>
                   <p>일기</p>
-                  <textarea name="content" onChange={onChangePost} defaultValue={editResData.content}>
-                  </textarea>
+                  <textarea
+                    name="content"
+                    onChange={onChangePost}
+                    defaultValue={editResData.content}></textarea>
                 </li>
               </ul>
               <div className="postEditBtn">

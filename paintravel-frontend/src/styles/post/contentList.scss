@@ -44,6 +44,9 @@
       width: 50vw;
       height: 30vw;
     }
+    .dummyId {
+      display: none;
+    }
     .contentImage {
       min-width: 50vw;
       min-height: 30vw;
@@ -129,6 +132,9 @@
       position: relative;
       margin-bottom: 3vh;
       overflow: hidden;
+      .dummyId {
+        display: none;
+      }
       .contentImage {
         display: block;
         position: relative;
@@ -172,6 +178,9 @@
     position: relative;
     margin-bottom: 3vh;
     overflow: hidden;
+    .dummyId {
+      display: none;
+    }
     > div:not(.modalContainer) {
       overflow: hidden;
     }

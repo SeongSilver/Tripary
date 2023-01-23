@@ -9,7 +9,7 @@ const fs = require("fs");
 
 function deletePhoto(file_name) {
   console.log("파일 삭제하러 옴");
-  console.log(fs.existsSync("paintravel-frontend/public/upload/" + file_name))
+  console.log(fs.existsSync("paintravel-frontend/public/upload/" + file_name));
   if (fs.existsSync("paintravel-frontend/public/upload/" + file_name)) {
     // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
     try {
@@ -97,13 +97,14 @@ router.post("/getPostEdit", upload.array("myFile"), async (req, res) => {
   let postWritedInfo = await Post.find({ _id: req.body.post_id });
   if (postWritedInfo[0].writer == req.body.currentId) {
     let editedPost = {};
-    if(req.body.file){//사진을 새로 등록하지 않은 경우
+    if (req.body.file) {
+      //사진을 새로 등록하지 않은 경우
       //등록되어야 하는 사진파일명 DB에 전달
-      let file = req.body.file.split(',')
+      let file = req.body.file.split(",");
       editedPost.file = file;
-      if(req.body.editDeleteFile){
-      //기존 등록된 사진 중 삭제해야 할 파일이 있는 경우
-        let editDeleteFile = req.body.editDeleteFile.split(',')
+      if (req.body.editDeleteFile) {
+        //기존 등록된 사진 중 삭제해야 할 파일이 있는 경우
+        let editDeleteFile = req.body.editDeleteFile.split(",");
         //기존 등록된 사진 중 삭제해야 할 파일 삭제
         for (i = 0; i < editDeleteFile.length; i++) {
           if (editDeleteFile[i]) {
@@ -111,22 +112,27 @@ router.post("/getPostEdit", upload.array("myFile"), async (req, res) => {
           }
         }
       }
-    }else{//사진을 새로 등록한 경우
-      let file =[]
+    } else {
+      //사진을 새로 등록한 경우
+      let file = [];
       //파일의 경우, 파일명(filename)을 저장하는것으로 설정. path를 저장하고 싶은 경우, req.files.path사용하는것으로 변경 가능
       for (i = 0; i < req.files.length; i++) {
         file.push(req.files[i].filename);
       }
-      editedPost.file=file;
+      editedPost.file = file;
     }
     editedPost.title = req.body.title;
     editedPost.location = req.body.location;
     editedPost.fromDate = req.body.fromDate;
     editedPost.toDate = req.body.toDate;
     editedPost.content = req.body.content;
-    let post = await Post.findByIdAndUpdate(req.body.post_id,{$set : editedPost} , {
-      new: true
-    });
+    let post = await Post.findByIdAndUpdate(
+      req.body.post_id,
+      { $set: editedPost },
+      {
+        new: true,
+      }
+    );
     if (!post)
       return res
         .status(400)
