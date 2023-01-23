@@ -15,7 +15,7 @@ function ContentList({
 }) {
   const [existLocalStorage, setExistLocalStorage] = useState(false);
   useEffect(() => {
-    if (window.localStorage.key("LOGINEDID")) {
+    if (window.localStorage.getItem("LOGINEDID")) {
       setExistLocalStorage(true);
     } else {
       setExistLocalStorage(false);
@@ -51,7 +51,7 @@ function ContentList({
       {/*null 자리에
         게시물이있다면(state 변수) ? <LoginedList openContentModal={openContentModal}/> : <EmptyList/> />
       */}
-      {localStorage.key("LOGINEDID") ? (
+      {localStorage.getItem("LOGINEDID") ? (
         listData &&
         (listData.length !== 0 ? (
           <LoginedList listData={listData} />

@@ -7,7 +7,6 @@ import Loading from "../common/Loading";
 import axios from "axios";
 
 function ContentModal({ modalData, setCheck }) {
-  console.log(modalData);
   const closeModal = () => {
     setCheck(false);
   };
@@ -80,7 +79,6 @@ function ContentModal({ modalData, setCheck }) {
     const reloadVisitedData = {
       currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
     };
-    console.log(deletePostInfo);
     axios
       .post("api/post/getPostDelete", deletePostInfo)
       .then((response) => {
