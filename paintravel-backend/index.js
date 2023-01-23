@@ -22,7 +22,7 @@ mongoose
     usenewurlparser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("MongoDB Connected"))
+  .then(() => console.log("MongoDB 연결 완료"))
   .catch((err) => console.log(err));
   
-app.listen(port, () => console.log(`Example app listening on port ${port}`));
+app.listen(port, () => console.log(`Paintravel-app 백엔드 서버가 ${port}번 포트에서 실행되는 중입니다.`));

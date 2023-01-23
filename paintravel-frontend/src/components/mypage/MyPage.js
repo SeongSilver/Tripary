@@ -23,7 +23,7 @@ function MyPage() {
   const [sort, setSort] = useState(1); //정렬차순 - (기본값)오름차순 : 1, 내림차순 : -1
   const [mypageList, setMypageList] = useState();
   const [needToReciveData, setNeedToReciveData] = useState(true);
-  const existLocalStorage = localStorage.key("LOGINEDID");
+  const existLocalStorage = localStorage.getItem("LOGINEDID");
 
   const [check, setCheck] = useState(false);
   const [modalData, setModalData] = useState();
@@ -42,12 +42,10 @@ function MyPage() {
       axios
         .post("api/post/getPostInfo", modalData)
         .then((response) => {
-          console.log("데이터 탐색 성공");
-          console.log(response.data);
           setModalData(response.data.postInfo[0]);
         })
         .catch((error) => {
-          console.log("데이터 탐색 에러 발생");
+          console.log("데이터 탐색 에러 발생"+error);
         });
     } else if (event.target.tagName === "svg") {
       setCheck(false);
@@ -70,7 +68,6 @@ function MyPage() {
           sort: sort,
           sortBy: sortBy,
         };
-        console.log(sendData);
         axios
           .post("/api/post/getMypage", sendData)
           .then(function (res) {
@@ -84,12 +81,10 @@ function MyPage() {
     }
   }, [login_id, sortBy, mypageList, sort]);
   const sortByThis = (data) => {
-    console.log(data);
     setSortBy(data);
     setNeedToReciveData(true);
   };
   const sorting = (data) => {
-    console.log(data);
     setSort(data);
     setNeedToReciveData(true);
   };
@@ -103,8 +98,6 @@ function MyPage() {
       axios
         .post("api/post/getPostDelete", deletePostInfo)
         .then((response) => {
-          console.log("게시물 삭제 성공");
-          console.log(response);
           location.reload();
         })
         .catch((error) => {
@@ -118,7 +111,6 @@ function MyPage() {
 
   const selectHandler = (event) => {
     setLimit(Number(event.target.value));
-    console.log(limit);
   };
 
   return (

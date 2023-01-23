@@ -35,7 +35,7 @@ const GlobeMap = () => {
     setContentDisplay("hidden");
   };
 
-  const existLocalStorage = localStorage.key("LOGINEDID");
+  const existLocalStorage = localStorage.getItem("LOGINEDID");
 
   /* Chart code */
   // Create root element
@@ -52,16 +52,14 @@ const GlobeMap = () => {
         const postData = {
           currentId: login_id,
         };
-        // console.log("로그인된 아이디", postData.currentId);
         axios
           .post("/api/post/getVisitedList", postData)
           .then(function (res) {
             setVisitedCountry(res.data.countryList);
             setNeedToFill(false);
-            // console.log("국가 탐색 성공" + res.data.countryList);
             setLoading(false);
           })
-          .catch((err) => console.log("에러발생이어라" + err));
+          .catch((err) => console.log("에러발생" + err));
       }
     }
   });
@@ -113,7 +111,6 @@ const GlobeMap = () => {
       });
 
       if (visitedCountry !== []) {
-        // console.log("@@@@" + visitedCountry);
         // [현아/성은] ----> 방문한 국가의 색깔을 지정하기 위한 과정
         // 기존에 방문한 국가 배열로 백엔드에서 받아오기
 
@@ -121,7 +118,6 @@ const GlobeMap = () => {
         polygonSeries.mapPolygons.template.adapters.add(
           "fill",
           function (fill, target) {
-            //console.log(polygonSeries.mapPolygons.template.states.create+"야여")
             let dataContext = target.dataItem.dataContext;
             let visitCount = visitedCountry.reduce(
               (cnt, element) => cnt + (dataContext.id === element),
@@ -223,7 +219,7 @@ const GlobeMap = () => {
             .then(function (res) {
               setListData(res.data.postList);
             })
-            .catch((err) => console.log("에러발생이어라" + err));
+            .catch((err) => console.log("에러발생" + err));
         }
 
         setTimeout(() => {

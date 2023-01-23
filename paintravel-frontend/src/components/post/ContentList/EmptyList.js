@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import '../../../styles/post/contentList/emptyList.scss';
 
 function EmptyList({ selectedCountry, nationCode }) {
-  console.log(nationCode)
   const [airplaneStyle, setAirplaneStyle] = useState({});
   useEffect (() => {
     document.querySelector(".emptyListContainer > a").addEventListener("mouseover", function(){
