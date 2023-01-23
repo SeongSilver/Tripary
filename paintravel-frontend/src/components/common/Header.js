@@ -44,7 +44,6 @@ function Header() {
         const nowTime = new Date().getTime();
 
         if (nowTime > expireTime) {
-          console.log(localStorage.getItem("LOGINEDID"));
           localStorage.removeItem("LOGINEDID");
           //[야나] 로컬스토리지 값 만료시 자동으로 로그아웃 실행되도록 추가
           onClickHandler();
@@ -53,7 +52,6 @@ function Header() {
         }
       }, 600000);
     }
-    console.log(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
   }, [window.location]);
 
   const onClickHandler = () => {
