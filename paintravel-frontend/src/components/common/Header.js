@@ -44,16 +44,17 @@ function Header() {
         const nowTime = new Date().getTime();
 
         if (nowTime > expireTime) {
-          console.log(localStorage.getItem("LOGINEDID"))
+          console.log(localStorage.getItem("LOGINEDID"));
           localStorage.removeItem("LOGINEDID");
           //[야나] 로컬스토리지 값 만료시 자동으로 로그아웃 실행되도록 추가
-          onClickHandler()
+          onClickHandler();
           //[야나] 실행중인 setInterval무효화
-          clearInterval(loginTimeOut)
+          clearInterval(loginTimeOut);
         }
       }, 600000);
     }
-  }, []);
+    console.log(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
+  }, [window.location]);
 
   const onClickHandler = () => {
     localStorage.removeItem("LOGINEDID");
@@ -108,16 +109,6 @@ function Header() {
               my page
             </Link>
           )}
-          {/* {existLocalStorage && (
-            <a href="#" className="headLink" onClick={onClickHandler}>
-              logout
-            </a>
-          )}
-          {existLocalStorage || (
-            <Link to="/Login" className="headLink">
-              sign in
-            </Link>
-          )} */}
           {localStorage.getItem("LOGINEDID") ? (
             <a href="#" className="headLink" onClick={onClickHandler}>
               logout

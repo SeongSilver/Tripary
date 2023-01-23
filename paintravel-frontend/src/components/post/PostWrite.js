@@ -99,8 +99,8 @@ function PostWrite() {
       alert("내용을 입력하세요");
       return;
     }
-    if(myfile.length===0) {
-      alert("사진을 한 장 이상 추가해주세요")
+    if (myfile.length === 0) {
+      alert("사진을 한 장 이상 추가해주세요");
       return;
     }
 
@@ -135,8 +135,8 @@ function PostWrite() {
       })
       .then((res) => {
         alert("글 등록 성공!");
+        window.location.assign("/");
       })
-      .then(navigate("/"))
       .catch((err) => {
         alert("글 등록 실패!");
         console.log(err);

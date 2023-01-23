@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -16,7 +16,8 @@ function MyPage() {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
-  const [search, setSearch] = useState("");
+  const [searchCountry, setSearchCountry] = useState("");
+  const [searchTitle, setSearchTitle] = useState("");
 
   const [login_id, setLogin_id] = useState("*");
   const [sortBy, setSortBy] = useState("fromDate"); //정렬기준 - (기본값) writeDate, fromDate
@@ -25,37 +26,10 @@ function MyPage() {
   const [needToReciveData, setNeedToReciveData] = useState(true);
   const existLocalStorage = localStorage.getItem("LOGINEDID");
 
-  const [check, setCheck] = useState(false);
+  const [openPostModal, setOpenPostModal] = useState(false);
   const [modalData, setModalData] = useState();
 
-  const openContentModal = (event) => {
-    if (
-      event.target.tagName !== "svg" ||
-      event.target.tagName !== "a" ||
-      event.target.tagName !== "path"
-    ) {
-      setCheck(true);
-      const modalData = {
-        currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
-        post_id: event.currentTarget.children[0].textContent,
-      };
-      axios
-        .post("api/post/getPostInfo", modalData)
-        .then((response) => {
-          setModalData(response.data.postInfo[0]);
-        })
-        .catch((error) => {
-          console.log("데이터 탐색 에러 발생"+error);
-        });
-    } else if (event.target.tagName === "svg") {
-      setCheck(false);
-    }
-  };
-
-  const mypageSearchHandler = (event) => {
-    setSearch(event.target.value);
-    setPage(1);
-  };
+  const [searchOption, setSearchOption] = useState("1");
 
   useLayoutEffect(() => {
     if (existLocalStorage) {
@@ -71,15 +45,64 @@ function MyPage() {
         axios
           .post("/api/post/getMypage", sendData)
           .then(function (res) {
-            console.log(res.data);
             setMypageList(res.data.mypageList);
             setNeedToReciveData(false);
             setLoading(false);
+            setListCount(res.data.mypageList.length);
           })
           .catch((err) => console.log("에러발생" + err));
       }
     }
   }, [login_id, sortBy, mypageList, sort]);
+
+  const openContentModal = (event) => {
+    console.log(event.target.parentElement);
+    if (
+      event.target !== event.currentTarget.children[1].children[5] &&
+      event.target.parentElement !==
+        event.currentTarget.children[1].children[5] &&
+      event.target.parentElement.parentElement !==
+        event.currentTarget.children[1].children[5]
+    ) {
+      setOpenPostModal(true);
+      const modalData = {
+        currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+        post_id: event.currentTarget.children[0].textContent,
+      };
+      axios
+        .post("api/post/getPostInfo", modalData)
+        .then((response) => {
+          setModalData(response.data.postInfo[0]);
+        })
+        .catch((error) => {
+          console.log("데이터 탐색 에러 발생" + error);
+        });
+    }
+  };
+
+  const [listCount, setListCount] = useState(0);
+
+  useEffect(() => {
+    if (needToReciveData === false) {
+      setListCount(
+        mypageList.filter((data) =>
+          data.country
+            .toLocaleLowerCase()
+            .includes(searchCountry.toLocaleLowerCase())
+        ).length
+      );
+    }
+  }, [mypageList, searchCountry, searchTitle]);
+
+  const mypageCountrySearchHandler = (event) => {
+    setSearchCountry(event.target.value);
+    setPage(1);
+  };
+  const mypageTitleSearchHandler = (event) => {
+    setSearchTitle(event.target.value);
+    setPage(1);
+  };
+
   const sortByThis = (data) => {
     setSortBy(data);
     setNeedToReciveData(true);
@@ -105,12 +128,17 @@ function MyPage() {
           console.log(error);
         });
     } else {
+      setOpenPostModal(false);
       alert("삭제를 취소합니다");
     }
   };
 
   const selectHandler = (event) => {
     setLimit(Number(event.target.value));
+  };
+
+  const searchBoxHandler = (event) => {
+    setSearchOption(event.currentTarget.value);
   };
 
   return (
@@ -120,24 +148,26 @@ function MyPage() {
       ) : (
         <div className="mypageContainer">
           <div className="myPageBtn">
-            <input
-              type="text"
-              value={search}
-              onChange={mypageSearchHandler}
-              placeholder="제목 검색"
-            />
-            <button type="button" onClick={() => sortByThis("fromDate")}>
-              정렬:여행시작일
-            </button>
-            <button type="button" onClick={() => sortByThis("writeDate")}>
-              정렬:작성일
-            </button>
-            <button type="button" onClick={() => sorting(1)}>
-              정렬:오름차순
-            </button>
-            <button type="button" onClick={() => sorting(-1)}>
-              정렬:내림차순
-            </button>
+            <select onChange={searchBoxHandler} value={searchOption}>
+              <option value="1">여행국가</option>
+              <option value="2">제목</option>
+            </select>
+            {searchOption === "1" && (
+              <input
+                type="text"
+                value={searchCountry}
+                onChange={mypageCountrySearchHandler}
+                placeholder="여행국가 검색 (영어)"
+              />
+            )}
+            {searchOption === "2" && (
+              <input
+                type="text"
+                value={searchTitle}
+                onChange={mypageTitleSearchHandler}
+                placeholder="제목 검색"
+              />
+            )}
             <label>
               게시물 수&emsp;
               <select type="number" value={limit} onChange={selectHandler}>
@@ -157,7 +187,6 @@ function MyPage() {
                 <span>
                   <GoChevronUp
                     onClick={() => {
-                      console.log("fromDate 오름");
                       sorting(1);
                       sortByThis("fromDate");
                       setPage(1);
@@ -165,7 +194,6 @@ function MyPage() {
                   />
                   <GoChevronDown
                     onClick={() => {
-                      console.log("fromDate 내림");
                       sorting(-1);
                       sortByThis("fromDate");
                       setPage(1);
@@ -194,13 +222,19 @@ function MyPage() {
             </ul>
             <div className="myPageListDiv">
               <div className="myPageList">
-                <ul>
+                <ul className="mypageListUl">
                   {mypageList ? (
                     mypageList
                       .filter((data) => {
-                        return data.title
-                          .toLocaleLowerCase()
-                          .includes(search.toLocaleLowerCase());
+                        if (searchOption === "1") {
+                          return data.country
+                            .toLocaleLowerCase()
+                            .includes(searchCountry.toLocaleLowerCase());
+                        } else if (searchOption === "2") {
+                          return data.title
+                            .toLocaleLowerCase()
+                            .includes(searchTitle.toLocaleLowerCase());
+                        }
                       })
                       .slice(offset, offset + limit)
                       .map((data) => (
@@ -256,7 +290,7 @@ function MyPage() {
               {mypageList ? (
                 <div>
                   <Pagination
-                    total={mypageList.length}
+                    total={listCount}
                     limit={limit}
                     page={page}
                     setPage={setPage}
@@ -267,7 +301,12 @@ function MyPage() {
           </div>
         </div>
       )}
-      {check && <ContentModal modalData={modalData} setCheck={setCheck} />}
+      {openPostModal && (
+        <ContentModal
+          modalData={modalData}
+          setOpenPostModal={setOpenPostModal}
+        />
+      )}
     </div>
   );
 }
