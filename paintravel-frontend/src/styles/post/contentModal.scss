@@ -59,9 +59,10 @@
     border-radius: 20px;
     .closeBtn {
       position: absolute;
-      top: 15px;
-      right: 15px;
+      top: 1vw;
+      right: 1vw;
       text-align: right;
+      z-index: 999;
     }
     .modalHeader {
       font-size: 1.3em;
@@ -104,7 +105,7 @@
       text-align: center;
       > pre {
         width: calc(100% - 6vw);
-        height: 15vh;
+        height: 17vh;
         padding: 0.5vw;
         background-color: rgba(0, 0, 0, 0.3);
         color: #fff;
@@ -113,7 +114,7 @@
         white-space: pre;
         font-size: 1.5rem;
         display: block;
-        margin-top: 70px;
+        margin-top: 50px;
         margin-left: 3vw;
       }
     }

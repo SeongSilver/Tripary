@@ -13,7 +13,6 @@ function Header() {
   //키, 값을 매개변수로 받는 localStorage setItem 하는 함수
   const setLoginedItem = (key, value) => {
     if (key === null || value === null) {
-      console.log("setItem에 매개변수 안들어감");
       return;
     }
     const now = new Date();
@@ -36,28 +35,34 @@ function Header() {
       }
     });
     //로컬스토리지에 LOGINEDID가 있을 경우 실행
-    if (localStorage.key("LOGINEDID")) {
+    if (localStorage.getItem("LOGINEDID")) {
       //로그인된 아이디의 만료시간
       const expireTime = JSON.parse(localStorage.getItem("LOGINEDID")).expiry;
 
       //현재시간이 LOGINEDID 만료시간보다 길면 localStorage에 있는 LOGINEDID 삭제
-      setInterval(() => {
+      const loginTimeOut = setInterval(() => {
         const nowTime = new Date().getTime();
 
         if (nowTime > expireTime) {
+          console.log(localStorage.getItem("LOGINEDID"));
           localStorage.removeItem("LOGINEDID");
+          //[야나] 로컬스토리지 값 만료시 자동으로 로그아웃 실행되도록 추가
+          onClickHandler();
+          //[야나] 실행중인 setInterval무효화
+          clearInterval(loginTimeOut);
         }
       }, 600000);
     }
-  }, []);
+    console.log(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
+  }, [window.location]);
 
   const onClickHandler = () => {
     localStorage.removeItem("LOGINEDID");
     dispatch(logoutUser()).then((response) => {
       if (response.payload.logoutSucess) {
-        navigate("/Login");
+        location.reload("/");
       } else {
-        alert("로그인아웃 실패..!");
+        alert("로그아웃 실패..!");
       }
     });
   };
@@ -95,7 +100,7 @@ function Header() {
           <img src={require("../../img/common/logo.png")} alt="logo" />
         </div>
         <div className="headerRight">
-          {localStorage.key("LOGINEDID") ? (
+          {localStorage.getItem("LOGINEDID") ? (
             <Link to="/mypage" className="headLink">
               my page
             </Link>
@@ -104,17 +109,7 @@ function Header() {
               my page
             </Link>
           )}
-          {/* {existLocalStorage && (
-            <a href="#" className="headLink" onClick={onClickHandler}>
-              logout
-            </a>
-          )}
-          {existLocalStorage || (
-            <Link to="/Login" className="headLink">
-              sign in
-            </Link>
-          )} */}
-          {localStorage.key("LOGINEDID") ? (
+          {localStorage.getItem("LOGINEDID") ? (
             <a href="#" className="headLink" onClick={onClickHandler}>
               logout
             </a>

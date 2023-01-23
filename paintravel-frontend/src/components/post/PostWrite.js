@@ -51,7 +51,6 @@ function PostWrite() {
 
   const onLoadFile = (e) => {
     const files = e.target.files;
-    console.log(files);
     //업로드한 파일을 미리보기로 보여주기 위한 과정
     if (files.length > 10) {
       e.preventDefault();
@@ -88,10 +87,6 @@ function PostWrite() {
       alert("위치를 입력하세요");
       return;
     }
-    if (!myfile) {
-      alert("사진을 업로드하세요");
-      return;
-    }
     if (!startDate) {
       alert("일정이 시작하는 날짜를 입력하세요");
       return;
@@ -102,6 +97,10 @@ function PostWrite() {
     }
     if (!post.content) {
       alert("내용을 입력하세요");
+      return;
+    }
+    if (myfile.length === 0) {
+      alert("사진을 한 장 이상 추가해주세요");
       return;
     }
 
@@ -123,12 +122,11 @@ function PostWrite() {
     for (let i = 0; i < myfile.length; i++) {
       formData.append("myfile", myfile[i]);
     }
+    // [야나] 백단으로 보낼 데이터를 확인하기 위한 부분
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + typeof pair[1]);
+    // }
 
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + typeof pair[1]);
-    }
-
-    console.log(myfile);
     axios
       .post("/api/post/upload", formData, {
         headers: {
@@ -137,8 +135,8 @@ function PostWrite() {
       })
       .then((res) => {
         alert("글 등록 성공!");
+        window.location.assign("/");
       })
-      .then(navigate("/"))
       .catch((err) => {
         alert("글 등록 실패!");
         console.log(err);

@@ -6,13 +6,12 @@ import { BiEdit, BiTrash } from "react-icons/bi";
 import Loading from "../common/Loading";
 import axios from "axios";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import "../../styles/post/modalSlickCarousel/slick-theme.css";
+import "../../styles/post/modalSlickCarousel/slick.css";
 
-function ContentModal({ modalData, setCheck }) {
-  // console.log(modalData);
+function ContentModal({ modalData, setOpenPostModal }) {
   const closeModal = () => {
-    setCheck(false);
+    setOpenPostModal(false);
   };
 
   const postDeleteHandler = () => {

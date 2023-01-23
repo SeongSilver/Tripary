@@ -9,7 +9,6 @@ const fs = require("fs");
 
 function deletePhoto(file_name) {
   console.log("파일 삭제하러 옴");
-  console.log(fs.existsSync("paintravel-frontend/public/upload/" + file_name));
   if (fs.existsSync("paintravel-frontend/public/upload/" + file_name)) {
     // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
     try {
@@ -54,7 +53,6 @@ router.post("/getVisitedList", async (req, res) => {
         countryList.push(postList[i].nationCode);
       }
     }
-    console.log("현재 아이디가 글 쓴 국가" + countryList);
     res.status(200).json({ countryList: countryList });
   }
 });
@@ -86,7 +84,6 @@ router.post("/getPostInfo", async (req, res) => {
   for (i in post) {
     postList.push(post[i]);
   }
-  console.log(postList);
   res.status(200).json({ postInfo: postList });
 });
 module.exports = router;
@@ -156,10 +153,7 @@ router.post("/getPostDelete", async (req, res) => {
   let postWritedInfo = await Post.find({ _id: req.body.post_id }).select(
     "writer file"
   );
-  console.log(postWritedInfo);
-  console.log(postWritedInfo[0].writer + " / " + req.body.currentId);
-  console.log(postWritedInfo[0].writer == req.body.currentId);
-  if (postWritedInfo[0].writer == req.body.currentId) {
+    if (postWritedInfo[0].writer == req.body.currentId) {
     for (i = 0; i < postWritedInfo[0].file.length; i++) {
       console.log("삭제할 파일 리스트 [" + postWritedInfo[0].file + "]");
       if (postWritedInfo[0].file[i]) {
@@ -185,8 +179,6 @@ module.exports = router;
 router.post("/getMypage", async (req, res) => {
   let sortBy = req.body.sortBy; //정렬 기준
   let sort = req.body.sort; //정렬차순 - 내림차순 : -1 오름차순 : 1
-  console.log(sortBy + sort);
-  console.log(sort === 1);
   let mypageList = [];
   let postList;
 
@@ -213,7 +205,6 @@ router.post("/getMypage", async (req, res) => {
   }
   for (i in postList) {
     mypageList.push(postList[i]);
-    console.log(postList[i].title);
   }
   res.status(200).json({ mypageList: mypageList });
 });
