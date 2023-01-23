@@ -279,7 +279,7 @@ function PostEdit() {
                     dateFormat="yyyy-MM-dd"
                     placeholderText={
                       new Date(editFromDate).toLocaleDateString() +
-                      "~" +
+                      " ~ " +
                       new Date(editToDate).toLocaleDateString()
                     }
                   />
