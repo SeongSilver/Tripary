@@ -75,6 +75,7 @@
           margin: 0.5vw 1vw;
           float: left;
           border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+          position: relative;
         }
         li:nth-child(1) {
           width: 8vw;
@@ -84,9 +85,33 @@
         }
         li:nth-child(4) {
           width: 14vw;
+          span {
+            position: absolute;
+            top: 0;
+            right: 0;
+            svg {
+              cursor: pointer;
+              transition: 0.2s ease-in-out;
+            }
+            svg:hover {
+              color: rgba(0, 0, 0, 0.3);
+            }
+          }
         }
         li:nth-child(5) {
           width: 8vw;
+          span {
+            position: absolute;
+            top: 0;
+            right: 0;
+            svg {
+              cursor: pointer;
+              transition: 0.2s ease-in-out;
+            }
+            svg:hover {
+              color: rgba(0, 0, 0, 0.3);
+            }
+          }
         }
         li:nth-child(6) {
           width: 5vw;

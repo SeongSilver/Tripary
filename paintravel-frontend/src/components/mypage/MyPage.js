@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import { BiEdit, BiTrash } from "react-icons/bi";
+import { GoChevronUp, GoChevronDown } from "react-icons/go";
 import ContentModal from "../post/ContentModal";
 import Pagination from "../common/Pagination";
 import Loading from "../common/Loading";
@@ -160,8 +161,20 @@ function MyPage() {
               <li>여행국가</li>
               <li>제목</li>
               <li>사진</li>
-              <li>여행기간</li>
-              <li>업로드일</li>
+              <li>
+                여행기간
+                <span>
+                  <GoChevronUp onClick={() => sorting(-1)} />
+                  <GoChevronDown onClick={() => sorting(1)} />
+                </span>
+              </li>
+              <li>
+                업로드일
+                <span>
+                  <GoChevronUp onClick={() => sorting(-1)} />
+                  <GoChevronDown onClick={() => sorting(1)} />
+                </span>
+              </li>
               <li>수정/삭제</li>
             </ul>
             <div className="myPageListDiv">
