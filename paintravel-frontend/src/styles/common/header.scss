@@ -38,13 +38,13 @@
 // 모바일
 @media all and (max-width: 767px) {
   html {
-    font-size: 1vw !important;
+    font-size: 46.875% !important;
   }
 }
 // 테블릿 & PC
 @media all and (min-width: 768px) {
   html {
-    font-size: 0.5vw !important;
+    font-size: 62.5% !important;
   }
 }
 .header {
@@ -86,9 +86,9 @@
     margin-right: 10vw;
     flex-grow: 1;
     text-align: right;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     .headLink {
-      margin-left: 2vw;
+      margin-left: 20px;
       font-weight: 600;
       color: #fff;
       @include font;

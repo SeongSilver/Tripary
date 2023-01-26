@@ -8,6 +8,7 @@ function Pagination({ total, limit, page, setPage }) {
     <>
       <div className="pageContainer">
         <button
+          type="button"
           className="pageBtn"
           onClick={() => setPage(page - 1)}
           disabled={page === 1 || page < 1}>
@@ -25,6 +26,7 @@ function Pagination({ total, limit, page, setPage }) {
             </span>
           ))}
         <button
+          type="button"
           className="pageBtn"
           onClick={() => setPage(page + 1)}
           disabled={page === numPages}>

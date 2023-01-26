@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import "../../styles/post/contentModal.scss";
 import { Link } from "react-router-dom";
 import { AiFillCloseCircle, AiOutlineMinus } from "react-icons/ai";
@@ -10,7 +10,6 @@ import "../../styles/post/modalSlickCarousel/slick-theme.css";
 import "../../styles/post/modalSlickCarousel/slick.css";
 
 function ContentModal({ modalData, setOpenPostModal }) {
-  const modalDiv = useRef();
   const closeModal = () => {
     setOpenPostModal(false);
   };
@@ -55,22 +54,15 @@ function ContentModal({ modalData, setOpenPostModal }) {
       ) : (
         <div className="modalContainer">
           <div className="modalDiv">
-            <div className="closeBtn">
-              <a href="#" onClick={closeModal} className="modalCloseBtn">
-                <AiFillCloseCircle
-                  style={{ color: "#343434", fontSize: "30px" }}
-                />
-              </a>
-            </div>
             <div className="modalHeader">
               <h1>{modalData.title}</h1>
               <hr />
               <div className="modalHeaderBottom">
                 <h2>{modalData.location}</h2>
                 <div className="modalDate">
-                  <h2>{new Date(modalData.fromDate).toLocaleDateString()}</h2>
-                  &emsp;~&emsp;
-                  <h2>{new Date(modalData.toDate).toLocaleDateString()}</h2>
+                  <span>{new Date(modalData.fromDate).toLocaleDateString()}</span>
+                  <span>&emsp;~&emsp;</span>
+                  <span>{new Date(modalData.toDate).toLocaleDateString()}</span>
                 </div>
               </div>
             </div>
@@ -78,41 +70,43 @@ function ContentModal({ modalData, setOpenPostModal }) {
               <Slider {...slickSettings}>
                 {modalData.file.map((image, index) => (
                   <div key={index}>
-                    <img
-                      src={`/upload/${image}`}
-                      alt="이미지"
-                      width={"200px"}
-                      height={"150px"}
-                    />
-                    {/* <img src={`/upload/${image}`} alt="이미지 배경" /> */}
+                    <figure>
+                      <img
+                        src={`/upload/${image}`}
+                        alt="이미지"
+                      />
+                    </figure>
+                    <img src={`/upload/${image}`} alt="이미지 배경" />
                   </div>
                 ))}
               </Slider>
               <pre>{modalData.content}</pre>
             </div>
             <div className="modalFooter">
-              <button className="editBtn">
-                <Link
-                  to="/postEdit"
-                  className="postEditBtn"
-                  state={{
-                    selectedCountry: modalData.country,
-                    nationCode: modalData.nationCode,
-                    _id: modalData._id,
-                    writer: modalData.writer,
-                  }}>
-                  수정하기&nbsp;
-                  <BiEdit />
-                </Link>
-              </button>
-              <button
+              <Link
+                to="/postEdit"
+                className="postEditBtn"
+                state={{
+                  selectedCountry: modalData.country,
+                  nationCode: modalData.nationCode,
+                  _id: modalData._id,
+                  writer: modalData.writer,
+                }}>
+                수정하기&nbsp;
+                <BiEdit />
+              </Link>
+              <a href="#"
                 className="deleteBtn"
                 onClick={postDeleteHandler}
                 style={{ zIndex: "999", cursor: "pointer" }}>
                 삭제하기&nbsp;
                 <BiTrash />
-              </button>
+              </a>
             </div>
+            <a href="#" onClick={closeModal} className="modalCloseBtn">
+              <AiFillCloseCircle/>
+              <span>닫기</span>
+            </a>
           </div>
         </div>
       )}

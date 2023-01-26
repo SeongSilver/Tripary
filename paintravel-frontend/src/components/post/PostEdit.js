@@ -113,12 +113,13 @@ function PostEdit() {
     setPreviewImg(previewImg.filter((_, index) => index !== id));
     setMyFile(myFile.filter((_, index) => index !== id));
   };
+
   //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
   const handleOnKeyPress = (e) => {
-    if(e.keycode=9){
+    if (e.key === "Tab") {
       e.preventDefault();
     }
-  }
+  };
   const onSubmit = (e) => {
     e.preventDefault();
     if (!post.title) {
@@ -271,7 +272,6 @@ function PostEdit() {
                 </li>
                 <li>
                   <p>일정</p>
-                  {/**성은 22.12.18 23:22 : react-datePicker의 Date Range using input with clear button 사용*/}
                   <DatePicker
                     selectsRange={true}
                     startDate={startDate}
@@ -297,8 +297,12 @@ function PostEdit() {
                 </li>
               </ul>
               <div className="postEditBtn">
-                <button onClick={goMain}>메인으로</button>
-                <button onClick={onSubmit}>등록</button>
+                <button type="button" onClick={goMain}>
+                  메인으로
+                </button>
+                <button type="button" onClick={onSubmit}>
+                  등록
+                </button>
               </div>
             </form>
           </div>
