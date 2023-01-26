@@ -199,6 +199,7 @@ const GlobeMap = () => {
             selectCountry(target.dataItem.get("id"));
           }
           previousPolygon = target;
+          console.log(previousPolygon)
         }
       );
       function selectCountry(id) {
@@ -252,7 +253,6 @@ const GlobeMap = () => {
         chart.zoomToGeoPoint(target.geoCentroid(), 1, target.geoCentroid());
         contentListClose();
       }
-
       function homeCountry(id) {
         let dataItem = polygonSeries.getDataItemById(id);
         let target = dataItem.get("mapPolygon");
