@@ -4,11 +4,11 @@
   "description": "PainTravel 프로젝트 Backend, node&mongoDB",
   "main": "paintravel-backend/index.js",
   "scripts": {
+    "build" : "webpack",
     "start": "node paintravel-backend/index.js",
     "backend": "nodemon paintravel-backend/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"npm run backend\" \"npm run start --prefix paintravel-frontend\"",
-    "build" : "webpack"
+    "dev": "concurrently \"npm run backend\" \"npm run start --prefix paintravel-frontend\""
   },
   "author": "yana-ko",
   "license": "ISC",
