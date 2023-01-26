@@ -19,4 +19,4 @@ jobs:
       - name: Generate Environment Variables File for Production
         run: npm run dev
         env:
-          REACT_APP_MONGOURI : '${{ secrets.REACT_APP_MONGOURI }}'
+          REACT_APP_MONGOURI : ${{ secrets.REACT_APP_MONGOURI }}
