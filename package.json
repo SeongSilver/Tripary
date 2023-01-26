@@ -1,5 +1,5 @@
 {
-  "name": "paintravel-backend",
+  "name": "paintravel",
   "version": "1.0.0",
   "description": "PainTravel 프로젝트 Backend, node&mongoDB",
   "main": "paintravel-backend/index.js",
@@ -25,5 +25,5 @@
   "devDependencies": {
     "nodemon": "^2.0.20"
   },
-  "proxy": "http://54.149.54.73:5000"
+  "proxy": "http://localhost:5000"
 }
