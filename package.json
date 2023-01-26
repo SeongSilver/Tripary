@@ -7,7 +7,8 @@
     "start": "node paintravel-backend/index.js",
     "backend": "nodemon paintravel-backend/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"npm run backend\" \"npm run start --prefix paintravel-frontend\""
+    "dev": "concurrently \"npm run backend\" \"npm run start --prefix paintravel-frontend\"",
+    "build" : "webpack"
   },
   "author": "yana-ko",
   "license": "ISC",
