@@ -16,5 +16,5 @@ jobs:
       REACT_APP_MONGOURI : ${{ secrets.REACT_APP_MONGOURI }}
 
     steps:
-    - uses: npm run dev
+    - uses: actions/checkout@v2
     - run: echo $REACT_APP_MONGOURI
