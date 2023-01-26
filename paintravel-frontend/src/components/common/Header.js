@@ -81,7 +81,7 @@ function Header() {
   };
 
   const goMain = () => {
-    if (window.location.href === "http://localhost:3000/") {
+    if (window.location.href === "http://54.149.54.73:3000/") {
       location.reload();
     } else {
       navigate("/");
