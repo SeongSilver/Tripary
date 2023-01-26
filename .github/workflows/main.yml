@@ -17,7 +17,6 @@ jobs:
 
       # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
       - name: Generate Environment Variables File for Production
-        run: |
-          echo "REACT_APP_MONGOURI=$REACT_APP_MONGOURI" >> .env.production
+        run: npm run dev
         env:
           REACT_APP_MONGOURI : '${{ secrets.REACT_APP_MONGOURI }}'
