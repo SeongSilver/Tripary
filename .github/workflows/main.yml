@@ -19,8 +19,5 @@ jobs:
       - name: Generate Environment Variables File for Production
         run: |
           echo "REACT_APP_MONGOURI=$REACT_APP_MONGOURI" >> .env.production
-          echo "REACT_APP_NODE_ENV=$REACT_APP_NODE_ENV" >> .env.production
         env:
           REACT_APP_MONGOURI : '${{ secrets.REACT_APP_MONGOURI }}'
-          REACT_APP_NODE_ENV : 'production'
-          
