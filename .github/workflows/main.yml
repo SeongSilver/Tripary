@@ -1,7 +1,10 @@
 name: Automatically Deployment
 
 on: 
-  [push, pull_request]
+  push:
+    branches: [ distribute ]
+  pull_request: 
+    branches : [ distribute ]
 
 jobs:
   deployment:
@@ -18,3 +21,5 @@ jobs:
           echo "REACT_APP_MONGOURI=$REACT_APP_MONGOURI" >> .env.production
         env:
           REACT_APP_MONGOURI : '${{ secrets.REACT_APP_MONGOURI }}'
+          NODE_ENV : 'production'
+          
