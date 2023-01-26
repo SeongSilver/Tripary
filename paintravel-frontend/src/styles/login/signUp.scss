@@ -15,12 +15,27 @@
   height: 0;
   text-indent: -9999px;
 }
-
-@media all and (max-width:600px) {
+// 모바일
+@media all and (max-width:767px) {
   .signUpWrap {padding: 2vh 30px;}
+  .message {
+    line-height: 4vh;
+    font-size: 1.6rem !important;
+  }
+  @media all and (max-width:490px) {
+    form > div > div:nth-child(2) .message {line-height: 2vh !important;}
+    form > div > div:nth-child(3) .message {line-height: 2vh !important;}
+  }
+  @media all and (min-width:491px) and (max-width:623px) {
+    form > div > div:nth-child(3) .message {line-height: 2vh !important;}
+  }
 }
-@media all and (min-width:601px) {
+@media all and (min-width:768px) {
   .signUpWrap {padding: 2vh 60px;}
+  .message {
+    line-height: 4vh;
+    font-size: 1.2rem !important
+  }
 }
 
 .signUpContainer {
@@ -36,9 +51,10 @@
     width: 100vw;
     height: 100vh;
     z-index: 1000;
+    padding:0 10vw;
     @include font;
     .signUpWrap {
-      min-width: 400px;
+      min-width: 200px;
       max-width: 600px;
       height: 80%;
       margin: 10vh auto 0 auto;
@@ -84,8 +100,6 @@
           }
           .message {
             font-weight: 500;
-            font-size: 1.2rem;
-            line-height: 4vh;
             position: absolute;
             bottom: 0;
             left: 0;
