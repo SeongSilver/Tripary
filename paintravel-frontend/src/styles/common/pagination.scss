@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   margin: 16px;
   font-size: 16px;
   .pageBtn {
@@ -31,6 +31,13 @@
       font-weight: bold;
       cursor: revert;
       transform: revert;
+      border: 2px solid rgba(0, 0, 0, 0.8);
     }
+  }
+  .pageBtn:first-child {
+    margin-right:10px;
+  }
+  .pageBtn:last-child {
+    margin-left:10px;
   }
 }
