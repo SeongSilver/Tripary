@@ -93,7 +93,8 @@ const GlobeMap = () => {
         am5map.MapPolygonSeries.new(root, {
           geoJSON: am5geodata_worldLow,
           exclude: ["AQ"],
-          fill: "#809cb0b7",
+          // fill: "#809cb0b7",
+          fill: "rgba(239,248,255,0.5)",
           strokeWidth: "3px",
         })
       );
@@ -172,7 +173,8 @@ const GlobeMap = () => {
 
       //지도에서 바다색칠하는 부분
       backgroundSeries.mapPolygons.template.setAll({
-        fill: "#1633569c",
+        // fill: "#1633569c",
+        fill: "rgba(17,54,100,0.5)",
         stroke: "transparent",
       });
       backgroundSeries.data.push({

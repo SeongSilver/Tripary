@@ -161,10 +161,10 @@ function PostWrite() {
         <form className="postWriteWrap" encType="multipart/form-data">
           <div className="gallery">
             <h2>Gallery</h2>
-            <span className="inputFileBtn">
-              <label htmlFor="galleryUpload">
-                <RiFolderAddFill />
-              </label>
+            <div className="inputFileBtn">
+                <label htmlFor="galleryUpload">
+                  <RiFolderAddFill />
+                </label>
               <input
                 type="file"
                 name="myfile"
@@ -172,18 +172,21 @@ function PostWrite() {
                 id="galleryUpload"
                 onChange={onLoadFile}
                 accept="image/jpg,image/png,image/jpeg,image/gif"
+                alt="이미지 추가하기"
               />
-            </span>
+            </div>
             <div className="galleryContainer">
               {previewImg.map((image, id) => (
                 <div className="galleryImageContainer" key={id}>
-                  <img
-                    src={image}
-                    alt={`${image} - ${id}`}
-                    id={id}
-                    onClick={(event) => console.dir(event.target)}
-                  />
-                  <span onClick={() => deleteImage(id)}>
+                  <figure>
+                    <img
+                      src={image}
+                      alt="업로드 이미지"
+                      id={id}
+                      onClick={(event) => console.dir(event.target)}
+                    />
+                  </figure>
+                  <span onClick={() => deleteImage(id)} tabIndex="0">
                     <MdDeleteForever />
                   </span>
                 </div>
@@ -198,7 +201,8 @@ function PostWrite() {
                 name="title"
                 onChange={onChangePost}
                 placeholder="30자 내로 작성하세요"
-                maxLength="30"></input>
+                aria-label="30자 내로 작성하세요"
+                maxLength="30"/>
             </li>
             <li>
               <p>위치</p>
@@ -206,7 +210,7 @@ function PostWrite() {
                 type="text"
                 name="location"
                 onChange={onChangePost}
-                onKeyDown={handleOnKeyPress}></input>
+                onKeyDown={handleOnKeyPress}/>
             </li>
             <li>
               <p>일정</p>
@@ -221,7 +225,8 @@ function PostWrite() {
                 dateFormat="yyyy-MM-dd"
                 placeholderText="여행 기간 선택"
                 className="datePicker"
-                tabindex="-1"
+                aria-label="여행 기간 선택"
+                tabIndex="-1"
               />
             </li>
             <li>

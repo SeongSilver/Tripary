@@ -64,7 +64,7 @@
   @include noDrag;
   .modalDiv {
     position: relative;
-    min-width: 500px;
+    min-width: 300px;
     width: 1000px;
     height: 85vh;
     background-color: white;
@@ -183,9 +183,8 @@
     }
     .modalFooter {
       margin-top: 20px;
-      padding: 0 30%;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       > a {
         color: white;
         font-size: 1.2rem;
@@ -200,6 +199,7 @@
       }
       .postEditBtn {
         background-color: rgba(0, 200, 100, 0.7);
+        margin-right:10%;
       }
       .postEditBtn:hover {
         background-color: rgba(0, 200, 100, 1);
