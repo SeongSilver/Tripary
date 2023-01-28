@@ -4,7 +4,7 @@
   "description": "PainTravel 프로젝트 Backend, node&mongoDB",
   "main": "paintravel-backend/index.js",
   "scripts": {
-    "build" : "webpack",
+    "build" : "concurrently \"webpack\" \"npm run build --prefix paintravel-frontend\"",
     "start": "node paintravel-backend/index.js",
     "backend": "nodemon paintravel-backend/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
