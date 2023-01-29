@@ -56,7 +56,6 @@ function MyPage() {
   }, [login_id, sortBy, mypageList, sort]);
 
   const openContentModal = (event) => {
-    console.log(event.target.parentElement);
     if (
       event.target !== event.currentTarget.children[1].children[5] &&
       event.target.parentElement !==

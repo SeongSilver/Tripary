@@ -26,15 +26,18 @@ router.use(bodyParser.json());
 
 //글 등록 라우터
 router.post("/upload", upload.array("myfile"), (req, res) => {
+  console.log("1111");
   //받아온 값들을 post모델에 저장
   const post = new Post(req.body);
   //파일의 경우, 파일명(filename)을 저장하는것으로 설정. path를 저장하고 싶은 경우, req.files.path사용하는것으로 변경 가능
   for (i = 0; i < req.files.length; i++) {
     post.file[i] = req.files[i].filename;
   }
+  console.log("22222");
 
   post.save((err, postInfo) => {
     if (err) return res.state(400).json({ postWriteSuccess: false, err });
+    console.log("3333333");
     return res.status(200).json({
       postWriteSuccess: true,
       postInfo: postInfo,
@@ -155,7 +158,7 @@ router.post("/getPostDelete", async (req, res) => {
   let postWritedInfo = await Post.find({ _id: req.body.post_id }).select(
     "writer file"
   );
-    if (postWritedInfo[0].writer == req.body.currentId) {
+  if (postWritedInfo[0].writer == req.body.currentId) {
     for (i = 0; i < postWritedInfo[0].file.length; i++) {
       console.log("삭제할 파일 리스트 [" + postWritedInfo[0].file + "]");
       if (postWritedInfo[0].file[i]) {
