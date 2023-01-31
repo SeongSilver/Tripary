@@ -6,7 +6,7 @@
 
 ---
   
-## :pushpin: 프로젝트 개요  
+## :pushpin: 프로젝트 개요
 여행을 좋아하는 사람들 셋이서 세계 여행 
 ---
   
@@ -50,24 +50,46 @@
 ---
 
 ## :pushpin: 프로젝트 사용 방법
-#### 로그인 안된 메인화면
-![메인-로그인안함](https://user-images.githubusercontent.com/95121282/215316223-599b084c-2c7d-44dd-9a43-caa79be70878.png)
-![로그인 안하고 나라 클릭 시](https://user-images.githubusercontent.com/95121282/215739787-e4f51470-31bd-419f-93ff-9da655923ff7.png)
+### 로그인 전
+* 메인 화면 지구본에는 색이 아무것도 칠해져 있지 않다
+* 국가 클릭 시 리스트 대신 로그인 페이지로 이동하는 버튼이 띄워지도록 구현
+
+![메인-로그인안함](https://user-images.githubusercontent.com/95121282/215316223-599b084c-2c7d-44dd-9a43-caa79be70878.png)  
+![로그인 안하고 나라 클릭 시](https://user-images.githubusercontent.com/95121282/215739787-e4f51470-31bd-419f-93ff-9da655923ff7.png)  
+
+### 로그인 & 회원가입
+* 계정 정보가 없을 시 로그인 input 하단에 회원가입 버튼을 클릭 후 회원가입
+
 ![로그인 화면](https://user-images.githubusercontent.com/95121282/215740049-0eb62e7f-422b-45e4-98ae-9d84540bbaa2.png)
-![회원가입 모달](https://user-images.githubusercontent.com/95121282/215740091-941db819-5724-4f8c-abaa-bb000c881446.png)
+![회원가입 모달](https://user-images.githubusercontent.com/95121282/215740091-941db819-5724-4f8c-abaa-bb000c881446.png)  
 
+### 로그인 후
+* 게시물이 있는 국가는 색칠되어 지구본이 메인페이지 렌더링 시 띄워지도록 구현
+* 게시물이 없는 국가 클릭 시 게시물 작성 페이지로 이동하는 버튼이 띄워지도록 구현
+* 게시물이 있는 국가 클릭 시 해당 국가의 게시물들 리스트가 카드 형식으로 띄워지도록 구현
+* 게시물 클릭 시 모달이 렌더링 되고 게시물의 디테일, 사진을 확인 할 수 있으며 하단에 수정페이지로 이동하는 버튼, 삭제버튼 구현
 
-#### 로그인 된 게시물 데이터가 있는 메인화면![로그인되고 게시물 있는 나라 클릭시](https://user-im
-
-ages.githubusercontent.com/95121282/215739745-957247a6-351d-4f30-a731-84961e773a3e.png)
-![로그인된 정보가 있는 메인](https://user-images.githubusercontent.com/95121282/215316192-2a3d1349-37e1-4639-98ee-67422a5b5e8a.png)
+![로그인된 정보가 있는 메인](https://user-images.githubusercontent.com/95121282/215316192-2a3d1349-37e1-4639-98ee-67422a5b5e8a.png)  
 ![글이 없는 나라](https://user-images.githubusercontent.com/95121282/215739903-f81492f7-14b5-45fd-b1db-fecb6f61ff87.png)
-![Uploading 로그인되고 게시물 있는 나라 클릭시.png…]()
-![리스트에서 모달](https://user-images.githubusercontent.com/95121282/215740136-43bc31f0-8f96-4a8d-9b60-7443f47cf642.PNG)
+![로그인되고 게시물 있는 나라 클릭시](https://user-images.githubusercontent.com/95121282/215739745-957247a6-351d-4f30-a731-84961e773a3e.png)
+![리스트에서 모달](https://user-images.githubusercontent.com/95121282/215744118-f412c0fb-bfee-4a55-9f5a-604467fbae8e.PNG)
 
 
-![글 수정 화면](https://user-images.githubusercontent.com/95121282/215739951-df7a4cfd-b2b2-499c-b634-0be777191f9a.png
+
+### 마이페이지
+* 마이페이지에서 게시한 모든 게시물을 업로드일, 여행 시작일 기준으로 정렬된다
+* 국가명, 제목을 select box에서 선택 후 검색되도록 구현  
+* 검색 또는 한 페이지에 보일 게시물 수를 선택할 수 있고 페이지네이션도 유동적으로 변한다
+* 게시물 클릭 시 모달이 렌더링 되고 게시물의 디테일, 사진을 확인 할 수 있으며 하단에 수정페이지로 이동하는 버튼, 삭제버튼 구현
+
 ![마이페이지 검색](https://user-images.githubusercontent.com/95121282/215739980-ce881c6d-1778-449e-94f5-b138a4dc8895.PNG)
-)![마이페이지 모달](https://user-images.githubusercontent.com/95121282/215740154-d6a7362f-9cdd-4d12-929e-2ce797c48aeb.PNG)
+![마이페이지 모달](https://user-images.githubusercontent.com/95121282/215740154-d6a7362f-9cdd-4d12-929e-2ce797c48aeb.PNG)
+
+#### 게시물 수정 페이지
+* 게시물 등록, 수정 페이지로 이미지는 총 10장까지 업로드 가능하다
+* 각 input box는 모두 각각의 유효성 검사를 구현
+* 일정 선택은 기간 선택을 위해 react-datePicker 라이브러리 사용
+
+![글 수정 화면](https://user-images.githubusercontent.com/95121282/215742439-12f9c5b4-1041-412e-8b03-cf994d2bb491.png)
 
 
