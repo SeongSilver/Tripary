@@ -3,11 +3,10 @@
 
 # Paintravel
 ### 세계여행 기록을 나만의 지구본에 색칠해 나가는 앨범 서비스
-
----
   
-## :pushpin: 프로젝트 개요
-여행을 좋아하는 사람들 셋이서 세계 여행 
+
+
+
 ---
   
 ## :pushpin: 프로젝트 설명
@@ -19,6 +18,8 @@
  
 :computer: 개발환경  
 
+<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat&logo=Visual Studio Code&logoColor=white"/>
+
 
   <img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/Sass-CC6699?style=flat&logo=Sass&logoColor=white"/> <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=Axios&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white"/> <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=MongoDB&logoColor=white"/>  
    
@@ -26,8 +27,8 @@
 :runner: 팀원 
 
 
-* [고현아(풀스택)](https://github.com/Yana94Ko)  :  각자의 역할을 쓰시오  
-* [문수빈(퍼블리셔)](https://github.com/NYANGSoobeen)  :  반응형 웹 구현, 와이어프레임, 기타 디자인 및 퍼블리싱, 메인페이지 캔버스 별 함수 작성 
+* [고현아(풀스택)](https://github.com/Yana94Ko)  :  am5 chart map 핸들링, node.js를 활용 백엔드 및 서버 담당, mongoDB를 활용 DB 담당, redux를 활용 state 관리, bcrypt 모듈 활용 계정 암호화, 로그인 여부에 따른 제한 접근 라우팅 구현
+* [문수빈(퍼블리셔)](https://github.com/NYANGSoobeen)  :  반응형 웹 구현, 전체 페이지 퍼블리싱, 와이어프레임, 기타 디자인, 메인페이지 캔버스 별 함수 작성 
 * [유성은(프론트엔드)](https://github.com/SeongSilver) :  am5 chart map 핸들링, React 작업 세팅, 라우팅, state 및 컴포넌트 관리, localStorage,  
  react-dataPicker,  react-slick 핸들링, 로고 디자인
 
