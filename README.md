@@ -5,16 +5,17 @@
 ---
   
 ## :pushpin: 프로젝트 설명
+페인트래블은 지구본을 돌려가며 각 나라에 여행을 기록하면서 동시에 색칠도 하는 앨범 서비스이다.  
+각 나라에 게시물을 업로드 할 수 있고 업로드 된 게시물의 개수에 따라 색이 점점 밝아진다.(10개부터는 동일)  
+마이페이지, 각 국가의 리스트를 통해 게시물 목록을 확인 할 수 있으며  
+모달을 통해 슬라이드로 게시물의 내용 및 사진을 확인 할 수 있고 수정, 삭제가 가능하다.  
+
 * 페이지 주요기능
   * am5 chart map API : 지구본 형태의 세계지도 핸들링
   * axios 활용한 데이터 송수신
   
-* 내가 구현한 기능
-  * am5 chart map API  
-  * 리액트 프로젝트 세팅, 라우팅, 페이지 세팅  
-  * state 관리 및 컴포넌트의 함수, 기능  
-  * localStorage 로그인 기능, Modal, Mypage SCSS  
-  * SLIDE, PAGINATION 등  
+:computer: 개발환경  
+<img src="https://img.shields.io/badge/react-61DAFB?style=flat&logo=react&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/Sass-CC6699?style=flat&logo=Sass&logoColor=white"/> <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=Axios&logoColor=white"/> <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white"/> <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=MongoDB&logoColor=white"/> 
 
 ---
   
