@@ -1,5 +1,9 @@
-<img src="https://user-images.githubusercontent.com/95121282/215732992-b6e04c47-e3db-4c9f-aaa9-54809f51a86f.png" width="150" height="auto">
+![Generic badge](https://img.shields.io/badge/npm-v18.9.0-blue.svg)
 
+
+<div align="center">
+<img src="https://user-images.githubusercontent.com/95121282/215732992-b6e04c47-e3db-4c9f-aaa9-54809f51a86f.png" width="300" height="auto">
+</div>
 
 # Paintravel
 ### 세계여행 기록을 나만의 지구본에 색칠해 나가는 앨범 서비스
@@ -32,6 +36,12 @@
 * [유성은(프론트엔드)](https://github.com/SeongSilver) :  am5 chart map 핸들링, React 작업 세팅, 라우팅, state 및 컴포넌트 관리, localStorage,  
  react-dataPicker,  react-slick 핸들링, 로고 디자인
 
+---
+  
+## :pushpin: 목차
+* [개발 로그](개발 로그)
+* [프로젝트 사용 방법](프로젝트 사용 방법)
+* [참고 자료](참고자료)
 
 ---
   
@@ -44,9 +54,56 @@
 * react-redux및 useState로 state 관리
 * react-dataPicker, react-slick 등 다양한 라이브러리 사용  
 
-## dependencies
-![dependency](https://user-images.githubusercontent.com/95121282/215739094-f87bc988-5da1-4051-80d3-4145aaf34fa2.PNG)  
-
+## dependencies  
+* Frontend
+```
+"dependencies": {
+    "@amcharts/amcharts5": "^5.2.33",
+    "@amcharts/amcharts5-geodata": "^5.0.6",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.1.3",
+    "d3-array": "^3.2.0",
+    "d3-fetch": "^3.0.1",
+    "d3-geo-projection": "^4.0.0",
+    "d3-scale": "^4.0.2",
+    "immer": "^9.0.16",
+    "react": "^18.2.0",
+    "react-datepicker": "^4.8.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.6.0",
+    "react-redux": "^8.0.5",
+    "react-router": "^6.4.3",
+    "react-router-dom": "^6.4.3",
+    "react-scripts": "5.0.1",
+    "react-simple-maps": "^3.0.0",
+    "react-slick": "^0.29.0",
+    "redux": "^4.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-promise": "^0.6.0",
+    "redux-saga": "^1.2.1",
+    "redux-thunk": "^2.4.2",
+    "sass": "^1.56.1",
+    "slick-carousel": "^1.8.1",
+    "styled-component": "^2.8.0",
+    "web-vitals": "^2.1.4"
+  }
+```
+* Backend
+```
+"dependencies": {
+    "@react-icons/all-files": "^4.1.0",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
+    "concurrently": "^7.5.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.2",
+    "multer": "^1.4.5-lts.1"
+  }
+```
 
 ---
 
@@ -94,3 +151,10 @@
 ![글 수정 화면](https://user-images.githubusercontent.com/95121282/215742439-12f9c5b4-1041-412e-8b03-cf994d2bb491.png)
 
 
+---
+
+## :pushpin: 참고자료
+* am5 chart map  : [https://www.amcharts.com/docs/v5/charts/map-chart/](https://www.amcharts.com/docs/v5/charts/map-chart/)
+* react-slick
+* react-datePicker
+* bcrypt
