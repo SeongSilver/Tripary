@@ -39,13 +39,13 @@
 ---
   
 ## :pushpin: 목차
-* [개발 로그](개발 로그)
-* [프로젝트 사용 방법](프로젝트 사용 방법)
-* [참고 자료](참고자료)
+[개발 로그](#-1.-개발-로그)  
+[프로젝트 사용 방법](#-2.-프로젝트-사용-방법)  
+[참고 자료](#-3.-참고-자료)  
 
 ---
   
-## :pushpin: 개발 로그
+## :pushpin: 1. 개발 로그
 * JSX, SCSS, Javascript를 활용하여 전체 페이지 구성
 * SCSS를 활용하여 반응형 웹 지원
 * am5 chart Map을 사용한 지구본 구현
@@ -107,7 +107,18 @@
 
 ---
 
-## :pushpin: 프로젝트 사용 방법
+## :pushpin: 2. 프로젝트 사용 방법
+### 설치
+PAINTRAVEL 폴더, paintravel-frontend 폴더에서 패키지 및 라이브러리 설치
+```
+npm install
+```
+
+PAINTRAVEL 폴더에서 프로젝트 시작
+```
+npm run dev
+```
+
 ### 로그인 전
 * 메인 화면 지구본에는 색이 아무것도 칠해져 있지 않다
 * 국가 클릭 시 리스트 대신 로그인 페이지로 이동하는 버튼이 띄워지도록 구현
@@ -153,8 +164,8 @@
 
 ---
 
-## :pushpin: 참고자료
+## :pushpin: 3. 참고 자료
 * am5 chart map  : [https://www.amcharts.com/docs/v5/charts/map-chart/](https://www.amcharts.com/docs/v5/charts/map-chart/)
-* react-slick
-* react-datePicker
-* bcrypt
+* react-slick : [https://sirong.tistory.com/38](https://sirong.tistory.com/38)
+* react-datePicker : [https://reactdatepicker.com/](https://reactdatepicker.com/)
+* bcrypt : [https://inpa.tistory.com/entry/NODE-%F0%9F%93%9A-bcrypt-%EB%AA%A8%EB%93%88-%EC%9B%90%EB%A6%AC-%EC%82%AC%EC%9A%A9%EB%B2%95](https://inpa.tistory.com/entry/NODE-%F0%9F%93%9A-bcrypt-%EB%AA%A8%EB%93%88-%EC%9B%90%EB%A6%AC-%EC%82%AC%EC%9A%A9%EB%B2%95)
