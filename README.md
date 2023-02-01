@@ -31,7 +31,7 @@
 :runner: 팀원 
 
 
-* [고현아(풀스택)](https://github.com/Yana94Ko)  :  am5 chart map 핸들링, node.js 활용 백엔드 및 서버 담당, mongoDB 활용 DB 담당, redux 활용 state 관리, bcrypt 모듈 활용 계정 암호화, 로그인 여부에 따른 제한 접근 및 authorization 구현
+* [고현아(풀스택)](https://github.com/Yana94Ko)  :  am5 chart map 핸들링, node.js 활용 백엔드 및 서버 담당, mongoDB 활용 DB 담당, redux 활용 state 관리, bcrypt 모듈 활용 계정 암호화, 로그인 여부에 따른 제한 접근 및 authorization 구현, multer활용 파일 업로드 수정 삭제 
 * [문수빈(퍼블리셔)](https://github.com/NYANGSoobeen)  :  반응형 웹 구현, 전체 페이지 퍼블리싱, 와이어프레임, 기타 디자인, 메인페이지 캔버스 별 함수 작성 
 * [유성은(프론트엔드)](https://github.com/SeongSilver) :  am5 chart map 핸들링, React 작업 세팅, 라우팅, state 및 컴포넌트 관리, localStorage,  
  react-dataPicker,  react-slick 핸들링, 로고 디자인
