@@ -45,7 +45,8 @@
 
 ---
   
-## :pushpin: 1. 개발 로그
+## :pushpin:   
+1. 개발 로그
 * JSX, SCSS, Javascript를 활용하여 전체 페이지 구성
 * SCSS를 활용하여 반응형 웹 지원
 * am5 chart Map을 사용한 지구본 구현
@@ -107,7 +108,8 @@
 
 ---
 
-## :pushpin: 2. 프로젝트 사용 방법
+## :pushpin:   
+2. 프로젝트 사용 방법
 ### 설치
 PAINTRAVEL 폴더, paintravel-frontend 폴더에서 패키지 및 라이브러리 설치
 ```
@@ -164,7 +166,8 @@ npm run dev
 
 ---
 
-## :pushpin: 3. 참고 자료
+## :pushpin:   
+3. 참고 자료
 * am5 chart map  : [https://www.amcharts.com/docs/v5/charts/map-chart/](https://www.amcharts.com/docs/v5/charts/map-chart/)
 * react-slick : [https://sirong.tistory.com/38](https://sirong.tistory.com/38)
 * react-datePicker : [https://reactdatepicker.com/](https://reactdatepicker.com/)
