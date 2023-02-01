@@ -39,10 +39,8 @@
 ---
   
 ## :pushpin: 목차  
-
-1. [개발 로그](#:pushpin:-1.-개발-로그)  
-2. [프로젝트 사용 방법](#:pushpin:-2.-프로젝트-사용-방법)  
-3. [참고 자료](#:pushpin:3.-참고-자료)  
+[1.개발을 하고 싶어요](#개발을-하고-싶어요)
+[2.코딩을 잘하고 싶어요](#coding을-잘하고-싶어요)
 
 ---
   
@@ -108,6 +106,7 @@
 
 ---
 
+## 개발을 하고 싶어요
 ## :pushpin: 2. 프로젝트 사용 방법
 ### 설치
 PAINTRAVEL 폴더, paintravel-frontend 폴더에서 패키지 및 라이브러리 설치
@@ -164,7 +163,7 @@ npm run dev
 
 
 ---
-
+## Coding을 잘하고 싶어요
 ## :pushpin: 3. 참고 자료
 * am5 chart map  : [https://www.amcharts.com/docs/v5/charts/map-chart/](https://www.amcharts.com/docs/v5/charts/map-chart/)
 * react-slick : [https://sirong.tistory.com/38](https://sirong.tistory.com/38)
