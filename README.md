@@ -154,7 +154,7 @@ npm run dev
 ![마이페이지 검색](https://user-images.githubusercontent.com/95121282/215739980-ce881c6d-1778-449e-94f5-b138a4dc8895.PNG)
 ![마이페이지 모달](https://user-images.githubusercontent.com/95121282/215740154-d6a7362f-9cdd-4d12-929e-2ce797c48aeb.PNG)
 
-#### 게시물 수정 페이지
+#### 게시물 등록 및 수정 페이지
 * 게시물 등록, 수정 페이지로 이미지는 총 10장까지 업로드 가능하다
 * 각 input box는 모두 각각의 유효성 검사를 구현
 * 일정 선택은 기간 선택을 위해 react-datePicker 라이브러리 사용
