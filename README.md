@@ -164,7 +164,6 @@ npm run dev
 
 
 ---
-## Coding을 잘하고 싶어요
 ## 참고 자료
 * am5 chart map  : [https://www.amcharts.com/docs/v5/charts/map-chart/](https://www.amcharts.com/docs/v5/charts/map-chart/)
 * react-slick : [https://sirong.tistory.com/38](https://sirong.tistory.com/38)
