@@ -21,8 +21,12 @@ function deletePhoto(file_name) {
   }
 }
 
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ 
+  limit : "50mb",
+  extended: true }));
+router.use(bodyParser.json({
+  limit : "50mb"
+}));
 
 //글 등록 라우터
 router.post("/upload", upload.array("myfile"), (req, res) => {
