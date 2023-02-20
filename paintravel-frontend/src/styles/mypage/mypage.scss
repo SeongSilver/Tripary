@@ -10,27 +10,160 @@
   -ms-user-select: none;
   user-select: none;
 }
+// 테블릿 & 모바일
+@media all and (max-width: 1024px) {
+  html {
+    font-size: 46.875% !important;
+  }
+  .myPageMenu {
+    font-size: 1.8rem;
+    li:nth-child(1) {
+      width: 10vw;
+    }
+    li:nth-child(2) {
+      width: 12vw;
+    }
+    li:nth-child(3) {
+      width: 15vw;
+    }
+    li:nth-child(4) {
+      width: 24vw;
+    }
+    li:nth-child(5) {
+      width: 12vw;
+    }
+    // li:nth-child(6) {width: 6vw;}
+  }
+  .mypageListSmallUl {
+    li {
+      font-size: 1.6rem !important;
+    }
+    li:nth-child(1) {
+      width: 10vw;
+    }
+    li:nth-child(2) {
+      width: 12vw;
+    }
+    li:nth-child(3) {
+      width: 15vw;
+    }
+    li:nth-child(4) {
+      width: 24vw;
+    }
+    li:nth-child(5) {
+      width: 12vw;
+    }
+    // li:nth-child(6) {width: 6vw;}
+  }
+  @media all and (max-width: 515px) {
+    .myPageMenu {
+      font-size: 1.6rem;
+      li:nth-child(1) {
+        display: none;
+      }
+      li:nth-child(2) {
+        width: 14vw;
+      }
+      li:nth-child(3) {
+        width: 17vw;
+      }
+      li:nth-child(4) {
+        width: 29vw;
+      }
+      li:nth-child(5) {
+        width: 15vw;
+      }
+      // li:nth-child(6) {width: 6vw;}
+    }
+    .mypageListSmallUl {
+      li {
+        font-size: 1.6rem !important;
+      }
+      li:nth-child(1) {
+        display: none;
+      }
+      li:nth-child(2) {
+        width: 14vw;
+      }
+      li:nth-child(3) {
+        width: 17vw;
+      }
+      li:nth-child(4) {
+        width: 29vw;
+      }
+      li:nth-child(5) {
+        width: 15vw;
+      }
+      // li:nth-child(6) {width: 6vw;}
+    }
+  }
+}
+// PC
+@media all and (min-width: 1025px) {
+  .myPageMenu {
+    li:nth-child(1) {
+      width: 10vw;
+    }
+    li:nth-child(2) {
+      width: 10vw;
+    }
+    li:nth-child(3) {
+      width: 18vw;
+    }
+    li:nth-child(4) {
+      width: 21vw;
+    }
+    li:nth-child(5) {
+      width: 14vw;
+    }
+    // li:nth-child(6) {width: 6vw;}
+  }
+  .mypageListSmallUl {
+    li:nth-child(1) {
+      width: 10vw;
+    }
+    li:nth-child(2) {
+      width: 10vw;
+    }
+    li:nth-child(3) {
+      width: 18vw;
+    }
+    li:nth-child(4) {
+      width: 21vw;
+    }
+    li:nth-child(5) {
+      width: 14vw;
+    }
+    // li:nth-child(6) {width: 6vw;}
+  }
+}
+
 .myPage {
+  width: 100vw;
+  height: 100vh;
+  background: url(../../img/mypage/mypageBg.png);
+  background-size: 100vw 100vh;
+  position: relative;
+  font-size: 1.6rem;
   .mypageContainer {
-    background: url(../../img/mypage/mypageBg.png);
-    background-size: 100vw 100vh;
     width: 100vw;
-    padding-top: calc(100px / 1080px * 100vh);
+    padding-top: 10vh;
     height: 100vh;
-    font-size: 1.6em;
     position: relative;
+    z-index: 1;
     @include noDrag;
     .myPageBtn {
       display: flex;
       justify-content: right;
-      margin-top: 10px;
-      margin-right: 7vw;
+      margin: 2vh 7vw 0 0;
+      font-size: 1.2rem;
       select {
         outline: none;
         border: none;
         padding: 5px;
         border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
         background-color: transparent;
+        font-size: 1.2rem;
       }
       input {
         width: 20vw;
@@ -40,6 +173,7 @@
         border: none;
         border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
         text-align: center;
+        font-size: 1.2rem;
       }
       button {
         padding: 0 0.3vw;
@@ -53,11 +187,11 @@
       }
       label {
         margin: 1px 4px;
+        border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
         select {
           outline: none;
           border: none;
           padding: 5px;
-          border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
           background-color: transparent;
         }
       }
@@ -65,35 +199,26 @@
     .myPageListContainer {
       width: 85vw;
       height: 70vh;
-      margin: 2vw 8vw;
+      margin: 3vh 8vw;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
       border-radius: 20px;
       .myPageMenu {
-        height: 6vh;
-        padding-top: 1vh;
-        font-weight: 600;
+        height: 8vh;
+        font-weight: 700;
+        padding: 0 1vw;
         li {
-          width: 10vw;
-          height: 30px;
-          line-height: 30px;
-          margin: 0.5vw 1vw;
+          height: 6vh;
+          line-height: 6vh;
+          margin: 1vh 1vw;
           float: left;
           border-bottom: 1px solid rgba(0, 0, 0, 0.8);
           position: relative;
           text-align: center;
-        }
-        li:nth-child(1) {
-          width: 14vw;
-        }
-        li:nth-child(2) {
-          width: 19vw;
-        }
-        li:nth-child(4) {
-          width: 14vw;
           span {
-            position: absolute;
-            top: 0;
-            right: 0;
+            // position: absolute;
+            // top: 0;
+            // right: 0;
+            float: right;
             svg {
               cursor: pointer;
               transition: 0.2s ease-in-out;
@@ -102,105 +227,89 @@
               color: rgba(0, 0, 0, 0.3);
             }
           }
-        }
-        li:nth-child(5) {
-          width: 8vw;
-          span {
-            position: absolute;
-            top: 0;
-            right: 0;
-            svg {
-              cursor: pointer;
-              transition: 0.2s ease-in-out;
-            }
-            svg:hover {
-              color: rgba(0, 0, 0, 0.3);
-            }
-          }
-        }
-        li:nth-child(6) {
-          width: 5vw;
         }
       }
-      .myPageListDiv {
+      .myPageList {
         width: 85vw;
-        height: 63vh;
-        overflow: scroll;
-        overflow-x: hidden;
-        .myPageList {
-          .mypageListLi {
-            span {
-              display: none;
-            }
-            .mypageListSmallUl {
-              transition: 0.3s ease-in;
-              li {
-                display: flex;
-                align-items: center;
-                justify-content: center;
+        height: 62vh;
+        padding: 0 1vw 1.5vh 1vw;
+        overflow: hidden;
+        .mypageListLi {
+          span {
+            display: none;
+          }
+          .mypageListSmallUl {
+            li {
+              margin: 0 1vw 1vh 1vw;
+              float: left;
+              text-align: center;
+              font-size: 1.4rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              figure {
                 width: 10vw;
-                height: 200px;
-                margin: 0.5vw 1vw;
-                float: left !important;
-                line-height: 150px;
-                text-align: center;
-                font-size: 1.1em;
-                white-space: nowrap;
+                height: 100%;
                 overflow: hidden;
-                text-overflow: ellipsis;
+                position: relative;
                 img {
-                  width: 10vw;
-                  height: 7.5vw;
+                  min-width: 10vw;
+                  width: auto;
                   object-fit: cover;
-                  line-height: 3.75vw;
-                }
-                svg {
-                  font-size: 1.5em;
-                  font-weight: 100;
-                  margin: 0 0.5vw;
-                  color: black;
+                  position: absolute;
+                  left: 50%;
+                  transform: translateX(-50%);
                 }
               }
-              li:nth-child(1) {
-                width: 14vw;
-              }
-              li:nth-child(2) {
-                width: 19vw;
-              }
-              li:nth-child(4) {
-                width: 14vw;
-              }
-              li:nth-child(5) {
-                width: 8vw;
-              }
-              li:nth-child(6) {
-                width: 5vw;
+              svg {
+                font-size: 1.5em;
+                font-weight: 100;
+                margin: 0 0.5vw;
+                color: black;
               }
             }
-            cursor: pointer;
+            .limit3 {
+              height: 19.5vh;
+              line-height: 19.5vh;
+              img {
+                height: 19.5vh;
+              }
+            }
+            .limit5 {
+              height: 11.3vh;
+              line-height: 11.3vh;
+              img {
+                height: 11.3vh;
+              }
+            }
+            .limit10 {
+              height: 5.1vh;
+              line-height: 5.1vh;
+              img {
+                height: 5.1vh;
+              }
+            }
           }
-          .mypageListLi:hover {
-            background-color: rgb(87, 105, 168);
-          }
+          cursor: pointer;
         }
-      }
-      .myPageListDiv::-webkit-scrollbar {
-        width: 15px;
-      }
-
-      .myPageListDiv::-webkit-scrollbar-thumb {
-        background-color: rgba(255, 255, 255, 0.5);
-        border-radius: 5px;
-        /* 스크롤바 둥글게 설정    */
-      }
-
-      /* 스크롤바 뒷 배경 설정*/
-      .myPageListDiv::-webkit-scrollbar-track {
-        background-color: rgba(0, 0, 0, 0);
       }
       .myPagePagination {
         margin-top: 5vh;
       }
     }
+  }
+  .mypageContainer::before {
+    content: "";
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.3),
+      rgba(255, 255, 255, 0.5) 15%
+    );
+    z-index: -1;
   }
 }

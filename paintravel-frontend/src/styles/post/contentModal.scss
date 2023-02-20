@@ -35,6 +35,17 @@
   height: 0;
   text-indent: -9999px;
 }
+
+// 모바일
+@media all and (max-width: 767px) {
+
+}
+
+// PC, 태블릿
+@media all and (min-width: 768px) {
+
+}
+
 .modalContainer {
   width: 100vw;
   height: 100vh;
@@ -48,61 +59,113 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.8);
+  padding:0 10vw;
   @include font;
   @include noDrag;
   .modalDiv {
-    position: absolute;
-    width: 50vw;
+    position: relative;
+    min-width: 300px;
+    width: 1000px;
     height: 85vh;
     background-color: white;
     transition: all 0.2s ease-out;
     border-radius: 20px;
-    .closeBtn {
-      position: absolute;
-      top: 1vw;
-      right: 1vw;
-      text-align: right;
-      z-index: 999;
-    }
+    @include font;
     .modalHeader {
-      font-size: 1.3em;
-      height: 5vh;
+      font-size: 1.2rem;
+      height: calc(6vh + 2px);
       padding: 0 3vw;
       position: relative;
-      margin: 2vw 0;
+      margin: 2vh 0;
       hr {
-        margin: 10px 0;
-      }
-      .modalHeaderBottom {
-        display: flex;
-        justify-content: space-between;
-        .modalDate {
-          display: flex;
-          flex-wrap: nowrap;
-          line-height: 16px;
-        }
-      }
-      * {
-        @include font;
-        overflow: hidden;
-        display: block;
+        margin: 0.5vh 0;
       }
       h1 {
-        width: 44vw;
+        width: 100%;
         margin-top: 2vh;
         line-height: 3vh;
         font-size: 2rem;
         font-weight: 800;
       }
-      h2 {
-        line-height: 2vh;
-        font-size: 1.5rem;
-        color: #555;
+      .modalHeaderBottom {
+        display: flex;
+        justify-content: space-between;
+        h2 {
+          max-width: 68%;
+          line-height: 2vh;
+          font-size: 1.6rem;
+          color: #555;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .modalDate {
+          width: 200px;
+          display: flex;
+          justify-content: right;
+          flex-wrap: nowrap;
+          line-height: 2vh;
+          margin-left:10px;
+          > span {
+            white-space: nowrap;
+          }
+        }
       }
     }
     .modalBody {
+      height: 66vh;
       position: relative;
       text-align: center;
+      .slick-slider {
+        height:66vh;
+        position:relative;
+        .slick-list {
+          height:100%;
+          .slick-track {
+            height: 100%;
+            overflow: hidden;
+            .slick-slide {
+              height: 100%;
+              > div {
+                width: 100%; height: 100%;
+                padding:0 3vw;
+                > div {
+                  width: 100%; height: 100%;
+                  position:relative;
+                  overflow: hidden;
+                  figure {
+                    width: 100%; height: calc(100% - 17vh);
+                    overflow: hidden;
+                    position:absolute; top: 0%;
+                    img {
+                      min-width: 100%; min-height: 100%;
+                      max-width: 200%; max-height: 120%;
+                      position:absolute; left: 50%; top: 50%;
+                      transform: translate(-50%, -50%);
+                      z-index: 1100;
+                      object-fit:cover !important;
+                    }
+                  }
+                  > img {
+                    min-width: 100%; min-height: calc(100% - 17vh);
+                    max-width: 200%; max-height: calc(100% - 17vh);
+                    position:absolute; left: 50%; bottom: 0%;
+                    transform: translateX(-50%);
+                    z-index: 1099;
+                    filter: blur(10px);
+                    object-fit:cover !important;
+                  }        
+                }
+              }
+            }
+          }
+        }
+        .slick-dots {
+          position:absolute;
+          bottom:17vh;
+          background-color: rgba(255,255,255,0.5);
+        }
+      }
       > pre {
         width: calc(100% - 6vw);
         height: 17vh;
@@ -112,37 +175,52 @@
         overflow: auto;
         line-height: 3vh;
         white-space: pre;
-        font-size: 1.5rem;
-        display: block;
-        margin-top: 50px;
+        font-size: 1.6rem;
         margin-left: 3vw;
+        position: absolute;
+        bottom:0;
       }
     }
-
     .modalFooter {
       margin-top: 20px;
-      padding: 0 18vw;
       display: flex;
-      justify-content: space-around;
-      font-size: 1.1em;
-      button {
+      justify-content: center;
+      > a {
         color: white;
-        font-size: 1.5em;
+        font-size: 1.2rem;
         font-weight: 600;
-        border: none;
         padding: 12px 8px 6px 8px;
         border-radius: 10px;
+        transition:all 0.5s;
         svg {
-          font-size: 1.2em;
-          margin-bottom: 5px;
+          font-size: 1.4em;
+          margin-bottom: 3px;
         }
       }
-      .editBtn {
+      .postEditBtn {
         background-color: rgba(0, 200, 100, 0.7);
+        margin-right:10%;
+      }
+      .postEditBtn:hover {
+        background-color: rgba(0, 200, 100, 1);
       }
       .deleteBtn {
         background-color: rgba(200, 37, 0, 0.7);
       }
+      .deleteBtn:hover {
+        background-color: rgba(200, 37, 0, 1);
+      }
+    }
+    .modalCloseBtn {
+      position: absolute;
+      top: 1vw;
+      right: 1vw;
+      z-index: 999;
+      svg {
+        font-size: 3rem;
+        color:#343434;
+      }
+      span {@include hidden}
     }
   }
 }

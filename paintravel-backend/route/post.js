@@ -9,35 +9,39 @@ const fs = require("fs");
 
 //업로드한 이미지 파일을 삭제하기 위한 함수
 function deletePhoto(file_name) {
-  console.log("파일 삭제하러 옴");
   if (fs.existsSync("paintravel-frontend/public/upload/" + file_name)) {
     // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
     try {
       fs.unlinkSync("paintravel-frontend/public/upload/" + file_name);
-      console.log("image delete 성공!");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 }
 
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
+router.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+  })
+);
+router.use(
+  bodyParser.json({
+    limit: "50mb",
+  })
+);
 
 //글 등록 라우터
 router.post("/upload", upload.array("myfile"), (req, res) => {
-  console.log("1111");
   //받아온 값들을 post모델에 저장
   const post = new Post(req.body);
   //파일의 경우, 파일명(filename)을 저장하는것으로 설정. path를 저장하고 싶은 경우, req.files.path사용하는것으로 변경 가능
   for (i = 0; i < req.files.length; i++) {
     post.file[i] = req.files[i].filename;
   }
-  console.log("22222");
 
   post.save((err, postInfo) => {
-    if (err) return res.state(400).json({ postWriteSuccess: false, err });
-    console.log("3333333");
+    if (err) {
+      return res.status(400).json({ postWriteSuccess: false, err });
+    }
     return res.status(200).json({
       postWriteSuccess: true,
       postInfo: postInfo,
@@ -80,7 +84,6 @@ module.exports = router;
 
 //글 가져오기(Front : 모달창, 글수정페이지 정보 전달 위함. 따라서 리스트에서 특정 게시글을 클릭하거나, 글수정 창을 띄울 시에 _id라고 프론트에 기존에 전달된 값을 'post_id'라는 값에 담아서 넘겨줘야 함)
 router.post("/getPostInfo", async (req, res) => {
-  console.log("게시글 정보 찾으러 옴");
   let postList = [];
   let post = await Post.find({
     writer: req.body.currentId,
@@ -95,7 +98,6 @@ module.exports = router;
 
 //글 수정하기(Front : 글수정 기능을 위함)
 router.post("/getPostEdit", upload.array("myFile"), async (req, res) => {
-  console.log("글수정하러 옴");
   let postWritedInfo = await Post.find({ _id: req.body.post_id });
   if (postWritedInfo[0].writer == req.body.currentId) {
     let editedPost = {};
@@ -154,15 +156,12 @@ module.exports = router;
 
 //글 삭제하기(Front : 글삭제 기능을 위함)
 router.post("/getPostDelete", async (req, res) => {
-  console.log("글삭제하러 옴");
   let postWritedInfo = await Post.find({ _id: req.body.post_id }).select(
     "writer file"
   );
   if (postWritedInfo[0].writer == req.body.currentId) {
     for (i = 0; i < postWritedInfo[0].file.length; i++) {
-      console.log("삭제할 파일 리스트 [" + postWritedInfo[0].file + "]");
       if (postWritedInfo[0].file[i]) {
-        console.log("현재 삭제할 파일 : " + postWritedInfo[0].file[i]);
         deletePhoto(postWritedInfo[0].file[i]);
       }
     }

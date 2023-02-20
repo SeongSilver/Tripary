@@ -10,7 +10,7 @@ function LoginedList({ listData }) {
     setOpenPostModal(true);
     const modalData = {
       currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
-      post_id: event.currentTarget.children[0].textContent,
+      post_id: event.currentTarget.children[0].children[0].textContent,
     };
 
     axios
@@ -32,19 +32,21 @@ function LoginedList({ listData }) {
             key={data._id}
             value={data._id}
             onClick={openContentModal}>
-            <span className="dummyId">{data._id}</span>
-            <span className="cardTag">{data.location}</span>
-            <div>
-              <img
-                className="contentImage"
-                src={`/upload/${data.file[0]}`}
-                alt={data._id}
-              />
-            </div>
-            <p className="cardDate">
-              {new Date(data.fromDate).toLocaleDateString()} ~{" "}
-              {new Date(data.toDate).toLocaleDateString()}
-            </p>
+            <a href="#">
+              <span className="dummyId">{data._id}</span>
+              <span className="cardTag">{data.location}</span>
+              <div>
+                <img
+                  className="contentImage"
+                  src={`/upload/${data.file[0]}`}
+                  alt={data._id}
+                />
+              </div>
+              <p className="cardDate">
+                {new Date(data.fromDate).toLocaleDateString()} ~{" "}
+                {new Date(data.toDate).toLocaleDateString()}
+              </p>
+            </a>
           </li>
         ))}
       {openPostModal && (

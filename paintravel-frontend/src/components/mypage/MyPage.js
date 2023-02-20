@@ -18,6 +18,7 @@ function MyPage() {
   const offset = (page - 1) * limit;
   const [searchCountry, setSearchCountry] = useState("");
   const [searchTitle, setSearchTitle] = useState("");
+  const [mypageListLimitClass, setMypageListLimitClass] = useState("limit10");
 
   const [login_id, setLogin_id] = useState("*");
   const [sortBy, setSortBy] = useState("fromDate"); //정렬기준 - (기본값) writeDate, fromDate
@@ -91,7 +92,16 @@ function MyPage() {
         ).length
       );
     }
-  }, [mypageList, searchCountry, searchTitle]);
+    if(limit == 3) {
+      setMypageListLimitClass("limit3");
+    }
+    if(limit == 5) {
+      setMypageListLimitClass("limit5");
+    }
+    if(limit == 10) {
+      setMypageListLimitClass("limit10");
+    }
+  }, [mypageList, searchCountry, searchTitle, limit]);
 
   const mypageCountrySearchHandler = (event) => {
     setSearchCountry(event.target.value);
@@ -178,9 +188,9 @@ function MyPage() {
           </div>
           <div className="myPageListContainer">
             <ul className="myPageMenu">
+              <li>사진</li>
               <li>여행국가</li>
               <li>제목</li>
-              <li>사진</li>
               <li>
                 여행기간
                 <span>
@@ -200,7 +210,7 @@ function MyPage() {
                   />
                 </span>
               </li>
-              <li>
+              {/* <li>
                 업로드일
                 <span>
                   <GoChevronUp
@@ -216,87 +226,81 @@ function MyPage() {
                     }}
                   />
                 </span>
-              </li>
+              </li> */}
               <li>수정/삭제</li>
             </ul>
-            <div className="myPageListDiv">
-              <div className="myPageList">
-                <ul className="mypageListUl">
-                  {mypageList ? (
-                    mypageList
-                      .filter((data) => {
-                        if (searchOption === "1") {
-                          return data.country
-                            .toLocaleLowerCase()
-                            .includes(searchCountry.toLocaleLowerCase());
-                        } else if (searchOption === "2") {
-                          return data.title
-                            .toLocaleLowerCase()
-                            .includes(searchTitle.toLocaleLowerCase());
-                        }
-                      })
-                      .slice(offset, offset + limit)
-                      .map((data) => (
-                        <li
-                          className="mypageListLi"
-                          onClick={openContentModal}
-                          key={data._id}>
-                          <span>{data._id}</span>
-                          <ul className="mypageListSmallUl">
-                            <li>{data.country}</li>
-                            <li>{data.title}</li>
-                            <li>
-                              <img
-                                width={40}
-                                height={40}
-                                src={`/upload/${data.file[0]}`}
-                              />
-                            </li>
-                            <li className="cardDate">
-                              {new Date(data.fromDate).toLocaleDateString()} ~{" "}
-                              {new Date(data.toDate).toLocaleDateString()}
-                            </li>
-                            <li>
-                              {new Date(data.writeDate).toLocaleDateString()}
-                            </li>
-                            <li>
-                              <Link
-                                to="/postEdit"
-                                state={{
-                                  selectedCountry: data.country,
-                                  nationCode: data.nationCode,
-                                  _id: data._id,
-                                  writer: data.writer,
-                                }}>
-                                <BiEdit />
-                              </Link>
-                              <BiTrash
-                                className="postEditBtn"
-                                onClick={() => postDeleteHandler(data)}
-                                style={{ zIndex: "999", cursor: "pointer" }}
-                              />
-                            </li>
-                          </ul>
-                        </li>
-                      ))
-                  ) : (
-                    <div>작성된 글이 없습니다</div>
-                  )}
-                </ul>
-              </div>
-            </div>
-            <div className="myPagePagination">
+            <ul className="myPageList">
               {mypageList ? (
-                <div>
-                  <Pagination
-                    total={listCount}
-                    limit={limit}
-                    page={page}
-                    setPage={setPage}
-                  />
-                </div>
-              ) : null}
-            </div>
+                mypageList
+                  .filter((data) => {
+                    if (searchOption === "1") {
+                      return data.country
+                        .toLocaleLowerCase()
+                        .includes(searchCountry.toLocaleLowerCase());
+                    } else if (searchOption === "2") {
+                      return data.title
+                        .toLocaleLowerCase()
+                        .includes(searchTitle.toLocaleLowerCase());
+                    }
+                  })
+                  .slice(offset, offset + limit)
+                  .map((data) => (
+                    <li
+                      className="mypageListLi"
+                      onClick={openContentModal}
+                      key={data._id}>
+                      <span>{data._id}</span>
+                      <ul className="mypageListSmallUl">
+                        <li className={mypageListLimitClass}>
+                          <figure>
+                            <img src={`/upload/${data.file[0]}`}/>
+                          </figure>
+                        </li>
+                        <li className={mypageListLimitClass}>{data.country}</li>
+                        <li className={mypageListLimitClass}>{data.title}</li>
+                        <li className={mypageListLimitClass}>
+                          {new Date(data.fromDate).toLocaleDateString()} ~{" "}
+                          {new Date(data.toDate).toLocaleDateString()}
+                        </li>
+                        {/* <li className={mypageListLimitClass}>
+                          {new Date(data.writeDate).toLocaleDateString()}
+                        </li> */}
+                        <li className={mypageListLimitClass}>
+                          <Link
+                            to="/postEdit"
+                            state={{
+                              selectedCountry: data.country,
+                              nationCode: data.nationCode,
+                              _id: data._id,
+                              writer: data.writer,
+                            }}>
+                            <BiEdit />
+                          </Link>
+                          <BiTrash
+                            className="postEditBtn"
+                            onClick={() => postDeleteHandler(data)}
+                            style={{ zIndex: "999", cursor: "pointer" }}
+                          />
+                        </li>
+                      </ul>
+                    </li>
+                  ))
+              ) : (
+                <div>작성된 글이 없습니다</div>
+              )}
+            </ul>
+          </div>
+          <div className="myPagePagination">
+            {mypageList ? (
+              <div>
+                <Pagination
+                  total={listCount}
+                  limit={limit}
+                  page={page}
+                  setPage={setPage}
+                />
+              </div>
+            ) : null}
           </div>
         </div>
       )}

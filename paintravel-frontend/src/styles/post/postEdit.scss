@@ -34,40 +34,56 @@
   height: 0;
   text-indent: -9999px;
 }
-// 모바일
-@media all and (max-width: 767px) {
+// 테블릿 & 모바일
+@media all and (max-width: 1024px) {
+  @media all and (max-width: 414px) {
+    .postEditWrap {
+      ul {
+        p {
+          width: 12vw !important;
+          line-height: 8vh !important;
+        }
+        input {
+          width: 30vw !important;
+        }
+      }
+    }
+  }
   .postEditContainer {
     .postEdit {
       .postEditWrap {
         position: relative;
         .gallery {
-          position: relative;
-          width: 32vw;
-          height: 25vh;
+          width: 80vw;
+          height: 29vh;
           position: absolute;
           left: 0;
           top: 0;
           .inputFileBtn {
-            font-size: 3em;
             position: absolute;
             top: 1.5vh;
             right: 0;
           }
           .galleryContainer {
-            width: 100%;
+            width: 80vw;
             height: 24vh;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
             .galleryImageContainer {
-              width: calc((32vw - 3vw - 4px) / 2);
-              height: calc((24vh - 3vw - 4px) / 2);
+              width: calc((80vw - 2px - 10vw)/4);
+              height: calc(24vh - 2px - 4vw);
+              margin: 2vw 1vw;
             }
+            .galleryImageContainer:first-child {margin-left:2vw;}
+            .galleryImageContainer:last-child {margin-right:2vw;}
           }
         }
         ul {
+          display: block;
           width: 80vw;
-          height: 55vh;
-          li {
-            margin-left: 36vw;
-          }
+          height: 25vh;
+          margin-top:36.5vh !important;
           p {
             width: 10vw;
             line-height: 8vh;
@@ -75,11 +91,14 @@
           p:not(li:nth-child(4) p)::after {
             margin-left: 3vw;
           }
-          input,
-          .react-datepicker-wrapper {
-            width: 34vw;
+          input{
+            width: 32vw;
             height: 5vh;
             line-height: 5vh;
+            border-bottom: 1px solid #fff;
+            border-top: none;
+            border-left: none;
+            border-right: none;
           }
           .react-datepicker-wrapper {
             width: 34vw !important;
@@ -91,30 +110,44 @@
           li:nth-child(4) {
             margin-left: 0;
             position: absolute;
-            left: 0;
+            right: 0;
             bottom: 0;
           }
           textarea {
-            width: 80vw;
+            width: 35vw;
             height: 23vh;
             line-height: 2.5vh;
+          }
+          .react-datepicker, .react-datepicker__month-container,
+          .react-datepicker__header, .react-datepicker__month {
+            width: 40vw;
+          }
+          .react-datepicker__month {
+            .react-datepicker__week {
+              > div {
+                margin: 1vw;
+                width: 2vw !important;
+                height: 2vw !important;
+              }
+            }
+          }
+          .react-datepicker__day-name {
+            margin: 1vw;
+            width: 2vw !important;
+            height: 2vw !important;
           }
         }
         .postEditBtn {
           position: absolute;
           left: 0;
           bottom: -10vh;
-          button {
-            width: 10vw;
-            height: 5vh;
-          }
         }
       }
     }
   }
 }
-// 테블릿 & PC
-@media all and (min-width: 768px) {
+// PC
+@media all and (min-width: 1025px) {
   .postEditContainer {
     .postEdit {
       .postEditWrap {
@@ -123,17 +156,33 @@
           width: 31vw;
           height: 60vh;
           margin-right: 3vw;
-          .inputFileBtn {
-            font-size: 3em;
-            position: absolute;
-            top: 1.5vh;
-            right: 0;
-          }
           .galleryContainer {
+            display: flex;
+            flex-wrap: wrap;
             height: 55vh;
+            overflow:auto;
             .galleryImageContainer {
-              width: calc((31vw - 3vw - 4px) / 2);
-              height: calc((55vh - 3vw - 4px) / 2);
+              display: inline-block;
+              width: calc((31vw - 3vw - 4px - 20px) / 2);
+              height: calc((55vh - 3vw) / 2);
+            }
+            .galleryImageContainer:nth-child(1) {
+              margin: 1vw 0.5vw 1vw calc(1vw + 10px) !important;
+            }
+            .galleryImageContainer:nth-child(2) {
+              margin: 1vw 1vw 1vw 0.5vw !important;
+            }
+            .galleryImageContainer:nth-child(4n+1) {
+              margin: 0 0.5vw 1vw calc(1vw + 10px);
+            }
+            .galleryImageContainer:nth-child(4n+2) {
+              margin: 0 1vw 1vw 0.5vw;
+            }
+            .galleryImageContainer:nth-child(4n+3) {
+              margin: 0 0.5vw 1vw calc(1vw + 10px);
+            }
+            .galleryImageContainer:nth-child(4n+4) {
+              margin: 0 1vw 1vw 0.5vw;
             }
           }
         }
@@ -151,12 +200,13 @@
             line-height: 5vh;
             margin-left: 5vw;
           }
-          input,
-          .react-datepicker-wrapper {
+          input{
             width: 33vw;
             height: 5vh;
             margin-top: 1vh;
             line-height: 3vh;
+            border: 1px solid #fff;
+            border-radius: 10px;
           }
           .react-datepicker-wrapper {
             width: 33vw !important;
@@ -166,22 +216,37 @@
           }
           textarea {
             width: 46vw;
-            height: 23vh;
+            height: calc(55vh - 32vh - 2px);
+          }
+          .react-datepicker__month-container {
+            width: 24vw !important;
+          }
+          .react-datepicker__month {
+            .react-datepicker__week {
+              > div {
+                margin: 0.5vw;
+                width: 1.5vw !important;
+                height: 1.5vw !important;
+              }
+            }
+          }
+          .react-datepicker__day-name {
+            margin: 0 0.5vw;
+            width: 1.5vw !important;
+            height: 1.5vw !important;
           }
         }
         .postEditBtn {
           position: absolute;
           left: 0;
           bottom: 0;
-          button {
-            width: 5vw;
-            height: 5vh;
-          }
         }
       }
     }
   }
 }
+
+
 .postEditContainer {
   background: url(../../img/post/postWriteBg.png);
   background-size: 100vw 100vh;
@@ -197,7 +262,7 @@
     z-index: 100;
     @include font;
     h1 {
-      font-size: 3rem;
+      font-size: 2.4rem;
       text-align: center;
       line-height: 10vh;
       @include font;
@@ -209,53 +274,52 @@
       display: flex;
       justify-content: center;
       .gallery {
+        .inputFileBtn {
+          position: absolute;
+          top: 1.5vh;
+          right: 0;
+          > label {
+            display: flex;
+            align-items: center;
+             svg {
+              margin-top:0.5vh;
+              font-size: 2rem;
+            }
+          }
+        }
         h2 {
           height: 5vh;
           font-size: 2rem;
           line-height: 5vh;
           @include noDrag;
         }
-        p {
-          font-size: 1.3rem;
-          margin-top: 5px;
-          margin-bottom: 15px;
-          text-align: right;
-        }
         input {
-          display: none;
-        }
-        a {
-          label {
-            font-size: 2.4rem;
-            position: absolute;
-            right: 0;
-            top: 0;
-            line-height: 5vh;
-            cursor: pointer;
-          }
-          span {
-            @include hidden;
-          }
+          @include hidden;
         }
         .galleryContainer {
           border: 1px solid #fff;
           border-radius: 10px;
-          display: flex;
-          flex-wrap: wrap;
-          overflow: scroll;
           //사진 추가 부분
           .galleryImageContainer {
             display: inline-block;
             position: relative;
             caret-color: transparent;
-            margin: 0.5vw;
-            img {
+            figure {
               width: 100%;
               height: 100%;
-              display: block;
-              object-fit: contain;
+              overflow: hidden;
+              position: relative;
+              img {
+                width: auto;
+                height: 100%;
+                display: block;
+                object-fit: cover;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+              }
             }
-            span {
+            > span {
               font-size: 2rem;
               font-weight: 100;
               z-index: 100;
@@ -268,22 +332,11 @@
               top: -1rem;
             }
           }
-          // .galleryImageContainer:nth-child(1) {
-          //   margin: 1vw 0.5vw 0.5vw 1vw;
-          // }
-          // .galleryImageContainer:nth-child(2) {
-          //   margin: 1vw 1vw 0.5vw 0.5vw;
-          // }
-          // .galleryImageContainer:nth-child(3) {
-          //   margin: 0.5vw 0.5vw 1vw 1vw;
-          // }
-          // .galleryImageContainer:nth-child(4) {
-          //   margin: 0.5vw 1vw 1vw 0.5vw;
-          // }
         }
+
         .galleryContainer::-webkit-scrollbar {
-          width: 12px;
-          height: 0;
+          width: 10px;
+          height: 10px;
         }
 
         .galleryContainer::-webkit-scrollbar-thumb {
@@ -309,13 +362,12 @@
         }
         p {
           display: inline-block;
-          font-size: 1vw;
+          font-size: 1.6rem;
           font-weight: 400;
           @include noDrag;
         }
         p:not(li:nth-child(4) p)::after {
           content: ":";
-          display: inline-block;
           font-size: 2rem;
           line-height: 5vh;
           @include noDrag;
@@ -324,19 +376,20 @@
         > .react-datepicker-wrapper {
           margin-top: 1vh;
           line-height: 3vh;
-          border: 1px solid #fff;
-          border-radius: 10px;
           outline: none;
           background: transparent;
           color: #fff;
           padding: 0 1vw;
-          font-size: 1.5rem;
+          font-size: 1.6rem;
           font-weight: 100;
           overflow: hidden;
           @include font;
         }
         input:focus {
           outline: none;
+        }
+        input::placeholder {
+          color:#fff;
         }
         textarea {
           display: block;
@@ -345,15 +398,13 @@
           border-radius: 10px;
           background: transparent;
           color: #fff;
-          font-size: 1.5rem;
+          font-size: 1.6rem;
           white-space: pre;
+          resize: none;
           @include font;
         }
         textarea:focus {
           outline: none;
-        }
-        ::-webkit-input-placeholder { /* Safari, Chrome and Opera */
-          color: #fff;
         }
       }
       .postEditBtn {
@@ -361,8 +412,9 @@
         display: flex;
         justify-content: center;
         button {
+          display: inline-block;
           background: rgba(175, 144, 126, 0.3);
-          border-radius: 20px;
+          border-radius: 15px;
           color: #fff;
           font-size: 1.6rem;
           cursor: pointer;
@@ -370,8 +422,11 @@
           @include font;
         }
         button:nth-child(1) {
-          background: rgba(175, 144, 126, 0.3);
           margin-right: 5vw;
+          padding: 5px 10px;
+        }
+        button:nth-child(2) {
+          padding: 5px 27.5px;
         }
         button:hover {
           background: rgb(175, 144, 126);
@@ -406,15 +461,11 @@
   caret-color: transparent;
 }
 .react-datepicker__month-container {
-  width: 20vw !important;
   margin: 0 auto;
   .react-datepicker__month {
+    margin: 1vh 0;
     .react-datepicker__week {
-      > div {
-        margin: 0.5vw;
-        width: 1vw !important;
-        height: 1vw !important;
-      }
+      margin:0.5vh 0;
       > div:first-child {
         color: red !important;
       }
@@ -431,11 +482,6 @@
     line-height: 2vh;
   }
   .react-datepicker__day-names {
-    .react-datepicker__day-name {
-      margin: 0 0.5vw;
-      width: 1vw !important;
-      height: 1vw !important;
-    }
     .react-datepicker__day-name:first-child {
       color: red !important;
     }
@@ -452,4 +498,6 @@
 .react-datepicker__close-icon::after {
   background-color: black !important;
 }
-
+.react-datepicker__day--keyboard-selected {
+  background-color: #7fc8ff !important;
+}

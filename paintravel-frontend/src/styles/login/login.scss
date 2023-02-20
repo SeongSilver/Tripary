@@ -22,9 +22,11 @@
     width: 100vw;
     height: 100vh;
     z-index: 100;
+    padding:0 10vw;
     @include font;
     .loginWrap {
-      width: 400px;
+      max-width: 400px;
+      min-width: 200px;
       height: 50%;
       margin: 25vh auto 0 auto;
     }
@@ -79,17 +81,16 @@
       }
       span {
         display: inline-block;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         line-height: 3vh;
       }
       #moveToSignUp {
-        border: none;
-        background-color: transparent;
-        @include font;
-        font-size: 1.6rem;
+        display: inline-block;
+        font-size: 1.8rem;
         line-height: 3vh;
-        cursor: pointer;
         margin-left: 1vw;
+        cursor: pointer;
+        @include font;
       }
     }
   }

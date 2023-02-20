@@ -216,31 +216,36 @@ function PostEdit() {
                     id="galleryUpload"
                     onChange={onLoadFile}
                     accept="image/jpg,image/png,image/jpeg,image/gif"
+                    alt="이미지 추가하기"
                   />
                 </span>
                 <div className="galleryContainer">
                   {previewImg !== undefined
                     ? previewImg.map((image, id) => (
                         <div className="galleryImageContainer" key={id}>
-                          <img
-                            src={image}
-                            alt={`${image} - ${id}`}
-                            id={id}
-                            onClick={(event) => console.dir(event.target)}
-                          />
-                          <span onClick={() => deleteImage(id)}>
+                          <figure>
+                            <img
+                              src={image}
+                              alt={`${image} - ${id}`}
+                              id={id}
+                              onClick={(event) => console.dir(event.target)}
+                            />
+                          </figure>
+                          <span onClick={() => deleteImage(id)} tabIndex="0">
                             <MdDeleteForever />
                           </span>
                         </div>
                       ))
                     : editFile.map((image, id) => (
                         <div className="galleryImageContainer" key={id}>
-                          <img
-                            src={`/upload/${image}`}
-                            alt={`${image} - ${id}`}
-                            id={id}
-                            onClick={(event) => console.dir(event.target)}
-                          />
+                          <figure>
+                            <img
+                              src={`/upload/${image}`}
+                              alt={`${image} - ${id}`}
+                              id={id}
+                              onClick={(event) => console.dir(event.target)}
+                            />
+                          </figure>
                           <span onClick={() => deleteEditImage(image, id)}>
                             <MdDeleteForever />
                           </span>

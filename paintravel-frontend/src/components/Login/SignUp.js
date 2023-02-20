@@ -137,7 +137,6 @@ function SignUp({ setOpenSignUpModal }) {
 
   return (
     <div className="signUpContainer">
-      <Header />
       <div className="signUp">
         <div className="signUpWrap">
           <h1>
@@ -238,7 +237,6 @@ function SignUp({ setOpenSignUpModal }) {
           </Link>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
