@@ -34,7 +34,7 @@
         const expireTime = new Date(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
 
         if (fiveMinLater > expireTime) {
-          setLoginedItem("LOGINEDID", localStorage.getItem("LOGINEDID"));
+          setLoginedItem("LOGINEDID", localStorage.getItem("LOGINEDID").value);
         }
       }
     }

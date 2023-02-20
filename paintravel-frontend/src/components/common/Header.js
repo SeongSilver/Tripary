@@ -16,7 +16,7 @@ function Header() {
       return;
     }
     const now = new Date();
-    now.setMinutes(now.getMinutes() + 30);//[Yana] 30분 후에 만료
+    now.setMinutes(now.getMinutes() + 6);//[Yana] 30분 후에 만료
 
     const item = {
       value: value,
