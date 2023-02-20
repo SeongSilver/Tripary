@@ -36,8 +36,8 @@
         console.log("현재만료시간",expireTime)
 
         if (fiveMinLater > expireTime) {
-          setLoginedItem("LOGINEDID", JSON.parse(localStorage.getItem("LOGINEDID")).value)
-          .then(console.log("%%%만료시간연장됨%%%",JSON.parse(localStorage.getItem("LOGINEDID"))));
+          setLoginedItem("LOGINEDID", JSON.parse(localStorage.getItem("LOGINEDID")).value);
+          console.log("%%%만료시간연장됨%%%",JSON.parse(localStorage.getItem("LOGINEDID")));
         }
       }
     }
