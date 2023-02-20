@@ -16,7 +16,7 @@ function Header() {
       return;
     }
     const now = new Date();
-    now.setMinutes(now.getMinutes() + 30);
+    now.setMinutes(now.getMinutes() + 0.5);
 
     const item = {
       value: value,
@@ -53,7 +53,7 @@ function Header() {
           //[야나] 실행중인 setInterval무효화
           clearInterval(loginTimeOut);
         }
-      }, 300000);
+      }, 30000);
     }
   }, [window.location]);
 
