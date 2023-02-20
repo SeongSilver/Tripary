@@ -34,7 +34,7 @@ router.post("/upload", upload.array("myfile"), (req, res) => {
   }
 
   post.save((err, postInfo) => {
-    if (err) return res.state(400).json({ postWriteSuccess: false, err });
+    if (err) return res.status(400).json({ postWriteSuccess: false, err });
     return res.status(200).json({
       postWriteSuccess: true,
       postInfo: postInfo,
