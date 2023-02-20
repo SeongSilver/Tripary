@@ -19,38 +19,38 @@
     font-size: 1.8rem;
     li:nth-child(1) {width: 10vw;}
     li:nth-child(2) {width: 12vw;}
-    li:nth-child(3) {width: 15vw;}
-    li:nth-child(4) {width: 24vw;}
+    li:nth-child(3) {width: 12vw;}
+    li:nth-child(4) {width: 17vw;}
     li:nth-child(5) {width: 12vw;}
-    // li:nth-child(6) {width: 6vw;}
+    li:nth-child(6) {width: 8vw;}
   }
-  .mypageListSmallUl {
+  .mypageListLi > ul {
     li {font-size: 1.6rem !important;}
     li:nth-child(1) {width: 10vw;}
     li:nth-child(2) {width: 12vw;}
-    li:nth-child(3) {width: 15vw;}
-    li:nth-child(4) {width: 24vw;}
+    li:nth-child(3) {width: 12vw;}
+    li:nth-child(4) {width: 17vw;}
     li:nth-child(5) {width: 12vw;}
-    // li:nth-child(6) {width: 6vw;}
+    li:nth-child(6) {width: 8vw;}
   }
-  @media all and (max-width: 515px) {
+  @media all and (max-width: 767px) {
     .myPageMenu {
       font-size: 1.6rem;
       li:nth-child(1) {display:none;}
-      li:nth-child(2) {width: 14vw;}
-      li:nth-child(3) {width: 17vw;}
-      li:nth-child(4) {width: 29vw;}
-      li:nth-child(5) {width: 15vw;}
-      // li:nth-child(6) {width: 6vw;}
+      li:nth-child(2) {width: 15vw;}
+      li:nth-child(3) {width: 18vw;}
+      li:nth-child(4) {width: 20vw;}
+      li:nth-child(5) {width: 20vw;}
+      li:nth-child(6) {display:none;}
     }
-    .mypageListSmallUl {
+    .mypageListLi > ul {
       li {font-size: 1.6rem !important;}
       li:nth-child(1) {display:none;}
-      li:nth-child(2) {width: 14vw;}
-      li:nth-child(3) {width: 17vw;}
-      li:nth-child(4) {width: 29vw;}
-      li:nth-child(5) {width: 15vw;}
-      // li:nth-child(6) {width: 6vw;}
+      li:nth-child(2) {width: 15vw;}
+      li:nth-child(3) {width: 18vw;}
+      li:nth-child(4) {width: 20vw;}
+      li:nth-child(5) {width: 20vw;}
+      li:nth-child(6) {display:none;}
     }
   }
 }
@@ -59,18 +59,18 @@
   .myPageMenu {
     li:nth-child(1) {width: 10vw;}
     li:nth-child(2) {width: 10vw;}
-    li:nth-child(3) {width: 18vw;}
-    li:nth-child(4) {width: 21vw;}
-    li:nth-child(5) {width: 14vw;}
-    // li:nth-child(6) {width: 6vw;}
+    li:nth-child(3) {width: 13vw;}
+    li:nth-child(4) {width: 18vw;}
+    li:nth-child(5) {width: 10vw;}
+    li:nth-child(6) {width: 10vw;}
   }
-  .mypageListSmallUl {
+  .mypageListLi > ul {
     li:nth-child(1) {width: 10vw;}
     li:nth-child(2) {width: 10vw;}
-    li:nth-child(3) {width: 18vw;}
-    li:nth-child(4) {width: 21vw;}
-    li:nth-child(5) {width: 14vw;}
-    // li:nth-child(6) {width: 6vw;}
+    li:nth-child(3) {width: 13vw;}
+    li:nth-child(4) {width: 18vw;}
+    li:nth-child(5) {width: 10vw;}
+    li:nth-child(6) {width: 10vw;}
   }
 }
 
@@ -151,9 +151,6 @@
           position: relative;
           text-align: center;
           span {
-            // position: absolute;
-            // top: 0;
-            // right: 0;
             float:right;
             svg {
               cursor: pointer;
@@ -170,19 +167,26 @@
         height: 62vh;
         padding:0 1vw 1.5vh 1vw;
         overflow: hidden;
+        > li:not(.myPageList > li:first-child) {
+          margin-top:1vh;
+        }
         .mypageListLi {
+          display: block;
+          height: auto;
+          transition: all 0.5s;
           span {
             display: none;
           }
-          .mypageListSmallUl {
+          > ul {
             li {
-              margin: 0 1vw 1vh 1vw;
+              margin: 0 1vw;
               float: left;
               text-align: center;
               font-size: 1.4rem;
               overflow:hidden;
               text-overflow:ellipsis;
               white-space:nowrap;
+              cursor: pointer;
               figure {
                 width: 10vw;
                 height: 100%;
@@ -197,28 +201,54 @@
                   transform: translateX(-50%);
                 }
               }
-              svg {
-                font-size: 1.5em;
-                font-weight: 100;
+              a {
                 margin: 0 0.5vw;
-                color: black;
+                svg {
+                  font-size: 2.5rem;
+                  font-weight: 100;
+                  color: black;
+                }
               }
             }
-            .limit3 {
+            // li:last-child {
+            //   width: 0;
+            //   height: 0;
+            //   text-indent: -9999px;
+            // }
+          }
+          .limit3 {
+            height: 19.5vh;
+            > li:first-child {
               height: 19.5vh;
-              line-height: 19.5vh;
+            }
+            li:not(.limit3 > li:first-child) {
+              height: 4.5vh;
+              line-height: 4.5vh;
+              margin-top: 7.5vh;
+              margin-bottom: 7.5vh;
               img {
                 height: 19.5vh;
               }
             }
-            .limit5 {
+          }
+          .limit5 {
+            height: 11.3vh;
+            > li:first-child {
               height: 11.3vh;
-              line-height: 11.3vh;
+            }
+            li:not(.limit5 > li:first-child) {
+              height: 4.3vh;
+              line-height: 4.3vh;
+              margin-top: 3.5vh;
+              margin-bottom: 3.5vh;
               img {
                 height: 11.3vh;
               }
             }
-            .limit10 {
+          }
+          .limit10 {
+            height: 5.1vh;
+            li {
               height: 5.1vh;
               line-height: 5.1vh;
               img {
@@ -226,7 +256,9 @@
               }
             }
           }
-          cursor: pointer;
+        }
+        .mypageListLi:hover {
+          background-color: rgba(0,0,0,0.1);
         }
       }
       .myPagePagination {

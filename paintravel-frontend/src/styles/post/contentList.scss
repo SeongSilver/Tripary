@@ -163,13 +163,8 @@
         }
         .dummyId {
           @include hidden;
+          display:none;
         }
-        // > a {
-        //   text-indent: -9999px;
-        //   position: absolute;
-        //   left: 0;
-        //   top: 0;
-        // }
       }
     }
   }
