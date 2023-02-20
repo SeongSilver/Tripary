@@ -16,10 +16,11 @@ function Header() {
       return;
     }
     const now = new Date();
+    now.setMinutes(now.getMinutes() + 30);//[Yana] 30분 후에 만료
 
     const item = {
       value: value,
-      expiry: now.getTime() + 1800000,
+      expiry: now,
     };
     localStorage.setItem(key, JSON.stringify(item));
   };
@@ -37,7 +38,7 @@ function Header() {
     //로컬스토리지에 LOGINEDID가 있을 경우 실행
     if (localStorage.getItem("LOGINEDID")) {
       //로그인된 아이디의 만료시간
-      const expireTime = JSON.parse(localStorage.getItem("LOGINEDID")).expiry;
+      const expireTime = new Date(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
 
       //현재시간이 LOGINEDID 만료시간보다 길면 localStorage에 있는 LOGINEDID 삭제
       const loginTimeOut = setInterval(() => {
@@ -50,7 +51,7 @@ function Header() {
           //[야나] 실행중인 setInterval무효화
           clearInterval(loginTimeOut);
         }
-      }, 600000);
+      }, 300000);//[Yana] 5분마다 재검사
     }
   }, [window.location]);
 

@@ -51,9 +51,8 @@ function PostWrite() {
 
   //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
   const handleOnKeyPress = (e) => {
-    if (e.key === "Tab") {
-      e.preventDefault();
-    }
+      e.isImmediatePropagationEnabled = false;
+      e.preventDefault ? e.preventDefault() : e.returnValue = false;
   };
 
   const onLoadFile = (e) => {
@@ -81,7 +80,7 @@ function PostWrite() {
 
   const deleteImage = (id) => {
     setPreviewImg(previewImg.filter((_, index) => index !== id));
-    setMyFile(myfile.filter((_, index) => index !== id));
+    setMyFile(myfile.filter((_, index) => index !== id)); 
   };
 
   const onSubmit = (e) => {
@@ -205,8 +204,7 @@ function PostWrite() {
               <input
                 type="text"
                 name="location"
-                onChange={onChangePost}
-                onKeyDown={handleOnKeyPress}></input>
+                onChange={onChangePost}></input>
             </li>
             <li>
               <p>일정</p>
@@ -217,6 +215,7 @@ function PostWrite() {
                 onChange={(update) => {
                   setDateRange(update);
                 }}
+                onChangeRaw={handleOnKeyPress}
                 isClearable={true}
                 dateFormat="yyyy-MM-dd"
                 placeholderText="여행 기간 선택"
