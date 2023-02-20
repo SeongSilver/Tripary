@@ -24,38 +24,40 @@ function LoginedList({ listData }) {
   };
   return (
     // <div className="contentBody">하하</div>
-    <ul className="contentBody">
-      {listData &&
-        listData.map((data) => (
-          <li
-            className="contentCard"
-            key={data._id}
-            value={data._id}
-            onClick={openContentModal}>
-            <a href="#">
-              <span className="dummyId">{data._id}</span>
-              <span className="cardTag">{data.location}</span>
-              <div>
-                <img
-                  className="contentImage"
-                  src={`/upload/${data.file[0]}`}
-                  alt={data._id}
-                />
-              </div>
-              <p className="cardDate">
-                {new Date(data.fromDate).toLocaleDateString()} ~{" "}
-                {new Date(data.toDate).toLocaleDateString()}
-              </p>
-            </a>
-          </li>
-        ))}
+    <div className="contentBody">
+      <ul>
+        {listData &&
+          listData.map((data) => (
+            <li
+              className="contentCard"
+              key={data._id}
+              value={data._id}
+              onClick={openContentModal}>
+              <a href="#">
+                <span className="dummyId">{data._id}</span>
+                <span className="cardTag">{data.location}</span>
+                <div>
+                  <img
+                    className="contentImage"
+                    src={`/upload/${data.file[0]}`}
+                    alt="썸네일사진"
+                  />
+                </div>
+                <p className="cardDate">
+                  {new Date(data.fromDate).toLocaleDateString()} ~{" "}
+                  {new Date(data.toDate).toLocaleDateString()}
+                </p>
+              </a>
+            </li>
+          ))}
+      </ul>
       {openPostModal && (
         <ContentModal
           modalData={modalData}
           setOpenPostModal={setOpenPostModal}
         />
       )}
-    </ul>
+    </div>
   );
 }
 

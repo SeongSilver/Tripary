@@ -211,7 +211,7 @@ function MyPage() {
                   />
                 </span>
               </li>
-              {/* <li>
+              <li>
                 업로드일
                 <span>
                   <GoChevronUp
@@ -227,7 +227,7 @@ function MyPage() {
                     }}
                   />
                 </span>
-              </li> */}
+              </li>
               <li>수정/삭제</li>
             </ul>
             <ul className="myPageList">
@@ -249,24 +249,27 @@ function MyPage() {
                     <li
                       className="mypageListLi"
                       onClick={openContentModal}
+                      onKeyPress={openContentModal}
+                      tabIndex="0"
+                      aria-label="일지보기"
                       key={data._id}>
                       <span>{data._id}</span>
-                      <ul className="mypageListSmallUl">
-                        <li className={mypageListLimitClass}>
+                      <ul className={mypageListLimitClass}>
+                        <li>
                           <figure>
-                            <img src={`/upload/${data.file[0]}`}/>
+                            <img src={`/upload/${data.file[0]}`} alt="썸네일사진"/>
                           </figure>
                         </li>
-                        <li className={mypageListLimitClass}>{data.country}</li>
-                        <li className={mypageListLimitClass}>{data.title}</li>
-                        <li className={mypageListLimitClass}>
+                        <li>{data.country}</li>
+                        <li>{data.title}</li>
+                        <li>
                           {new Date(data.fromDate).toLocaleDateString()} ~{" "}
                           {new Date(data.toDate).toLocaleDateString()}
                         </li>
-                        {/* <li className={mypageListLimitClass}>
+                        <li>
                           {new Date(data.writeDate).toLocaleDateString()}
-                        </li> */}
-                        <li className={mypageListLimitClass}>
+                        </li>
+                        <li>
                           <Link
                             to="/postEdit"
                             state={{
@@ -274,14 +277,13 @@ function MyPage() {
                               nationCode: data.nationCode,
                               _id: data._id,
                               writer: data.writer,
-                            }}>
+                            }}
+                            aria-label="수정버튼">
                             <BiEdit />
                           </Link>
-                          <BiTrash
-                            className="postEditBtn"
-                            onClick={() => postDeleteHandler(data)}
-                            style={{ zIndex: "999", cursor: "pointer" }}
-                          />
+                          <a href="#" aria-label="삭제버튼">
+                            <BiTrash onClick={() => postDeleteHandler(data)} />
+                          </a>
                         </li>
                       </ul>
                     </li>

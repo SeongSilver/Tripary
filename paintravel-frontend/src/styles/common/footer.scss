@@ -157,6 +157,8 @@ footer {
         cursor:pointer;
         position: relative;
         img {
+          width:fit-content;
+          height:fit-content;
           opacity: 0;
           transition:all 0.3s;
         }
@@ -215,5 +217,7 @@ footer {
   }
   .footerLogo {
     display:block;
+    width:fit-content;
+    height:fit-content;
   }
 }

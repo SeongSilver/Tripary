@@ -11,7 +11,8 @@ function Pagination({ total, limit, page, setPage }) {
           type="button"
           className="pageBtn"
           onClick={() => setPage(page - 1)}
-          disabled={page === 1 || page < 1}>
+          disabled={page === 1 || page < 1}
+          aria-label="이전페이지">
           <RiArrowLeftSFill />
         </button>
         {Array(numPages)
@@ -29,7 +30,8 @@ function Pagination({ total, limit, page, setPage }) {
           type="button"
           className="pageBtn"
           onClick={() => setPage(page + 1)}
-          disabled={page === numPages}>
+          disabled={page === numPages}
+          aria-label="다음페이지">
           <RiArrowRightSFill />
         </button>
       </div>

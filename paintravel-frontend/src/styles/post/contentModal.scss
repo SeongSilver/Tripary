@@ -73,10 +73,10 @@
     @include font;
     .modalHeader {
       font-size: 1.2rem;
-      height: calc(6vh + 2px);
+      height: calc(8vh + 2px);
       padding: 0 3vw;
       position: relative;
-      margin: 2vh 0;
+      margin-top: 3vh;
       hr {
         margin: 0.5vh 0;
       }
@@ -92,7 +92,7 @@
         justify-content: space-between;
         h2 {
           max-width: 68%;
-          line-height: 2vh;
+          line-height: 3vh;
           font-size: 1.6rem;
           color: #555;
           overflow: hidden;
@@ -104,7 +104,7 @@
           display: flex;
           justify-content: right;
           flex-wrap: nowrap;
-          line-height: 2vh;
+          line-height: 3vh;
           margin-left:10px;
           > span {
             white-space: nowrap;
@@ -172,13 +172,21 @@
         padding: 0.5vw;
         background-color: rgba(0, 0, 0, 0.3);
         color: #fff;
-        overflow: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
         line-height: 3vh;
-        white-space: pre;
         font-size: 1.6rem;
         margin-left: 3vw;
         position: absolute;
         bottom:0;
+      }
+      > pre::-webkit-scrollbar {width: 10px;}
+      > pre::-webkit-scrollbar-track {background-color: rgba(0,0,0,0.1);}
+      > pre::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.3);
+        border-radius: 5px;
       }
     }
     .modalFooter {
@@ -187,7 +195,7 @@
       justify-content: center;
       > a {
         color: white;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         font-weight: 600;
         padding: 12px 8px 6px 8px;
         border-radius: 10px;
@@ -198,17 +206,17 @@
         }
       }
       .postEditBtn {
-        background-color: rgba(0, 200, 100, 0.7);
+        background-color: rgba(13, 90, 45, 0.9);
         margin-right:10%;
       }
       .postEditBtn:hover {
-        background-color: rgba(0, 200, 100, 1);
+        background-color: rgba(13, 90, 45, 1);
       }
       .deleteBtn {
-        background-color: rgba(200, 37, 0, 0.7);
+        background-color: rgba(192, 51, 28, 0.9);
       }
       .deleteBtn:hover {
-        background-color: rgba(200, 37, 0, 1);
+        background-color: rgba(192, 51, 28, 1);
       }
     }
     .modalCloseBtn {
