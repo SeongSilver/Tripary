@@ -30,7 +30,7 @@
     function onClickHandler() {
       console.log("클릭이벤트 발생")
       if (localStorage.getItem("LOGINEDID")) {
-        const fiveMinLater = new Date().getMinutes() + 5;
+        const fiveMinLater = new Date(new Date().getMinutes() + 5);
         const expireTime = new Date(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
         console.log("현재 지정된 만료시간", expireTime);
         console.log("현재 시간보다 5분뒤", fiveMinLater);
