@@ -32,12 +32,9 @@
         const fiveMinLater = new Date();
         fiveMinLater.setMinutes(fiveMinLater.getMinutes() + 5);
         const expireTime = new Date(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
-        console.log("5분뒤 시간",fiveMinLater)
-        console.log("현재만료시간",expireTime)
 
         if (fiveMinLater > expireTime) {
           setLoginedItem("LOGINEDID", JSON.parse(localStorage.getItem("LOGINEDID")).value);
-          console.log("%%%만료시간연장됨%%%",JSON.parse(localStorage.getItem("LOGINEDID")));
         }
       }
     }
@@ -47,7 +44,6 @@
       }
       const extended_expiry = new Date(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
       extended_expiry.setMinutes(extended_expiry.getMinutes() + 5);//[Yana] 만료시간 5분 추가
-      console.log(value, "만료시간 추가중",extended_expiry);
       const item = {
         value: value,
         expiry: extended_expiry,
