@@ -43,7 +43,7 @@ function ContentList({
             </Link>
           )}
         </div>
-        <div className="backButton" onClick={contentListClose}>
+        <div className="backButton" onClick={contentListClose} tabIndex="0">
           <span>리스트 닫기</span>
           <BiArrowBack />
         </div>

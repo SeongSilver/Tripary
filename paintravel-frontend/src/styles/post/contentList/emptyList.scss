@@ -12,20 +12,26 @@
         }
         img:nth-child(2) {
             display:block;
-            width: 6vw; height: 3vw;
+            width: 6vw; height: 6vw;
             position:absolute;
-            left: 48%; top: 0;
+            left: 47%; top: -22%;
             transition:all 1s;
+        }
+        @keyframes penShake {
+            50% {transform: rotate(5deg);}
+        }
+        @keyframes penMoving {
+            100% {left:51%}
         }
     }
     p {
         line-height: 5vh;
         margin-bottom:4vh;
-        font-size: 2rem;
+        font-size: 1.8rem;
         text-align: center;
     }
     a {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         padding: 1.5vh 2vh;
         border: 1px solid #fff;
         border-radius: 1vw;

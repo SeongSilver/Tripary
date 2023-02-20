@@ -10,7 +10,7 @@ function LoginedList({ listData }) {
     setOpenPostModal(true);
     const modalData = {
       currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
-      post_id: event.currentTarget.children[0].textContent,
+      post_id: event.currentTarget.children[0].children[0].textContent,
     };
 
     axios
@@ -24,36 +24,40 @@ function LoginedList({ listData }) {
   };
   return (
     // <div className="contentBody">하하</div>
-    <ul className="contentBody">
-      {listData &&
-        listData.map((data) => (
-          <li
-            className="contentCard"
-            key={data._id}
-            value={data._id}
-            onClick={openContentModal}>
-            <span className="dummyId">{data._id}</span>
-            <span className="cardTag">{data.location}</span>
-            <div>
-              <img
-                className="contentImage"
-                src={`/upload/${data.file[0]}`}
-                alt={data._id}
-              />
-            </div>
-            <p className="cardDate">
-              {new Date(data.fromDate).toLocaleDateString()} ~{" "}
-              {new Date(data.toDate).toLocaleDateString()}
-            </p>
-          </li>
-        ))}
+    <div className="contentBody">
+      <ul>
+        {listData &&
+          listData.map((data) => (
+            <li
+              className="contentCard"
+              key={data._id}
+              value={data._id}
+              onClick={openContentModal}>
+              <a href="#">
+                <span className="dummyId">{data._id}</span>
+                <span className="cardTag">{data.location}</span>
+                <div>
+                  <img
+                    className="contentImage"
+                    src={`/upload/${data.file[0]}`}
+                    alt="썸네일사진"
+                  />
+                </div>
+                <p className="cardDate">
+                  {new Date(data.fromDate).toLocaleDateString()} ~{" "}
+                  {new Date(data.toDate).toLocaleDateString()}
+                </p>
+              </a>
+            </li>
+          ))}
+      </ul>
       {openPostModal && (
         <ContentModal
           modalData={modalData}
           setOpenPostModal={setOpenPostModal}
         />
       )}
-    </ul>
+    </div>
   );
 }
 

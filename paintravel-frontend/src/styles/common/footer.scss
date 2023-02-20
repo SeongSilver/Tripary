@@ -37,56 +37,86 @@
 
 // 모바일
 @media all and (max-width:767px) {
-  .footerButton{
-    span {
-      width: 5vw; height: 5vw;
-      top: -2.5vw;
-      img {
-        display:block;
-        width: 2vw; height: 1vw;
-        margin-bottom:2vw;
+  footer {
+    height:50%;
+    .footerMenu {
+      width: 80%; 
+      text-align: center;
+      .sns {
+        justify-content: center;
+        li:not(li:first-child) {margin-left:5vw;}
       }
+      ul:not(.sns) {
+        width: 50%;
+        justify-content: center;
+        li {font-size: 12px !important;}
+        li:not(li:last-child) {
+          margin-right:6vw;
+        }
+        li:not(li:nth-child(1))::after {
+          margin: 0.75vh 0 0 -3vw;
+        }
+      }
+      address {font-size: 12px !important;}
+      p {font-size: 12px !important;}
+    }
+    .footerLogo {
+      width: auto; height: 10vh;
+      margin: 10vh auto 5vh auto;
     }
   }
-  .footerMenu {
-    ul:not(.sns) {
-      li {
-        margin-right:6vw;
-      }
-      li:not(li:nth-child(1))::after {
-        margin: 0.75vh 0 0 -3vw;
-      }
-    }
+  .footerOpen {
+    bottom : 0 !important;
+    .footerOpenBtn {display:none !important;}
+    .footerCloseBtn {display:flex !important;}
+  }
+  .footerClose {
+    bottom : -50%;
+    .footerOpenBtn {display:flex !important;}
+    .footerCloseBtn {display:none !important;}
   }
 }
 // 테블릿 & PC
 @media all and (min-width:768px) {
-  .footerButton{
-    span {
-      width: 2.4vw; height: 3vw;
-      top: -1.5vw;
-      img {
-        width: 0.6vw; height: 0.5vw;
-        margin-bottom:1.5vw;
+  footer {
+    height:28%;
+    display: flex;
+    align-items: center;
+    .footerMenu {
+      width: 50%; 
+      .sns {
+        li {
+          margin-right:15%;
+        }
       }
+      ul:not(.sns) {
+        li {
+          margin-right:10vw;
+        }
+        li:not(li:nth-child(1))::after {
+          margin: 0.75rem 0 0 -5vw;
+        }
+      }
+    }
+    .footerLogo {
+      width: auto; height: 25%;
+      margin-left:15%;
     }
   }
-  .footerMenu {
-    ul:not(.sns) {
-      li {
-        margin-right:10vw;
-      }
-      li:not(li:nth-child(1))::after {
-        margin: 0.75rem 0 0 -5vw;
-      }
-    }
+  .footerOpen {
+    bottom : 0 !important;
+    .footerOpenBtn {display:none !important;}
+    .footerCloseBtn {display:flex !important;}
+  }
+  .footerClose {
+    bottom : -28%;
+    .footerOpenBtn {display:flex !important;}
+    .footerCloseBtn {display:none !important;}
   }
 }
 footer {
-  width: 100%; height: 28%;
+  width: 100%;
   background-color: #222;
-  display: flex;
-  align-items: center;
   position:absolute; left: 0; bottom: -28%;
   z-index: 500;
   color:#fff;
@@ -97,34 +127,38 @@ footer {
   h1 {@include hidden;}
   .footerButton{
     span {
+      width: 50px; height: 50px;
       background-color: #222;
       display: flex;
       align-items: center;
       justify-content: center;
       position: absolute;
       left: calc(2% + (5% - 1.2vw)/2);
+      top: -25px;
       border-top-left-radius: 20%;
       border-top-right-radius: 20%;
       clip-path:polygon(0 0, 100% 0, 100% 50%, 0 50%);
       cursor:pointer;
       img {
+        width: 15px; height: 10px;
+        margin-bottom: 20px;
         display:block;
       }
     }
     .footerClose {display:none;}
   }
   .footerMenu {
-    width: 50%; height: auto;
+    height: auto;
     margin: 0 auto;
     .sns {
       display: flex;
       align-items: center;
       li {
-        float:left;
         cursor:pointer;
-        margin-right:15%;
         position: relative;
         img {
+          width:fit-content;
+          height:fit-content;
           opacity: 0;
           transition:all 0.3s;
         }
@@ -144,6 +178,7 @@ footer {
       li:nth-child(4) {
         content:"";
         background:url("../../img/common/footer_twitter.png") no-repeat 0 0;
+        margin-right:0;
       }
       li:nth-child(1):hover img {opacity: 1;}
       li:nth-child(2):hover img {opacity: 1;}
@@ -182,17 +217,7 @@ footer {
   }
   .footerLogo {
     display:block;
-    width: auto; height: 25%;
-    margin-left:15%;
+    width:fit-content;
+    height:fit-content;
   }
-}
-.footerOpen {
-  bottom : 0 !important;
-  .footerOpenBtn {display:none !important;}
-  .footerCloseBtn {display:flex !important;}
-}
-.footerClose {
-  bottom : -28%;
-  .footerOpenBtn {display:flex !important;}
-  .footerCloseBtn {display:none !important;}
 }
