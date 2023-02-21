@@ -56,6 +56,11 @@
         border-radius: 10px;
         margin-bottom: 3vh;
       }
+      // edge 비밀번호 눈 없애기
+      input[type="password"]::-ms-reveal,
+      input[type="password"]::-ms-clear {
+        display: none;
+      }
       input::placeholder {
         color: #fff;
         opacity: 0.5;
