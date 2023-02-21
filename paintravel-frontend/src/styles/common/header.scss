@@ -51,7 +51,7 @@
   width: 100%;
   height: calc(100px / 1080px * 100%);
   height: calc(100px / 1080px * 100vh);
-  background-color: transparent;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 100%);
   @include font;
   @include noDrag;
   position: fixed;

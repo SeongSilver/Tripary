@@ -162,7 +162,7 @@ function PostWrite() {
             <h2>Gallery</h2>
             <div className="inputFileBtn">
                 <label htmlFor="galleryUpload">
-                  <RiFolderAddFill />
+                  <RiFolderAddFill aria-label="사진 추가하기"/>
                 </label>
               <input
                 type="file"
@@ -171,7 +171,6 @@ function PostWrite() {
                 id="galleryUpload"
                 onChange={onLoadFile}
                 accept="image/jpg,image/png,image/jpeg,image/gif"
-                alt="이미지 추가하기"
               />
             </div>
             <div className="galleryContainer">
@@ -194,24 +193,27 @@ function PostWrite() {
           </div>
           <ul>
             <li>
-              <p>제목</p>
+              <label htmlFor="title">제목</label>
               <input
                 type="text"
                 name="title"
+                id="title"
                 onChange={onChangePost}
                 placeholder="30자 내로 작성하세요"
                 aria-label="30자 내로 작성하세요"
                 maxLength="30"/>
             </li>
             <li>
-              <p>위치</p>
+              <label htmlFor="location">위치</label>
               <input
                 type="text"
                 name="location"
+                id="location"
+                placeholder="예 ) 용산구 or 남산타워"
                 onChange={onChangePost}></input>
             </li>
             <li>
-              <p>일정</p>
+              <label htmlFor="date">일정</label>
               <DatePicker
                 selectsRange={true}
                 startDate={startDate}
@@ -226,11 +228,12 @@ function PostWrite() {
                 className="datePicker"
                 aria-label="여행 기간 선택"
                 tabIndex="-1"
+                id="date"
               />
             </li>
             <li>
-              <p>일기</p>
-              <textarea name="content" onChange={onChangePost}></textarea>
+              <label htmlFor="content">일기</label>
+              <textarea name="content" id="content" onChange={onChangePost}></textarea>
             </li>
           </ul>
           <div className="postWriteBtn">

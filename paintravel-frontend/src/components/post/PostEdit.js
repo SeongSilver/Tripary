@@ -207,7 +207,7 @@ function PostEdit() {
                 <h2>Gallery</h2>
                 <span className="inputFileBtn">
                   <label htmlFor="galleryUpload">
-                    <RiFolderAddFill />
+                    <RiFolderAddFill  aria-label="사진 추가하기"/>
                   </label>
                   <input
                     type="file"
@@ -216,7 +216,6 @@ function PostEdit() {
                     id="galleryUpload"
                     onChange={onLoadFile}
                     accept="image/jpg,image/png,image/jpeg,image/gif"
-                    alt="이미지 추가하기"
                   />
                 </span>
                 <div className="galleryContainer">
@@ -255,10 +254,11 @@ function PostEdit() {
               </div>
               <ul>
                 <li>
-                  <p>제목</p>
+                  <label htmlFor="title">제목</label>
                   <input
                     type="text"
                     name="title"
+                    id="title"
                     onChange={onChangePost}
                     defaultValue={editResData.title}
                     placeholder="30자 내로 작성하세요"
@@ -266,17 +266,18 @@ function PostEdit() {
                   />
                 </li>
                 <li>
-                  <p>위치</p>
+                  <label htmlFor="location">위치</label>
                   <input
                     type="text"
                     name="location"
+                    id="location"
                     onChange={onChangePost}
                     defaultValue={editResData.location}
                     onKeyDown={handleOnKeyPress}
                   />
                 </li>
                 <li>
-                  <p>일정</p>
+                  <label htmlFor="date">일정</label>
                   <DatePicker
                     selectsRange={true}
                     startDate={startDate}
@@ -291,14 +292,16 @@ function PostEdit() {
                       " ~ " +
                       new Date(editToDate).toLocaleDateString()
                     }
+                    id="date"
                   />
                 </li>
                 <li>
-                  <p>일기</p>
+                  <label htmlFor="content">일기</label>
                   <textarea
                     name="content"
                     onChange={onChangePost}
-                    defaultValue={editResData.content}></textarea>
+                    defaultValue={editResData.content} 
+                    id="content"></textarea>
                 </li>
               </ul>
               <div className="postEditBtn">

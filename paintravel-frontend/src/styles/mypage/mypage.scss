@@ -1,6 +1,6 @@
 @mixin font {
   font-family: "Nanum Myeongjo", "Noto Sans KR";
-  color: #fff;
+  color: #222;
   letter-spacing: 0.3rem;
   text-align: center;
 }
@@ -10,96 +10,165 @@
   -ms-user-select: none;
   user-select: none;
 }
-// 테블릿 & 모바일
+@mixin hidden {
+  display: block;
+  width: 0;
+  height: 0;
+  text-indent: -9999px;
+}
+body {
+  margin-top:10vh;
+}
+// 모바일 & 테블릿
 @media all and (max-width: 1024px) {
-  html {
-    font-size: 46.875% !important;
-  }
-  .myPageMenu {
-    font-size: 1.8rem;
-    li:nth-child(1) {width: 10vw;}
-    li:nth-child(2) {width: 12vw;}
-    li:nth-child(3) {width: 12vw;}
-    li:nth-child(4) {width: 17vw;}
-    li:nth-child(5) {width: 12vw;}
-    li:nth-child(6) {width: 8vw;}
-  }
-  .mypageListLi > ul {
-    li {font-size: 1.6rem !important;}
-    li:nth-child(1) {width: 10vw;}
-    li:nth-child(2) {width: 12vw;}
-    li:nth-child(3) {width: 12vw;}
-    li:nth-child(4) {width: 17vw;}
-    li:nth-child(5) {width: 12vw;}
-    li:nth-child(6) {width: 8vw;}
-  }
   @media all and (max-width: 767px) {
-    .myPageMenu {
-      font-size: 1.6rem;
-      li:nth-child(1) {display:none;}
-      li:nth-child(2) {width: 15vw;}
-      li:nth-child(3) {width: 18vw;}
-      li:nth-child(4) {width: 20vw;}
-      li:nth-child(5) {width: 20vw;}
-      li:nth-child(6) {display:none;}
+    html {
+      .myPageBtn {
+        font-size: 1.6rem !important;
+        select {font-size: 1.6rem !important;}
+        input {font-size: 1.6rem !important;}
+      }
     }
-    .mypageListLi > ul {
-      li {font-size: 1.6rem !important;}
-      li:nth-child(1) {display:none;}
-      li:nth-child(2) {width: 15vw;}
-      li:nth-child(3) {width: 18vw;}
-      li:nth-child(4) {width: 20vw;}
-      li:nth-child(5) {width: 20vw;}
-      li:nth-child(6) {display:none;}
+  }
+  .myPageList {
+    .mypageListLi {
+      width: 80vw;
+      height: calc(70vw + 23vh);
+      margin-bottom: 5vh;
+      padding: 0 5vw;
+      > h1 {
+        width: 68vw;
+        line-height: 8vh;
+        font-size: 16px !important;
+        > figure {
+          width: 5vh;
+          height: 5vh;
+          margin: 1.5vh 1.5vh 0 0;
+          img {
+            width: auto;
+            height: 6vh;
+          }
+        }
+      }
+      > figure {
+        width: 70vw;
+        height: 70vw;
+      }
+      > h2 {
+        font-size: 16px;
+        line-height: 5vh;
+        margin-top:2vh;
+      }
+      > h3 {
+        font-size: 2rem;
+        line-height: 3vh;
+        > span {
+          font-size: 1.6rem;
+          line-height: 3vh;
+        }
+      }
+      > h4 {
+        font-size: 1.6rem;
+        line-height: 3vh;
+      }
+      > button {
+        width: 20px;
+        height: 30px;
+        right: calc(5vw - 10px);
+        top: calc(4vh - 15px);
+        font-size: 25px;
+        background-color: red;
+      }
     }
   }
 }
 // PC
 @media all and (min-width: 1025px) {
-  .myPageMenu {
-    li:nth-child(1) {width: 10vw;}
-    li:nth-child(2) {width: 10vw;}
-    li:nth-child(3) {width: 13vw;}
-    li:nth-child(4) {width: 18vw;}
-    li:nth-child(5) {width: 10vw;}
-    li:nth-child(6) {width: 10vw;}
-  }
-  .mypageListLi > ul {
-    li:nth-child(1) {width: 10vw;}
-    li:nth-child(2) {width: 10vw;}
-    li:nth-child(3) {width: 13vw;}
-    li:nth-child(4) {width: 18vw;}
-    li:nth-child(5) {width: 10vw;}
-    li:nth-child(6) {width: 10vw;}
+  .myPageList {
+    .mypageListLi {
+      width: 25vw;
+      height: 35vw;
+      margin-bottom: 2.5vw;
+      padding: 0 2vw;
+      > h1 {
+        width: 19vw;
+        line-height: 5vw;
+        > figure {
+          width: 3vw;
+          height: 3vw;
+          margin: 1vw 1vw 0 0;
+          img {
+            width: auto;
+            height: 5vw;
+          }
+        }
+      }
+      > figure {
+        width: 21vw;
+        height: 21vw;
+      }
+      > h2 {
+        font-size: 1.6rem;
+        line-height: 2vw;
+        margin-top:2vw;
+      }
+      > h3 {
+        font-size: 1.5rem;
+        line-height: 2vw;
+        > span {
+          font-size: 1.2rem;
+          line-height: 2vw;
+        }
+      }
+      > h4 {
+        font-size: 1.2rem;
+        line-height: 2vw;
+      }
+      > button {
+        width: 20px;
+        height: 2vw;
+        right: calc(2vw - 10px);
+        top: 1.5vw;
+        font-size: 20px;
+      }
+    }
+    .mypageListLi:not(.mypageListLi:nth-child(3n)) {
+      margin-right:2.5vw;
+    }
+    .mypageListLi:nth-last-child(1), .mypageListLi:nth-last-child(2),
+    .mypageListLi:nth-last-child(3) {
+      margin-bottom: 0 !important;
+    }
   }
 }
 
 .myPage {
   width: 100vw;
-  height: 100vh;
   background: url(../../img/mypage/mypageBg.png);
   background-size: 100vw 100vh;
   position: relative;
   font-size: 1.6rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
   .mypageContainer {
     width: 100vw;
-    padding-top: 10vh;
     height: 100vh;
+    padding-top: 10vh;
     position: relative;
     z-index: 1;
     @include noDrag;
+    @include font;
     .myPageBtn {
       display: flex;
       justify-content: right;
       margin: 2vh 7vw 0 0;
-      font-size: 1.2rem;
-      select {
+      > select {
         outline: none;
         border: none;
         padding: 5px;
         border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
         background-color: transparent;
-        font-size: 1.2rem;
+        font-size: 12px;
       }
       input {
         width: 20vw;
@@ -109,171 +178,131 @@
         border: none;
         border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
         text-align: center;
-        font-size: 1.2rem;
+        font-size: 12px;
       }
-      button {
-        padding: 0 0.3vw;
-        border-radius: 10px;
-        background-color: rgba(0, 0, 0, 0.8);
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        font-weight: 400;
-        margin: 0 0.7vw;
-      }
-      label {
+      > label {
         margin: 1px 4px;
         border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
+        font-size: 12px;
+        color:#000;
+        font-weight: 600;
         select {
           outline: none;
           border: none;
           padding: 5px;
           background-color: transparent;
+          font-size: 12px;
+          color:#555;
         }
       }
     }
     .myPageListContainer {
-      width: 85vw;
-      height: 70vh;
-      margin: 3vh 8vw;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-      border-radius: 20px;
       .myPageMenu {
-        height: 8vh;
-        font-weight: 700;
-        padding:0 1vw;
-        li {
-          height: 6vh;
-          line-height: 6vh;
-          margin: 1vh 1vw;
-          float: left;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-          position: relative;
-          text-align: center;
-          span {
-            float:right;
-            svg {
-              cursor: pointer;
-              transition: 0.2s ease-in-out;
-            }
-            svg:hover {
-              color: rgba(0, 0, 0, 0.3);
-            }
+        display: flex;
+        justify-content: right;
+        margin: 2vh 7vw 5vh 0;
+        > label {
+          margin: 1px 4px;
+          border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
+          font-size: 12px;
+          color:#000;
+          font-weight: 600;
+          select {
+            outline: none;
+            border: none;
+            padding: 5px;
+            background-color: transparent;
+            font-size: 12px;
+            color:#555;
           }
+        }
+        > label:nth-child(1) {
+          margin-right:2vw;
         }
       }
       .myPageList {
-        width: 85vw;
-        height: 62vh;
-        padding:0 1vw 1.5vh 1vw;
-        overflow: hidden;
-        > li:not(.myPageList > li:first-child) {
-          margin-top:1vh;
-        }
+        width: 80vw;
+        display: flex;
+        align-items: space-around;
+        flex-wrap: wrap;
+        margin: 0 auto;
         .mypageListLi {
           display: block;
-          height: auto;
-          transition: all 0.5s;
-          span {
-            display: none;
+          overflow: hidden;
+          border-radius: 15px;
+          background-color: #fff;
+          text-align: left;
+          position:relative;
+          box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+          > * {
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow: hidden;
           }
-          > ul {
-            li {
-              margin: 0 1vw;
+          > span {display:none;}
+          > h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            > figure {
               float: left;
-              text-align: center;
-              font-size: 1.4rem;
-              overflow:hidden;
-              text-overflow:ellipsis;
-              white-space:nowrap;
-              cursor: pointer;
-              figure {
-                width: 10vw;
-                height: 100%;
-                overflow: hidden;
-                position: relative;
-                img {
-                  min-width: 10vw;
-                  width: auto;
-                  object-fit: cover;
-                  position: absolute;
-                  left: 50%;
-                  transform: translateX(-50%);
-                }
-              }
-              a {
-                margin: 0 0.5vw;
-                svg {
-                  font-size: 2.5rem;
-                  font-weight: 100;
-                  color: black;
-                }
-              }
-            }
-            // li:last-child {
-            //   width: 0;
-            //   height: 0;
-            //   text-indent: -9999px;
-            // }
-          }
-          .limit3 {
-            height: 19.5vh;
-            > li:first-child {
-              height: 19.5vh;
-            }
-            li:not(.limit3 > li:first-child) {
-              height: 4.5vh;
-              line-height: 4.5vh;
-              margin-top: 7.5vh;
-              margin-bottom: 7.5vh;
+              border: solid 1px #555;
+              border-radius: 50%;
+              overflow: hidden;
+              position:relative;
               img {
-                height: 19.5vh;
+                position:absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
               }
             }
           }
-          .limit5 {
-            height: 11.3vh;
-            > li:first-child {
-              height: 11.3vh;
-            }
-            li:not(.limit5 > li:first-child) {
-              height: 4.3vh;
-              line-height: 4.3vh;
-              margin-top: 3.5vh;
-              margin-bottom: 3.5vh;
-              img {
-                height: 11.3vh;
-              }
+          > figure {
+            overflow: hidden;
+            position: relative;
+            > img {
+              min-width: auto;
+              max-width: 150%;
+              height: 100%;
+              position:absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
             }
           }
-          .limit10 {
-            height: 5.1vh;
-            li {
-              height: 5.1vh;
-              line-height: 5.1vh;
-              img {
-                height: 5.1vh;
-              }
+          > h2 {
+            font-weight: 600;
+          }
+          > h3 {
+            span {
+              margin-left: 10px;
             }
+          }
+          > h4 {
+            text-align: right;
+          }
+          > button {
+            position:absolute;
+            background-color: transparent;
+            color:#222;
+            border:none;
+            text-align: center;
+            cursor: pointer;
           }
         }
-        .mypageListLi:hover {
-          background-color: rgba(0,0,0,0.1);
-        }
-      }
-      .myPagePagination {
-        margin-top: 5vh;
       }
     }
   }
-  .mypageContainer::before {
-    content: "";
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0, 0.3),rgba(255,255,255, 0.5) 15%);
-    z-index: -1;
-  }
+}
+.myPage::-webkit-scrollbar {
+  width: 10px;
+}
+/* 스크롤바 설정    */
+.myPage::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+}
+/* 스크롤바 뒷 배경 설정*/
+.myPage::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
 }
