@@ -162,9 +162,9 @@ function PostWrite() {
           <div className="gallery">
             <h2>Gallery</h2>
             <div className="inputFileBtn">
-                <label htmlFor="galleryUpload">
-                  <RiFolderAddFill />
-                </label>
+              <label htmlFor="galleryUpload">
+                <RiFolderAddFill />
+              </label>
               <input
                 type="file"
                 name="myfile"
@@ -202,7 +202,8 @@ function PostWrite() {
                 onChange={onChangePost}
                 placeholder="30자 내로 작성하세요"
                 aria-label="30자 내로 작성하세요"
-                maxLength="30"/>
+                maxLength="30"
+              />
             </li>
             <li>
               <p>위치</p>
@@ -210,7 +211,8 @@ function PostWrite() {
                 type="text"
                 name="location"
                 onChange={onChangePost}
-                onKeyDown={handleOnKeyPress}/>
+                onKeyDown={handleOnKeyPress}
+              />
             </li>
             <li>
               <p>일정</p>
@@ -227,6 +229,7 @@ function PostWrite() {
                 className="datePicker"
                 aria-label="여행 기간 선택"
                 tabIndex="-1"
+                ignoreReadonly={true}
               />
             </li>
             <li>
