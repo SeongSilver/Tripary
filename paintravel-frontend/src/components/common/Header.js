@@ -30,9 +30,11 @@ function Header() {
       //localStorage에 LOGINEDID를 만드는 함수에 response에서 받아온 id넣음
       if (response.payload._id) {
         setLoginedItem("LOGINEDID", response.payload._id);
+        console.log("로그인 정보 localstorage에 저장함");
       }
       if (response.payload._id === null || response.payload._id === "") {
         localStorage.clear();
+        console.log("백엔드에서 받아온 로그인 정보가 없기에, localstorage에서도 정보 삭제함");
       }
     });
     //로컬스토리지에 LOGINEDID가 있을 경우 실행
