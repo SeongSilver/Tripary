@@ -23,7 +23,6 @@ function Header() {
       expiry: now,
     };
     localStorage.setItem(key, JSON.stringify(item));
-    console.log("localstorage 저장$$$$$$")
   };
 
   useEffect(() => {
@@ -31,11 +30,9 @@ function Header() {
       //localStorage에 LOGINEDID를 만드는 함수에 response에서 받아온 id넣음
       if (response.payload._id) {
         setLoginedItem("LOGINEDID", response.payload._id);
-        console.log("로그인 정보 localstorage에 저장함");
       }
       if (response.payload._id === null || response.payload._id === "") {
         localStorage.clear();
-        console.log("백엔드에서 받아온 로그인 정보가 없기에, localstorage에서도 정보 삭제함");
       }
     });
     //로컬스토리지에 LOGINEDID가 있을 경우 실행
@@ -46,10 +43,8 @@ function Header() {
       //현재시간이 LOGINEDID 만료시간보다 길면 localStorage에 있는 LOGINEDID 삭제
       const loginTimeOut = setInterval(() => {
         const nowTime = new Date().getTime();
-        console.log("현재 로컬스토리지에 저장된 아이디",JSON.parse(localStorage.getItem("LOGINEDID")));
 
         if (nowTime > expireTime) {
-          console.log("로컬스토리지 값 지우러왔어요")
           localStorage.removeItem("LOGINEDID");
           //[야나] 로컬스토리지 값 만료시 자동으로 로그아웃 실행되도록 추가
           onClickHandler();
