@@ -1,5 +1,4 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 import { BiEdit, BiTrash } from "react-icons/bi";
@@ -9,8 +8,9 @@ import { GoChevronUp, GoChevronDown } from "react-icons/go";
 import ContentModal from "../post/ContentModal";
 import Pagination from "../common/Pagination";
 import Loading from "../common/Loading";
-
 import "../../styles/mypage/mypage.scss";
+
+import SelectCountryModal from "./SelectCountryModal.js";
 
 function MyPage() {
   const [loading, setLoading] = useState(true);
@@ -32,6 +32,9 @@ function MyPage() {
   const [modalData, setModalData] = useState();
 
   const [searchOption, setSearchOption] = useState("1");
+
+  //지역선택 후 글쓰기를 띄우기 위한 모달
+  const [selectedCountryModal, setSelectedCountryModal] = useState(false);
 
   useLayoutEffect(() => {
     if (existsessionStorage) {
@@ -113,33 +116,16 @@ function MyPage() {
     setNeedToReciveData(true);
   };
 
-  const postDeleteHandler = (data) => {
-    const deletePostInfo = {
-      currentId: data.writer,
-      post_id: data._id,
-    };
-    if (window.confirm("게시물을 삭제하시겠습니까?")) {
-      axios
-        .post("api/post/getPostDelete", deletePostInfo)
-        .then((response) => {
-          location.reload();
-        })
-        .catch((error) => {
-          console.log("게시물 삭제 실패");
-          console.log(error);
-        });
-    } else {
-      setOpenPostModal(false);
-      alert("삭제를 취소합니다");
-    }
-  };
-
   const selectHandler = (event) => {
     setLimit(Number(event.target.value));
   };
 
   const searchBoxHandler = (event) => {
     setSearchOption(event.currentTarget.value);
+  };
+
+  const openSelectCountryModal = () => {
+    setSelectedCountryModal(true);
   };
 
   return (
@@ -149,97 +135,130 @@ function MyPage() {
       ) : (
         <div className="mypageContainer">
           <div className="myPageBtn">
-            <select onChange={searchBoxHandler} value={searchOption}>
-              <option value="1">여행국가</option>
-              <option value="2">제목</option>
-            </select>
-            {searchOption === "1" && (
-              <input
-                type="text"
-                value={searchCountry}
-                onChange={mypageCountrySearchHandler}
-                placeholder="여행국가 검색 (영어)"
-              />
-            )}
-            {searchOption === "2" && (
-              <input
-                type="text"
-                value={searchTitle}
-                onChange={mypageTitleSearchHandler}
-                placeholder="제목 검색"
-              />
-            )}
-            <label>
-              게시물 수&emsp;
-              <select type="number" value={limit} onChange={selectHandler}>
-                <option value="3">3</option>
-                <option value="6">6</option>
-                <option value="9">9</option>
+            <div>
+              <span onClick={openSelectCountryModal}>글쓰기</span>
+              {selectedCountryModal && (
+                <SelectCountryModal
+                  setSelectedCountryModal={setSelectedCountryModal}
+                />
+              )}
+            </div>
+            <div>
+              <select onChange={searchBoxHandler} value={searchOption}>
+                <option value="1">여행국가</option>
+                <option value="2">제목</option>
               </select>
-            </label>
-          </div>
-          <div className="myPageListContainer">
-            {/* <ul className="myPageMenu">
-              <li>사진</li>
-              <li>여행국가</li>
-              <li>제목</li>
-              <li>
-                여행기간
-                <span>
-                  <GoChevronUp
-                    onClick={() => {
-                      sorting(1);
-                      sortByThis("fromDate");
-                      setPage(1);
-                    }}
-                  />
-                  <GoChevronDown
-                    onClick={() => {
-                      sorting(-1);
-                      sortByThis("fromDate");
-                      setPage(1);
-                    }}
-                  />
-                </span>
-              </li>
-              <li>
-                업로드일
-                <span>
-                  <GoChevronUp
-                    onClick={() => {
-                      sorting(1);
-                      sortByThis("writeDate");
-                    }}
-                  />
-                  <GoChevronDown
-                    onClick={() => {
-                      sorting(-1);
-                      sortByThis("writeDate");
-                    }}
-                  />
-                </span>
-              </li>
-              <li>수정/삭제</li>
-            </ul> */}
-
-            <div className="myPageMenu">
+              {searchOption === "1" && (
+                <input
+                  type="text"
+                  value={searchCountry}
+                  onChange={mypageCountrySearchHandler}
+                  placeholder="여행국가 검색 (영어)"
+                />
+              )}
+              {searchOption === "2" && (
+                <input
+                  type="text"
+                  value={searchTitle}
+                  onChange={mypageTitleSearchHandler}
+                  placeholder="제목 검색"
+                />
+              )}
               <label>
-                여행기간&emsp;
-                <select type="text">
-                  <option value="3">최신순</option>
-                  <option value="6">오래된순</option>
+                게시물 수&emsp;
+                <select type="number" value={limit} onChange={selectHandler}>
+                  <option value="3">3</option>
+                  <option value="6">6</option>
+                  <option value="9">9</option>
                 </select>
               </label>
               <label>
-                작성일&emsp;
-                <select type="text">
-                  <option value="3">최신순</option>
-                  <option value="6">오래된순</option>
-                </select>
+                여행기간&nbsp;
+                <span>
+                  <GoChevronUp
+                    onClick={() => {
+                      sorting(1);
+                      sortByThis("fromDate");
+                      setPage(1);
+                    }}
+                    title="최신순"
+                  />
+                  <GoChevronDown
+                    onClick={() => {
+                      sorting(-1);
+                      sortByThis("fromDate");
+                      setPage(1);
+                    }}
+                    title="오래된순"
+                  />
+                </span>
+              </label>
+              <label>
+                업로드일&nbsp;
+                <span>
+                  <GoChevronUp
+                    onClick={() => {
+                      sorting(1);
+                      sortByThis("writeDate");
+                    }}
+                    title="최신순"
+                  />
+                  <GoChevronDown
+                    onClick={() => {
+                      sorting(-1);
+                      sortByThis("writeDate");
+                    }}
+                    title="오래된순"
+                  />
+                </span>
               </label>
             </div>
+          </div>
+          <div className="myPageListContainer">
+            {/* <div className="myPageMenu">
+              <label>
+                여행기간&nbsp;
+                <span>
+                  <GoChevronUp
+                    onClick={() => {
+                      sorting(1);
+                      sortByThis("fromDate");
+                      setPage(1);
+                    }}
+                    title="최신순"
+                  />
+                  <GoChevronDown
+                    onClick={() => {
+                      sorting(-1);
+                      sortByThis("fromDate");
+                      setPage(1);
+                    }}
+                    title="오래된순"
+                  />
+                </span>
+              </label>
+              <label>
+                업로드일&nbsp;
+                <span>
+                  <GoChevronUp
+                    onClick={() => {
+                      sorting(1);
+                      sortByThis("writeDate");
+                    }}
+                    title="최신순"
+                  />
+                  <GoChevronDown
+                    onClick={() => {
+                      sorting(-1);
+                      sortByThis("writeDate");
+                    }}
+                    title="오래된순"
+                  />
+                </span>
+              </label>
+            </div> */}
             <ul className="myPageList">
-              {/* {mypageList ? (
+              {mypageList ? (
                 mypageList
                   .filter((data) => {
                     if (searchOption === "1") {
@@ -256,64 +275,8 @@ function MyPage() {
                   .map((data) => (
                     <li
                       className="mypageListLi"
-                      onClick={openContentModal}
-                      onKeyPress={openContentModal}
-                      tabIndex="0"
-                      aria-label="일지보기"
-                      key={data._id}>
-                      <span>{data._id}</span>
-                      <ul className={mypageListLimitClass}>
-                        <li>
-                          <figure>
-                            <img src={`/upload/${data.file[0]}`} alt="썸네일사진"/>
-                            <img src={require("../../img/iu.jpg")} alt="썸네일사진"/>
-                          </figure>
-                        </li>
-                        <li>{data.country}</li>
-                        <li>{data.title}</li>
-                        <li>
-                          {new Date(data.fromDate).toLocaleDateString()} ~{" "}
-                          {new Date(data.toDate).toLocaleDateString()}
-                        </li>
-                        <li>{new Date(data.writeDate).toLocaleDateString()}</li>
-                        <li>
-                          <Link
-                            to="/postEdit"
-                            state={{
-                              selectedCountry: data.country,
-                              nationCode: data.nationCode,
-                              _id: data._id,
-                              writer: data.writer,
-                            }}
-                            aria-label="수정버튼">
-                            <BiEdit />
-                          </Link>
-                          <a href="#" aria-label="삭제버튼">
-                            <BiTrash onClick={() => postDeleteHandler(data)} />
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                  ))
-              ) : (
-                <div>작성된 글이 없습니다</div>
-              )} */}
-              {mypageList ? (
-                mypageList
-                  .filter((data) => {
-                    if (searchOption === "1") {
-                      return data.country
-                        .toLocaleLowerCase()
-                        .includes(searchCountry.toLocaleLowerCase());
-                    } else if (searchOption === "2") {
-                      return data.title
-                        .toLocaleLowerCase()
-                        .includes(searchTitle.toLocaleLowerCase());
-                    }
-                  })
-                  .slice(offset, offset + limit)
-                  .map((data) => (
-                    <li className="mypageListLi" key={data._id}>
+                      key={data._id}
+                      onClick={openContentModal}>
                       <span>{data._id}</span>
                       <h1>
                         <figure>
