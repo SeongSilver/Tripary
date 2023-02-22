@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../styles/post/postWrite.scss";
 import DatePicker from "react-datepicker";
@@ -35,7 +35,7 @@ function PostWrite() {
     writer: "",
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (existsessionStorage) {
       setLoginedId(JSON.parse(sessionStorage.getItem("LOGINEDID")).value);
     }
