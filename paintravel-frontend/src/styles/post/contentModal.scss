@@ -138,8 +138,10 @@
                     overflow: hidden;
                     position:absolute; top: 0%;
                     img {
-                      min-width: 100%; min-height: 100%;
-                      max-width: 200%; max-height: 120%;
+                      // min-width: 100%; min-height: 100%;
+                      // max-width: 200%; max-height: 120%;
+                      width: auto;
+                      height:100%; 
                       position:absolute; left: 50%; top: 50%;
                       transform: translate(-50%, -50%);
                       z-index: 1100;
@@ -147,12 +149,14 @@
                     }
                   }
                   > img {
-                    min-width: 100%; min-height: calc(100% - 17vh);
-                    max-width: 200%; max-height: calc(100% - 17vh);
+                    // min-width: 100%; min-height: calc(100% - 17vh);
+                    // max-width: 200%; max-height: calc(100% - 17vh);
+                    width: 100%; height: auto;
+                    min-height: 100%;
                     position:absolute; left: 50%; bottom: 0%;
                     transform: translateX(-50%);
                     z-index: 1099;
-                    filter: blur(10px);
+                    filter: blur(10px) brightness(0.5);
                     object-fit:cover !important;
                   }        
                 }
@@ -190,9 +194,10 @@
       }
     }
     .modalFooter {
-      margin-top: 20px;
+      height: calc(85vh - 8vh - 3vh - 2px - 66vh);
       display: flex;
       justify-content: center;
+      align-items: center;
       > a {
         color: white;
         font-size: 1.4rem;

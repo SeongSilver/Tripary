@@ -39,7 +39,7 @@
   @media all and (max-width: 414px) {
     .postEditWrap {
       ul {
-        p {
+        label {
           width: 12vw !important;
           line-height: 8vh !important;
         }
@@ -84,11 +84,11 @@
           width: 80vw;
           height: 25vh;
           margin-top:36.5vh !important;
-          p {
+          label {
             width: 10vw;
             line-height: 8vh;
           }
-          p:not(li:nth-child(4) p)::after {
+          label:not(li:nth-child(4) label)::after {
             margin-left: 3vw;
           }
           input{
@@ -189,12 +189,12 @@
         ul {
           width: calc(80vw - 26vw - 8vw);
           height: 55vh;
-          p {
+          label {
             width: 10vw;
             line-height: 8vh;
             margin-right: 3vw;
           }
-          p:not(li:nth-child(4) p)::after {
+          label:not(li:nth-child(4) label)::after {
             content: ":";
             width: 2vw;
             line-height: 5vh;
@@ -360,13 +360,13 @@
             text-align: center;
           }
         }
-        p {
+        label {
           display: inline-block;
           font-size: 1.6rem;
           font-weight: 400;
           @include noDrag;
         }
-        p:not(li:nth-child(4) p)::after {
+        label:not(li:nth-child(4) label)::after {
           content: ":";
           font-size: 2rem;
           line-height: 5vh;

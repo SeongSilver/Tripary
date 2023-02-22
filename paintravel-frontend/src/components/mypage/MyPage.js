@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import { BiEdit, BiTrash } from "react-icons/bi";
+import { MdDateRange } from "react-icons/md";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { GoChevronUp, GoChevronDown } from "react-icons/go";
 import ContentModal from "../post/ContentModal";
 import Pagination from "../common/Pagination";
@@ -13,12 +15,11 @@ import "../../styles/mypage/mypage.scss";
 function MyPage() {
   const [loading, setLoading] = useState(true);
   //페이지네이션
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(6);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
   const [searchCountry, setSearchCountry] = useState("");
   const [searchTitle, setSearchTitle] = useState("");
-  const [mypageListLimitClass, setMypageListLimitClass] = useState("limit10");
 
   const [login_id, setLogin_id] = useState("*");
   const [sortBy, setSortBy] = useState("fromDate"); //정렬기준 - (기본값) writeDate, fromDate
@@ -91,15 +92,6 @@ function MyPage() {
             .includes(searchCountry.toLocaleLowerCase())
         ).length
       );
-    }
-    if (limit == 3) {
-      setMypageListLimitClass("limit3");
-    }
-    if (limit == 5) {
-      setMypageListLimitClass("limit5");
-    }
-    if (limit == 10) {
-      setMypageListLimitClass("limit10");
     }
   }, [mypageList, searchCountry, searchTitle, limit]);
 
@@ -181,13 +173,13 @@ function MyPage() {
               게시물 수&emsp;
               <select type="number" value={limit} onChange={selectHandler}>
                 <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
+                <option value="6">6</option>
+                <option value="9">9</option>
               </select>
             </label>
           </div>
           <div className="myPageListContainer">
-            <ul className="myPageMenu">
+            {/* <ul className="myPageMenu">
               <li>사진</li>
               <li>여행국가</li>
               <li>제목</li>
@@ -228,9 +220,26 @@ function MyPage() {
                 </span>
               </li>
               <li>수정/삭제</li>
-            </ul>
+            </ul> */}
+
+            <div className="myPageMenu">
+              <label>
+                여행기간&emsp;
+                <select type="text">
+                  <option value="3">최신순</option>
+                  <option value="6">오래된순</option>
+                </select>
+              </label>
+              <label>
+                작성일&emsp;
+                <select type="text">
+                  <option value="3">최신순</option>
+                  <option value="6">오래된순</option>
+                </select>
+              </label>
+            </div>
             <ul className="myPageList">
-              {mypageList ? (
+              {/* {mypageList ? (
                 mypageList
                   .filter((data) => {
                     if (searchOption === "1") {
@@ -256,10 +265,8 @@ function MyPage() {
                       <ul className={mypageListLimitClass}>
                         <li>
                           <figure>
-                            <img
-                              src={`/upload/${data.file[0]}`}
-                              alt="썸네일사진"
-                            />
+                            <img src={`/upload/${data.file[0]}`} alt="썸네일사진"/>
+                            <img src={require("../../img/iu.jpg")} alt="썸네일사진"/>
                           </figure>
                         </li>
                         <li>{data.country}</li>
@@ -286,6 +293,57 @@ function MyPage() {
                           </a>
                         </li>
                       </ul>
+                    </li>
+                  ))
+              ) : (
+                <div>작성된 글이 없습니다</div>
+              )} */}
+              {mypageList ? (
+                mypageList
+                  .filter((data) => {
+                    if (searchOption === "1") {
+                      return data.country
+                        .toLocaleLowerCase()
+                        .includes(searchCountry.toLocaleLowerCase());
+                    } else if (searchOption === "2") {
+                      return data.title
+                        .toLocaleLowerCase()
+                        .includes(searchTitle.toLocaleLowerCase());
+                    }
+                  })
+                  .slice(offset, offset + limit)
+                  .map((data) => (
+                    <li className="mypageListLi" key={data._id}>
+                      <span>{data._id}</span>
+                      <h1>
+                        <figure>
+                          <img
+                            src={`https://flagsapi.com/${data.nationCode}/flat/64.png`}
+                            alt="국기"
+                          />
+                        </figure>
+                        {data.country}
+                      </h1>
+                      <figure>
+                        <img src={`/upload/${data.file[0]}`} alt="썸네일사진" />
+                      </figure>
+                      <h2>{data.title}</h2>
+                      <h3 aria-label="여행기간">
+                        <MdDateRange />
+                        <span>
+                          {new Date(data.fromDate).toLocaleDateString()} ~{" "}
+                          {new Date(data.toDate).toLocaleDateString()}
+                        </span>
+                      </h3>
+                      <h4 aria-label="작성일">
+                        {new Date(data.writeDate).toLocaleDateString()}
+                      </h4>
+                      <button
+                        aria-label="자세히 보기"
+                        onClick={openContentModal}
+                        onKeyPress={openContentModal}>
+                        <BsThreeDotsVertical />
+                      </button>
                     </li>
                   ))
               ) : (
