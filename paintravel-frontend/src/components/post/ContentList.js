@@ -13,12 +13,12 @@ function ContentList({
   contentListClose,
   listData,
 }) {
-  const [existLocalStorage, setExistLocalStorage] = useState(false);
+  const [existsessionStorage, setExistsessionStorage] = useState(false);
   useEffect(() => {
-    if (window.localStorage.getItem("LOGINEDID")) {
-      setExistLocalStorage(true);
+    if (window.sessionStorage.getItem("LOGINEDID")) {
+      setExistsessionStorage(true);
     } else {
-      setExistLocalStorage(false);
+      setExistsessionStorage(false);
     }
     // setLoginedListData(listData);
   }, [listData]);
@@ -31,7 +31,7 @@ function ContentList({
       <div className="contentHeader">
         <h2 className="selectedCountry">{selectedCountry}</h2>
         <div className="postButton">
-          {existLocalStorage && (
+          {existsessionStorage && (
             <Link
               to="/postwrite"
               state={{
@@ -51,7 +51,7 @@ function ContentList({
       {/*null 자리에
         게시물이있다면(state 변수) ? <LoginedList openContentModal={openContentModal}/> : <EmptyList/> />
       */}
-      {localStorage.getItem("LOGINEDID") ? (
+      {sessionStorage.getItem("LOGINEDID") ? (
         listData &&
         (listData.length !== 0 ? (
           <LoginedList listData={listData} />

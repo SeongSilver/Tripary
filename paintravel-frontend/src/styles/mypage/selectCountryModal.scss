@@ -1,0 +1,43 @@
+.selectCountryModalContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .selectCountryModal {
+    width: 30vw;
+    height: 15vh;
+    padding: 2vw;
+    background-color: white;
+    z-index: 101;
+    border-radius: 30px;
+    a {
+      color: black !important;
+    }
+    div {
+      margin: 2vh 0;
+      select {
+        // -moz-appearance: none;
+        // -webkit-appearance: none;
+        // appearance: none;
+        // border: none;
+        outline: none;
+        text-align: center;
+      }
+      a,
+      span {
+        font-weight: 600;
+        margin: 20px;
+        transition: 0.1s;
+      }
+    }
+    // .selectBox {
+    //   border-bottom: 1px solid gray;
+    // }
+  }
+}
