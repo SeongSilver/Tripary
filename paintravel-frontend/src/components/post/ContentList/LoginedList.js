@@ -9,7 +9,7 @@ function LoginedList({ listData }) {
   const openContentModal = (event) => {
     setOpenPostModal(true);
     const modalData = {
-      currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+      currentId: JSON.parse(sessionStorage.getItem("LOGINEDID")).value,
       post_id: event.currentTarget.children[0].children[0].textContent,
     };
 

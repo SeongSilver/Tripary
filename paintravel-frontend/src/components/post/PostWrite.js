@@ -23,8 +23,8 @@ function PostWrite() {
   const selectedCountry = location.state.selectedCountry;
   const nationCode = location.state.nationCode;
 
-  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
-  const existlocalStorage = localStorage.getItem("LOGINEDID");
+  //sessionStorage에 "LOGINED" 가 있는지 여부 확인할 변수
+  const existsessionStorage = sessionStorage.getItem("LOGINEDID");
 
   const [post, setPost] = useState({
     title: "",
@@ -36,8 +36,8 @@ function PostWrite() {
   });
 
   useEffect(() => {
-    if (existlocalStorage) {
-      setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+    if (existsessionStorage) {
+      setLoginedId(JSON.parse(sessionStorage.getItem("LOGINEDID")).value);
     }
   }, []);
 

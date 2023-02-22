@@ -25,7 +25,7 @@ function MyPage() {
   const [sort, setSort] = useState(1); //정렬차순 - (기본값)오름차순 : 1, 내림차순 : -1
   const [mypageList, setMypageList] = useState();
   const [needToReciveData, setNeedToReciveData] = useState(true);
-  const existLocalStorage = localStorage.getItem("LOGINEDID");
+  const existsessionStorage = sessionStorage.getItem("LOGINEDID");
 
   const [openPostModal, setOpenPostModal] = useState(false);
   const [modalData, setModalData] = useState();
@@ -33,8 +33,8 @@ function MyPage() {
   const [searchOption, setSearchOption] = useState("1");
 
   useLayoutEffect(() => {
-    if (existLocalStorage) {
-      setLogin_id(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+    if (existsessionStorage) {
+      setLogin_id(JSON.parse(sessionStorage.getItem("LOGINEDID")).value);
     }
     if (needToReciveData) {
       if (login_id !== "*") {
@@ -66,7 +66,7 @@ function MyPage() {
     ) {
       setOpenPostModal(true);
       const modalData = {
-        currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+        currentId: JSON.parse(sessionStorage.getItem("LOGINEDID")).value,
         post_id: event.currentTarget.children[0].textContent,
       };
       axios
@@ -92,13 +92,13 @@ function MyPage() {
         ).length
       );
     }
-    if(limit == 3) {
+    if (limit == 3) {
       setMypageListLimitClass("limit3");
     }
-    if(limit == 5) {
+    if (limit == 5) {
       setMypageListLimitClass("limit5");
     }
-    if(limit == 10) {
+    if (limit == 10) {
       setMypageListLimitClass("limit10");
     }
   }, [mypageList, searchCountry, searchTitle, limit]);
@@ -256,7 +256,10 @@ function MyPage() {
                       <ul className={mypageListLimitClass}>
                         <li>
                           <figure>
-                            <img src={`/upload/${data.file[0]}`} alt="썸네일사진"/>
+                            <img
+                              src={`/upload/${data.file[0]}`}
+                              alt="썸네일사진"
+                            />
                           </figure>
                         </li>
                         <li>{data.country}</li>
@@ -265,9 +268,7 @@ function MyPage() {
                           {new Date(data.fromDate).toLocaleDateString()} ~{" "}
                           {new Date(data.toDate).toLocaleDateString()}
                         </li>
-                        <li>
-                          {new Date(data.writeDate).toLocaleDateString()}
-                        </li>
+                        <li>{new Date(data.writeDate).toLocaleDateString()}</li>
                         <li>
                           <Link
                             to="/postEdit"
