@@ -43,7 +43,7 @@ function SignUp({ setOpenSignUpModal }) {
     dispatch(signUpUser(signUpInfo)).then((response) => {
       if (response.payload.success) {
         closeSignUp();
-        alert("회원가입 성공!\n로그인 후 이용하세요 :)")
+        alert("회원가입 성공!\n로그인 후 이용하세요 :)");
       } else {
         alert("회원가입 실패");
       }
@@ -200,7 +200,6 @@ function SignUp({ setOpenSignUpModal }) {
                   name="email"
                   onChange={onChangeEmail}
                 />
-                {/* <button type="button" className="doubleCheckBtn">중복 확인</button> */}
                 {signUpInfo.email.length > 0 && (
                   <span className={`message ${isEmail ? "success" : "error"}`}>
                     {emailMessage}

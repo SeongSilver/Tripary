@@ -35,15 +35,15 @@ const GlobeMap = () => {
     setContentDisplay("hidden");
   };
 
-  const existLocalStorage = localStorage.getItem("LOGINEDID");
+  const existsessionStorage = sessionStorage.getItem("LOGINEDID");
 
   /* Chart code */
   // Create root element
   // https://www.amcharts.com/docs/v5/getting-started/#Root_element
   //로컬스토리지에 LOGINEDID가 있을 경우 실행
   useEffect(() => {
-    if (existLocalStorage) {
-      setLogin_id(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+    if (existsessionStorage) {
+      setLogin_id(JSON.parse(sessionStorage.getItem("LOGINEDID")).value);
     }
     //[현아, 성은] 기방문 국가 탐색을 위한 부분
     if (needToFill) {
@@ -201,7 +201,7 @@ const GlobeMap = () => {
             selectCountry(target.dataItem.get("id"));
           }
           previousPolygon = target;
-          console.log(previousPolygon)
+          console.log(previousPolygon);
         }
       );
       function selectCountry(id) {

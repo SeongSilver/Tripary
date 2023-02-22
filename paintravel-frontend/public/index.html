@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/faviconLogo.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Web site created using create-react-app" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/faviconLogo.ico" />
-  <!--
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/faviconLogo.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/faviconLogo.ico" />
+    <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  <!--
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"></script> -->
+    <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -22,38 +28,180 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  <title>PAINTRAVEL</title>
-</head>
+    <title>PAINTRAVEL</title>
+  </head>
 
-<body>
-  <script>
-    function onClickHandler() {
-      if (localStorage.getItem("LOGINEDID")) {
-        const fiveMinLater = new Date();
-        fiveMinLater.setMinutes(fiveMinLater.getMinutes() + 5);
-        const expireTime = new Date(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
+  <body>
+    <script>
+      function onClickHandler() {
+        if (sessionStorage.getItem("LOGINEDID")) {
+          const fiveMinLater = new Date();
+          fiveMinLater.setMinutes(fiveMinLater.getMinutes() + 5);
+          const expireTime = new Date(
+            JSON.parse(sessionStorage.getItem("LOGINEDID")).expiry
+          );
 
-        if (fiveMinLater > expireTime) {
-          setLoginedItem("LOGINEDID", JSON.parse(localStorage.getItem("LOGINEDID")).value);
+          if (fiveMinLater > expireTime) {
+            setLoginedItem(
+              "LOGINEDID",
+              JSON.parse(sessionStorage.getItem("LOGINEDID")).value
+            );
+          }
         }
       }
-    }
-    function setLoginedItem(key, value){
-      if (key === null || value === null) {
-        return;
+      function setLoginedItem(key, value) {
+        if (key === null || value === null) {
+          return;
+        }
+        const extended_expiry = new Date(
+          JSON.parse(sessionStorage.getItem("LOGINEDID")).expiry
+        );
+        extended_expiry.setMinutes(extended_expiry.getMinutes() + 5); //[Yana] 만료시간 5분 추가
+        const item = {
+          value: value,
+          expiry: extended_expiry,
+        };
+        sessionStorage.setItem(key, JSON.stringify(item));
       }
-      const extended_expiry = new Date(JSON.parse(localStorage.getItem("LOGINEDID")).expiry);
-      extended_expiry.setMinutes(extended_expiry.getMinutes() + 5);//[Yana] 만료시간 5분 추가
-      const item = {
-        value: value,
-        expiry: extended_expiry,
-      };
-      localStorage.setItem(key, JSON.stringify(item));
-    };
-  </script>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root" onclick="onClickHandler()"></div>
-  <!--
+      // 브라우저 종료 시 로그인한 유저의 토큰값 로컬 스토리지에서 삭제
+      // // 유저가 window 사용 시에는 window가 닫힌 것이 아니다.
+      // var closing_window = false;
+      // $(window).on('focus', function () {
+      //   closing_window = false;
+      // });
+
+      // $(window).on('blur', function () {
+      //   closing_window = true;
+      //   if (!document.hidden) { // window가 최소화된 것은 닫힌 것이 아니다.
+      //     closing_window = false;
+      //   }
+      //   $(window).on('resize', function (e) { // window가 최대화된 것은 닫힌 것이 아니다.
+      //     closing_window = false;
+      //   });
+      //   $(window).off('resize'); // multiple listening 회피
+      // });
+
+      // // 유저가 html을 나간다면 window가 닫힌 것으로 간주
+      // $('html').on('mouseleave', function () {
+      //   closing_window = true;
+      // });
+
+      // // 유저의 마우스가 window 안에 있다면 토큰들을 삭제하지 않음
+      // $('html').on('mouseenter', function () {
+      //   closing_window = false;
+      // });
+
+      // $(document).on('keydown', function (e) {
+      //   if (e.keyCode == 91 || e.keyCode == 18) {
+      //     closing_window = false; // 단축키 ALT+TAB (창 변경)
+      //   }
+      //   if (e.keyCode == 116 || (e.ctrlKey && e.keyCode == 82)) {
+      //     closing_window = false; // 단축키 F5, CTRL+F5, CTRL+R (새로고침)
+      //   }
+      // });
+
+      // // a 링크를 눌렀을 때 토큰값 삭제 방지
+      // $(document).on("click", "a", function () {
+      //   closing_window = false;
+      // });
+
+      // // 버튼이 다른 페이지로 redirect한다면 토큰값 삭제 방지
+      // $(document).on("click", "button", function () {
+      //   closing_window = false;
+      // });
+
+      // // submit이나 form 사용 시 토큰값 삭제 방지
+      // $(document).on("submit", "form", function () {
+      //   closing_window = false;
+      // });
+
+      // // toDoWhenClosing 함수를 통해 window가 닫히면 토큰 관련 값 전부 삭제
+      // var toDoWhenClosing = function () {
+      //   sessionStorage.removeItem("payload")
+      //   sessionStorage.removeItem("access")
+      //   sessionStorage.removeItem("refresh")
+      //   return;
+      // };
+
+      // // unload(window가 닫히는 이벤트)가 감지되면 closing_window가 true가 되고 토큰 관련 값들 전부 삭제
+      // window.addEventListener("unload", function (e) {
+      //   if (closing_window) {
+      //     toDoWhenClosing();
+      //   }
+      // });
+
+      // 브라우저 종료 시 로그인한 유저의 토큰값 로컬 스토리지에서 삭제
+      // 유저가 window 사용 시에는 window가 닫힌 것이 아니다.
+      // var closing_window = false;
+      // $(window).on("focus", function () {
+      //   closing_window = false;
+      // });
+
+      // $(window).on("blur", function () {
+      //   closing_window = true;
+      //   if (!document.hidden) {
+      //     // window가 최소화된 것은 닫힌 것이 아니다.
+      //     closing_window = false;
+      //   }
+      //   $(window).on("resize", function (e) {
+      //     // window가 최대화된 것은 닫힌 것이 아니다.
+      //     closing_window = false;
+      //   });
+      //   $(window).off("resize"); // multiple listening 회피
+      // });
+
+      // // 유저가 html을 나간다면 window가 닫힌 것으로 간주
+      // $("html").on("mouseleave", function () {
+      //   closing_window = true;
+      // });
+
+      // // 유저의 마우스가 window 안에 있다면 토큰들을 삭제하지 않음
+      // $("html").on("mouseenter", function () {
+      //   closing_window = false;
+      // });
+
+      // $(document).on("keydown", function (e) {
+      //   if (e.keyCode == 91 || e.keyCode == 18) {
+      //     closing_window = false; // 단축키 ALT+TAB (창 변경)
+      //   }
+      //   if (e.keyCode == 116 || (e.ctrlKey && e.keyCode == 82)) {
+      //     closing_window = false; // 단축키 F5, CTRL+F5, CTRL+R (새로고침)
+      //   }
+      // });
+
+      // // a 링크를 눌렀을 때 토큰값 삭제 방지
+      // $(document).on("click", "a", function () {
+      //   closing_window = false;
+      // });
+
+      // // 버튼이 다른 페이지로 redirect한다면 토큰값 삭제 방지
+      // $(document).on("click", "button", function () {
+      //   closing_window = false;
+      // });
+
+      // // submit이나 form 사용 시 토큰값 삭제 방지
+      // $(document).on("submit", "form", function () {
+      //   closing_window = false;
+      // });
+
+      // // toDoWhenClosing 함수를 통해 window가 닫히면 토큰 관련 값 전부 삭제
+      // var toDoWhenClosing = function () {
+      //   sessionStorage.removeItem("payload");
+      //   sessionStorage.removeItem("access");
+      //   sessionStorage.removeItem("refresh");
+      //   return;
+      // };
+
+      // // unload(window가 닫히는 이벤트)가 감지되면 closing_window가 true가 되고 토큰 관련 값들 전부 삭제
+      // window.addEventListener("unload", function (e) {
+      //   if (closing_window) {
+      //     toDoWhenClosing();
+      //   }
+      // });
+    </script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root" onclick="onClickHandler()"></div>
+    <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -63,6 +211,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-</body>
-
+  </body>
 </html>
