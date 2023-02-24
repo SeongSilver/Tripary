@@ -278,22 +278,24 @@ function PostEdit() {
                 </li>
                 <li>
                   <label htmlFor="date">일정</label>
-                  <DatePicker
-                    selectsRange={true}
-                    startDate={startDate}
-                    endDate={endDate}
-                    onChange={(update) => {
-                      setDateRange(update);
-                    }}
-                    isClearable={true}
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText={
-                      new Date(editFromDate).toLocaleDateString() +
-                      " ~ " +
-                      new Date(editToDate).toLocaleDateString()
-                    }
-                    id="date"
-                  />
+                  <div>
+                    <DatePicker
+                      selectsRange={true}
+                      startDate={startDate}
+                      endDate={endDate}
+                      onChange={(update) => {
+                        setDateRange(update);
+                      }}
+                      isClearable={true}
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText={
+                        new Date(editFromDate).toLocaleDateString() +
+                        " ~ " +
+                        new Date(editToDate).toLocaleDateString()
+                      }
+                      id="date"
+                    />
+                  </div>
                 </li>
                 <li>
                   <label htmlFor="content">일기</label>
