@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../styles/post/postWrite.scss";
 import DatePicker from "react-datepicker";
@@ -23,8 +23,8 @@ function PostWrite() {
   const selectedCountry = location.state.selectedCountry;
   const nationCode = location.state.nationCode;
 
-  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
-  const existlocalStorage = localStorage.getItem("LOGINEDID");
+  //sessionStorage에 "LOGINED" 가 있는지 여부 확인할 변수
+  const existsessionStorage = sessionStorage.getItem("LOGINEDID");
 
   const [post, setPost] = useState({
     title: "",
@@ -35,9 +35,9 @@ function PostWrite() {
     writer: "",
   });
 
-  useEffect(() => {
-    if (existlocalStorage) {
-      setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+  useLayoutEffect(() => {
+    if (existsessionStorage) {
+      setLoginedId(JSON.parse(sessionStorage.getItem("LOGINEDID")).value);
     }
   }, []);
 
@@ -51,8 +51,8 @@ function PostWrite() {
 
   //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
   const handleOnKeyPress = (e) => {
-      e.isImmediatePropagationEnabled = false;
-      e.preventDefault ? e.preventDefault() : e.returnValue = false;
+    e.isImmediatePropagationEnabled = false;
+    e.preventDefault ? e.preventDefault() : (e.returnValue = false);
   };
 
   const onLoadFile = (e) => {
@@ -80,7 +80,7 @@ function PostWrite() {
 
   const deleteImage = (id) => {
     setPreviewImg(previewImg.filter((_, index) => index !== id));
-    setMyFile(myfile.filter((_, index) => index !== id)); 
+    setMyFile(myfile.filter((_, index) => index !== id));
   };
 
   const onSubmit = (e) => {
@@ -161,9 +161,9 @@ function PostWrite() {
           <div className="gallery">
             <h2>Gallery</h2>
             <div className="inputFileBtn">
-                <label htmlFor="galleryUpload">
-                  <RiFolderAddFill aria-label="사진 추가하기"/>
-                </label>
+              <label htmlFor="galleryUpload">
+                <RiFolderAddFill aria-label="사진 추가하기" />
+              </label>
               <input
                 type="file"
                 name="myfile"
@@ -201,7 +201,8 @@ function PostWrite() {
                 onChange={onChangePost}
                 placeholder="30자 내로 작성하세요"
                 aria-label="30자 내로 작성하세요"
-                maxLength="30"/>
+                maxLength="30"
+              />
             </li>
             <li>
               <label htmlFor="location">위치</label>
@@ -235,7 +236,10 @@ function PostWrite() {
             </li>
             <li>
               <label htmlFor="content">일기</label>
-              <textarea name="content" id="content" onChange={onChangePost}></textarea>
+              <textarea
+                name="content"
+                id="content"
+                onChange={onChangePost}></textarea>
             </li>
           </ul>
           <div className="postWriteBtn">

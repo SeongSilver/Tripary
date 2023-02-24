@@ -31,12 +31,12 @@ function PostEdit() {
   const edit_id = location.state._id;
   const editWriter = location.state.writer;
 
-  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
-  const existlocalStorage = localStorage.getItem("LOGINEDID");
+  //sessionStorage에 "LOGINED" 가 있는지 여부 확인할 변수
+  const existsessionStorage = sessionStorage.getItem("LOGINEDID");
 
   useLayoutEffect(() => {
-    if (existlocalStorage) {
-      setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+    if (existsessionStorage) {
+      setLoginedId(JSON.parse(sessionStorage.getItem("LOGINEDID")).value);
     }
 
     const editData = {
