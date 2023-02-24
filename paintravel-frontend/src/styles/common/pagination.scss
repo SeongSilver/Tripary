@@ -1,5 +1,5 @@
 .pageContainer {
-  height: 10vh;
+  height: calc(var(--vh, 1vh) * 10);
   display: flex;
   justify-content: center;
   align-items: center;

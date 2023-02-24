@@ -5,7 +5,8 @@
 
 body {
   display: block;
-  width: 100vw; height: 100vh;
+  width: 100vw; 
+  height: calc(var(--vh, 1vh) * 100);
   margin: 0;
 }
 svg {
@@ -20,10 +21,10 @@ svg {
   display: flex;
   flex-direction: row;
   transition: 0.5s;
-  padding-top: 10vh;
+  padding-top: calc(var(--vh, 1vh) * 10);
   .chartdiv {
     display: block;
-    height: 80vh;
+    height: calc(var(--vh, 1vh) * 80);
     background: transparent;
     opacity: 0.9;
     transition: 1s ease-in-out;
@@ -40,7 +41,7 @@ svg {
 
 .stars {
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   position: absolute;
   left: 0;
   top: 0;
