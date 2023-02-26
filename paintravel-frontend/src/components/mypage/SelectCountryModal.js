@@ -27,7 +27,7 @@ function SelectCountryModal({ setSelectedCountryModal }) {
     <div className="selectCountryModalContainer">
       <div className="selectCountryModal">
         <div className="selectBox">
-          <label>국가선택</label>&ensp;
+          <label>국가선택</label>
           <select
             onChange={selectCountryToWrite}
             defaultValue={`${selectedCountryToPostWrite}_${nationCodeToPostWrite}`}>
@@ -49,7 +49,7 @@ function SelectCountryModal({ setSelectedCountryModal }) {
             className="postButton">
             <span>글쓰기</span>
           </Link>
-          <span onClick={closeModal}>닫기</span>
+          <a href="#" onClick={closeModal}>닫기</a>
         </div>
       </div>
     </div>

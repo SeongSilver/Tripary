@@ -1,43 +1,67 @@
+// 모바일 & 테블릿
+@media all and (max-width: 1024px) {
+  div:nth-child(2) {
+    > a {
+      padding:5px 8px !important;
+    }
+  }
+}
 .selectCountryModalContainer {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  z-index: 100;
+  height: calc(var(--vh, 1vh) * 100);
+  z-index: 1100;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   .selectCountryModal {
-    width: 30vw;
-    height: 15vh;
-    padding: 2vw;
+    min-width: 350px;
+    // height: 15vh;
+    padding: 30px 20px;
+    margin: 0 10vw;
     background-color: white;
-    z-index: 101;
+    z-index: 1100;
     border-radius: 30px;
-    a {
-      color: black !important;
-    }
-    div {
-      margin: 2vh 0;
+    .selectBox {
+      height: calc(var(--vh, 1vh) * 8 + 20px);
+      label {
+        display: block;
+        line-height: calc(var(--vh, 1vh) * 5);
+        font-size: 16px;
+      }
       select {
-        // -moz-appearance: none;
-        // -webkit-appearance: none;
-        // appearance: none;
-        // border: none;
-        outline: none;
-        text-align: center;
+        width: 90%;
+        height: calc(var(--vh, 1vh) * 3 + 20px);
+        border: none;
+        border-radius: 50px;
+        background-color: rgba(0,0,0,0.1);
+        padding: 10px;
+        scrollbar-width: thin;
+        scrollbar-color:  rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.1);
       }
-      a,
-      span {
-        font-weight: 600;
-        margin: 20px;
-        transition: 0.1s;
+      select::-webkit-scrollbar {
+        width: 10px;
+      }
+      select::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 5px;
+      }
+      select::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.1);
       }
     }
-    // .selectBox {
-    //   border-bottom: 1px solid gray;
-    // }
+    div:nth-child(2) {
+      height: calc(var(--vh, 1vh) * 5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top:  calc(var(--vh, 1vh) * 2);
+      a:nth-child(1) {
+        margin-right:50px;
+      }
+    }
   }
 }

@@ -279,6 +279,8 @@
         .galleryContainer {
           border: 1px solid #fff;
           border-radius: 10px;
+          scrollbar-width: thin;
+          scrollbar-color:  rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0);
           //사진 추가 부분
           .galleryImageContainer {
             display: inline-block;
@@ -320,7 +322,7 @@
         }
 
         .galleryContainer::-webkit-scrollbar-thumb {
-          background-color: rgba(255, 255, 255, 0.3);
+          background-color: rgba(255, 255, 255, 0.5);
           border-radius: 5px;
           /* 스크롤바 둥글게 설정    */
         }
@@ -381,10 +383,12 @@
           overflow-wrap: anywhere;
           white-space: pre-wrap;
           resize: none;
+          scrollbar-width: thin;
+          scrollbar-color:  rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0);
           @include font;
         }
         textarea::-webkit-scrollbar {width: 10px;}
-        textarea::-webkit-scrollbar-track {background-color: rgba(255, 255, 255, 0.3);}
+        textarea::-webkit-scrollbar-track {background-color: rgba(255, 255, 255, 0.5);}
         textarea::-webkit-scrollbar-thumb {
           background-color: rgba(0,0,0,0);
           border-radius: 10px;
