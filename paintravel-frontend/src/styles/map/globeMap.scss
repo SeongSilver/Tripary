@@ -30,7 +30,7 @@ svg {
     transition: 1s ease-in-out;
     // 캔버스 워터마크 지우기
     > div > div > div > canvas:nth-child(2) {
-      clip-path: circle(50%);
+      clip-path: polygon(50% 0%, 100% 0, 100% 60%, 100% 100%, 32% 100%, 0 70%, 0 0);
     }
   }
   .nationdiv {

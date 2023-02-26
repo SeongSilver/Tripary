@@ -125,6 +125,8 @@
     height: calc(var(--vh, 1vh) * 72);
     overflow: auto;
     padding: 0 calc((60vw - 45vw - 6vw - 10px) / 2);
+    scrollbar-width: thin;
+    scrollbar-color:  rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0);
     .contentCard {
       margin-bottom: calc(var(--vh, 1vh) * 3);
       overflow: hidden;
