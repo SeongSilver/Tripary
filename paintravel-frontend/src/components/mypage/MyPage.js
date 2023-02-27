@@ -15,7 +15,7 @@ import SelectCountryModal from "./SelectCountryModal.js";
 function MyPage() {
   const [loading, setLoading] = useState(true);
   //페이지네이션
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(8);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
   const [searchCountry, setSearchCountry] = useState("");
@@ -135,128 +135,116 @@ function MyPage() {
       ) : (
         <div className="mypageContainer">
           <div className="myPageBtn">
-            <div>
-              <span onClick={openSelectCountryModal}>글쓰기</span>
+            <div className="postBtn">
+              <a href="#selectCountryModal" onClick={openSelectCountryModal}>글쓰기</a>
               {selectedCountryModal && (
                 <SelectCountryModal
                   setSelectedCountryModal={setSelectedCountryModal}
+                  id="selectedCountryModal"
                 />
               )}
             </div>
-            <div>
-              <select onChange={searchBoxHandler} value={searchOption}>
-                <option value="1">여행국가</option>
-                <option value="2">제목</option>
-              </select>
-              {searchOption === "1" && (
-                <input
-                  type="text"
-                  value={searchCountry}
-                  onChange={mypageCountrySearchHandler}
-                  placeholder="여행국가 검색 (영어)"
-                />
-              )}
-              {searchOption === "2" && (
-                <input
-                  type="text"
-                  value={searchTitle}
-                  onChange={mypageTitleSearchHandler}
-                  placeholder="제목 검색"
-                />
-              )}
-              <label>
-                게시물 수&emsp;
-                <select type="number" value={limit} onChange={selectHandler}>
-                  <option value="3">3</option>
-                  <option value="6">6</option>
-                  <option value="9">9</option>
-                </select>
-              </label>
-              <label>
-                여행기간&nbsp;
+            <div className="myPageOption">
+              <div>
                 <span>
-                  <GoChevronUp
-                    onClick={() => {
-                      sorting(1);
-                      sortByThis("fromDate");
-                      setPage(1);
-                    }}
-                    title="최신순"
-                  />
-                  <GoChevronDown
-                    onClick={() => {
-                      sorting(-1);
-                      sortByThis("fromDate");
-                      setPage(1);
-                    }}
-                    title="오래된순"
-                  />
+                  <select onChange={searchBoxHandler} value={searchOption}>
+                    <option value="1">여행국가</option>
+                    <option value="2">제목</option>
+                  </select>
+                  &nbsp;<GoChevronDown/>&nbsp;
+                  {searchOption === "1" && (
+                    <input
+                      type="text"
+                      value={searchCountry}
+                      onChange={mypageCountrySearchHandler}
+                      placeholder="여행국가 검색 (영어)"
+                    />
+                  )}
+                  {searchOption === "2" && (
+                    <input
+                      type="text"
+                      value={searchTitle}
+                      onChange={mypageTitleSearchHandler}
+                      placeholder="제목 검색"
+                    />
+                  )}
                 </span>
-              </label>
-              <label>
-                업로드일&nbsp;
-                <span>
-                  <GoChevronUp
-                    onClick={() => {
-                      sorting(1);
-                      sortByThis("writeDate");
-                    }}
-                    title="최신순"
-                  />
-                  <GoChevronDown
-                    onClick={() => {
-                      sorting(-1);
-                      sortByThis("writeDate");
-                    }}
-                    title="오래된순"
-                  />
-                </span>
-              </label>
+                <label>
+                  게시물 수&nbsp;<GoChevronDown/>&nbsp;
+                  <select type="number" value={limit} onChange={selectHandler}>
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                    <option value="12">12</option>
+                  </select>
+                </label>
+              </div>
+              <div>
+                <label>
+                  여행기간&nbsp;
+                  <span>
+                    <GoChevronUp
+                      onClick={() => {
+                        sorting(1);
+                        sortByThis("fromDate");
+                        setPage(1);
+                      }}
+                      onKeyPress={() => {
+                        sorting(1);
+                        sortByThis("fromDate");
+                        setPage(1);
+                      }}
+                      title="최신순"
+                      tabIndex="0"
+                    />
+                    <GoChevronDown
+                      onClick={() => {
+                        sorting(-1);
+                        sortByThis("fromDate");
+                        setPage(1);
+                      }}
+                      onKeyPress={() => {
+                        sorting(-1);
+                        sortByThis("fromDate");
+                        setPage(1);
+                      }}
+                      title="오래된순"
+                      tabIndex="0"
+                    />
+                  </span>
+                </label>
+                <label>
+                  업로드일&nbsp;
+                  <span>
+                    <GoChevronUp
+                      onClick={() => {
+                        sorting(1);
+                        sortByThis("writeDate");
+                      }}
+                      onKeyPress={() => {
+                        sorting(1);
+                        sortByThis("writeDate");
+                      }}
+                      title="최신순"
+                      tabIndex="0"
+                    />
+                    <GoChevronDown
+                      onClick={() => {
+                        sorting(-1);
+                        sortByThis("writeDate");
+                      }}
+                      onKeyPress={() => {
+                        sorting(-1);
+                        sortByThis("writeDate");
+                      }}
+                      title="오래된순"
+                      tabIndex="0"
+                    />
+                  </span>
+                </label>
+              </div>
             </div>
           </div>
           <div className="myPageListContainer">
-            {/* <div className="myPageMenu">
-              <label>
-                여행기간&nbsp;
-                <span>
-                  <GoChevronUp
-                    onClick={() => {
-                      sorting(1);
-                      sortByThis("fromDate");
-                      setPage(1);
-                    }}
-                    title="최신순"
-                  />
-                  <GoChevronDown
-                    onClick={() => {
-                      sorting(-1);
-                      sortByThis("fromDate");
-                      setPage(1);
-                    }}
-                    title="오래된순"
-                  />
-                </span>
-              </label>
-              <label>
-                업로드일&nbsp;
-                <span>
-                  <GoChevronUp
-                    onClick={() => {
-                      sorting(1);
-                      sortByThis("writeDate");
-                    }}
-                    title="최신순"
-                  />
-                  <GoChevronDown
-                    onClick={() => {
-                      sorting(-1);
-                      sortByThis("writeDate");
-                    }}
-                    title="오래된순"
-                  />
-                </span>
-              </label>
-            </div> */}
             <ul className="myPageList">
               {mypageList ? (
                 mypageList
@@ -301,12 +289,14 @@ function MyPage() {
                       <h4 aria-label="작성일">
                         {new Date(data.writeDate).toLocaleDateString()}
                       </h4>
-                      <button
-                        aria-label="자세히 보기"
-                        onClick={openContentModal}
-                        onKeyPress={openContentModal}>
-                        <BsThreeDotsVertical />
-                      </button>
+                      <div>
+                        <button
+                          aria-label="자세히 보기"
+                          onClick={openContentModal}
+                          onKeyPress={openContentModal}>
+                          <BsThreeDotsVertical />
+                        </button>
+                      </div>
                     </li>
                   ))
               ) : (

@@ -11,30 +11,30 @@
 }
 .loginContainer {
   background: url(../../img/login/loginBg.jpg);
-  background-size: 100vw 100vh;
+  background-size: 100vw calc(var(--vh, 1vh) * 100);
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   position: relative;
   .login {
     position: absolute;
     left: 0;
     top: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     z-index: 100;
     padding:0 10vw;
     @include font;
     .loginWrap {
       max-width: 400px;
       min-width: 200px;
-      height: 50%;
-      margin: 25vh auto 0 auto;
+      height: calc(var(--vh, 1vh) * 50);
+      margin: calc(var(--vh, 1vh) * 25) auto 0 auto;
     }
     h1 {
       font-size: 2.4rem;
       text-align: left;
-      line-height: 5vh;
-      margin-bottom: 5vh;
+      line-height: calc(var(--vh, 1vh) * 5);
+      margin-bottom: calc(var(--vh, 1vh) * 5);
       @include font;
       @include noDrag;
       span {
@@ -48,13 +48,13 @@
       input {
          @include font;
         width: 100%;
-        height: 6vh;
+        height: calc(var(--vh, 1vh) * 7);
         background: transparent;
         border: 1px solid #fff;
         padding: 0 5%;
         font-size: 1.6rem;
         border-radius: 10px;
-        margin-bottom: 3vh;
+        margin-bottom: calc(var(--vh, 1vh) * 3);
       }
       // edge 비밀번호 눈 없애기
       input[type="password"]::-ms-reveal,
@@ -71,28 +71,28 @@
       p {
         color: yellow;
         font-size: 1.6rem;
-        margin-bottom: 5vh;
+        margin-bottom: calc(var(--vh, 1vh) * 5);
       }
       #loginButton {
         @include font;
         width: 100%;
-        height: 6vh;
+        height: calc(var(--vh, 1vh) * 7);
         padding: 0 5%;
         font-size: 1.8rem;
         border: none;
         border-radius: 10px;
-        margin: 2vh 0;
+        margin: calc(var(--vh, 1vh) * 2) 0;
         cursor: pointer;
       }
       span {
         display: inline-block;
         font-size: 1.6rem;
-        line-height: 3vh;
+        line-height: calc(var(--vh, 1vh) * 3);
       }
       #moveToSignUp {
         display: inline-block;
         font-size: 1.8rem;
-        line-height: 3vh;
+        line-height: calc(var(--vh, 1vh) * 3);
         margin-left: 1vw;
         cursor: pointer;
         @include font;
@@ -102,7 +102,7 @@
   .login::before {
     content: "";
     width: 100vw;
-    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     position: absolute;
     left: 0;
     top: 0;
