@@ -61,27 +61,23 @@ function MyPage() {
   }, [login_id, sortBy, mypageList, sort]);
 
   const openContentModal = (event) => {
-    if (
-      event.target !== event.currentTarget.children[1].children[5] &&
-      event.target.parentElement !==
-        event.currentTarget.children[1].children[5] &&
-      event.target.parentElement.parentElement !==
-        event.currentTarget.children[1].children[5]
-    ) {
-      setOpenPostModal(true);
-      const modalData = {
-        currentId: JSON.parse(sessionStorage.getItem("LOGINEDID")).value,
-        post_id: event.currentTarget.children[0].textContent,
-      };
-      axios
-        .post("api/post/getPostInfo", modalData)
-        .then((response) => {
-          setModalData(response.data.postInfo[0]);
-        })
-        .catch((error) => {
-          console.log("데이터 탐색 에러 발생" + error);
-        });
-    }
+    console.log(
+      event.currentTarget.parentElement.parentElement.children[0].textContent
+    );
+    setOpenPostModal(true);
+    const modalData = {
+      currentId: JSON.parse(sessionStorage.getItem("LOGINEDID")).value,
+      post_id:
+        event.currentTarget.parentElement.parentElement.children[0].textContent,
+    };
+    axios
+      .post("api/post/getPostInfo", modalData)
+      .then((response) => {
+        setModalData(response.data.postInfo[0]);
+      })
+      .catch((error) => {
+        console.log("데이터 탐색 에러 발생" + error);
+      });
   };
 
   const [listCount, setListCount] = useState(0);
@@ -136,7 +132,9 @@ function MyPage() {
         <div className="mypageContainer">
           <div className="myPageBtn">
             <div className="postBtn">
-              <a href="#selectCountryModal" onClick={openSelectCountryModal}>글쓰기</a>
+              <a href="#selectCountryModal" onClick={openSelectCountryModal}>
+                글쓰기
+              </a>
               {selectedCountryModal && (
                 <SelectCountryModal
                   setSelectedCountryModal={setSelectedCountryModal}
@@ -151,7 +149,9 @@ function MyPage() {
                     <option value="1">여행국가</option>
                     <option value="2">제목</option>
                   </select>
-                  &nbsp;<GoChevronDown/>&nbsp;
+                  &nbsp;
+                  <GoChevronDown />
+                  &nbsp;
                   {searchOption === "1" && (
                     <input
                       type="text"
@@ -170,7 +170,9 @@ function MyPage() {
                   )}
                 </span>
                 <label>
-                  게시물 수&nbsp;<GoChevronDown/>&nbsp;
+                  게시물 수&nbsp;
+                  <GoChevronDown />
+                  &nbsp;
                   <select type="number" value={limit} onChange={selectHandler}>
                     <option value="4">4</option>
                     <option value="8">8</option>
@@ -264,7 +266,8 @@ function MyPage() {
                     <li
                       className="mypageListLi"
                       key={data._id}
-                      onClick={openContentModal}>
+                      // onClick={openContentModal}
+                    >
                       <span>{data._id}</span>
                       <h1>
                         <figure>
@@ -291,7 +294,9 @@ function MyPage() {
                       </h4>
                       <div>
                         <button
+                          type="button"
                           aria-label="자세히 보기"
+                          title="자세히 보기"
                           onClick={openContentModal}
                           onKeyPress={openContentModal}>
                           <BsThreeDotsVertical />

@@ -26,11 +26,11 @@ body {
     .postBtn {
       display: block !important;
       height: auto !important;
-      position:absolute;
+      position: absolute;
       left: 0;
       bottom: 6px;
       > a {
-        background: rgba(255,255,255,0.8) !important;
+        background: rgba(255, 255, 255, 0.8) !important;
         padding: 5px 8px !important;
       }
     }
@@ -159,7 +159,7 @@ body {
       }
     }
     .mypageListLi:not(.mypageListLi:nth-child(4n)) {
-      margin-right: calc(4vw/3);
+      margin-right: calc(4vw / 3);
     }
   }
 }
@@ -173,7 +173,7 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: auto;
-  scrollbar-color:  rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.1);
+  scrollbar-color: rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.1);
   .mypageContainer {
     width: 100vw;
     height: calc(var(--vh, 1vh) * 100);
@@ -188,10 +188,12 @@ body {
         margin-right: 4vw;
       }
       .myPageOption div:nth-child(2) label:nth-child(1) {
-        margin-right:2vw;
+        margin-right: 2vw;
       }
       .myPageOption {
-        div {display: inline-block;}
+        div {
+          display: inline-block;
+        }
         div > span {
           display: inline-block;
           border-bottom: 1px solid rgba(0, 0, 0, 0.5);
@@ -199,7 +201,7 @@ body {
           select {
             min-width: 55px;
             background-color: transparent;
-            padding-bottom:1px;
+            padding-bottom: 1px;
             height: calc(var(--vh, 1vh) * 3);
             font-size: 12px;
             font-weight: 600;
@@ -232,7 +234,7 @@ body {
             font-size: 12px;
             color: #555;
             appearance: none;
-            height: calc(var(--vh, 1vh) * 3); 
+            height: calc(var(--vh, 1vh) * 3);
             padding: 0 5px;
           }
         }
@@ -242,16 +244,16 @@ body {
         display: flex;
         align-items: center;
         a {
-        background: transparent;
-        padding: 0 8px;
-        border: 1px solid #000;
-        color:#000;
-        line-height: calc(var(--vh, 1vh) * 3);
-        border-radius: 20px;
-        font-weight: 600;
-        cursor: pointer;
-        font-size: 12px;
-      }
+          background: transparent;
+          padding: 0 8px;
+          border: 1px solid #000;
+          color: #000;
+          line-height: calc(var(--vh, 1vh) * 3);
+          border-radius: 20px;
+          font-weight: 600;
+          cursor: pointer;
+          font-size: 12px;
+        }
       }
     }
     .myPageListContainer {
