@@ -95,7 +95,7 @@ function Header() {
     <header className="header">
       <div className="headerWrapper">
         <div className="skipNav">
-          <Link to="/">본문바로가기</Link>
+          <Link to="/">홈 바로가기</Link>
         </div>
         <div className="logo" onClick={goMain}>
           <img src={require("../../img/common/logo.png")} alt="logo" />

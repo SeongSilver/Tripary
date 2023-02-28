@@ -372,6 +372,7 @@ const GlobeMap = () => {
 
   return (
     <div className="globeMap">
+      <p>지구본이 보이지 않으시는 분들은 mypage 안의 글쓰기 기능을 이용해주세요. 불편을 드려 죄송합니다.</p>
       <div
         style={{ width: `${globeWidth}` }}
         id="chartdiv"

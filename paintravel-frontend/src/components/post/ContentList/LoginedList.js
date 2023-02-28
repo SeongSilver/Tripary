@@ -10,7 +10,7 @@ function LoginedList({ listData }) {
     setOpenPostModal(true);
     const modalData = {
       currentId: JSON.parse(sessionStorage.getItem("LOGINEDID")).value,
-      post_id: event.currentTarget.children[0].children[0].textContent,
+      post_id: event.currentTarget.children[0].textContent,
     };
 
     axios
@@ -23,7 +23,6 @@ function LoginedList({ listData }) {
       });
   };
   return (
-    // <div className="contentBody">하하</div>
     <div className="contentBody">
       <ul>
         {listData &&
@@ -31,9 +30,8 @@ function LoginedList({ listData }) {
             <li
               className="contentCard"
               key={data._id}
-              value={data._id}
-              onClick={openContentModal}>
-              <a href="#">
+              value={data._id}>
+              <a href="#modalContainer" onClick={openContentModal}>
                 <span className="dummyId">{data._id}</span>
                 <span className="cardTag">{data.location}</span>
                 <div>
