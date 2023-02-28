@@ -1,8 +1,3 @@
-// html {
-//   font-family: system-ui, sans-serif;
-//   font-size: 1.25rem;
-// }
-
 body {
   display: block;
   width: 100vw; 
@@ -22,6 +17,13 @@ svg {
   flex-direction: row;
   transition: 0.5s;
   padding-top: calc(var(--vh, 1vh) * 10);
+  > p {
+    text-indent: -9999px;
+    width: 0;
+    height: 0;
+    position:absolute;
+    left: -9999px;
+  }
   .chartdiv {
     display: block;
     height: calc(var(--vh, 1vh) * 80);
