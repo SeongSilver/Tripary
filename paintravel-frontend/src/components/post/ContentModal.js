@@ -20,7 +20,7 @@ function ContentModal({ modalData, setOpenPostModal }) {
       post_id: modalData._id,
     };
     // const reloadVisitedData = {
-    //   currentId: JSON.parse(localStorage.getItem("LOGINEDID")).value,
+    //   currentId: JSON.parse(sessionStorage.getItem("LOGINEDID")).value,
     // };
     if (window.confirm("게시물을 삭제하시겠습니까?")) {
       axios
@@ -60,7 +60,9 @@ function ContentModal({ modalData, setOpenPostModal }) {
               <div className="modalHeaderBottom">
                 <h2>{modalData.location}</h2>
                 <div className="modalDate">
-                  <span>{new Date(modalData.fromDate).toLocaleDateString()}</span>
+                  <span>
+                    {new Date(modalData.fromDate).toLocaleDateString()}
+                  </span>
                   <span>&emsp;~&emsp;</span>
                   <span>{new Date(modalData.toDate).toLocaleDateString()}</span>
                 </div>
@@ -71,10 +73,7 @@ function ContentModal({ modalData, setOpenPostModal }) {
                 {modalData.file.map((image, index) => (
                   <div key={index}>
                     <figure>
-                      <img
-                        src={`/upload/${image}`}
-                        alt="이미지"
-                      />
+                      <img src={`/upload/${image}`} alt="이미지" />
                     </figure>
                     <img src={`/upload/${image}`} alt="이미지 배경" />
                   </div>
@@ -95,7 +94,8 @@ function ContentModal({ modalData, setOpenPostModal }) {
                 수정하기&nbsp;
                 <BiEdit />
               </Link>
-              <a href="#"
+              <a
+                href="#"
                 className="deleteBtn"
                 onClick={postDeleteHandler}
                 style={{ zIndex: "999", cursor: "pointer" }}>
@@ -104,7 +104,7 @@ function ContentModal({ modalData, setOpenPostModal }) {
               </a>
             </div>
             <a href="#" onClick={closeModal} className="modalCloseBtn">
-              <AiFillCloseCircle/>
+              <AiFillCloseCircle />
               <span>닫기</span>
             </a>
           </div>

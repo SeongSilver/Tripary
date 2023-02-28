@@ -1,10 +1,11 @@
 .pageContainer {
+  height: calc(var(--vh, 1vh) * 10);
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
-  margin: 16px;
-  font-size: 16px;
+  margin-bottom: 30px;
+  font-size: 1.6rem;
   .pageBtn {
     border: none;
     border-radius: 8px;
@@ -20,7 +21,7 @@
       transform: translateY(-2px);
     }
     &[disabled] {
-      background: grey;
+      // background: grey;
       cursor: revert;
       transform: revert;
     }

@@ -1,6 +1,6 @@
 @mixin font {
   font-family: "Nanum Myeongjo", "Noto Sans KR";
-  color: #fff;
+  color: #222;
   letter-spacing: 0.3rem;
   text-align: center;
 }
@@ -10,270 +10,372 @@
   -ms-user-select: none;
   user-select: none;
 }
-// 테블릿 & 모바일
+@mixin hidden {
+  display: block;
+  width: 0;
+  height: 0;
+  text-indent: -9999px;
+}
+body {
+  margin-top: calc(var(--vh, 1vh) * 10);
+}
+// 모바일 & 테블릿
 @media all and (max-width: 1024px) {
-  html {
-    font-size: 46.875% !important;
-  }
-  .myPageMenu {
-    font-size: 1.8rem;
-    li:nth-child(1) {width: 10vw;}
-    li:nth-child(2) {width: 12vw;}
-    li:nth-child(3) {width: 12vw;}
-    li:nth-child(4) {width: 17vw;}
-    li:nth-child(5) {width: 12vw;}
-    li:nth-child(6) {width: 8vw;}
-  }
-  .mypageListLi > ul {
-    li {font-size: 1.6rem !important;}
-    li:nth-child(1) {width: 10vw;}
-    li:nth-child(2) {width: 12vw;}
-    li:nth-child(3) {width: 12vw;}
-    li:nth-child(4) {width: 17vw;}
-    li:nth-child(5) {width: 12vw;}
-    li:nth-child(6) {width: 8vw;}
-  }
-  @media all and (max-width: 767px) {
-    .myPageMenu {
-      font-size: 1.6rem;
-      li:nth-child(1) {display:none;}
-      li:nth-child(2) {width: 15vw;}
-      li:nth-child(3) {width: 18vw;}
-      li:nth-child(4) {width: 20vw;}
-      li:nth-child(5) {width: 20vw;}
-      li:nth-child(6) {display:none;}
+  .myPageBtn {
+    position: relative;
+    .postBtn {
+      display: block !important;
+      height: auto !important;
+      position:absolute;
+      left: 0;
+      bottom: 6px;
+      > a {
+        background: rgba(255,255,255,0.8) !important;
+        padding: 5px 8px !important;
+      }
     }
-    .mypageListLi > ul {
-      li {font-size: 1.6rem !important;}
-      li:nth-child(1) {display:none;}
-      li:nth-child(2) {width: 15vw;}
-      li:nth-child(3) {width: 18vw;}
-      li:nth-child(4) {width: 20vw;}
-      li:nth-child(5) {width: 20vw;}
-      li:nth-child(6) {display:none;}
+    .myPageOption > div:nth-child(1) {
+      margin-right: 0vw !important;
+    }
+    .myPageOption > div {
+      display: flex !important;
+      justify-content: right;
+    }
+    .myPageOption {
+      span {
+        line-height: calc(var(--vh, 1vh) * 8) !important;
+        height: calc(var(--vh, 1vh) * 8) !important;
+        select {
+          height: calc(var(--vh, 1vh) * 8) !important;
+        }
+        input {
+          width: 20vw !important;
+          line-height: calc(var(--vh, 1vh) * 8) !important;
+        }
+      }
+      div > label {
+        line-height: calc(var(--vh, 1vh) * 8) !important;
+      }
+    }
+  }
+  .myPageList {
+    .mypageListLi {
+      width: 80vw;
+      height: calc(70vw + 23vh);
+      margin-bottom: calc(var(--vh, 1vh) * 5);
+      padding: 0 5vw;
+      > h1 {
+        width: 68vw;
+        height: calc(var(--vh, 1vh) * 8);
+        line-height: calc(var(--vh, 1vh) * 8);
+        font-size: 16px !important;
+        > figure {
+          width: calc(var(--vh, 1vh) * 7);
+          height: calc(var(--vh, 1vh) * 5);
+          margin: calc(var(--vh, 1vh) * 1.5) calc(var(--vh, 1vh) * 1.5) 0 0;
+          img {
+            width: auto;
+            height: calc(var(--vh, 1vh) * 7.7);
+          }
+        }
+      }
+      > figure {
+        width: 70vw;
+        height: 70vw;
+      }
+      > h2 {
+        font-size: 16px;
+        line-height: calc(var(--vh, 1vh) * 5);
+        margin-top: calc(var(--vh, 1vh) * 2);
+      }
+      > h3 {
+        font-size: 2rem;
+        line-height: calc(var(--vh, 1vh) * 3);
+        > span {
+          font-size: 1.6rem;
+          line-height: calc(var(--vh, 1vh) * 3);
+        }
+      }
+      > h4 {
+        font-size: 1.6rem;
+        line-height: calc(var(--vh, 1vh) * 3);
+      }
+      > div {
+        height: calc(var(--vh, 1vh) * 8);
+        right: calc(5vw - 10px);
+      }
     }
   }
 }
 // PC
 @media all and (min-width: 1025px) {
-  .myPageMenu {
-    li:nth-child(1) {width: 10vw;}
-    li:nth-child(2) {width: 10vw;}
-    li:nth-child(3) {width: 13vw;}
-    li:nth-child(4) {width: 18vw;}
-    li:nth-child(5) {width: 10vw;}
-    li:nth-child(6) {width: 10vw;}
+  .myPageBtn {
+    display: flex;
+    justify-content: space-between;
   }
-  .mypageListLi > ul {
-    li:nth-child(1) {width: 10vw;}
-    li:nth-child(2) {width: 10vw;}
-    li:nth-child(3) {width: 13vw;}
-    li:nth-child(4) {width: 18vw;}
-    li:nth-child(5) {width: 10vw;}
-    li:nth-child(6) {width: 10vw;}
+  .myPageList {
+    .mypageListLi {
+      width: 19vw;
+      height: 29vw;
+      margin-bottom: 2.5vw;
+      padding: 0 2vw;
+      > h1 {
+        width: 14vw;
+        line-height: 5vw;
+        > figure {
+          width: 3vw;
+          height: 2vw;
+          margin: 1.5vw 15px 0 0;
+          img {
+            width: auto;
+            height: 3.1vw;
+          }
+        }
+      }
+      > figure {
+        width: 15vw;
+        height: 15vw;
+      }
+      > h2 {
+        font-size: 1.6rem;
+        line-height: 2vw;
+        margin-top: 2vw;
+      }
+      > h3 {
+        font-size: 1.5rem;
+        line-height: 2vw;
+        > span {
+          font-size: 1.2rem;
+          line-height: 2vw;
+        }
+      }
+      > h4 {
+        font-size: 1.2rem;
+        line-height: 2vw;
+      }
+      > div {
+        right: calc(2vw - 10px);
+        height: 5vw;
+      }
+    }
+    .mypageListLi:not(.mypageListLi:nth-child(4n)) {
+      margin-right: calc(4vw/3);
+    }
   }
 }
 
 .myPage {
   width: 100vw;
-  height: 100vh;
   background: url(../../img/mypage/mypageBg.png);
-  background-size: 100vw 100vh;
+  background-size: 100vw calc(var(--vh, 1vh) * 100);
   position: relative;
   font-size: 1.6rem;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: auto;
+  scrollbar-color:  rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0.1);
   .mypageContainer {
     width: 100vw;
-    padding-top: 10vh;
-    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    padding-top: calc(var(--vh, 1vh) * 10);
     position: relative;
-    z-index: 1;
     @include noDrag;
+    @include font;
     .myPageBtn {
-      display: flex;
-      justify-content: right;
-      margin: 2vh 7vw 0 0;
-      font-size: 1.2rem;
-      select {
-        outline: none;
-        border: none;
-        padding: 5px;
-        border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
-        background-color: transparent;
-        font-size: 1.2rem;
+      width: 80vw;
+      margin: calc(var(--vh, 1vh) * 5) auto calc(var(--vh, 1vh) * 5) auto;
+      .myPageOption div:nth-child(1) {
+        margin-right: 4vw;
       }
-      input {
-        width: 20vw;
-        margin-right: 2vw;
-        background-color: transparent;
-        outline: none;
-        border: none;
-        border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
-        text-align: center;
-        font-size: 1.2rem;
+      .myPageOption div:nth-child(2) label:nth-child(1) {
+        margin-right:2vw;
       }
-      button {
-        padding: 0 0.3vw;
-        border-radius: 10px;
-        background-color: rgba(0, 0, 0, 0.8);
-        border: none;
-        color: white;
-        font-size: 1.5rem;
-        font-weight: 400;
-        margin: 0 0.7vw;
-      }
-      label {
-        margin: 1px 4px;
-        border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
-        select {
+      .myPageOption {
+        div {display: inline-block;}
+        div > span {
+          display: inline-block;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+          margin-right: 2vw;
+          select {
+            min-width: 55px;
+            background-color: transparent;
+            padding-bottom:1px;
+            height: calc(var(--vh, 1vh) * 3);
+            font-size: 12px;
+            font-weight: 600;
+            outline: none;
+            border: none;
+            appearance: none;
+            @include font;
+          }
+        }
+        input {
+          width: 20vw;
+          background-color: transparent;
           outline: none;
           border: none;
-          padding: 5px;
-          background-color: transparent;
+          text-align: center;
+          font-size: 12px;
+          line-height: calc(var(--vh, 1vh) * 3);
         }
+        div > label {
+          display: inline-block;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+          font-size: 12px;
+          color: #000;
+          font-weight: 600;
+          line-height: calc(var(--vh, 1vh) * 3);
+          select {
+            outline: none;
+            border: none;
+            background-color: transparent;
+            font-size: 12px;
+            color: #555;
+            appearance: none;
+            height: calc(var(--vh, 1vh) * 3); 
+            padding: 0 5px;
+          }
+        }
+      }
+      .postBtn {
+        height: calc(var(--vh, 1vh) * 3);
+        display: flex;
+        align-items: center;
+        a {
+        background: transparent;
+        padding: 0 8px;
+        border: 1px solid #000;
+        color:#000;
+        line-height: calc(var(--vh, 1vh) * 3);
+        border-radius: 20px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 12px;
+      }
       }
     }
     .myPageListContainer {
-      width: 85vw;
-      height: 70vh;
-      margin: 3vh 8vw;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-      border-radius: 20px;
       .myPageMenu {
-        height: 8vh;
-        font-weight: 700;
-        padding:0 1vw;
-        li {
-          height: 6vh;
-          line-height: 6vh;
-          margin: 1vh 1vw;
-          float: left;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.8);
-          position: relative;
-          text-align: center;
-          span {
-            float:right;
-            svg {
-              cursor: pointer;
-              transition: 0.2s ease-in-out;
-            }
-            svg:hover {
-              color: rgba(0, 0, 0, 0.3);
-            }
+        display: flex;
+        justify-content: right;
+        margin: calc(var(--vh, 1vh) * 2) 7vw calc(var(--vh, 1vh) * 5) 0;
+        > label {
+          margin: 1px 4px;
+          border-bottom: 1.5px solid rgba(0, 0, 0, 0.5);
+          font-size: 12px;
+          color: #000;
+          font-weight: 600;
+          select {
+            outline: none;
+            border: none;
+            padding: 5px;
+            background-color: transparent;
+            font-size: 12px;
+            color: #555;
           }
+        }
+        > label:nth-child(1) {
+          margin-right: 2vw;
         }
       }
       .myPageList {
-        width: 85vw;
-        height: 62vh;
-        padding:0 1vw 1.5vh 1vw;
-        overflow: hidden;
-        > li:not(.myPageList > li:first-child) {
-          margin-top:1vh;
-        }
+        width: 80vw;
+        display: flex;
+        align-items: space-around;
+        flex-wrap: wrap;
+        margin: 0 auto;
         .mypageListLi {
           display: block;
-          height: auto;
-          transition: all 0.5s;
-          span {
+          overflow: hidden;
+          border-radius: 15px;
+          background-color: #fff;
+          text-align: left;
+          position: relative;
+          box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+          > * {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+          > span {
             display: none;
           }
-          > ul {
-            li {
-              margin: 0 1vw;
+          > h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            > figure {
               float: left;
+              border: solid 1px #555;
+              border-radius: 5px;
+              overflow: hidden;
+              position: relative;
+              img {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+              }
+            }
+          }
+          > figure {
+            overflow: hidden;
+            position: relative;
+            > img {
+              min-width: auto;
+              max-width: 150%;
+              height: 100%;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+          > h2 {
+            font-weight: 600;
+          }
+          > h3 {
+            span {
+              margin-left: 10px;
+            }
+          }
+          > h4 {
+            text-align: right;
+          }
+          > div {
+            width: 20px;
+            position: absolute;
+            top: 0;
+            display: flex;
+            align-items: center;
+            button {
+              width: 20px;
+              height: 30px;
+              font-size: 20px;
+              background-color: transparent;
+              color: #222;
+              border: none;
               text-align: center;
-              font-size: 1.4rem;
-              overflow:hidden;
-              text-overflow:ellipsis;
-              white-space:nowrap;
               cursor: pointer;
-              figure {
-                width: 10vw;
-                height: 100%;
-                overflow: hidden;
-                position: relative;
-                img {
-                  min-width: 10vw;
-                  width: auto;
-                  object-fit: cover;
-                  position: absolute;
-                  left: 50%;
-                  transform: translateX(-50%);
-                }
-              }
-              a {
-                margin: 0 0.5vw;
-                svg {
-                  font-size: 2.5rem;
-                  font-weight: 100;
-                  color: black;
-                }
-              }
-            }
-            // li:last-child {
-            //   width: 0;
-            //   height: 0;
-            //   text-indent: -9999px;
-            // }
-          }
-          .limit3 {
-            height: 19.5vh;
-            > li:first-child {
-              height: 19.5vh;
-            }
-            li:not(.limit3 > li:first-child) {
-              height: 4.5vh;
-              line-height: 4.5vh;
-              margin-top: 7.5vh;
-              margin-bottom: 7.5vh;
-              img {
-                height: 19.5vh;
-              }
-            }
-          }
-          .limit5 {
-            height: 11.3vh;
-            > li:first-child {
-              height: 11.3vh;
-            }
-            li:not(.limit5 > li:first-child) {
-              height: 4.3vh;
-              line-height: 4.3vh;
-              margin-top: 3.5vh;
-              margin-bottom: 3.5vh;
-              img {
-                height: 11.3vh;
-              }
-            }
-          }
-          .limit10 {
-            height: 5.1vh;
-            li {
-              height: 5.1vh;
-              line-height: 5.1vh;
-              img {
-                height: 5.1vh;
-              }
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
           }
         }
-        .mypageListLi:hover {
-          background-color: rgba(0,0,0,0.1);
-        }
-      }
-      .myPagePagination {
-        margin-top: 5vh;
       }
     }
   }
-  .mypageContainer::before {
-    content: "";
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0, 0.3),rgba(255,255,255, 0.5) 15%);
-    z-index: -1;
-  }
+}
+// 나머지 스크롤바
+.myPage::-webkit-scrollbar {
+  width: 10px;
+}
+/* 스크롤바 설정    */
+.myPage::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+}
+/* 스크롤바 뒷 배경 설정*/
+.myPage::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
 }

@@ -31,12 +31,12 @@ function PostEdit() {
   const edit_id = location.state._id;
   const editWriter = location.state.writer;
 
-  //localStorage에 "LOGINED" 가 있는지 여부 확인할 변수
-  const existlocalStorage = localStorage.getItem("LOGINEDID");
+  //sessionStorage에 "LOGINED" 가 있는지 여부 확인할 변수
+  const existsessionStorage = sessionStorage.getItem("LOGINEDID");
 
   useLayoutEffect(() => {
-    if (existlocalStorage) {
-      setLoginedId(JSON.parse(localStorage.getItem("LOGINEDID")).value);
+    if (existsessionStorage) {
+      setLoginedId(JSON.parse(sessionStorage.getItem("LOGINEDID")).value);
     }
 
     const editData = {
@@ -207,7 +207,7 @@ function PostEdit() {
                 <h2>Gallery</h2>
                 <span className="inputFileBtn">
                   <label htmlFor="galleryUpload">
-                    <RiFolderAddFill />
+                    <RiFolderAddFill  aria-label="사진 추가하기"/>
                   </label>
                   <input
                     type="file"
@@ -216,7 +216,6 @@ function PostEdit() {
                     id="galleryUpload"
                     onChange={onLoadFile}
                     accept="image/jpg,image/png,image/jpeg,image/gif"
-                    alt="이미지 추가하기"
                   />
                 </span>
                 <div className="galleryContainer">
@@ -255,10 +254,11 @@ function PostEdit() {
               </div>
               <ul>
                 <li>
-                  <p>제목</p>
+                  <label htmlFor="title">제목</label>
                   <input
                     type="text"
                     name="title"
+                    id="title"
                     onChange={onChangePost}
                     defaultValue={editResData.title}
                     placeholder="30자 내로 작성하세요"
@@ -266,39 +266,44 @@ function PostEdit() {
                   />
                 </li>
                 <li>
-                  <p>위치</p>
+                  <label htmlFor="location">위치</label>
                   <input
                     type="text"
                     name="location"
+                    id="location"
                     onChange={onChangePost}
                     defaultValue={editResData.location}
                     onKeyDown={handleOnKeyPress}
                   />
                 </li>
                 <li>
-                  <p>일정</p>
-                  <DatePicker
-                    selectsRange={true}
-                    startDate={startDate}
-                    endDate={endDate}
-                    onChange={(update) => {
-                      setDateRange(update);
-                    }}
-                    isClearable={true}
-                    dateFormat="yyyy-MM-dd"
-                    placeholderText={
-                      new Date(editFromDate).toLocaleDateString() +
-                      " ~ " +
-                      new Date(editToDate).toLocaleDateString()
-                    }
-                  />
+                  <label htmlFor="date">일정</label>
+                  <div>
+                    <DatePicker
+                      selectsRange={true}
+                      startDate={startDate}
+                      endDate={endDate}
+                      onChange={(update) => {
+                        setDateRange(update);
+                      }}
+                      isClearable={true}
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText={
+                        new Date(editFromDate).toLocaleDateString() +
+                        " ~ " +
+                        new Date(editToDate).toLocaleDateString()
+                      }
+                      id="date"
+                    />
+                  </div>
                 </li>
                 <li>
-                  <p>일기</p>
+                  <label htmlFor="content">일기</label>
                   <textarea
                     name="content"
                     onChange={onChangePost}
-                    defaultValue={editResData.content}></textarea>
+                    defaultValue={editResData.content} 
+                    id="content"></textarea>
                 </li>
               </ul>
               <div className="postEditBtn">

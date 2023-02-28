@@ -49,9 +49,8 @@
 }
 .header {
   width: 100%;
-  height: calc(100px / 1080px * 100%);
-  height: calc(100px / 1080px * 100vh);
-  background-color: transparent;
+  height: calc(var(--vh, 1vh) * 10);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 100%);
   @include font;
   @include noDrag;
   position: fixed;
@@ -68,6 +67,7 @@
   }
   .logo {
     cursor: pointer;
+    width: auto;
     height: 50%;
     margin-left: 10vw;
     a {
@@ -76,7 +76,7 @@
       display: block;
     }
     img {
-      width: 100%;
+      width: auto;
       height: 100%;
       display: block;
     }

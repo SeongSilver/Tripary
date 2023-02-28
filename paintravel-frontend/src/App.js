@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Routes, Route } from "react-router";
 import MyPagePage from "./pages/MyPagePage";
 import Login from "./components/Login/Login";
@@ -17,6 +17,14 @@ function App() {
   const AuthMyPagePage = Auth(MyPagePage, true);
   const AuthPostWritePage = Auth(PostWritePage, true);
   const AuthPostEditPage = Auth(PostEditPage, true);
+
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  useEffect(() => {
+    setScreenSize();
+  });
 
   return (
     <Routes>
