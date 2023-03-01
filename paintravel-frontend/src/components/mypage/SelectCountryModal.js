@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/mypage/selectCountryModal.scss";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
@@ -8,6 +8,8 @@ function SelectCountryModal({ setSelectedCountryModal }) {
   const [selectedCountryToPostWrite, setSelectedCountryToPostWrite] =
     useState("South Korea");
   const [nationCodeToPostWrite, setNationCodeToPostWrite] = useState("KR");
+
+  const modalContainer = useRef();
 
   //[성은 23.02.22]GlobeMap에서 쓴 데이터 가져와서 정렬된 국가 이름, 코드 배열 만들기
   const countriesData = am5geodata_worldLow.features
@@ -23,8 +25,17 @@ function SelectCountryModal({ setSelectedCountryModal }) {
     setSelectedCountryModal(false);
   };
 
+  const closeModalContainer = (e) => {
+    if (modalContainer.current === e.target) {
+      setSelectedCountryModal(false);
+    }
+  };
+
   return (
-    <div className="selectCountryModalContainer">
+    <div
+      className="selectCountryModalContainer"
+      ref={modalContainer}
+      onClick={closeModalContainer}>
       <div className="selectCountryModal">
         <div className="selectBox">
           <label>국가선택</label>
@@ -49,7 +60,9 @@ function SelectCountryModal({ setSelectedCountryModal }) {
             className="postButton">
             <span>글쓰기</span>
           </Link>
-          <a href="#" onClick={closeModal}>닫기</a>
+          <a href="#" onClick={closeModal}>
+            닫기
+          </a>
         </div>
       </div>
     </div>
