@@ -114,12 +114,12 @@ function PostEdit() {
     setMyFile(myFile.filter((_, index) => index !== id));
   };
 
-  //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
-  const handleOnKeyPress = (e) => {
-    if (e.key === "Tab") {
-      e.preventDefault();
-    }
+  //[야나] datePicker안에 키보드입력 방지
+  const OnChangeRawHandler = (e) => {
+    e.isImmediatePropagationEnabled = false;
+    e.preventDefault ? e.preventDefault() : (e.returnValue = false);
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (!post.title) {
@@ -207,7 +207,7 @@ function PostEdit() {
                 <h2>Gallery</h2>
                 <span className="inputFileBtn">
                   <label htmlFor="galleryUpload">
-                    <RiFolderAddFill  aria-label="사진 추가하기"/>
+                    <RiFolderAddFill aria-label="사진 추가하기" />
                   </label>
                   <input
                     type="file"
@@ -273,7 +273,6 @@ function PostEdit() {
                     id="location"
                     onChange={onChangePost}
                     defaultValue={editResData.location}
-                    onKeyDown={handleOnKeyPress}
                   />
                 </li>
                 <li>
@@ -286,8 +285,9 @@ function PostEdit() {
                       onChange={(update) => {
                         setDateRange(update);
                       }}
+                      onChangeRaw={OnChangeRawHandler}
                       isClearable={true}
-                      dateFormat="yyyy-MM-dd"
+                      dateFormat="yyyy.MM.dd"
                       placeholderText={
                         new Date(editFromDate).toLocaleDateString() +
                         " ~ " +
@@ -302,7 +302,7 @@ function PostEdit() {
                   <textarea
                     name="content"
                     onChange={onChangePost}
-                    defaultValue={editResData.content} 
+                    defaultValue={editResData.content}
                     id="content"></textarea>
                 </li>
               </ul>
