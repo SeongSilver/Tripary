@@ -49,8 +49,8 @@ function PostWrite() {
     });
   };
 
-  //[야나] 날짜 입력칸으로 tab이동 되는것 막기위한 함수
-  const handleOnKeyPress = (e) => {
+  //[야나] datePicker안에 키보드입력 방지
+  const OnChangeRawHandler = (e) => {
     e.isImmediatePropagationEnabled = false;
     e.preventDefault ? e.preventDefault() : (e.returnValue = false);
   };
@@ -215,22 +215,23 @@ function PostWrite() {
             </li>
             <li>
               <label htmlFor="date">일정</label>
-              <DatePicker
-                selectsRange={true}
-                startDate={startDate}
-                endDate={endDate}
-                onChange={(update) => {
-                  setDateRange(update);
-                }}
-                onChangeRaw={handleOnKeyPress}
-                isClearable={true}
-                dateFormat="yyyy-MM-dd"
-                placeholderText="여행 기간 선택"
-                className="datePicker"
-                aria-label="여행 기간 선택"
-                tabIndex="-1"
-                id="date"
-              />
+              <div>
+                <DatePicker
+                  selectsRange={true}
+                  startDate={startDate}
+                  endDate={endDate}
+                  onChange={(update) => {
+                    setDateRange(update);
+                  }}
+                  onChangeRaw={OnChangeRawHandler}
+                  isClearable={true}
+                  dateFormat="yyyy.MM.dd"
+                  className="datePicker"
+                  placeholderText="여행 기간 선택"
+                  aria-label="여행 기간 선택"
+                  id="date"
+                />
+              </div>
             </li>
             <li>
               <label htmlFor="content">일기</label>

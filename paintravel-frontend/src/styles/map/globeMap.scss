@@ -1,11 +1,7 @@
-// html {
-//   font-family: system-ui, sans-serif;
-//   font-size: 1.25rem;
-// }
-
 body {
   display: block;
-  width: 100vw; height: 100vh;
+  width: 100vw; 
+  height: calc(var(--vh, 1vh) * 100);
   margin: 0;
 }
 svg {
@@ -20,16 +16,23 @@ svg {
   display: flex;
   flex-direction: row;
   transition: 0.5s;
-  padding-top: 10vh;
+  padding-top: calc(var(--vh, 1vh) * 10);
+  > p {
+    text-indent: -9999px;
+    width: 0;
+    height: 0;
+    position:absolute;
+    left: -9999px;
+  }
   .chartdiv {
     display: block;
-    height: 80vh;
+    height: calc(var(--vh, 1vh) * 80);
     background: transparent;
     opacity: 0.9;
     transition: 1s ease-in-out;
     // 캔버스 워터마크 지우기
     > div > div > div > canvas:nth-child(2) {
-      clip-path: circle(50%);
+      clip-path: polygon(50% 0%, 100% 0, 100% 60%, 100% 100%, 32% 100%, 0 70%, 0 0);
     }
   }
   .nationdiv {
@@ -40,7 +43,7 @@ svg {
 
 .stars {
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   position: absolute;
   left: 0;
   top: 0;

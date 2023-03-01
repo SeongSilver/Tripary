@@ -52,7 +52,7 @@ function ContentModal({ modalData, setOpenPostModal }) {
       {!modalData ? (
         <Loading />
       ) : (
-        <div className="modalContainer">
+        <div className="modalContainer" id="modalContainer">
           <div className="modalDiv">
             <div className="modalHeader">
               <h1>{modalData.title}</h1>
