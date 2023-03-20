@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/faviconLogo.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -34,6 +34,45 @@
 
   <body>
     <script>
+      // 모바일 vh 적용
+      let vw = window.innerWidth;
+      let vh = window.innerHeight;
+      let mvh = window.innerHeight;
+      function setScreenSize() {
+        vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty("--vh", `${vh}px`);
+      }
+      setScreenSize();
+      window.addEventListener("resize", mScroll);
+      function mScroll() {
+        mvh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty("--mvh", `${mvh}px`);
+
+        // 모바일에서 input focus 시 자판 올라왔을 때 스크롤 가능하도록 구현 
+        try {
+          document.querySelector(".signUp").style.cssText = 
+          "overflow:scroll; height: calc(var(--mvh, 1mvh) * 100);";
+        } catch {
+          try {
+            document.querySelector(".login").style.cssText = 
+            "overflow:scroll; height: calc(var(--mvh, 1mvh) * 100);";
+          } catch {
+            try {
+              document.querySelector(".postWriteContainer").style.cssText = 
+              "overflow:scroll; height: calc(var(--mvh, 1mvh) * 100);";
+            } catch {
+              try {
+                document.querySelector(".postEditContainer").style.cssText = 
+                "overflow:scroll; height: calc(var(--mvh, 1mvh) * 100);";
+              } catch {
+
+              }
+            }
+            
+          }
+        }
+      }
+
       function onClickHandler() {
         if (sessionStorage.getItem("LOGINEDID")) {
           const fiveMinLater = new Date();

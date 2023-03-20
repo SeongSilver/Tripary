@@ -53,3 +53,8 @@ table {
 }
 a:visited {text-decoration: none; color:#fff}
 a:link {text-decoration: none; color:#fff}
+#root {
+	width: 100vw;
+	height: calc(var(--vh, 1vh) * 100);
+	position:relative;
+}
