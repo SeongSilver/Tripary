@@ -1,0 +1,55 @@
+body {
+  display: block;
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  margin: 0;
+}
+
+svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.globeMap {
+  display: flex;
+  flex-direction: row;
+  transition: 0.5s;
+  padding-top: calc(var(--vh, 1vh) * 10);
+}
+.globeMap > p {
+  text-indent: -9999px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: -9999px;
+}
+.globeMap .chartdiv {
+  display: block;
+  height: calc(var(--vh, 1vh) * 80);
+  background: transparent;
+  opacity: 0.9;
+  transition: 1s ease-in-out;
+}
+.globeMap .chartdiv > div > div > div > canvas:nth-child(2) {
+  -webkit-clip-path: polygon(50% 0%, 100% 0, 100% 60%, 100% 100%, 32% 100%, 0 70%, 0 0);
+          clip-path: polygon(50% 0%, 100% 0, 100% 60%, 100% 100%, 32% 100%, 0 70%, 0 0);
+}
+.globeMap .nationdiv {
+  width: 100%;
+  transition: 1s ease-in-out;
+}
+
+.stars {
+  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: black;
+  z-index: -1;
+}/*# sourceMappingURL=globeMap.css.map */

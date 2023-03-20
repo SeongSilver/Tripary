@@ -134,7 +134,7 @@ function SignUp({ setOpenSignUpModal }) {
       setIsNickname(true);
     }
   };
-
+  
   return (
     <div className="signUpContainer">
       <div className="signUp">
