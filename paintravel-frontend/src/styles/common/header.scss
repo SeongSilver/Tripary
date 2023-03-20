@@ -48,7 +48,7 @@
   }
 }
 .header {
-  width: 100%;
+  width: 100vw;
   height: calc(var(--vh, 1vh) * 10);
   background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 100%);
   @include font;

@@ -1,7 +1,7 @@
 ![Generic badge](https://img.shields.io/badge/npm-v18.9.0-blue.svg)
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/95121282/215732992-b6e04c47-e3db-4c9f-aaa9-54809f51a86f.png" width="300" height="auto">
+<img src="https://user-images.githubusercontent.com/95121282/220123217-e209884e-e496-480b-bfca-fa9137010895.png" width="300" height="auto">
 </div>
 
 # Paintravel
