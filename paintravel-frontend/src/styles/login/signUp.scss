@@ -145,6 +145,8 @@
             outline: none;
           }
           .message {
+            display: block;
+            width: 100%;
             font-weight: 500;
             line-height: calc(var(--vh, 1vh) * 4);
             padding: 0 0.5vw;
@@ -156,7 +158,21 @@
             }
           }
         }
-        
+        div:nth-child(1) {
+          div:nth-child(2) {
+            input:nth-child(1) {
+              width: 70% !important;
+            }
+            input:nth-child(2) {
+              width: 25% !important;
+              float: right;
+              padding:0 !important;
+              background: #000;
+              color: #fff;
+              border:none;
+            }
+          }
+        }
         .doubleCheckBtn {
           width: 18%;
           height: calc(var(--vh, 1vh) * 4);
@@ -171,6 +187,7 @@
           color: red;
           font-size: 1.6rem;
           overflow:visible;
+          letter-spacing: 2px !important;
         }
         p {
           font-size: 1.8rem;
@@ -178,6 +195,7 @@
           margin: calc(var(--vh, 1vh) * 1) 0;
         }
         #signUpButton {
+          @include font;
           color: #fff;
           width: 100%;
           height: calc(var(--vh, 1vh) * 6);
