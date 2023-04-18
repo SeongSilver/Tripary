@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
+import axios from 'axios';
 import "../../styles/login/signUp.scss";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -39,15 +40,15 @@ function SignUp({ setOpenSignUpModal }) {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-
-    dispatch(signUpUser(signUpInfo)).then((response) => {
-      if (response.payload.success) {
-        closeSignUp();
-        alert("회원가입 성공!\n로그인 후 이용하세요 :)");
-      } else {
-        alert("회원가입 실패");
-      }
-    });
+      dispatch(signUpUser(signUpInfo)).then((response) => {
+        console.log(response);
+        if (response.payload.success) {
+          closeSignUp();
+          alert("회원가입 성공!\n로그인 후 이용하세요 :)");
+        } else {
+          alert("회원가입 실패");
+        }
+      });
   };
 
   //아이디 유효성 검사
@@ -66,6 +67,20 @@ function SignUp({ setOpenSignUpModal }) {
       setIsUserId(true);
     }
   };
+
+  //아이디 중복확인 axios
+  const checkIdDuplication = () => {
+    if(signUpInfo.userId === ""){
+      alert("아이디를 입력하세요.");
+      return;
+    }
+    if(signUpInfo.userId.length < 6 || signUpInfo.userId > 12){
+      alert("아이디는 6자 이상 12자 이하로 입력해주세요");
+      return;
+    }
+    axios.post("/api/users/checkIdDuplication", signUpInfo.userId)
+    .then(res => console.log(res));
+  }
 
   //비밀번호 유효성 검사
   const onChangePassword = (e) => {
@@ -153,6 +168,11 @@ function SignUp({ setOpenSignUpModal }) {
                   maxLength="15"
                   name="userId"
                   onChange={onChangeUserId}
+                />
+                <input 
+                  type="button"
+                  value="중복확인"
+                  onClick={checkIdDuplication}
                 />
                 {signUpInfo.userId.length > 0 && (
                   <span className={`message ${isUserId ? "success" : "error"}`}>
