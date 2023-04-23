@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
+import axios from 'axios';
 import "../../styles/login/signUp.scss";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -9,6 +10,8 @@ import { signUpUser } from "../../_actions/user_actions";
 function SignUp({ setOpenSignUpModal }) {
   //[성은] 유효성 검사 완료, 버튼에 is해당항목 중 하나라도 false면 disable되게 함 (22.11.24 14:20)
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [isUniqueId, setIsUniqueId] = useState(false);
+  const [isCheckedId, setIsCheckedId] = useState(false);
 
   const [userIdMessage, setUserIdMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
@@ -39,20 +42,25 @@ function SignUp({ setOpenSignUpModal }) {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
-
-    dispatch(signUpUser(signUpInfo)).then((response) => {
-      if (response.payload.success) {
-        closeSignUp();
-        alert("회원가입 성공!\n로그인 후 이용하세요 :)");
-      } else {
-        alert("회원가입 실패");
-      }
-    });
+      dispatch(signUpUser(signUpInfo)).then((response) => {
+        console.log(response);
+        if(isUniqueId) {
+          if (response.payload.success) {
+            closeSignUp();
+            alert("회원가입 성공!\n로그인 후 이용하세요 :)");
+          } else {
+            alert("회원가입 실패\n-오류가 게속되면 관리자에게 문의하세요..!");
+          }
+        } else {
+          alert("아이디 중복확인을 진행하세요!");
+          return;
+        }
+      });
   };
 
   //아이디 유효성 검사
   const onChangeUserId = (e) => {
-    const userIdRegex = /^[a-z0-9]{6,12}$/;
+    const userIdRegex = /^(?=.*[a-z])(?=.*\d)[a-z0-9]{6,12}$/;
     const userIdCurrent = e.target.value;
     setSignUpInfo({
       ...signUpInfo,
@@ -66,6 +74,42 @@ function SignUp({ setOpenSignUpModal }) {
       setIsUserId(true);
     }
   };
+
+  //아이디 중복확인 axios
+  const checkIdDuplication = () => {
+    if(signUpInfo.userId === ""){
+      alert("아이디를 입력하세요.");
+      return;
+    }
+    if(signUpInfo.userId.length < 6 || signUpInfo.userId.length > 12){
+      alert("아이디는 6자 이상 12자 이하로 입력해주세요");
+      return;
+    }
+    if(isUserId){
+      axios.post("/api/users/checkIdDuplication", {userId : signUpInfo.userId})
+      .then(res => {
+        setIsUniqueId(res.data.isUniqueId);
+        setIsCheckedId(true);
+      });
+    } else {
+      alert("아이디 형식에 맞춰 작성해주세요");
+      return;
+    }
+    
+  }
+
+  useEffect(()=>{
+    if(isCheckedId){
+      if(isUniqueId){
+        alert("사용 가능한 아이디 입니다");
+        setIsCheckedId(false);
+      }else{
+        alert("이미 사용중인 아이디 입니다.\n다른 아이디를 입력해주세요!");
+        setIsCheckedId(false);
+        return;
+      }
+    }
+  },[isCheckedId])
 
   //비밀번호 유효성 검사
   const onChangePassword = (e) => {
@@ -134,7 +178,7 @@ function SignUp({ setOpenSignUpModal }) {
       setIsNickname(true);
     }
   };
-
+  
   return (
     <div className="signUpContainer">
       <div className="signUp">
@@ -153,6 +197,11 @@ function SignUp({ setOpenSignUpModal }) {
                   maxLength="15"
                   name="userId"
                   onChange={onChangeUserId}
+                />
+                <input 
+                  type="button"
+                  value="중복확인"
+                  onClick={checkIdDuplication}
                 />
                 {signUpInfo.userId.length > 0 && (
                   <span className={`message ${isUserId ? "success" : "error"}`}>

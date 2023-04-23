@@ -18,6 +18,22 @@ const cookieParser = require("cookie-parser");
 //cookie-parser 라이브러리 사용하기 위한 환경세팅
 router.use(cookieParser());
 
+//아이디 중복확인 라우터
+
+router.post("/checkIdDuplication",(req,res) => {
+  User.findOne({ userId: req.body.userId }, (err, user) => {
+    if(user === null) {
+      return res.json({
+        isUniqueId: true
+      })
+    } else {
+      return res.json({
+        isUniqueId: false
+      })
+    }
+  })
+})
+
 //회원가입 라우터
 router.post("/signUp", (req, res) => {
     //1) 회원가입시 필요한 정보들을 클라이언트에서 가져오면
