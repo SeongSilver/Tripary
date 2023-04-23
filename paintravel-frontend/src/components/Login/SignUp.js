@@ -42,20 +42,21 @@ function SignUp({ setOpenSignUpModal }) {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if(isUniqueId) {
       dispatch(signUpUser(signUpInfo)).then((response) => {
         console.log(response);
-        if(isUniqueId) {
           if (response.payload.success) {
             closeSignUp();
             alert("회원가입 성공!\n로그인 후 이용하세요 :)");
           } else {
             alert("회원가입 실패\n-오류가 게속되면 관리자에게 문의하세요..!");
           }
-        } else {
-          alert("아이디 중복확인을 진행하세요!");
-          return;
-        }
+        
       });
+    } else {
+      alert("아이디 중복확인을 진행하세요!");
+      return;
+    }
   };
 
   //아이디 유효성 검사

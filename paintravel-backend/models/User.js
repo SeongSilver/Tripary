@@ -19,7 +19,6 @@ const userSchema = mongoose.Schema({
   email: {
     type: String,
     trim: true, //빈칸 제거
-    unique: 1,
   },
   nickName: {
     type: String,
